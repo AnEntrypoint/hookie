@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "write-file": {
+      "command": "node",
+      "args": ["$CLAUDE_PROJECT_DIR/.claude/mcp/write-file.cjs"]
+    }
+  }
+}
