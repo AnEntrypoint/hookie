@@ -1,7 +1,14 @@
 const TOKEN_KEY = 'github_token';
-const CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_GITHUB_REDIRECT_URI;
+const CLIENT_ID_KEY = 'github_client_id';
 const API_BASE = 'https://api.github.com';
+
+function getClientId() {
+  return localStorage.getItem(CLIENT_ID_KEY) || import.meta.env.VITE_GITHUB_CLIENT_ID || '';
+}
+
+function getRedirectUri() {
+  return `${window.location.origin}/?auth=callback`;
+}
 
 function getHeaders() {
   const token = sessionStorage.getItem(TOKEN_KEY);
@@ -31,38 +38,26 @@ export function getAuthToken() {
   return sessionStorage.getItem(TOKEN_KEY);
 }
 
+export function setClientId(clientId) {
+  localStorage.setItem(CLIENT_ID_KEY, clientId);
+}
+
+export function getStoredClientId() {
+  return getClientId();
+}
+
 export async function initiateOAuthLogin() {
-  if (!CLIENT_ID || !REDIRECT_URI) {
-    throw new Error('GitHub OAuth configuration missing');
+  const clientId = getClientId();
+  if (!clientId) {
+    throw new Error('GitHub OAuth Client ID not configured. Please set it in settings.');
   }
 
-  return new Promise((resolve, reject) => {
-    const scope = 'repo,user';
-    const state = Math.random().toString(36).substring(7);
-    sessionStorage.setItem('oauth_state', state);
+  const scope = 'repo,user';
+  const state = Math.random().toString(36).substring(7);
+  sessionStorage.setItem('oauth_state', state);
 
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${scope}&state=${state}`;
-    const popup = window.open(authUrl, 'github-auth', 'width=500,height=600');
-
-    const checkAuth = setInterval(() => {
-      try {
-        const token = sessionStorage.getItem(TOKEN_KEY);
-        if (token) {
-          clearInterval(checkAuth);
-          popup?.close();
-          resolve(token);
-        }
-      } catch (e) {
-        clearInterval(checkAuth);
-        reject(e);
-      }
-    }, 1000);
-
-    setTimeout(() => {
-      clearInterval(checkAuth);
-      reject(new Error('OAuth timeout'));
-    }, 300000);
-  });
+  const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(getRedirectUri())}&scope=${scope}&state=${state}&allow_signup=true`;
+  window.location.href = authUrl;
 }
 
 export function logout() {
@@ -202,6 +197,8 @@ export async function getUser() {
 
 export const github = {
   getAuthToken,
+  setClientId,
+  getStoredClientId,
   initiateOAuthLogin,
   logout,
   getRepoStructure,
