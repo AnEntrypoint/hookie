@@ -1,22 +1,9 @@
 import React from 'react';
-
-/**
- * App
- *
- * Public App Component
- *
- * Generated from App.md
- */
+import { Router } from '../Router.js';
 
 export function App(props = {}, children) {
   return (
-    <div
-      className="App"
-      data-component="App"
-      role="generic"
-    >
-      {/* TODO: Implement App component */}
-      {/* See App.md for full specification */}
+    <div className="App" data-component="App">
       {children}
     </div>
   );

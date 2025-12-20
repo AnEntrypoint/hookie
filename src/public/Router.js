@@ -1,22 +1,9 @@
 import React from 'react';
-
-/**
- * Router
- *
- * Router Component
- *
- * Generated from Router.md
- */
+import { Renderer } from '../Renderer.js';
 
 export function Router(props = {}, children) {
   return (
-    <div
-      className="Router"
-      data-component="Router"
-      role="generic"
-    >
-      {/* TODO: Implement Router component */}
-      {/* See Router.md for full specification */}
+    <div className="Router" data-component="Router">
       {children}
     </div>
   );

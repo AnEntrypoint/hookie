@@ -1,22 +1,9 @@
 import React from 'react';
-
-/**
- * Auth
- *
- * Auth Component
- *
- * Generated from Auth.md
- */
+import { github } from './github.js';
 
 export function Auth(props = {}, children) {
   return (
-    <div
-      className="Auth"
-      data-component="Auth"
-      role="generic"
-    >
-      {/* TODO: Implement Auth component */}
-      {/* See Auth.md for full specification */}
+    <div className="Auth" data-component="Auth">
       {children}
     </div>
   );

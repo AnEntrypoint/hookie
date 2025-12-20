@@ -1,22 +1,9 @@
 import React from 'react';
+import { componentRegistry } from './componentRegistry.js';
 
-/**
- * PropsEditor
- *
- * PropsEditor Component
- *
- * Generated from PropsEditor.md
- */
-
-export function PropsEditor({ propName, required, default, options }, children) {
+export function PropsEditor(props = {}, children) {
   return (
-    <div
-      className="PropsEditor"
-      data-component="PropsEditor"
-      role="generic"
-    >
-      {/* TODO: Implement PropsEditor component */}
-      {/* See PropsEditor.md for full specification */}
+    <div className="PropsEditor" data-component="PropsEditor">
       {children}
     </div>
   );

@@ -1,22 +1,9 @@
 import React from 'react';
-
-/**
- * Renderer
- *
- * Renderer Component
- *
- * Generated from Renderer.md
- */
+import { componentRegistry } from '../componentRegistry.js';
 
 export function Renderer(props = {}, children) {
   return (
-    <div
-      className="Renderer"
-      data-component="Renderer"
-      role="generic"
-    >
-      {/* TODO: Implement Renderer component */}
-      {/* See Renderer.md for full specification */}
+    <div className="Renderer" data-component="Renderer">
       {children}
     </div>
   );

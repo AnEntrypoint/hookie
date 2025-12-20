@@ -1,22 +1,9 @@
 import React from 'react';
-
-/**
- * AdminApp
- *
- * AdminApp Component
- *
- * Generated from AdminApp.md
- */
+import { Auth } from './Auth.js';
 
 export function AdminApp(props = {}, children) {
   return (
-    <div
-      className="AdminApp"
-      data-component="AdminApp"
-      role="generic"
-    >
-      {/* TODO: Implement AdminApp component */}
-      {/* See AdminApp.md for full specification */}
+    <div className="AdminApp" data-component="AdminApp">
       {children}
     </div>
   );

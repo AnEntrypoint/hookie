@@ -1,22 +1,9 @@
 import React from 'react';
+import { contentManager } from './contentManager.js';
 
-/**
- * PageManager
- *
- * PageManager Component
- *
- * Generated from PageManager.md
- */
-
-export function PageManager({ maxWidth }, children) {
+export function PageManager(props = {}, children) {
   return (
-    <div
-      className="PageManager"
-      data-component="PageManager"
-      role="generic"
-    >
-      {/* TODO: Implement PageManager component */}
-      {/* See PageManager.md for full specification */}
+    <div className="PageManager" data-component="PageManager">
       {children}
     </div>
   );
