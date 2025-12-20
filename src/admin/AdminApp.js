@@ -335,15 +335,69 @@ const AdminApp = () => {
 
     if (route === '#/admin/settings') {
       return (
-        <div className="settings-view">
+        <div className="settings-view" style={{ maxWidth: '600px' }}>
           <h2>Settings</h2>
-          <div className="form-field">
-            <label>Repository Owner</label>
-            <p>{repoInfo.owner || 'Not set'}</p>
+
+          <div className="settings-section">
+            <h3>Repository Configuration</h3>
+            <div className="form-field">
+              <label>Repository Owner</label>
+              <p style={{ fontWeight: 'bold' }}>{repoInfo.owner || 'Not set'}</p>
+            </div>
+            <div className="form-field">
+              <label>Repository Name</label>
+              <p style={{ fontWeight: 'bold' }}>{repoInfo.repo || 'Not set'}</p>
+            </div>
           </div>
-          <div className="form-field">
-            <label>Repository Name</label>
-            <p>{repoInfo.repo || 'Not set'}</p>
+
+          <div className="settings-section" style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
+            <h3>GitHub OAuth Setup</h3>
+            <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
+              To enable GitHub OAuth login, create an OAuth application at GitHub:
+            </p>
+            <ol style={{ fontSize: '14px', lineHeight: '1.8', color: '#333', paddingLeft: '20px' }}>
+              <li style={{ marginBottom: '10px' }}>Go to <a href="https://github.com/settings/developers" target="_blank" rel="noreferrer" style={{ color: '#007bff', textDecoration: 'underline' }}>github.com/settings/developers</a></li>
+              <li style={{ marginBottom: '10px' }}>Click "OAuth Apps" then "New OAuth App"</li>
+              <li style={{ marginBottom: '10px' }}>Fill in Application name (e.g., "My CMS")</li>
+              <li style={{ marginBottom: '10px' }}>Homepage URL: <code style={{ backgroundColor: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '12px' }}>http://localhost:5182</code></li>
+              <li style={{ marginBottom: '10px' }}>Authorization callback URL: <code style={{ backgroundColor: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '12px' }}>http://localhost:5182/?auth=callback</code></li>
+              <li style={{ marginBottom: '10px' }}>Click "Register application"</li>
+              <li>Copy the "Client ID" from the next page and paste below</li>
+            </ol>
+
+            <div className="form-field" style={{ marginTop: '20px' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>GitHub OAuth Client ID</label>
+              <input
+                type="text"
+                placeholder="Paste your Client ID here"
+                defaultValue={localStorage.getItem('github_client_id') || ''}
+                onChange={(e) => localStorage.setItem('github_client_id', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                  fontFamily: 'monospace',
+                  boxSizing: 'border-box'
+                }}
+              />
+              <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
+                Saved automatically in localStorage
+              </p>
+            </div>
+
+            <div style={{
+              marginTop: '20px',
+              padding: '12px',
+              backgroundColor: '#e7f3ff',
+              color: '#004085',
+              borderRadius: '4px',
+              fontSize: '13px',
+              lineHeight: '1.6'
+            }}>
+              <strong>After setup:</strong> Click "Sign in with GitHub" button to login with your GitHub account. You'll be redirected to GitHub to authorize the app.
+            </div>
           </div>
         </div>
       );
