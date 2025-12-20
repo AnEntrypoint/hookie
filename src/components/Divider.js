@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 /**
  * Get thickness value in pixels based on variant
@@ -84,22 +83,6 @@ const Divider = ({
       aria-orientation="horizontal"
     />
   );
-};
-
-Divider.propTypes = {
-  color: PropTypes.string,
-  thickness: PropTypes.oneOf(['thin', 'normal', 'thick']),
-  margin: PropTypes.oneOf(['sm', 'md', 'lg']),
-  fullWidth: PropTypes.bool,
-  style: PropTypes.object
-};
-
-Divider.defaultProps = {
-  color: '#e2e8f0',
-  thickness: 'normal',
-  margin: 'md',
-  fullWidth: true,
-  style: {}
 };
 
 export default Divider;
