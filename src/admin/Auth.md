@@ -16,34 +16,38 @@ Use React useState for:
 - `loading` (boolean): Loading state during authentication check
 
 ## Lifecycle
-On component mount (useEffect):
-1. Check for existing auth token using github.getAuthToken()
-2. If token exists, fetch user info using github.getUser()
-3. Set isAuthenticated to true if user fetch succeeds
-4. Set loading to false after check completes
-5. Handle errors gracefully (treat as not authenticated)
+On component mount (useEffect MUST execute this exact sequence):
+1. Call github.getAuthToken() to check for existing auth token
+2. If token exists (not null):
+   a. Call github.getUser() to fetch user info
+   b. On success: set isAuthenticated to true AND set user to returned user object
+   c. On error: set isAuthenticated to false AND set user to null
+3. If token is null:
+   a. Set isAuthenticated to false
+   b. Set user to null
+4. Set loading to false (MUST happen in finally block to always execute)
 
 ## Rendering Logic
 
-### Loading State
-Display: "Loading..." or a spinner
+### Loading State (when loading === true)
+MUST display exactly: "Loading..." text in a div with class "auth-loading"
 
-### Not Authenticated State
-Display:
-- GitHub logo or icon
-- "Sign in with GitHub" button
-- On click: Call github.initiateOAuthLogin()
+### Not Authenticated State (when loading === false AND isAuthenticated === false)
+MUST display:
+- Button with class "auth-login" containing text "Sign in with GitHub"
+- On button click: MUST call github.initiateOAuthLogin()
+- No icon required (text only)
 
-### Authenticated State
-Display:
-- User avatar (circular image from user.avatar_url)
-- User name or login (user.name || user.login)
-- "Logout" button
-- On logout click:
-  - Clear token from localStorage
-  - Set isAuthenticated to false
-  - Set user to null
-  - Optionally reload page
+### Authenticated State (when loading === false AND isAuthenticated === true)
+MUST display all of these elements:
+- img element with class "auth-avatar", src={user.avatar_url}, alt={user.login}, width="32px", height="32px", borderRadius="50%"
+- span element with class "auth-username" containing text: user.name if it exists, otherwise user.login
+- button with class "auth-logout" containing text "Logout"
+- On logout button click MUST execute in this order:
+  1. Call github.logout() to clear token from sessionStorage
+  2. Set isAuthenticated to false
+  3. Set user to null
+  4. Call window.location.reload() to force full app reset
 
 ## DOM Structure (Not Authenticated)
 ```
@@ -78,24 +82,23 @@ Display:
 ### handleLogout
 ```
 () => {
-  localStorage.removeItem('github_token');
+  github.logout();
   setIsAuthenticated(false);
   setUser(null);
-  window.location.reload(); // Optional: force full app reset
+  window.location.reload();
 }
 ```
 
 ## Default Export
-Export the Auth component as default export.
+MUST export the Auth component as default export using: export default Auth;
 
 ## Implementation Notes
-- Use github module functions exclusively for auth operations
-- Handle OAuth redirect flow (token will be in URL after redirect)
-- Store minimal state (just authenticated status and user object)
-- Avatar should be small (32px or similar)
-- Loading state prevents flash of login button
-- Logout should clear all auth-related localStorage items
-- Consider showing tooltip with user email on hover
-- Button styles should match GitHub branding
-- Handle network errors during user fetch
-- Component should be compact for header placement
+- MUST use github module functions exclusively for all auth operations (getAuthToken, initiateOAuthLogin, logout, getUser)
+- Token storage is ALWAYS in sessionStorage with key 'github_token' (handled by github module)
+- MUST render EXACTLY one of: loading state, not authenticated state, or authenticated state (never multiple simultaneously)
+- Avatar MUST be exactly 32px width and height with 50% border radius (circular)
+- Loading state prevents flash of unauthenticated UI
+- MUST call window.location.reload() on logout (not optional)
+- User display text MUST use user.name if present, otherwise user.login
+- Initial loading state MUST be true
+- MUST wrap user fetch in try/catch and treat errors as unauthenticated
