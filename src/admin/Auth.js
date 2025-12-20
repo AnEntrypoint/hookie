@@ -32,15 +32,6 @@ const Auth = () => {
     checkAuth();
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      await github.initiateOAuthLogin();
-    } catch (error) {
-      console.error('OAuth login failed:', error);
-      alert('GitHub OAuth not configured. Create an OAuth app at github.com/settings/developers and set the Client ID in settings.');
-    }
-  };
-
   const handleLogout = () => {
     github.logout();
     setIsAuthenticated(false);
@@ -55,9 +46,9 @@ const Auth = () => {
   if (!isAuthenticated) {
     return (
       <div className="auth">
-        <button className="auth-login" onClick={handleLogin}>
-          Sign in with GitHub
-        </button>
+        <a href="#/admin/settings" className="auth-login" style={{ textDecoration: 'none', color: 'white' }}>
+          Add GitHub Token
+        </a>
       </div>
     );
   }

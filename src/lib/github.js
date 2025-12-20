@@ -1,20 +1,8 @@
-const TOKEN_KEY = 'github_token';
-const CLIENT_ID_KEY = 'github_client_id';
 const PAT_KEY = 'github_pat';
 const API_BASE = 'https://api.github.com';
 
-function getClientId() {
-  return localStorage.getItem(CLIENT_ID_KEY) || import.meta.env.VITE_GITHUB_CLIENT_ID || '';
-}
-
-function getRedirectUri() {
-  return `${window.location.origin}/?auth=callback`;
-}
-
 function getToken() {
-  const pat = localStorage.getItem(PAT_KEY);
-  if (pat) return pat;
-  return sessionStorage.getItem(TOKEN_KEY);
+  return localStorage.getItem(PAT_KEY) || '';
 }
 
 function getHeaders() {
@@ -45,26 +33,8 @@ export function getAuthToken() {
   return getToken();
 }
 
-export function setClientId(clientId) {
-  localStorage.setItem(CLIENT_ID_KEY, clientId);
-}
-
-export function getStoredClientId() {
-  return getClientId();
-}
-
-export async function initiateOAuthLogin() {
-  const pat = localStorage.getItem(PAT_KEY);
-  if (!pat) {
-    alert('Please set your GitHub Personal Access Token in Settings first.');
-    return;
-  }
-  alert('You are authenticated! Go to Settings to verify or change your token.');
-}
-
 export function logout() {
-  sessionStorage.removeItem(TOKEN_KEY);
-  sessionStorage.removeItem('oauth_state');
+  localStorage.removeItem(PAT_KEY);
 }
 
 export async function getRepoStructure(owner, repo) {
@@ -199,9 +169,6 @@ export async function getUser() {
 
 export const github = {
   getAuthToken,
-  setClientId,
-  getStoredClientId,
-  initiateOAuthLogin,
   logout,
   getRepoStructure,
   readFile,
