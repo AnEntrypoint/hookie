@@ -54,6 +54,9 @@ useEffect(() => {
     const hash = window.location.hash;
     setCurrentRoute(hash);
 
+    // Wait for repo info to be loaded from environment
+    if (!repoInfo.owner || !repoInfo.repo) return;
+
     // Parse route params
     if (hash.startsWith('#/admin/pages/')) {
       const pageName = hash.split('/')[3];
@@ -62,10 +65,14 @@ useEffect(() => {
   };
 
   window.addEventListener('hashchange', handleHashChange);
-  handleHashChange(); // Initial load
+
+  // Only call initial load if repoInfo is ready
+  if (repoInfo.owner && repoInfo.repo) {
+    handleHashChange();
+  }
 
   return () => window.removeEventListener('hashchange', handleHashChange);
-}, []);
+}, [repoInfo]);
 ```
 
 ## Layout Structure

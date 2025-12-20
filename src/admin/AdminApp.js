@@ -19,20 +19,19 @@ const AdminApp = () => {
   });
   const [showNotification, setShowNotification] = useState(false);
 
-  // Load repository info from environment
   useEffect(() => {
     const owner = import.meta.env?.VITE_GITHUB_OWNER || '';
     const repo = import.meta.env?.VITE_GITHUB_REPO || '';
     setRepoInfo({ owner, repo });
   }, []);
 
-  // Hash-based routing
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
       setCurrentRoute(hash);
 
-      // Parse route params
+      if (!repoInfo.owner || !repoInfo.repo) return;
+
       if (hash.startsWith('#/admin/pages/')) {
         const pageName = hash.split('/')[3];
         loadPage(pageName);
@@ -40,12 +39,14 @@ const AdminApp = () => {
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Initial load
+
+    if (repoInfo.owner && repoInfo.repo) {
+      handleHashChange();
+    }
 
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [repoInfo]);
 
-  // Live reload watcher
   useEffect(() => {
     if (!repoInfo.owner || !repoInfo.repo) return;
 
@@ -64,7 +65,6 @@ const AdminApp = () => {
     }
   }, [repoInfo]);
 
-  // Load page
   const loadPage = async (pageName) => {
     try {
       if (contentManager && contentManager.loadPage) {
@@ -76,7 +76,6 @@ const AdminApp = () => {
         setCurrentPage({ name: pageName, data: pageData });
         localStorage.setItem('lastPage', pageName);
       } else {
-        // Fallback: create mock page data
         setCurrentPage({
           name: pageName,
           data: {
@@ -88,7 +87,6 @@ const AdminApp = () => {
       }
     } catch (error) {
       console.error('Failed to load page:', error);
-      // Create empty page on error
       setCurrentPage({
         name: pageName,
         data: {
@@ -100,7 +98,6 @@ const AdminApp = () => {
     }
   };
 
-  // Helper: Get component by ID
   const getComponentById = (id) => {
     if (!currentPage || !currentPage.data) return null;
 
@@ -119,7 +116,6 @@ const AdminApp = () => {
     return findInArray(currentPage.data.components);
   };
 
-  // Helper: Update component props
   const updateComponentProps = (pageData, componentId, newProps) => {
     const cloned = JSON.parse(JSON.stringify(pageData));
 
@@ -140,7 +136,6 @@ const AdminApp = () => {
     return cloned;
   };
 
-  // Helper: Update component style
   const updateComponentStyle = (pageData, componentId, newStyle) => {
     const cloned = JSON.parse(JSON.stringify(pageData));
 
@@ -161,27 +156,23 @@ const AdminApp = () => {
     return cloned;
   };
 
-  // Helper: Get component schema
   const getComponentSchema = (componentId) => {
     const component = getComponentById(componentId);
     if (!component) return null;
 
-    if (componentRegistry && componentRegistry.getSchema) {
-      return componentRegistry.getSchema(component.type);
+    if (componentRegistry && componentRegistry.getComponent) {
+      return componentRegistry.getComponent(component.type);
     }
     return null;
   };
 
-  // Add change for tracking
   const addChange = (change) => {
     setChanges(prevChanges => {
-      // Remove existing change for same path
       const filtered = prevChanges.filter(c => c.path !== change.path);
       return [...filtered, change];
     });
   };
 
-  // Event handlers
   const handleSelectPage = (page) => {
     setCurrentPage(page);
     window.location.hash = `#/admin/pages/${page.name}`;
@@ -191,7 +182,6 @@ const AdminApp = () => {
   const handlePageUpdate = (updatedPageData) => {
     setCurrentPage({ ...currentPage, data: updatedPageData });
 
-    // Track change
     addChange({
       path: `/content/pages/${currentPage.name}.json`,
       status: 'modified',
@@ -218,20 +208,15 @@ const AdminApp = () => {
   };
 
   const handleComponentCreated = (componentName) => {
-    // Reload component registry
     if (componentRegistry && componentRegistry.reload) {
       componentRegistry.reload();
     }
 
-    // Show success message
     alert(`Component "${componentName}" created successfully!`);
-
-    // Navigate back to pages
     window.location.hash = '#/admin';
   };
 
   const handleRefresh = async () => {
-    // Reload current page from GitHub
     if (currentPage && contentManager && contentManager.loadPage) {
       try {
         const fresh = await contentManager.loadPage(
@@ -268,12 +253,10 @@ const AdminApp = () => {
     }
   };
 
-  // Render current view based on route
   const renderCurrentView = () => {
     const route = currentRoute;
 
     if (route === '#/admin' || route === '' || route === '#/') {
-      // PageManager view - simplified for now
       return (
         <div className="page-manager">
           <h2>Pages</h2>
