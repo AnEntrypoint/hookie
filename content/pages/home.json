@@ -1,106 +1,42 @@
 {
+  "name": "home",
   "title": "Home",
-  "slug": "home",
   "components": [
     {
-      "id": "hero-section-1",
-      "type": "Section",
+      "id": "container-1",
+      "type": "Container",
       "props": {
-        "title": "Welcome to Your Site"
+        "maxWidth": "1200px"
       },
       "style": {
-        "padding": "80px 20px",
-        "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        "color": "#fff",
-        "textAlign": "center"
+        "padding": "40px 20px"
       },
       "children": [
         {
-          "id": "hero-text-1",
+          "id": "heading-1",
           "type": "Heading",
           "props": {
             "level": 1,
-            "text": "Build Your Site Visually"
+            "text": "Welcome to the Dynamic CMS"
           },
           "style": {
-            "fontSize": "48px",
-            "marginBottom": "20px",
-            "color": "#fff"
+            "textAlign": "center",
+            "marginBottom": "20px"
           },
           "children": []
         },
         {
-          "id": "hero-text-2",
+          "id": "text-1",
           "type": "Text",
           "props": {
-            "content": "Drag, drop, and publish. No code required."
+            "content": "This is a dynamic content management system powered by React and GitHub. You can create, edit, and manage your content through an intuitive interface."
           },
           "style": {
-            "fontSize": "20px",
-            "color": "#f0f0f0"
+            "textAlign": "center",
+            "marginBottom": "40px",
+            "fontSize": "18px"
           },
           "children": []
-        }
-      ]
-    },
-    {
-      "id": "content-section-1",
-      "type": "Section",
-      "props": {
-        "title": "Features"
-      },
-      "style": {
-        "padding": "60px 20px",
-        "background": "#f9f9f9"
-      },
-      "children": [
-        {
-          "id": "features-grid",
-          "type": "Grid",
-          "props": {
-            "columns": 3,
-            "gap": "30px"
-          },
-          "style": {
-            "maxWidth": "1200px",
-            "margin": "0 auto"
-          },
-          "children": [
-            {
-              "id": "feature-1",
-              "type": "Container",
-              "props": {},
-              "style": {
-                "padding": "20px",
-                "background": "white",
-                "borderRadius": "8px",
-                "boxShadow": "0 2px 8px rgba(0,0,0,0.1)"
-              },
-              "children": [
-                {
-                  "id": "feature-1-heading",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "Visual Builder"
-                  },
-                  "style": {
-                    "marginBottom": "10px"
-                  },
-                  "children": []
-                },
-                {
-                  "id": "feature-1-text",
-                  "type": "Text",
-                  "props": {
-                    "content": "Drag and drop components to build beautiful pages in minutes."
-                  },
-                  "style": {},
-                  "children": []
-                }
-              ]
-            }
-          ]
         }
       ]
     }
