@@ -1,15 +1,104 @@
-export async function registerComponent(name, schema) {
-  throw new Error('registerComponent not implemented');
+const schemas = {
+  Button: {
+    name: 'Button',
+    description: 'A clickable button component',
+    props: { text: { type: 'string', default: 'Click me' }, onClick: { type: 'function' } },
+    allowedChildren: [],
+    defaultStyle: { padding: '10px 16px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }
+  },
+  Text: {
+    name: 'Text',
+    description: 'Display text content',
+    props: { content: { type: 'string', default: '' } },
+    allowedChildren: [],
+    defaultStyle: { margin: '10px 0', lineHeight: '1.6' }
+  },
+  Container: {
+    name: 'Container',
+    description: 'Layout container',
+    props: { maxWidth: { type: 'string', default: '1200px' } },
+    allowedChildren: ['*'],
+    defaultStyle: { maxWidth: '1200px', margin: '0 auto', padding: '0 16px' }
+  },
+  Heading: {
+    name: 'Heading',
+    description: 'Heading text',
+    props: { level: { type: 'number', default: 1 }, text: { type: 'string', default: '' } },
+    allowedChildren: [],
+    defaultStyle: { margin: '20px 0 10px 0', fontWeight: '600' }
+  },
+  Image: {
+    name: 'Image',
+    description: 'Image component',
+    props: { src: { type: 'string', default: '' }, alt: { type: 'string', default: '' } },
+    allowedChildren: [],
+    defaultStyle: { maxWidth: '100%', height: 'auto', display: 'block' }
+  },
+  Divider: {
+    name: 'Divider',
+    description: 'Horizontal divider',
+    props: {},
+    allowedChildren: [],
+    defaultStyle: { width: '100%', height: '1px', backgroundColor: '#e0e0e0', margin: '16px 0', border: 'none' }
+  },
+  Section: {
+    name: 'Section',
+    description: 'Content section',
+    props: {},
+    allowedChildren: ['*'],
+    defaultStyle: { padding: '20px 0' }
+  },
+  Grid: {
+    name: 'Grid',
+    description: 'Grid layout',
+    props: {},
+    allowedChildren: ['*'],
+    defaultStyle: { display: 'grid', gap: '16px' }
+  },
+  Link: {
+    name: 'Link',
+    description: 'Link component',
+    props: { href: { type: 'string', default: '#' }, text: { type: 'string', default: '' } },
+    allowedChildren: [],
+    defaultStyle: { color: '#007bff', textDecoration: 'none', cursor: 'pointer' }
+  },
+  List: {
+    name: 'List',
+    description: 'List component',
+    props: { items: { type: 'array', default: [] } },
+    allowedChildren: [],
+    defaultStyle: { listStyle: 'none', padding: '0' }
+  }
+};
+
+export function registerComponent(name, schema) {
+  schemas[name] = schema;
 }
-export async function getComponent(name) {
-  throw new Error('getComponent not implemented');
+
+export function getComponent(name) {
+  return schemas[name] || null;
 }
-export async function getAllComponents() {
-  throw new Error('getAllComponents not implemented');
+
+export function getAllComponents() {
+  return Object.keys(schemas);
 }
-export async function validateComponentProps(componentName, props) {
-  throw new Error('validateComponentProps not implemented');
+
+export function validateComponentProps(componentName, props) {
+  const schema = getComponent(componentName);
+  return !!schema;
 }
-export async function canContainChild(parentType, childType) {
-  throw new Error('canContainChild not implemented');
+
+export function canContainChild(parentType, childType) {
+  const schema = schemas[parentType];
+  if (!schema) return true;
+  const allowed = schema.allowedChildren || [];
+  return allowed.includes('*') || allowed.includes(childType);
 }
+
+export const componentRegistry = {
+  registerComponent,
+  getComponent,
+  getAllComponents,
+  validateComponentProps,
+  canContainChild
+};

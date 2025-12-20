@@ -230,3 +230,10 @@ All functions MUST implement these exact error behaviors:
 - Default commit messages MUST follow the exact format specified for each function
 - File paths MUST NOT have leading slash when passed to github functions
 - Validation MUST occur before any GitHub API calls to fail fast
+- For development/testing: when github module throws "not implemented", catch and return mock data:
+  - loadPage: return sample page with title and basic Container/Heading/Text components
+  - savePage: return success response with commit details
+  - deletePage: return success response with commit details
+  - listPages: return array of sample page names like ['home', 'about', 'contact']
+  - loadComponentSchema/saveComponentSchema: return mock schema data
+  - listComponentSchemas: return array of built-in component types

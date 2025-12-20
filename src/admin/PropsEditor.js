@@ -1,5 +1,5 @@
 import React from 'react';
-import { componentRegistry } from './componentRegistry.js';
+import { componentRegistry } from '../lib/componentRegistry.js';
 
 export function PropsEditor(props = {}, children) {
   return (

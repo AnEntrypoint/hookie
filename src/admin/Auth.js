@@ -1,12 +1,76 @@
-import React from 'react';
-import { github } from './github.js';
+import React, { useState, useEffect } from 'react';
+import { github } from '../lib/github.js';
 
-export function Auth(props = {}, children) {
+const Auth = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = github.getAuthToken();
+
+        if (token) {
+          try {
+            const userData = await github.getUser();
+            setIsAuthenticated(true);
+            setUser(userData);
+          } catch (error) {
+            setIsAuthenticated(false);
+            setUser(null);
+          }
+        } else {
+          setIsAuthenticated(false);
+          setUser(null);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleLogin = () => {
+    github.initiateOAuthLogin();
+  };
+
+  const handleLogout = () => {
+    github.logout();
+    setIsAuthenticated(false);
+    setUser(null);
+    window.location.reload();
+  };
+
+  if (loading) {
+    return <div className="auth-loading">Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="auth">
+        <button className="auth-login" onClick={handleLogin}>
+          Sign in with GitHub
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="Auth" data-component="Auth">
-      {children}
+    <div className="auth auth-authenticated">
+      <img
+        className="auth-avatar"
+        src={user.avatar_url}
+        alt={user.login}
+        style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+      />
+      <span className="auth-username">{user.name || user.login}</span>
+      <button className="auth-logout" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
-}
+};
 
 export default Auth;

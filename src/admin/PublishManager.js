@@ -1,5 +1,5 @@
 import React from 'react';
-import { github } from './github.js';
+import { github } from '../lib/github.js';
 
 export function PublishManager(props = {}, children) {
   return (

@@ -4,3 +4,8 @@ export async function startWatching(owner, repo, callback) {
 export async function stopWatching() {
   throw new Error('stopWatching not implemented');
 }
+
+export const liveReload = {
+  startWatching,
+  stopWatching
+};

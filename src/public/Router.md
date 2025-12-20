@@ -259,3 +259,6 @@ Export the Router component as default export.
 - Handle special characters in page names
 - Provide breadcrumbs or navigation context
 - Support programmatic navigation
+- Must use contentManager.loadPage to fetch page data
+- Must accept owner and repo props and pass to contentManager
+- Must render Renderer component with pageData in view mode

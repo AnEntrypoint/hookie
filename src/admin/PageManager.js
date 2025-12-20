@@ -1,5 +1,5 @@
 import React from 'react';
-import { contentManager } from './contentManager.js';
+import { contentManager } from '../lib/contentManager.js';
 
 export function PageManager(props = {}, children) {
   return (

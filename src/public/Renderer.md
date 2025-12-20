@@ -247,3 +247,8 @@ Export the Renderer component as default export.
 - Log rendering errors to console in development
 - Support hot reloading in development
 - Cache rendered output where appropriate
+- Must recursively render component trees based on component.type
+- Must apply props, style, and children from component data structure
+- Must support both edit mode and view mode rendering
+- Must import all base components (Button, Text, Container, Heading, Image, Divider, Section, Grid, Link, List)
+- Must handle missing component implementations gracefully with error placeholders

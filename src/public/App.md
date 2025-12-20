@@ -277,3 +277,6 @@ Export the App component as default export (or AppWithErrorBoundary).
 - Support keyboard navigation
 - Ensure responsive design
 - Handle browser compatibility
+- Must render Router component when on public route with owner/repo
+- Must render AdminApp component when on admin route with owner/repo
+- Must show config form when repo info is missing

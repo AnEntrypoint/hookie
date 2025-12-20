@@ -1,11 +1,26 @@
 import React from 'react';
 
-export function Text(props = {}, children) {
+const Text = ({
+  content = 'Enter text',
+  fontSize = '16px',
+  color = '#000000',
+  fontWeight = 'normal',
+  align = 'left',
+  style = {}
+}) => {
+  const textStyle = {
+    fontSize,
+    color,
+    fontWeight,
+    textAlign: align,
+    ...style
+  };
+
   return (
-    <div className="Text" data-component="Text">
-      {children}
-    </div>
+    <p className="text" style={textStyle}>
+      {content}
+    </p>
   );
-}
+};
 
 export default Text;
