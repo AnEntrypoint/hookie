@@ -19,13 +19,14 @@ React functional component
 ## Design Specifications
 
 ### Gap Presets
-- **sm**: 12px (compact spacing)
-- **md**: 20px (default spacing)
-- **lg**: 32px (generous spacing)
+- **sm**: 16px (compact spacing)
+- **md**: 24px (default spacing, improved)
+- **lg**: 40px (generous spacing)
+- Support for custom CSS values (e.g., "2rem", "calc(1vw + 10px)")
 
 ### Grid Templates
 - Standard: `repeat(columns, 1fr)`
-- Auto-fit: `repeat(auto-fit, minmax(minItemWidth, 1fr))`
+- Auto-fit: `repeat(auto-fit, minmax(minItemWidth, 1fr))` (responsive)
 - Auto-fill: `repeat(auto-fill, minmax(minItemWidth, 1fr))`
 
 ### Default Behavior
@@ -33,6 +34,13 @@ React functional component
 - Grid-auto-flow: row (top-to-bottom)
 - Each child spans 1 column by default
 - Items stretch to fill available space
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+
+### Advanced Features
+- Auto-sizing for responsive item widths
+- Support for grid alignment (start, center, end)
+- Gap animation on state changes
+- Support for nested grids with proper inheritance
 
 ## Rendering Logic
 1. Create div container with className 'grid'

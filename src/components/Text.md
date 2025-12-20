@@ -20,10 +20,10 @@ React functional component
 ## Design Specifications
 
 ### Font Sizes
-- **sm**: 0.875rem (14px), line-height 1.5, compact sizing
-- **base**: 1rem (16px), line-height 1.6, default body text
-- **lg**: 1.125rem (18px), line-height 1.7, larger text blocks
-- **xl**: 1.25rem (20px), line-height 1.8, extra large display text
+- **sm**: 0.875rem (14px), line-height 1.6, compact sizing
+- **base**: 1rem (16px), line-height 1.7, default body text
+- **lg**: 1.125rem (18px), line-height 1.8, larger text blocks
+- **xl**: 1.25rem (20px), line-height 1.9, extra large display text
 
 ### Font Weights
 - Normal: 400
@@ -34,10 +34,13 @@ React functional component
 - Default: #1e293b (dark text)
 - Muted: #64748b (lighter gray for secondary text)
 - Subtle: #94a3b8 (very light gray for hints)
+- Accent: #2563eb (primary blue for highlights)
 
 ### Spacing
 - Margin-bottom: 16px (natural spacing between paragraphs)
-- Letter-spacing: 0 (default)
+- Margin-top: 0
+- Letter-spacing: 0.3px (subtle letter spacing for better readability)
+- Word-spacing: 0.05em (improved word spacing)
 
 ## Rendering Logic
 1. Create p (paragraph) element with className 'text'

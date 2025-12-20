@@ -19,12 +19,12 @@ React functional component
 ## Design Specifications
 
 ### Typography by Level
-- **H1**: font-size 2.5rem, font-weight 700, line-height 1.2, letter-spacing -0.5px
-- **H2**: font-size 2rem, font-weight 700, line-height 1.3, letter-spacing -0.3px
-- **H3**: font-size 1.5rem, font-weight 600, line-height 1.4, letter-spacing 0px
-- **H4**: font-size 1.25rem, font-weight 600, line-height 1.5, letter-spacing 0px
-- **H5**: font-size 1.125rem, font-weight 600, line-height 1.5, letter-spacing 0px
-- **H6**: font-size 1rem, font-weight 600, line-height 1.6, letter-spacing 0px
+- **H1**: font-size 3rem, font-weight 800, line-height 1.1, letter-spacing -0.8px, text-shadow subtle depth
+- **H2**: font-size 2.25rem, font-weight 700, line-height 1.2, letter-spacing -0.5px
+- **H3**: font-size 1.75rem, font-weight 700, line-height 1.3, letter-spacing -0.2px
+- **H4**: font-size 1.375rem, font-weight 600, line-height 1.4, letter-spacing 0px
+- **H5**: font-size 1.125rem, font-weight 600, line-height 1.5, letter-spacing 0.2px
+- **H6**: font-size 1rem, font-weight 700, line-height 1.6, letter-spacing 0.3px
 
 ### Colors
 - Default: #1e293b (dark text)

@@ -20,25 +20,29 @@ React functional component
 
 ### Link Styling
 - Color: #2563eb (primary blue)
-- Text-decoration: none (underline on hover)
+- Text-decoration: none
 - Cursor: pointer
-- Transition: all 150ms ease-in-out
-- Font-weight: 500
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Font-weight: 600 (medium-bold for better visibility)
+- Border-bottom: 2px solid transparent (subtle underline ready)
+- Position: relative (for enhanced effects)
 
 ### Hover State
-- Text-decoration: underline
 - Color: #1e40af (darker blue)
-- Slight opacity increase
+- Border-bottom: 2px solid #1e40af (animated underline)
+- Text-decoration: none
+- Transform: translateX(2px) (subtle shift)
 - Smooth transition
 
 ### Active State
 - Color: #1e3a8a (dark blue)
-- Text-decoration: underline
+- Border-bottom: 2px solid #1e3a8a (solid underline)
 
 ### Focus State
-- Outline: 2px solid #dbeafe
+- Outline: 3px solid rgba(37, 99, 235, 0.4)
 - Outline-offset: 2px
 - Outline-style: solid
+- Box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1)
 
 ### External Links
 - rel: "noopener noreferrer"

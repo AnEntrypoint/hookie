@@ -24,10 +24,11 @@ React functional component
 
 ### Padding Variants
 - **none**: 0px horizontal
-- **sm**: 12px horizontal
-- **md**: 24px horizontal
-- **lg**: 32px horizontal
-- **xl**: 48px horizontal
+- **sm**: 16px horizontal
+- **md**: 28px horizontal
+- **lg**: 40px horizontal
+- **xl**: 56px horizontal
+- Support vertical padding with responsive breakpoints
 
 ### Container Styles
 - Display: block

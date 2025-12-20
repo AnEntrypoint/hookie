@@ -18,20 +18,27 @@ React functional component
 ## Design Specifications
 
 ### Thickness Options
-- **thin**: 1px
-- **normal**: 1px (standard)
-- **thick**: 2px
+- **thin**: 0.5px (delicate, subtle)
+- **normal**: 1px (standard, balanced)
+- **thick**: 2px (bold, prominent)
 
 ### Margin Presets
-- **sm**: 12px 0
-- **md**: 24px 0 (default)
-- **lg**: 32px 0
+- **sm**: 16px 0
+- **md**: 28px 0 (default, improved spacing)
+- **lg**: 40px 0
 
 ### Colors
-- Default: #e2e8f0 (light border gray)
+- Default: #e2e8f0 (light border gray with gradient)
 - Dark: #cbd5e1 (medium gray)
-- Accent: #2563eb (primary blue)
+- Accent: linear gradient from #2563eb to #3b82f6 (modern gradient blue)
 - Success: #10b981 (emerald green)
+- Subtle: rgba(0, 0, 0, 0.05) (minimal impact)
+
+### Styling
+- Gradient background support for modern look
+- Transition: background 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: subtle gradient shadow on dark dividers
+- Border-radius: 1px (minimal rounding for soft edges)
 
 ### Container
 - Display: block

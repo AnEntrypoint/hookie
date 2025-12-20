@@ -19,30 +19,33 @@ React functional component
 ## Design Specifications
 
 ### Padding Presets
-- **sm**: 16px
-- **md**: 32px
-- **lg**: 48px
-- **xl**: 64px
+- **sm**: 20px
+- **md**: 36px (default, improved spacing)
+- **lg**: 56px
+- **xl**: 72px
+- Vertical and horizontal padding consistency
 
 ### Background Options
 - transparent (default)
 - #f8fafc (light gray)
 - #ffffff (white)
-- Linear gradients
-- Custom colors
+- Linear gradients with smooth transitions
+- Custom colors with support for rgba
 
 ### Section Title
-- Font-size: 1.5rem
-- Font-weight: 700
+- Font-size: 1.75rem (larger for impact)
+- Font-weight: 800 (bolder, more prominent)
 - Color: #1e293b
-- Margin-bottom: 24px
-- Letter-spacing: -0.5px
+- Margin-bottom: 28px (improved spacing)
+- Letter-spacing: -0.6px (tighter for modern look)
+- Text-transform: none (supports optional uppercase via prop)
 
 ### Container
 - Full-width by default
 - Max-width: 1200px (unless fullWidth is true)
 - Margin: 0 auto
-- Transitions: background-color 200ms ease-in-out
+- Transitions: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Subtle box-shadow on backgrounds: 0 1px 3px rgba(0, 0, 0, 0.05)
 
 ## Rendering Logic
 1. Create div container with className 'section'

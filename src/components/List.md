@@ -20,23 +20,26 @@ React functional component with hooks
 ### Container
 - Font-family: System font from index.md
 - Color: props.color or #1e293b
-- Line-height: 1.8
+- Line-height: 1.9 (improved readability)
 - Margin: 0
-- Padding-left: 24px
+- Padding-left: 28px (more spacious)
 - List-style-position: outside
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
 ### List Items
 - Padding: Depends on spacing prop:
-  - **sm**: 4px 0
-  - **md**: 8px 0
-  - **lg**: 12px 0
+  - **sm**: 6px 0
+  - **md**: 12px 0
+  - **lg**: 16px 0
 - Color: Inherit from parent
 - Font-size: 1rem
 - Font-weight: 400
-- Transition: color 150ms ease-in-out
-- Hover: color becomes darker, text-decoration underline on hover
+- Letter-spacing: 0.2px (improved text clarity)
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Hover: color becomes #1e40af (darker blue), scale 1.01 transform
 - Marker color: #2563eb (primary blue)
-- Marker size: 6px diameter
+- Marker size: 7px diameter (more prominent)
+- Marker shadow: subtle drop shadow for depth
 
 ### Unordered Lists
 - Bullet style: disc

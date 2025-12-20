@@ -21,9 +21,9 @@ React functional component
 ## Design Specifications
 
 ### Border Radius Options
-- **sm**: 4px
-- **md**: 8px
-- **lg**: 12px
+- **sm**: 6px
+- **md**: 12px (default, more modern)
+- **lg**: 16px
 - **full**: 9999px
 
 ### Image Styling
@@ -31,14 +31,16 @@ React functional component
 - Max-width: 100% (responsive)
 - Height: auto (maintains aspect ratio by default)
 - Object-fit: cover (default, fills container)
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
 ### Shadow
-- Box-shadow: small (subtle shadow under images)
-- Transition: box-shadow 150ms ease-in-out
+- Box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) (elegant depth)
+- Transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
 ### Hover Effects
-- Box-shadow: medium
-- Transform: scale(1.02) (subtle zoom)
+- Box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) (lifted effect)
+- Transform: scale(1.03) translateY(-4px) (elevated zoom)
+- Smooth transition
 
 ## Rendering Logic
 1. Create img element with className 'image'
