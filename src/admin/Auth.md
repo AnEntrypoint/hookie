@@ -1,7 +1,7 @@
 # Auth Component
 
 ## Purpose
-OAuth login UI component for GitHub authentication. Displays login button when unauthenticated, and user info with logout when authenticated.
+OAuth login UI component for GitHub authentication. Displays login button when unauthenticated, and user info with logout when authenticated. Requires github.md module for all auth operations.
 
 ## Component Type
 React functional component
