@@ -1,5 +1,6 @@
 const TOKEN_KEY = 'github_token';
 const CLIENT_ID_KEY = 'github_client_id';
+const PAT_KEY = 'github_pat';
 const API_BASE = 'https://api.github.com';
 
 function getClientId() {
@@ -10,8 +11,14 @@ function getRedirectUri() {
   return `${window.location.origin}/?auth=callback`;
 }
 
+function getToken() {
+  const pat = localStorage.getItem(PAT_KEY);
+  if (pat) return pat;
+  return sessionStorage.getItem(TOKEN_KEY);
+}
+
 function getHeaders() {
-  const token = sessionStorage.getItem(TOKEN_KEY);
+  const token = getToken();
   return {
     'Authorization': token ? `token ${token}` : '',
     'Accept': 'application/vnd.github.v3+json',
@@ -35,7 +42,7 @@ async function apiCall(url, options = {}) {
 }
 
 export function getAuthToken() {
-  return sessionStorage.getItem(TOKEN_KEY);
+  return getToken();
 }
 
 export function setClientId(clientId) {
@@ -47,17 +54,12 @@ export function getStoredClientId() {
 }
 
 export async function initiateOAuthLogin() {
-  const clientId = getClientId();
-  if (!clientId) {
-    throw new Error('GitHub OAuth Client ID not configured. Please set it in settings.');
+  const pat = localStorage.getItem(PAT_KEY);
+  if (!pat) {
+    alert('Please set your GitHub Personal Access Token in Settings first.');
+    return;
   }
-
-  const scope = 'repo,user';
-  const state = Math.random().toString(36).substring(7);
-  sessionStorage.setItem('oauth_state', state);
-
-  const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(getRedirectUri())}&scope=${scope}&state=${state}&allow_signup=true`;
-  window.location.href = authUrl;
+  alert('You are authenticated! Go to Settings to verify or change your token.');
 }
 
 export function logout() {

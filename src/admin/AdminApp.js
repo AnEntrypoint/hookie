@@ -333,8 +333,47 @@ const AdminApp = () => {
             </div>
           </div>
 
-          <div className="settings-section" style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-            <h3>GitHub OAuth Setup</h3>
+          <div className="settings-section" style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
+            <h3>GitHub Authentication</h3>
+
+            <div style={{ marginBottom: '20px', padding: '12px', backgroundColor: '#fff9c4', borderRadius: '4px', fontSize: '13px' }}>
+              <strong>Note:</strong> For 100% in-browser operation, use a Personal Access Token (easier) or OAuth with a backend proxy.
+            </div>
+
+            <h4 style={{ marginTop: '20px' }}>Option 1: Personal Access Token (Easiest)</h4>
+            <p style={{ fontSize: '14px', color: '#666' }}>
+              Create a PAT on GitHub for quick, browser-only authentication:
+            </p>
+            <ol style={{ fontSize: '14px', lineHeight: '1.8', color: '#333', paddingLeft: '20px' }}>
+              <li style={{ marginBottom: '10px' }}>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer" style={{ color: '#007bff' }}>github.com/settings/tokens</a></li>
+              <li style={{ marginBottom: '10px' }}>Click "Generate new token" → "Generate new token (classic)"</li>
+              <li style={{ marginBottom: '10px' }}>Select scopes: <code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px' }}>repo</code> and <code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px' }}>user</code></li>
+              <li>Copy the token and paste below</li>
+            </ol>
+
+            <div className="form-field" style={{ marginTop: '15px' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>GitHub Personal Access Token</label>
+              <input
+                type="password"
+                placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                defaultValue={localStorage.getItem('github_pat') || ''}
+                onChange={(e) => localStorage.setItem('github_pat', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                  fontFamily: 'monospace',
+                  boxSizing: 'border-box'
+                }}
+              />
+              <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
+                Stored locally in browser. Never sent to any server.
+              </p>
+            </div>
+
+            <h4 style={{ marginTop: '25px' }}>Option 2: GitHub OAuth Setup</h4>
             <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
               To enable GitHub OAuth login, create an OAuth application at GitHub:
             </p>
