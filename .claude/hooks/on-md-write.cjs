@@ -47,7 +47,7 @@ try {
   const result = run();
   if (result.decision === 'block') {
     console.log(JSON.stringify({ decision: result.decision, reason: result.reason }));
-    process.exit(1);
+    process.exit(2);
   }
 } catch (e) {
   process.exit(1);
