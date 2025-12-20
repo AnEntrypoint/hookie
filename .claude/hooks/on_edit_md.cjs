@@ -46,8 +46,15 @@ const run = () => {
 try {
   const result = run();
   if (result.decision === 'instruct') {
-    console.log(JSON.stringify({ decision: result.decision, reason: result.reason }));
-    process.exit(0);
+    const output = {
+      decision: 'block',
+      reason: result.reason,
+      hookSpecificOutput: {
+        hookEventName: 'PostToolUse'
+      }
+    };
+    console.log(JSON.stringify(output));
+    process.exit(2);
   }
 } catch (e) {
   process.exit(1);

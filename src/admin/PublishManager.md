@@ -1,19 +1,65 @@
 # PublishManager Component
 
+Beautiful git publishing interface with real-time change tracking and elegant commit workflow.
+
 ## Purpose
-Manages publishing changes to GitHub. Shows diff of changes, allows commit message input, and handles the commit/push process.
+Manages publishing changes to GitHub. Shows organized diff of changes, allows commit message input, and handles the commit/push process with visual feedback.
 
 ## Component Type
-React functional component
+React functional component with async operations
 
 ## Dependencies
 - github.md for git operations
+- Global design system from index.md
 
 ## Props
 - `owner` (string): GitHub repository owner
 - `repo` (string): Repository name
 - `changes` (array): List of changed files
-  - Each change: { path, status, diff }
+  - Each change: { path, status, diff, content }
+
+## Design Specifications
+
+### Layout
+- Container: Full width, max-width 1200px, centered
+- Padding: 32px
+- Background: White (#ffffff)
+- Border-radius: 12px
+
+### Changes Section
+- Title: "Changed Files" (1.5rem, weight 600, #1e293b)
+- Padding: 24px
+- Border: 1px solid #e2e8f0
+- Border-radius: 12px
+- Margin-bottom: 24px
+
+### Change Item
+- Display: flex flex-direction column
+- Padding: 16px
+- Border: 1px solid #e2e8f0
+- Border-radius: 8px
+- Background: #f8fafc
+- Margin-bottom: 12px
+- Hover: background #f1f5f9
+
+#### Status Badge
+- Styling varies by status:
+  - **Added**: background #dcfce7 (green-100), color #166534 (green-900)
+  - **Modified**: background #fef08a (yellow-100), color #854d0e (amber-900)
+  - **Deleted**: background #fee2e2 (red-100), color #991b1b (red-900)
+- Padding: 4px 12px
+- Border-radius: 4px
+- Font-size: 0.75rem
+- Font-weight: 600
+- Display: inline-block
+- Margin-right: 12px
+
+#### Path
+- Font-family: monospace
+- Font-size: 0.875rem
+- Color: #1e293b
+- Word-break: break-all
+- Margin-left: 12px
 
 ## State Management
 Use React useState for:
@@ -21,93 +67,134 @@ Use React useState for:
 - `publishing` (boolean): Publishing in progress
 - `lastCommit` (object|null): Result of last commit
 - `error` (string|null): Error message
+- `expandedDiffs` (Set): Tracking which diffs are expanded
 
 ## Rendering Logic
 
 ### No Changes State
-Display: "No changes to publish"
+- Container: Centered, min-height 200px, flex center
+- Icon: Checkmark circle, #10b981, 64px
+- Title: "All changes published" (1.5rem, #1e293b)
+- Subtitle: "No pending changes. Keep building!" (1rem, #64748b)
 
 ### Changes List
-Display list of changed files:
-- File path
-- Status (added, modified, deleted)
-- Diff preview (expandable)
+- Display each file with status badge and path
+- Diffs expandable (collapsible details)
+- Green highlight for additions
+- Red highlight for deletions
+- Dark background for code blocks
 
 ### Commit Form
-- Textarea for commit message
-- Character counter
-- "Publish" button (disabled if no message or no changes)
-- Show warning if commit message is too short
+- Textarea styling:
+  - Min-height: 120px
+  - Padding: 12px
+  - Font-family: monospace
+  - Font-size: 0.875rem
+  - Border: 1px solid #e2e8f0
+  - Border-radius: 8px
+  - Resize: vertical
+  - Focus: border #2563eb, box-shadow blue-500 light
+- Character counter: bottom-right, #64748b, 0.75rem
+- Warning message: #f59e0b, displays when < 10 characters
+- Publish button: Primary blue, full-width or inline
+- Disabled state: When publishing or message < 10 chars
 
-### Last Commit Display
-After successful publish:
-- Commit SHA
-- Commit message
-- Author
-- Timestamp
-- Link to view commit on GitHub
+### Success State
+- Background: #ecfdf5 (green-50)
+- Border: 2px solid #10b981
+- Border-radius: 12px
+- Padding: 24px
+- Icon: Checkmark, #10b981
+- Title: "Published Successfully" (1.25rem, #065f46)
+- Commit info displayed with GitHub link
+- Auto-reset after 5 seconds
+
+### Diff Display
+- Display each changed file with status badge
+- Expandable/collapsible diff sections
+- Code blocks with monospace font
+- Syntax highlighting for additions (green) and deletions (red)
+- Dark background (#1e293b) for code blocks
+- Padding: 12px inside code blocks
+- Border-radius: 4px on code blocks
+
+### Textarea Styling
+- Min-height: 120px
+- Padding: 12px
+- Font-family: monospace
+- Font-size: 0.875rem
+- Border: 1px solid #e2e8f0
+- Border-radius: 8px
+- Resize: vertical
+- Focus: border #2563eb, box-shadow inset with light blue
+- Background: #ffffff
+- Color: #1e293b
 
 ## DOM Structure
-```
-<div class="publish-manager">
-  <h2>Publish Changes</h2>
+```jsx
+<div style={styles.container}>
+  <h2 style={styles.title}>Publish Changes</h2>
 
   {changes.length === 0 ? (
-    <div class="publish-manager-empty">
-      <p>No changes to publish</p>
-      <p class="hint">Make edits to pages or components to see changes here</p>
+    <div style={styles.emptyState}>
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.5">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+      </svg>
+      <h3 style={styles.emptyTitle}>All changes published</h3>
+      <p style={styles.emptySubtitle}>No pending changes. Keep building!</p>
     </div>
   ) : (
     <>
-      <div class="publish-manager-changes">
-        <h3>Changed Files ({changes.length})</h3>
+      <div style={styles.changesSection}>
+        <h3 style={styles.sectionTitle}>Changed Files ({changes.length})</h3>
 
         {changes.map((change, index) => (
-          <div key={index} class="change-item">
-            <div class="change-header">
-              <span class={`change-status change-status-${change.status}`}>
-                {change.status}
+          <div key={index} style={styles.changeItem}>
+            <div style={styles.changeHeader}>
+              <span style={getStatusBadgeStyle(change.status)}>
+                {change.status.toUpperCase()}
               </span>
-              <span class="change-path">{change.path}</span>
+              <code style={styles.changePath}>{change.path}</code>
             </div>
 
             {change.diff && (
-              <details class="change-diff">
-                <summary>View diff</summary>
-                <pre>{change.diff}</pre>
+              <details style={styles.diffDetails}>
+                <summary style={styles.diffSummary}>View diff</summary>
+                <pre style={styles.diffCode}>{change.diff}</pre>
               </details>
             )}
           </div>
         ))}
       </div>
 
-      <div class="publish-manager-commit">
-        <h3>Commit Message</h3>
+      <div style={styles.commitSection}>
+        <h3 style={styles.sectionTitle}>Commit Message</h3>
 
         <textarea
           value={commitMessage}
           onChange={(e) => setCommitMessage(e.target.value)}
           placeholder="Describe your changes..."
-          rows={4}
+          style={styles.textarea}
         />
 
-        <div class="commit-message-info">
-          <span class="character-count">
+        <div style={styles.commitInfo}>
+          <span style={styles.charCount}>
             {commitMessage.length} characters
           </span>
           {commitMessage.length < 10 && (
-            <span class="warning">
+            <span style={styles.warning}>
               Commit message should be descriptive (at least 10 characters)
             </span>
           )}
         </div>
 
         {error && (
-          <div class="error-message">{error}</div>
+          <div style={styles.errorMessage}>{error}</div>
         )}
 
         <button
-          class="publish-button"
+          style={styles.publishButton}
           onClick={handlePublish}
           disabled={publishing || !commitMessage.trim() || commitMessage.length < 10}
         >
@@ -118,19 +205,20 @@ After successful publish:
   )}
 
   {lastCommit && (
-    <div class="publish-manager-success">
-      <h3>Last Published</h3>
-      <div class="commit-info">
-        <div class="commit-sha">
-          <strong>Commit:</strong>
-          <a href={`https://github.com/${owner}/${repo}/commit/${lastCommit.sha}`} target="_blank">
+    <div style={styles.successState}>
+      <div style={styles.successIcon}>✓</div>
+      <h3 style={styles.successTitle}>Published Successfully</h3>
+      <div style={styles.commitInfo}>
+        <div>
+          <strong>Commit:</strong>{' '}
+          <a href={`https://github.com/${owner}/${repo}/commit/${lastCommit.sha}`} target="_blank" rel="noopener noreferrer">
             {lastCommit.sha.substring(0, 7)}
           </a>
         </div>
-        <div class="commit-message">
+        <div>
           <strong>Message:</strong> {lastCommit.message}
         </div>
-        <div class="commit-meta">
+        <div style={styles.commitMeta}>
           <span>{lastCommit.author}</span>
           <span>{new Date(lastCommit.timestamp).toLocaleString()}</span>
         </div>
@@ -139,6 +227,43 @@ After successful publish:
   )}
 </div>
 ```
+
+### Status Badge Styles
+```javascript
+const getStatusBadgeStyle = (status) => {
+  const baseStyle = {
+    display: 'inline-block',
+    padding: '4px 12px',
+    borderRadius: '4px',
+    fontSize: '0.75rem',
+    fontWeight: 600,
+    marginRight: '12px'
+  };
+
+  const statusStyles = {
+    added: { background: '#dcfce7', color: '#166534' },
+    modified: { background: '#fef08a', color: '#854d0e' },
+    deleted: { background: '#fee2e2', color: '#991b1b' }
+  };
+
+  return { ...baseStyle, ...statusStyles[status] };
+};
+```
+
+## Default Export
+Export the PublishManager component as default export.
+
+## Implementation Notes
+- Validate commit message before allowing publish
+- Show progress indicator during publish
+- Handle API rate limits gracefully
+- Provide link to view commit on GitHub
+- Clear form after successful publish
+- Show success notification with auto-reset
+- Handle errors with helpful messages
+- Support keyboard navigation
+- Ensure proper contrast ratios
+- Disable button when conditions not met
 
 ## Event Handlers
 

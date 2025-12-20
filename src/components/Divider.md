@@ -1,54 +1,105 @@
 # Divider Component
 
+Elegant horizontal separator for visually dividing content sections with subtle styling.
+
 ## Purpose
-Horizontal separator component used to visually divide content sections. Renders as a styled line.
+Horizontal separator component used to visually divide content sections. Renders as a styled line with configurable appearance and spacing.
 
 ## Component Type
 React functional component
 
 ## Props
-- `color` (string, optional): CSS color value for the divider. Default: '#e0e0e0'
-- `height` (string, optional): CSS height value for divider thickness. Default: '1px'
-- `margin` (string, optional): CSS margin value for spacing. Default: '16px 0'
+- `color` (string, optional): Line color. Default: '#e2e8f0' (light border)
+- `thickness` (string, optional): Line thickness ('thin'|'normal'|'thick'). Default: 'normal'
+- `margin` (string, optional): Margin preset ('sm'|'md'|'lg'). Default: 'md'
+- `fullWidth` (boolean, optional): Extend to full container width. Default: true
 - `style` (object, optional): Additional inline styles to merge
 
+## Design Specifications
+
+### Thickness Options
+- **thin**: 1px
+- **normal**: 1px (standard)
+- **thick**: 2px
+
+### Margin Presets
+- **sm**: 12px 0
+- **md**: 24px 0 (default)
+- **lg**: 32px 0
+
+### Colors
+- Default: #e2e8f0 (light border gray)
+- Dark: #cbd5e1 (medium gray)
+- Accent: #2563eb (primary blue)
+- Success: #10b981 (emerald green)
+
+### Container
+- Display: block
+- Full width by default
+- No border (background color only)
+- Box-sizing: border-box
+
 ## Rendering Logic
-1. Create a div element with className 'divider'
+1. Create div element with className 'divider'
 2. Apply inline styles:
-   - backgroundColor from props.color
-   - height from props.height
-   - margin from props.margin
-   - border: 'none'
-   - width: '100%'
-   - Merge with props.style if provided
-3. Render empty div (self-closing)
+   - background-color from props.color
+   - height from thickness prop
+   - margin from margin prop
+   - width: 100%
+   - border: none
+   - Merge with props.style
+3. Render empty self-closing div
 
 ## DOM Structure
-```
+```jsx
 <div
-  class="divider"
-  style="background-color: #e0e0e0; height: 1px; margin: 16px 0; border: none; width: 100%; ..."
+  className="divider"
+  style={{
+    display: 'block',
+    width: props.fullWidth ? '100%' : 'auto',
+    height: getThickness(props.thickness),
+    backgroundColor: props.color || '#e2e8f0',
+    margin: getMargin(props.margin),
+    border: 'none',
+    boxSizing: 'border-box',
+    ...props.style
+  }}
 />
 ```
 
-## Alternative Implementation
-Could also use hr element instead of div:
+## Thickness Helper
+```javascript
+const getThickness = (thicknessProp) => {
+  const thicknesses = {
+    thin: '1px',
+    normal: '1px',
+    thick: '2px'
+  };
+  return thicknesses[thicknessProp] || thicknesses.normal;
+};
 ```
-<hr
-  class="divider"
-  style="background-color: #e0e0e0; height: 1px; margin: 16px 0; border: none; width: 100%; ..."
-/>
+
+## Margin Helper
+```javascript
+const getMargin = (marginProp) => {
+  const margins = {
+    sm: '12px 0',
+    md: '24px 0',
+    lg: '32px 0'
+  };
+  return margins[marginProp] || margins.md;
+};
 ```
 
 ## Default Export
 Export the Divider component as default export.
 
 ## Implementation Notes
-- Use div (or hr) for simple horizontal line
-- No content inside divider (self-closing)
+- Use div for simple horizontal line
+- No content inside divider
 - Full width by default
-- Vertical margin provides spacing from surrounding content
-- Border set to none to avoid default hr borders
-- Support custom colors for theming
+- Vertical margin provides spacing from content
 - Background color creates the visible line
-- Height determines thickness of the line
+- Height determines line thickness
+- Support custom colors for theming
+- Subtle default color for minimal visual impact

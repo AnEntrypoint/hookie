@@ -1,30 +1,84 @@
 # Container Component
 
+Responsive content wrapper that constrains width and centers content with elegant spacing.
+
 ## Purpose
-Simple wrapper component that constrains content to a maximum width and centers it. Used for creating responsive page layouts.
+Simple wrapper component that constrains content to a maximum width and centers it. Used for creating responsive page layouts and maintaining visual hierarchy.
 
 ## Component Type
 React functional component
 
 ## Props
 - `maxWidth` (string, optional): CSS max-width value. Default: '1200px'
+- `padding` (string, optional): Padding amount ('none'|'sm'|'md'|'lg'|'xl'). Default: 'md'
 - `children` (ReactNode, optional): Child components to render inside container
 - `style` (object, optional): Additional inline styles to merge
 
+## Design Specifications
+
+### Max Widths
+- Small: 768px
+- Medium: 1024px
+- Large: 1200px
+- XL: 1400px
+
+### Padding Variants
+- **none**: 0px horizontal
+- **sm**: 12px horizontal
+- **md**: 24px horizontal
+- **lg**: 32px horizontal
+- **xl**: 48px horizontal
+
+### Container Styles
+- Display: block
+- Width: 100%
+- Max-width: from props
+- Margin: 0 auto (centered)
+- Padding: Depends on padding prop
+- Box-sizing: border-box
+
+### Responsive Behavior
+- On small screens: Full-width with padding (sm)
+- On medium screens: Full-width with padding (md)
+- On large screens: Constrained to maxWidth with padding (lg)
+
 ## Rendering Logic
-1. Create a div element with className 'container'
-2. Apply inline styles:
-   - maxWidth from props.maxWidth
-   - margin: '0 auto' (center the container)
-   - padding: '0 16px' (horizontal padding)
-   - Merge with props.style if provided
-3. Render children inside the container
+1. Create div element with className 'container'
+2. Apply max-width constraint from props
+3. Apply responsive padding based on padding prop
+4. Center with margin: 0 auto
+5. Set box-sizing: border-box
+6. Render children inside
 
 ## DOM Structure
-```
-<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 16px; ...">
+```jsx
+<div
+  style={{
+    display: 'block',
+    width: '100%',
+    maxWidth: props.maxWidth || '1200px',
+    margin: '0 auto',
+    padding: getPadding(props.padding),
+    boxSizing: 'border-box',
+    ...props.style
+  }}
+>
   {children}
 </div>
+```
+
+## Padding Helper
+```javascript
+const getPadding = (paddingProp) => {
+  const paddings = {
+    none: '0',
+    sm: '0 12px',
+    md: '0 24px',
+    lg: '0 32px',
+    xl: '0 48px'
+  };
+  return paddings[paddingProp] || paddings.md;
+};
 ```
 
 ## Default Export
@@ -34,7 +88,11 @@ Export the Container component as default export.
 - Container centers content horizontally with margin auto
 - Horizontal padding prevents content from touching viewport edges on mobile
 - maxWidth prevents content from being too wide on large screens
-- Support nested containers (though not recommended)
+- Use box-sizing: border-box to include padding in width calculation
+- Support nested containers
 - Handle empty children gracefully (render empty div)
-- Full-width on small screens (up to maxWidth)
-- Responsive behavior through maxWidth constraint
+- Full-width on all screen sizes with maxWidth constraint
+- Responsive padding adjusts based on viewport
+- Preserve CSS cascade for children styling
+
+<!-- Regenerated -->
