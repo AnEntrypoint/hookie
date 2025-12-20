@@ -1,25 +1,29 @@
 #!/bin/bash
 
-FILE="$1"
+# Read hook input from stdin
+read -r hook_input
 
+# Extract file path from hook input
+# The hook receives JSON with tool use information
+FILE=$(echo "$hook_input" | grep -oP '"path":\s*"\K[^"]+' | head -1)
+
+if [[ -z "$FILE" ]]; then
+  # If path extraction failed, try to get from arguments
+  FILE="$1"
+fi
+
+# Check if a .md file was written
 if [[ "$FILE" == *.md ]]; then
-  BASENAME="${FILE%.md}"
-  CODE_FILE="${BASENAME}.js"
+  # Get the project directory
+  PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+  GENERATOR_SCRIPT="${PROJECT_DIR}/.claude/generate-from-md.js"
 
-  cat <<EOF
-A .md file was written: $FILE
+  # Run the code generator in the background
+  if [[ -f "$GENERATOR_SCRIPT" ]]; then
+    (node "$GENERATOR_SCRIPT" "$FILE" 2>&1 | sed 's/^/[CodeGen] /') &
 
-Use the Task tool with a prompt that instructs an agent to:
-1. Read the markdown file at: $FILE
-2. Extract the code content from the markdown
-3. Use the 'write_file' MCP tool to write the code to: $CODE_FILE
-
-CRITICAL INSTRUCTIONS:
-- Only read $FILE - do not read any other files from the codebase
-- Only reference external files if they are explicitly mentioned in the markdown itself
-- All code must be fully contained within or explicitly derived from the markdown content
-- Do not explore, analyze, or reference any files outside of what the markdown specifies
-
-The write_file tool is available through the file-writer MCP server.
-EOF
+    echo ""
+    echo "Auto-generating: $FILE → ${FILE%.md}.js"
+    echo ""
+  fi
 fi

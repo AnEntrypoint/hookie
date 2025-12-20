@@ -1,0 +1,108 @@
+{
+  "title": "Home",
+  "slug": "home",
+  "components": [
+    {
+      "id": "hero-section-1",
+      "type": "Section",
+      "props": {
+        "title": "Welcome to Your Site"
+      },
+      "style": {
+        "padding": "80px 20px",
+        "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        "color": "#fff",
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "hero-text-1",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Build Your Site Visually"
+          },
+          "style": {
+            "fontSize": "48px",
+            "marginBottom": "20px",
+            "color": "#fff"
+          },
+          "children": []
+        },
+        {
+          "id": "hero-text-2",
+          "type": "Text",
+          "props": {
+            "content": "Drag, drop, and publish. No code required."
+          },
+          "style": {
+            "fontSize": "20px",
+            "color": "#f0f0f0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "content-section-1",
+      "type": "Section",
+      "props": {
+        "title": "Features"
+      },
+      "style": {
+        "padding": "60px 20px",
+        "background": "#f9f9f9"
+      },
+      "children": [
+        {
+          "id": "features-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "30px"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "feature-1",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "padding": "20px",
+                "background": "white",
+                "borderRadius": "8px",
+                "boxShadow": "0 2px 8px rgba(0,0,0,0.1)"
+              },
+              "children": [
+                {
+                  "id": "feature-1-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Visual Builder"
+                  },
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "feature-1-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Drag and drop components to build beautiful pages in minutes."
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
