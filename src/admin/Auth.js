@@ -5,8 +5,6 @@ const Auth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showTokenInput, setShowTokenInput] = useState(false);
-  const [tokenInput, setTokenInput] = useState('');
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -39,23 +37,7 @@ const Auth = () => {
       await github.initiateOAuthLogin();
     } catch (error) {
       console.error('OAuth login failed:', error);
-      setShowTokenInput(true);
-    }
-  };
-
-  const handleTokenSubmit = async () => {
-    if (!tokenInput.trim()) return;
-    sessionStorage.setItem('github_token', tokenInput.trim());
-    try {
-      const userData = await github.getUser();
-      setIsAuthenticated(true);
-      setUser(userData);
-      setShowTokenInput(false);
-      setTokenInput('');
-    } catch (error) {
-      console.error('Token validation failed:', error);
-      alert('Invalid token. Please try again.');
-      sessionStorage.removeItem('github_token');
+      alert('GitHub OAuth not configured. Create an OAuth app at github.com/settings/developers and set the Client ID in settings.');
     }
   };
 
@@ -73,61 +55,9 @@ const Auth = () => {
   if (!isAuthenticated) {
     return (
       <div className="auth">
-        {showTokenInput ? (
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', fontSize: '12px' }}>
-            <input
-              type="password"
-              placeholder="GitHub Personal Access Token (repo scope)"
-              value={tokenInput}
-              onChange={(e) => setTokenInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleTokenSubmit()}
-              title="Create a token at: github.com/settings/tokens"
-              style={{
-                padding: '8px 12px',
-                fontSize: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                width: '220px'
-              }}
-            />
-            <button
-              onClick={handleTokenSubmit}
-              style={{
-                padding: '8px 12px',
-                backgroundColor: '#28a745',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '12px',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              Login
-            </button>
-            <button
-              onClick={() => {
-                setShowTokenInput(false);
-                setTokenInput('');
-              }}
-              style={{
-                padding: '8px 12px',
-                backgroundColor: '#6c757d',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '12px'
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <button className="auth-login" onClick={handleLogin}>
-            Sign in with GitHub
-          </button>
-        )}
+        <button className="auth-login" onClick={handleLogin}>
+          Sign in with GitHub
+        </button>
       </div>
     );
   }
