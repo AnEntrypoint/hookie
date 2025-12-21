@@ -22,24 +22,30 @@ React functional component with hooks
 
 ### Layout
 - Container: Full width, max-width 1400px, centered
-- Padding: 32px top/bottom, 24px left/right
+- Padding: 40px top/bottom, 28px left/right (improved spacing)
 - Background: White (#ffffff)
 - Border-radius: 12px
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
 ### Header
 - Display: flex, space-between, align items center
-- Padding: 24px
-- Border-bottom: 1px solid #e2e8f0
-- Background: #f8fafc
+- Padding: 32px 28px (vertical × horizontal)
+- Border-bottom: 1px solid #e2e8f0 with subtle shadow
+- Background: linear gradient from #ffffff to #f8fafc (modern gradient)
 - H2 color: #1e293b
-- H2 font-size: 1.75rem, weight 700
+- H2 font-size: 2rem (larger), weight 800 (bolder)
+- Letter-spacing: -0.5px (tight for emphasis)
+- Text-shadow: 0 1px 2px rgba(0,0,0,0.05)
+- Box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06)
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
 ### Page Grid
 - Display: CSS Grid (responsive)
-- Columns: auto-fit, minmax(280px, 1fr)
-- Gap: 20px
-- Padding: 24px
+- Columns: auto-fit, minmax(300px, 1fr)
+- Gap: 24px (improved spacing)
+- Padding: 28px (improved)
 - Min height: 400px
+- Transition: gap 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
 ## State Management
 Use React useState for:
@@ -67,32 +73,38 @@ On component mount (useEffect):
 - Animation: 1s rotation, infinite
 
 ### Error State
-- Background: #fecaca (red-200)
-- Border: 1px solid #ef4444
-- Border-radius: 8px
-- Padding: 16px
-- Text color: #991b1b (red-900)
+- Background: linear gradient from #fee2e2 to #fecaca (red gradient)
+- Border: 2px solid #ef4444
+- Border-radius: 12px
+- Padding: 16px 20px
+- Text color: #7f1d1d (deep red-900)
+- Text weight: 600
 - Dismiss button: Red pill-shaped, right-aligned
-- Box-shadow: subtle
+- Box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2) (elevated shadow)
+- Letter-spacing: -0.2px
+- Display: flex, align-center, justify-between
 
 ### New Page Form
-- Modal-style overlay with backdrop blur
-- Background: White card with shadow
+- Modal-style overlay with backdrop blur (12px)
+- Background: White card with elevated shadow
 - Padding: 32px
 - Border-radius: 12px
 - Max-width: 500px
-- Title: "Create New Page" (24px, bold, dark text)
+- Shadow: 0 25px 50px rgba(0,0,0,0.15), 0 15px 20px rgba(0,0,0,0.08) (Elevation High)
+- Title: "Create New Page" (1.5rem/24px, weight 700, color #1e293b)
 - Input styling:
   - Border: 1px solid #e2e8f0
-  - Padding: 12px
+  - Padding: 12px 16px
   - Border-radius: 8px
   - Font-size: 1rem
-  - Focus: border #2563eb, box-shadow blue
-  - Full width
-  - Placeholder: #94a3b8
+  - Focus: border #2563eb, box-shadow 0 0 0 4px rgba(37, 99, 235, 0.12)
+  - Full width, box-sizing border-box
+  - Background: #ffffff
+  - Transition: 150ms ease-in-out
+  - Placeholder color: #94a3b8
 - Button layout: flex gap 12px, justify-end
-- Create Button: Primary blue (#2563eb), white text
-- Cancel Button: Ghost style, gray text (#64748b)
+- Create Button: Primary blue (#2563eb), white text, hover opacity 0.85
+- Cancel Button: Ghost style, gray text (#64748b), hover background #f1f5f9
 
 ## Page Operations
 
@@ -266,11 +278,14 @@ async (pageName) => {
 ### Page Card Empty State
 - Text: "No pages yet. Create your first page!"
 - Color: #64748b
-- Font-size: 1rem
-- Padding: 48px
+- Font-size: 1rem (16px)
+- Padding: 48px 28px
 - Text-align: center
 - Border: 2px dashed #cbd5e1
 - Border-radius: 8px
+- Background: #f8fafc (subtle light background)
+- Min-height: 300px (better vertical centering)
+- Display: flex, align-items center, justify-content center
 
 ## DOM Structure
 ```jsx

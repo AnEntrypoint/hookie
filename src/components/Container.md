@@ -17,31 +17,38 @@ React functional component
 ## Design Specifications
 
 ### Max Widths
-- Small: 768px
-- Medium: 1024px
-- Large: 1200px
-- XL: 1400px
+- Small: 640px
+- Medium: 768px
+- Large: 1024px
+- XL: 1200px
+- 2XL: 1400px
 
-### Padding Variants
-- **none**: 0px horizontal
-- **sm**: 16px horizontal
-- **md**: 28px horizontal
-- **lg**: 40px horizontal
-- **xl**: 56px horizontal
-- Support vertical padding with responsive breakpoints
+### Padding Variants (Horizontal × Vertical)
+- **none**: 0px × 0px
+- **sm**: 16px × 12px
+- **md**: 24px × 16px
+- **lg**: 32px × 20px
+- **xl**: 48px × 28px
+- **2xl**: 64px × 32px
 
 ### Container Styles
 - Display: block
 - Width: 100%
-- Max-width: from props
-- Margin: 0 auto (centered)
-- Padding: Depends on padding prop
+- Max-width: from props (default 1200px)
+- Margin: 0 auto (centered horizontally)
+- Padding: Respects padding prop
 - Box-sizing: border-box
+- Transition: padding 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
-### Responsive Behavior
-- On small screens: Full-width with padding (sm)
-- On medium screens: Full-width with padding (md)
-- On large screens: Constrained to maxWidth with padding (lg)
+### Responsive Breakpoints
+- **Mobile** (< 640px): Full-width with padding sm
+- **Tablet** (640px - 1024px): Full-width with padding md
+- **Desktop** (1024px+): Constrained width with padding lg+
+
+### Background Options
+- Default: transparent
+- Can accept custom background color via style prop
+- Supports gradient backgrounds
 
 ## Rendering Logic
 1. Create div element with className 'container'

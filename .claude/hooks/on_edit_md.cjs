@@ -33,7 +33,7 @@ const run = () => {
 
       return {
         decision: 'instruct',
-        reason: `Markdown specification updated: ${filePath}\n\nYou must regenerate the corresponding JavaScript implementation:\n\n  Spec File: ${filePath}\n  Implementation Target: ${codeFile}\n\nAction Required:\nUse the Task tool with the frontend-react-expert agent to:\n1. Read the markdown specification at ${filePath}\n2. Generate a production-grade React component that implements the design specifications\n3. Write the implementation to ${codeFile} using the Write tool\n\nThe component spec has been updated with design specifications, styling requirements, and implementation details that must be followed.`
+        reason: `Markdown specification updated: ${filePath}\n\nYou must regenerate the corresponding JavaScript implementation:\n\nAction Required:\nUse the Task tool to:\n1. Read the markdown specification at ${filePath}\n2. Generate the code that implements the specifications\n3. Write the implementation to ${codeFile} using the write-file MCP tool\n\nThe component spec has been updated with details that must be followed.`
       };
     }
 

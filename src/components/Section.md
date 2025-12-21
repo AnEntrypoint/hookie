@@ -18,34 +18,48 @@ React functional component
 
 ## Design Specifications
 
-### Padding Presets
-- **sm**: 20px
-- **md**: 36px (default, improved spacing)
-- **lg**: 56px
-- **xl**: 72px
-- Vertical and horizontal padding consistency
+### Padding Presets (Vertical × Horizontal)
+- **sm**: 24px × 20px
+- **md**: 40px × 32px (default, improved spacing)
+- **lg**: 56px × 48px
+- **xl**: 72px × 64px
+- **2xl**: 88px × 80px
+- Responsive padding on mobile screens
 
 ### Background Options
-- transparent (default)
-- #f8fafc (light gray)
-- #ffffff (white)
-- Linear gradients with smooth transitions
-- Custom colors with support for rgba
+- **transparent** (default)
+- **light**: #f8fafc (Slate 50)
+- **white**: #ffffff (pure white)
+- **subtle**: #f1f5f9 (Slate 100)
+- **gradient-blue**: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)
+- **gradient-green**: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)
+- **gradient-purple**: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%)
+- Custom colors and gradients via style prop
 
 ### Section Title
-- Font-size: 1.75rem (larger for impact)
+- Font-size: 1.875rem (30px, more prominent)
 - Font-weight: 800 (bolder, more prominent)
-- Color: #1e293b
-- Margin-bottom: 28px (improved spacing)
+- Color: #1e293b (dark text)
+- Margin-bottom: 32px (improved spacing)
 - Letter-spacing: -0.6px (tighter for modern look)
-- Text-transform: none (supports optional uppercase via prop)
+- Text-transform: none (default)
+- Text-shadow: optional subtle depth (0 2px 4px rgba(0,0,0,0.05))
+
+### Section Subtitle (Optional)
+- Font-size: 1.125rem (18px)
+- Font-weight: 500
+- Color: #64748b (muted text)
+- Margin-bottom: 24px
+- Margin-top: -12px (tighten spacing after title)
 
 ### Container
 - Full-width by default
 - Max-width: 1200px (unless fullWidth is true)
-- Margin: 0 auto
-- Transitions: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
-- Subtle box-shadow on backgrounds: 0 1px 3px rgba(0, 0, 0, 0.05)
+- Margin: 0 auto (centered)
+- Transitions: background 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) when background is set
+- Border-radius: 12px (optional, when needed for card-style sections)
+- Position: relative (for layering)
 
 ## Rendering Logic
 1. Create div container with className 'section'

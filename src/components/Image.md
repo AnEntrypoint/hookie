@@ -13,17 +13,22 @@ React functional component
 - `alt` (string, optional): Alternative text for accessibility. Default: 'Image'
 - `width` (string, optional): CSS width value. Default: 'auto'
 - `height` (string, optional): CSS height value. Default: 'auto'
-- `borderRadius` (string, optional): Border radius value ('sm'|'md'|'lg'|'full'). Default: 'md'
-- `objectFit` (string, optional): CSS object-fit value ('cover'|'contain'|'fill'). Default: 'cover'
+- `borderRadius` (string, optional): Border radius value ('xs'|'sm'|'md'|'lg'|'xl'|'full'). Default: 'md'
+- `objectFit` (string, optional): CSS object-fit value ('cover'|'contain'|'fill'|'scale-down'). Default: 'cover'
+- `objectPosition` (string, optional): CSS object-position value. Default: 'center'
 - `lazy` (boolean, optional): Enable lazy loading. Default: true
+- `shadow` (string, optional): Shadow intensity ('none'|'sm'|'md'|'lg'|'xl'). Default: 'md'
+- `effect` (string, optional): Hover effect ('none'|'lift'|'zoom'|'glow'). Default: 'lift'
 - `style` (object, optional): Additional inline styles to merge
 
 ## Design Specifications
 
 ### Border Radius Options
-- **sm**: 6px
-- **md**: 12px (default, more modern)
+- **xs**: 4px
+- **sm**: 8px
+- **md**: 12px (default, modern)
 - **lg**: 16px
+- **xl**: 20px
 - **full**: 9999px
 
 ### Image Styling
@@ -31,16 +36,22 @@ React functional component
 - Max-width: 100% (responsive)
 - Height: auto (maintains aspect ratio by default)
 - Object-fit: cover (default, fills container)
+- Object-position: center (default)
 - Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- User-select: none (prevent drag/select)
 
-### Shadow
-- Box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) (elegant depth)
-- Transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)
+### Shadow Variants
+- **none**: no shadow
+- **sm**: 0 1px 3px rgba(0, 0, 0, 0.1)
+- **md**: 0 4px 12px rgba(0, 0, 0, 0.15) (default)
+- **lg**: 0 10px 25px rgba(0, 0, 0, 0.2)
+- **xl**: 0 20px 40px rgba(0, 0, 0, 0.25)
 
 ### Hover Effects
-- Box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) (lifted effect)
-- Transform: scale(1.03) translateY(-4px) (elevated zoom)
-- Smooth transition
+- **none**: No transform or shadow change
+- **lift**: Box-shadow 0 15px 40px rgba(0, 0, 0, 0.2), transform translateY(-6px)
+- **zoom**: Scale 1.05, box-shadow 0 15px 40px rgba(0, 0, 0, 0.2)
+- **glow**: Box-shadow 0 0 20px rgba(37, 99, 235, 0.3), scale 1.02 (for colorful images)
 
 ## Rendering Logic
 1. Create img element with className 'image'

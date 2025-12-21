@@ -1,36 +1,22 @@
 #!/usr/bin/env node
 
-/**
- * Simple MCP server for writing files
- * Provides a single tool: write_file
- * Input: { file_path: string, content: string }
- * Output: { success: boolean, message: string }
- */
-
 const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
 
-const STDIO_TRANSPORT = {
-  send: (msg) => process.stdout.write(JSON.stringify(msg) + '\n'),
-  receive: () => {
-    return new Promise((resolve) => {
-      process.stdin.once('data', (data) => {
-        try {
-          resolve(JSON.parse(data.toString()));
-        } catch (e) {
-          resolve(null);
-        }
-      });
-    });
-  }
-};
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+});
 
-// Simple request/response handler
 async function handleRequest(request) {
   if (request.method === 'initialize') {
     return {
       protocolVersion: '2024-11-05',
-      capabilities: {},
+      capabilities: {
+        tools: {}
+      },
       serverInfo: {
         name: 'write-file-mcp',
         version: '1.0.0'
@@ -99,13 +85,11 @@ async function handleRequest(request) {
           };
         }
 
-        // Ensure directory exists
         const dir = path.dirname(filePath);
         if (!fs.existsSync(dir)) {
           fs.mkdirSync(dir, { recursive: true });
         }
 
-        // Write the file
         fs.writeFileSync(filePath, String(content), 'utf-8');
 
         return {
@@ -162,35 +146,29 @@ async function handleRequest(request) {
   };
 }
 
-// Main loop
-async function main() {
-  // Read requests from stdin and send responses to stdout
-  while (true) {
-    try {
-      const data = await new Promise((resolve, reject) => {
-        process.stdin.once('data', (chunk) => {
-          try {
-            resolve(JSON.parse(chunk.toString()));
-          } catch (e) {
-            reject(e);
-          }
-        });
-        process.stdin.once('error', reject);
-      });
-
-      const response = await handleRequest(data);
-      console.log(JSON.stringify(response));
-    } catch (error) {
-      console.log(
-        JSON.stringify({
-          error: {
-            code: -32603,
-            message: error.message
-          }
-        })
-      );
-    }
+rl.on('line', async (line) => {
+  try {
+    const request = JSON.parse(line);
+    const result = await handleRequest(request);
+    const response = {
+      jsonrpc: '2.0',
+      id: request.id,
+      result
+    };
+    console.log(JSON.stringify(response));
+  } catch (error) {
+    console.log(
+      JSON.stringify({
+        jsonrpc: '2.0',
+        error: {
+          code: -32603,
+          message: error.message
+        }
+      })
+    );
   }
-}
+});
 
-main().catch(console.error);
+rl.on('error', (error) => {
+  process.exit(1);
+});

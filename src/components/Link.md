@@ -11,43 +11,79 @@ React functional component
 ## Props
 - `href` (string, required): URL or anchor link. Default: '#'
 - `text` (string, required): Link text to display. Default: 'Link'
-- `color` (string, optional): Link color. Default: '#2563eb' (primary blue)
-- `underline` (boolean, optional): Show underline by default. Default: false
+- `variant` (string, optional): Link style variant ('default'|'underline'|'button'|'pill'). Default: 'default'
+- `color` (string, optional): Link color variant ('primary'|'success'|'danger'|'muted'). Default: 'primary'
+- `customColor` (string, optional): Custom hex color, overrides color variant
+- `size` (string, optional): Text size ('sm'|'md'|'lg'). Default: 'md'
 - `newTab` (boolean, optional): Open in new tab. Default: false
+- `underline` (boolean, optional): Show underline by default. Default: false
 - `style` (object, optional): Additional inline styles to merge
 
 ## Design Specifications
 
-### Link Styling
-- Color: #2563eb (primary blue)
+### Color Variants
+- **Primary**: #2563eb (blue) → hover #1e40af → active #1e3a8a
+- **Success**: #10b981 (green) → hover #059669 → active #047857
+- **Danger**: #ef4444 (red) → hover #dc2626 → active #991b1b
+- **Muted**: #64748b (gray) → hover #475569 → active #1e293b
+- Custom colors via customColor prop
+
+### Link Variants
+
+#### Default Variant
+- Color: From color prop
 - Text-decoration: none
 - Cursor: pointer
 - Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
-- Font-weight: 600 (medium-bold for better visibility)
-- Border-bottom: 2px solid transparent (subtle underline ready)
-- Position: relative (for enhanced effects)
+- Font-weight: 600
+- Position: relative
+- Border-bottom: 2px solid transparent
+- Hover: Color darkened, border-bottom solid, transform translateX(2px)
+- Active: Color darkest, border-bottom solid
+- Focus: outline 3px solid with offset 2px, box-shadow glow
 
-### Hover State
-- Color: #1e40af (darker blue)
-- Border-bottom: 2px solid #1e40af (animated underline)
-- Text-decoration: none
-- Transform: translateX(2px) (subtle shift)
-- Smooth transition
+#### Underline Variant
+- Color: From color prop
+- Text-decoration: underline (always visible)
+- Font-weight: 600
+- Cursor: pointer
+- Transition: color 150ms ease-in-out
+- Hover: Color darkened, brightness(1.1)
+- Focus: Outline with offset
 
-### Active State
-- Color: #1e3a8a (dark blue)
-- Border-bottom: 2px solid #1e3a8a (solid underline)
+#### Button Variant
+- Background: From color prop (solid color)
+- Color: white
+- Padding: 8px 16px (sm), 10px 20px (md), 12px 24px (lg)
+- Border-radius: 8px
+- Font-weight: 600
+- Cursor: pointer
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: 0 2px 8px rgba from color
+- Hover: Darker shade, lift effect (translateY -2px), enhanced shadow
+- Active: Darker, pressed (translateY 0), reduced shadow
 
-### Focus State
-- Outline: 3px solid rgba(37, 99, 235, 0.4)
-- Outline-offset: 2px
-- Outline-style: solid
-- Box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1)
+#### Pill Variant
+- Background: From color prop with opacity 0.1
+- Color: From color prop
+- Padding: 8px 16px (sm), 10px 20px (md), 12px 24px (lg)
+- Border-radius: 9999px (full)
+- Border: 2px solid from color prop
+- Font-weight: 600
+- Cursor: pointer
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Hover: Solid background, white text, transform scale(1.05)
+- Active: Darker background
+
+### Text Size Options
+- **sm**: 0.875rem, height 32px (for buttons)
+- **md**: 1rem, height 40px (default)
+- **lg**: 1.125rem, height 48px (for buttons)
 
 ### External Links
 - rel: "noopener noreferrer"
 - target: "_blank" (if newTab prop is true)
-- Visual indicator (optional icon) for external links
+- Indicator: Small external icon appended
 
 ## Rendering Logic
 1. Create an a (anchor) element with className 'link'

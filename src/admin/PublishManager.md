@@ -22,25 +22,33 @@ React functional component with async operations
 
 ### Layout
 - Container: Full width, max-width 1200px, centered
-- Padding: 32px
+- Padding: 40px (improved spacing)
 - Background: White (#ffffff)
 - Border-radius: 12px
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05)
 
 ### Changes Section
-- Title: "Changed Files" (1.5rem, weight 600, #1e293b)
-- Padding: 24px
-- Border: 1px solid #e2e8f0
+- Title: "Changed Files" (1.875rem, weight 800, #1e293b, letter-spacing -0.4px)
+- Padding: 32px
+- Border: 1px solid #e2e8f0 with subtle shadow
 - Border-radius: 12px
-- Margin-bottom: 24px
+- Margin-bottom: 32px (improved spacing)
+- Background: linear gradient from #ffffff to #f8fafc (modern gradient)
+- Box-shadow: 0 2px 8px rgba(0,0,0,0.06)
+- Text-shadow: 0 1px 2px rgba(0,0,0,0.05)
 
 ### Change Item
 - Display: flex flex-direction column
-- Padding: 16px
-- Border: 1px solid #e2e8f0
-- Border-radius: 8px
+- Padding: 20px (improved spacing)
+- Border: 2px solid transparent
+- Border-radius: 12px
 - Background: #f8fafc
-- Margin-bottom: 12px
-- Hover: background #f1f5f9
+- Margin-bottom: 16px (improved spacing)
+- Hover: background #f1f5f9, border-color #2563eb, transform translateY(-2px)
+- Active: border-color #1e40af
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: 0 1px 3px rgba(0,0,0,0.05) on hover
 
 #### Status Badge
 - Styling varies by status:

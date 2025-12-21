@@ -20,9 +20,9 @@ React functional component with event handling
 ## Design Specifications
 
 ### Sizing
-- **sm**: padding 8px 12px, font-size 0.75rem, min-width 80px
-- **md**: padding 12px 20px, font-size 0.875rem, min-width 100px
-- **lg**: padding 16px 28px, font-size 1rem, min-width 120px
+- **sm**: padding 8px 16px, font-size 0.75rem, min-width 80px, height 32px
+- **md**: padding 12px 24px, font-size 0.875rem, min-width 100px, height 40px
+- **lg**: padding 16px 32px, font-size 1rem, min-width 120px, height 48px
 
 ### Variants
 
@@ -30,57 +30,76 @@ React functional component with event handling
 - Background: linear gradient from #2563eb to #1e40af (modern gradient)
 - Color: #ffffff (white)
 - Border: none
-- Border-radius: 12px (more modern rounded corners)
-- Font-weight: 700 (bolder for better impact)
+- Border-radius: 12px
+- Font-weight: 700
 - Letter-spacing: 0.4px
 - Cursor: pointer
-- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) (smooth easing)
-- Box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) (depth shadow)
-- Hover: background linear gradient from #1e40af to #1e3a8a, box-shadow 0 8px 20px rgba(37, 99, 235, 0.4), transform translateY(-2px) lift
-- Active: background linear gradient from #1e3a8a to #1e3a8a, box-shadow 0 2px 8px rgba(37, 99, 235, 0.2), transform translateY(0) pressed
-- Focus: outline 3px solid rgba(37, 99, 235, 0.5), outline-offset 2px for keyboard
-- Disabled: background #cbd5e1 (gray), cursor not-allowed, opacity 0.5 dimmed, box-shadow none
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3)
+- Hover: background linear gradient from #1e40af to #1e3a8a, box-shadow 0 8px 24px rgba(37, 99, 235, 0.45), transform translateY(-2px), brightness(1.08)
+- Active: background linear gradient from #1e3a8a to #1e3a8a, box-shadow 0 2px 8px rgba(37, 99, 235, 0.2), transform translateY(0)
+- Focus: outline 3px solid rgba(37, 99, 235, 0.5), outline-offset 2px
+- Disabled: background #cbd5e1, cursor not-allowed, opacity 0.6, box-shadow none
+- User-select: none
 
 #### Secondary Button
 - Background: linear gradient from #f1f5f9 to #e2e8f0 (subtle gradient)
 - Color: #1e293b
-- Border: 2px solid #cbd5e1 (bolder border)
-- Border-radius: 12px (modern corners)
-- Font-weight: 700 (bolder)
+- Border: 2px solid #cbd5e1
+- Border-radius: 12px
+- Font-weight: 700
 - Cursor: pointer
 - Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
 - Box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06)
-- Hover: background linear gradient from #e2e8f0 to #cbd5e1, box-shadow 0 6px 16px rgba(0, 0, 0, 0.1), transform translateY(-2px)
+- Hover: background linear gradient from #e2e8f0 to #cbd5e1, border-color #94a3b8, box-shadow 0 6px 20px rgba(0, 0, 0, 0.12), transform translateY(-2px)
 - Active: background linear gradient from #cbd5e1 to #cbd5e1, box-shadow 0 2px 4px rgba(0, 0, 0, 0.05), transform translateY(0)
 - Focus: outline 3px solid rgba(37, 99, 235, 0.4), outline-offset 2px
-- Disabled: background #f1f5f9, color #cbd5e1, cursor not-allowed, opacity 0.5
+- Disabled: background #f1f5f9, color #cbd5e1, border-color #e2e8f0, cursor not-allowed, opacity 0.6
+- User-select: none
 
 #### Danger Button
 - Background: transparent
-- Color: #dc2626 (deeper red for better contrast)
-- Border: 2px solid #dc2626 (thicker, deeper red border)
-- Border-radius: 12px (modern corners)
-- Font-weight: 700 (bolder)
+- Color: #dc2626
+- Border: 2px solid #dc2626
+- Border-radius: 12px
+- Font-weight: 700
 - Cursor: pointer
 - Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
-- Box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15) (subtle danger shadow)
-- Hover: background rgba(220, 38, 38, 0.1) (light danger bg), border-color #dc2626, box-shadow 0 6px 16px rgba(220, 38, 38, 0.25), transform translateY(-2px)
-- Active: background rgba(220, 38, 38, 0.2), border-color #dc2626, box-shadow 0 2px 4px rgba(220, 38, 38, 0.15), transform translateY(0)
+- Box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15)
+- Hover: background rgba(220, 38, 38, 0.08), border-color #b91c1c, box-shadow 0 6px 20px rgba(220, 38, 38, 0.3), transform translateY(-2px)
+- Active: background rgba(220, 38, 38, 0.15), border-color #991b1b, box-shadow 0 2px 4px rgba(220, 38, 38, 0.2), transform translateY(0)
 - Focus: outline 3px solid rgba(220, 38, 38, 0.4), outline-offset 2px
-- Disabled: color #fecaca, border-color #fecaca, cursor not-allowed, opacity 0.5
+- Disabled: color #fecaca, border-color #fecaca, cursor not-allowed, opacity 0.6
+- User-select: none
 
 #### Ghost Button
 - Background: transparent
 - Color: #64748b
 - Border: none
-- Border-radius: 8px
-- Font-weight: 500
+- Border-radius: 12px
+- Font-weight: 600
 - Cursor: pointer
-- Transition: all 150ms ease-in-out
-- Hover: background #f1f5f9, color #1e293b
-- Active: background #e2e8f0
+- Transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: none
+- Hover: background #f1f5f9, color #1e293b, box-shadow 0 2px 8px rgba(0, 0, 0, 0.06)
+- Active: background #e2e8f0, color #0f172a
 - Focus: outline 2px solid #2563eb, outline-offset 2px
-- Disabled: color #cbd5e1, cursor not-allowed
+- Disabled: color #cbd5e1, cursor not-allowed, opacity 0.6
+- User-select: none
+
+#### Success Button (Bonus Variant)
+- Background: linear gradient from #10b981 to #059669
+- Color: #ffffff
+- Border: none
+- Border-radius: 12px
+- Font-weight: 700
+- Cursor: pointer
+- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
+- Box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3)
+- Hover: background linear gradient from #059669 to #047857, box-shadow 0 8px 24px rgba(16, 185, 129, 0.4), transform translateY(-2px)
+- Active: background linear gradient from #047857 to #047857, box-shadow 0 2px 8px rgba(16, 185, 129, 0.2), transform translateY(0)
+- Focus: outline 3px solid rgba(16, 185, 129, 0.4), outline-offset 2px
+- Disabled: background #cbd5e1, cursor not-allowed, opacity 0.6
 
 ### States
 - **Hover**: Lift effect with shadow, slight color shift

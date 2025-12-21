@@ -9,10 +9,12 @@ Horizontal separator component used to visually divide content sections. Renders
 React functional component
 
 ## Props
-- `color` (string, optional): Line color. Default: '#e2e8f0' (light border)
-- `thickness` (string, optional): Line thickness ('thin'|'normal'|'thick'). Default: 'normal'
-- `margin` (string, optional): Margin preset ('sm'|'md'|'lg'). Default: 'md'
+- `color` (string, optional): Line color variant or custom color. Default: 'default'
+- `variant` (string, optional): Divider style ('solid'|'dashed'|'dotted'|'gradient'). Default: 'solid'
+- `thickness` (string, optional): Line thickness ('thin'|'normal'|'thick'|'xl'). Default: 'normal'
+- `margin` (string, optional): Margin preset ('sm'|'md'|'lg'|'xl'). Default: 'md'
 - `fullWidth` (boolean, optional): Extend to full container width. Default: true
+- `orientation` (string, optional): Direction ('horizontal'|'vertical'). Default: 'horizontal'
 - `style` (object, optional): Additional inline styles to merge
 
 ## Design Specifications
@@ -21,28 +23,46 @@ React functional component
 - **thin**: 0.5px (delicate, subtle)
 - **normal**: 1px (standard, balanced)
 - **thick**: 2px (bold, prominent)
+- **xl**: 3px (heavy, dramatic)
 
-### Margin Presets
-- **sm**: 16px 0
-- **md**: 28px 0 (default, improved spacing)
-- **lg**: 40px 0
+### Margin Presets (Vertical/Horizontal)
+- **sm**: 16px 0 (horizontal), 0 12px (vertical)
+- **md**: 28px 0 (horizontal), 0 20px (vertical) - default
+- **lg**: 40px 0 (horizontal), 0 32px (vertical)
+- **xl**: 56px 0 (horizontal), 0 48px (vertical)
 
-### Colors
-- Default: #e2e8f0 (light border gray with gradient)
-- Dark: #cbd5e1 (medium gray)
-- Accent: linear gradient from #2563eb to #3b82f6 (modern gradient blue)
-- Success: #10b981 (emerald green)
-- Subtle: rgba(0, 0, 0, 0.05) (minimal impact)
+### Color Variants
+- **default**: #e2e8f0 (light gray)
+- **dark**: #cbd5e1 (medium gray)
+- **primary**: #2563eb (primary blue)
+- **success**: #10b981 (emerald green)
+- **danger**: #ef4444 (red)
+- **muted**: #94a3b8 (light gray muted)
+- Custom colors via direct hex/rgb values
+
+### Divider Variants
+- **solid**: Continuous solid line
+- **dashed**: Dashed pattern (8px dash, 6px gap)
+- **dotted**: Dotted pattern (2px dot, 4px gap)
+- **gradient**: Gradient background from color to transparent
+
+### Gradient Backgrounds
+- **blue-gradient**: From #2563eb to transparent
+- **green-gradient**: From #10b981 to transparent
+- **purple-gradient**: From #8b5cf6 to transparent
+- **rainbow**: Multi-color gradient effect
 
 ### Styling
-- Gradient background support for modern look
+- Gradient and dashed support for modern look
 - Transition: background 200ms cubic-bezier(0.4, 0, 0.2, 1)
-- Box-shadow: subtle gradient shadow on dark dividers
+- Box-shadow: subtle shadow option for depth (0 1px 2px rgba(0,0,0,0.05))
 - Border-radius: 1px (minimal rounding for soft edges)
+- Opacity: 1 (solid), 0.6 (subtle)
 
 ### Container
-- Display: block
-- Full width by default
+- Display: block (horizontal) / inline-block (vertical)
+- Full width by default (horizontal)
+- Min height: thickness value
 - No border (background color only)
 - Box-sizing: border-box
 

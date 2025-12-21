@@ -10,37 +10,62 @@ React functional component
 
 ## Props
 - `columns` (number, optional): Number of grid columns. Default: 2
-- `gap` (string, optional): Gap preset ('sm'|'md'|'lg') or CSS value. Default: 'md'
-- `minItemWidth` (string, optional): Minimum width for auto-responsive grids. Default: '250px'
+- `gap` (string, optional): Gap preset ('sm'|'md'|'lg'|'xl') or CSS value. Default: 'md'
+- `minItemWidth` (string, optional): Minimum width for auto-responsive grids. Default: '280px'
 - `autoFit` (boolean, optional): Use auto-fit for responsive columns. Default: false
+- `autoFill` (boolean, optional): Use auto-fill for responsive columns. Default: false
+- `align` (string, optional): Align items ('start'|'center'|'end'|'stretch'). Default: 'stretch'
+- `justify` (string, optional): Justify content ('start'|'center'|'end'|'stretch'). Default: 'stretch'
+- `autoFlow` (string, optional): Grid flow direction ('row'|'column'|'dense'). Default: 'row'
 - `children` (ReactNode, optional): Child components as grid items
 - `style` (object, optional): Additional inline styles to merge
 
 ## Design Specifications
 
 ### Gap Presets
-- **sm**: 16px (compact spacing)
-- **md**: 24px (default spacing, improved)
-- **lg**: 40px (generous spacing)
+- **sm**: 12px (compact spacing)
+- **md**: 20px (default spacing)
+- **lg**: 32px (generous spacing)
+- **xl**: 48px (spacious layouts)
 - Support for custom CSS values (e.g., "2rem", "calc(1vw + 10px)")
 
-### Grid Templates
-- Standard: `repeat(columns, 1fr)`
-- Auto-fit: `repeat(auto-fit, minmax(minItemWidth, 1fr))` (responsive)
-- Auto-fill: `repeat(auto-fill, minmax(minItemWidth, 1fr))`
+### Responsive Grid Templates
+- **Standard**: `repeat(columns, 1fr)`
+- **Auto-fit**: `repeat(auto-fit, minmax(minItemWidth, 1fr))` (responsive, no empty cells)
+- **Auto-fill**: `repeat(auto-fill, minmax(minItemWidth, 1fr))` (responsive, with empty cells)
+- **Dynamic**: Responsive column sizing based on available space
 
-### Default Behavior
+### Alignment Options
+- **Items Align** (align-items): start, center, end, stretch
+- **Content Justify** (justify-items): start, center, end, stretch
+- **Items Alignment**: Aligns individual grid items along the block axis
+- **Content Alignment**: Aligns grid tracks along the inline axis
+
+### Auto-flow Variants
+- **row**: Default, items fill horizontally then wrap to next row
+- **column**: Items fill vertically then wrap to next column
+- **dense**: Packs items densely, filling gaps automatically
+
+### Default Container Behavior
 - Display: grid
 - Grid-auto-flow: row (top-to-bottom)
+- Grid-auto-rows: auto (size to content)
 - Each child spans 1 column by default
 - Items stretch to fill available space
 - Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
 
+### Responsive Breakpoints
+- Mobile (< 640px): 1 column or auto-fit sizing
+- Tablet (640px - 1024px): 2 columns
+- Desktop (1024px+): 3+ columns
+
 ### Advanced Features
 - Auto-sizing for responsive item widths
-- Support for grid alignment (start, center, end)
-- Gap animation on state changes
+- Full alignment and justification control
+- Grid auto-placement with dense packing
 - Support for nested grids with proper inheritance
+- Box-shadow on hover for interactive grids (optional)
+- Transition animations on layout changes
 
 ## Rendering Logic
 1. Create div container with className 'grid'

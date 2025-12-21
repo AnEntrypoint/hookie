@@ -19,21 +19,35 @@ React functional component
 ## Design Specifications
 
 ### Typography by Level
-- **H1**: font-size 3rem, font-weight 800, line-height 1.1, letter-spacing -0.8px, text-shadow subtle depth
-- **H2**: font-size 2.25rem, font-weight 700, line-height 1.2, letter-spacing -0.5px
-- **H3**: font-size 1.75rem, font-weight 700, line-height 1.3, letter-spacing -0.2px
-- **H4**: font-size 1.375rem, font-weight 600, line-height 1.4, letter-spacing 0px
-- **H5**: font-size 1.125rem, font-weight 600, line-height 1.5, letter-spacing 0.2px
-- **H6**: font-size 1rem, font-weight 700, line-height 1.6, letter-spacing 0.3px
+- **H1**: font-size 3.5rem, font-weight 800, line-height 1.1, letter-spacing -1px, text-shadow 0 2px 4px rgba(0,0,0,0.1), margin-bottom 32px, margin-top 0
+- **H2**: font-size 2.5rem, font-weight 800, line-height 1.2, letter-spacing -0.5px, margin-bottom 24px, margin-top 0
+- **H3**: font-size 1.875rem, font-weight 700, line-height 1.3, letter-spacing -0.3px, margin-bottom 20px, margin-top 0
+- **H4**: font-size 1.5rem, font-weight 700, line-height 1.4, letter-spacing -0.1px, margin-bottom 16px, margin-top 0
+- **H5**: font-size 1.25rem, font-weight 600, line-height 1.5, letter-spacing 0px, margin-bottom 12px, margin-top 0
+- **H6**: font-size 1.125rem, font-weight 700, line-height 1.6, letter-spacing 0.3px, margin-bottom 12px, margin-top 0
 
-### Colors
-- Default: #1e293b (dark text)
-- Can be overridden with color prop
-- Ensure sufficient contrast for readability
+### Colors (with Variants)
+- **Default**: #1e293b (dark text)
+- **Primary**: #2563eb (accent color)
+- **Success**: #10b981 (success/positive)
+- **Danger**: #ef4444 (error/danger)
+- **Muted**: #64748b (secondary text)
+- Custom colors via color prop
+
+### Gradients (Bonus)
+- **Blue Gradient**: from #2563eb to #1e40af
+- **Green Gradient**: from #10b981 to #059669
+- **Purple Gradient**: from #8b5cf6 to #7c3aed
 
 ### Spacing
-- Margin-bottom: 16px (default spacing below heading)
-- Margin-top: 32px (if preceded by other content)
+- Margin-bottom: Varies by level (12-24px)
+- Margin-top: 0 (parent container manages top spacing)
+- Word-break: break-word (handle long words)
+
+### Responsive Behavior
+- Font sizes scale down on mobile screens
+- Letter-spacing adjusts for readability
+- Line-height remains consistent across breakpoints
 
 ## Rendering Logic
 1. Determine which heading element to use based on level prop (h1-h6)

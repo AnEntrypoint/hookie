@@ -1,7 +1,7 @@
 # ComponentCreator Component
 
 ## Purpose
-Provides UI for defining custom component types. Allows users to create component schemas with custom props, validation rules, and containment rules.
+Provides beautiful UI for defining custom component types with modern form design. Allows users to create component schemas with custom props, validation rules, and containment rules with real-time preview and elegant visual feedback.
 
 ## Component Type
 React functional component

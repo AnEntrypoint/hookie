@@ -1,75 +1,73 @@
-import React from 'react';
-
-// Helper function to get font size value from size prop
 const getSizeValue = (size) => {
   const sizes = {
-    'sm': '0.875rem',
-    'base': '1rem',
-    'lg': '1.125rem',
-    'xl': '1.25rem'
+    sm: '0.875rem',
+    base: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem'
   };
-  return sizes[size] || sizes['base'];
+  return sizes[size] || sizes.base;
 };
 
-// Helper function to get line height from size prop
-const getLineHeight = (size) => {
-  const lineHeights = {
-    'sm': '1.6',
-    'base': '1.7',
-    'lg': '1.8',
-    'xl': '1.9'
-  };
-  return lineHeights[size] || lineHeights['base'];
-};
-
-// Helper function to get font weight value from weight prop
 const getWeight = (weight) => {
   const weights = {
-    'normal': 400,
-    'semibold': 600,
-    'bold': 700
+    normal: 400,
+    semibold: 600,
+    bold: 700
   };
-  return weights[weight] || weights['normal'];
+  return weights[weight] || 400;
 };
 
-const Text = ({
-  content = 'Enter text',
-  size = 'base',
-  color = '#1e293b',
-  weight = 'normal',
-  align = 'left',
-  lineHeight,
-  style = {}
-}) => {
-  // Ensure content is a string for safe rendering (XSS prevention)
-  const textContent = typeof content === 'string' ? content : String(content || '');
-
-  // Determine line height - use lineHeight prop if provided, otherwise use default for size
-  const finalLineHeight = lineHeight || getLineHeight(size);
-
-  const textStyle = {
-    fontSize: getSizeValue(size),
-    color: color || '#1e293b',
-    fontWeight: getWeight(weight),
-    textAlign: align || 'left',
-    lineHeight: finalLineHeight,
-    marginBottom: '16px',
-    marginTop: 0,
-    padding: 0,
-    letterSpacing: '0.3px',
-    wordSpacing: '0.05em',
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
-    ...style
+const getLetterSpacing = (size) => {
+  const spacing = {
+    sm: '-0.2px',
+    base: '-0.1px',
+    lg: '0px',
+    xl: '0px'
   };
+  return spacing[size] || '-0.1px';
+};
+
+const getLineHeight = (size) => {
+  const lineHeights = {
+    sm: '1.5',
+    base: '1.6',
+    lg: '1.7',
+    xl: '1.8'
+  };
+  return lineHeights[size] || '1.6';
+};
+
+export default function Text(props) {
+  const {
+    content = 'Enter text',
+    size = 'base',
+    color = '#1e293b',
+    weight = 'normal',
+    align = 'left',
+    lineHeight,
+    style = {}
+  } = props;
 
   return (
     <p
-      className="text"
-      style={textStyle}
+      style={{
+        fontSize: getSizeValue(size),
+        color,
+        fontWeight: getWeight(weight),
+        textAlign: align,
+        lineHeight: lineHeight || getLineHeight(size),
+        letterSpacing: getLetterSpacing(size),
+        wordBreak: 'break-word',
+        display: 'block',
+        marginTop: 0,
+        marginBottom: '20px',
+        marginLeft: 0,
+        marginRight: 0,
+        padding: 0,
+        ...style
+      }}
     >
-      {textContent}
+      {content}
     </p>
   );
-};
-
-export default Text;
+}

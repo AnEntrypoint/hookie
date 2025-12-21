@@ -19,8 +19,8 @@ React functional component with hooks
 
 ### Container
 - Font-family: System font from index.md
-- Color: props.color or #1e293b
-- Line-height: 1.9 (improved readability)
+- Color: From color prop or variants (#1e293b default)
+- Line-height: 1.7 (improved readability)
 - Margin: 0
 - Padding-left: 28px (more spacious)
 - List-style-position: outside
@@ -28,32 +28,52 @@ React functional component with hooks
 
 ### List Items
 - Padding: Depends on spacing prop:
-  - **sm**: 6px 0
-  - **md**: 12px 0
+  - **sm**: 8px 0
+  - **md**: 12px 0 (default)
   - **lg**: 16px 0
+  - **xl**: 20px 0
 - Color: Inherit from parent
 - Font-size: 1rem
 - Font-weight: 400
-- Letter-spacing: 0.2px (improved text clarity)
-- Transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)
-- Hover: color becomes #1e40af (darker blue), scale 1.01 transform
-- Marker color: #2563eb (primary blue)
-- Marker size: 7px diameter (more prominent)
-- Marker shadow: subtle drop shadow for depth
-
-### Unordered Lists
-- Bullet style: disc
-- Marker size: 6px
+- Letter-spacing: 0px (natural spacing)
+- Transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1)
+- Hover: color becomes darker, subtle lift effect (translateX 4px)
+- Marker color: varies by variant
+- Marker size: 6px diameter (standard)
 - Marker spacing: 12px
+
+### Color Variants
+- **default**: #1e293b (dark text)
+- **primary**: #2563eb (primary blue)
+- **success**: #10b981 (emerald green)
+- **danger**: #ef4444 (red)
+- **muted**: #64748b (gray)
+- Custom colors via color prop
+
+### Unordered Lists (Bullet Variants)
+- **disc**: Standard filled circle (default)
+- **circle**: Outlined circle
+- **square**: Square marker
+- **check**: Custom ✓ checkmark style
+- **arrow**: Custom → arrow style
+- **dot**: Small filled dot
 
 ### Ordered Lists
-- Number style: decimal
-- Counter: auto-incrementing
-- Marker spacing: 12px
+- **decimal**: Standard numbers (1, 2, 3...)
+- **roman**: Roman numerals (i, ii, iii...)
+- **alpha**: Alphabetic (a, b, c...)
+- **custom**: Custom counter with styling
 
-### Dark Mode Support
-- Color: Automatically adjust for dark backgrounds
-- If background is dark, use light text colors
+### Marker Styling
+- Color: Matches list color
+- Size: 6px (standard), 8px (lg variant)
+- Hover effect: Subtle shadow or highlight
+- Box-shadow: 0 1px 2px rgba(0,0,0,0.05) on hover
+
+### Interactive Features
+- Hover: Text color changes, marker accent added
+- Selection: Highlight background option via style
+- Focus: Outline for keyboard navigation (outline 2px solid #2563eb)
 
 ## Rendering Logic
 1. Determine which list element to use based on type prop ('ul' or 'ol')

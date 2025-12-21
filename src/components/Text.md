@@ -20,27 +20,41 @@ React functional component
 ## Design Specifications
 
 ### Font Sizes
-- **sm**: 0.875rem (14px), line-height 1.6, compact sizing
-- **base**: 1rem (16px), line-height 1.7, default body text
-- **lg**: 1.125rem (18px), line-height 1.8, larger text blocks
-- **xl**: 1.25rem (20px), line-height 1.9, extra large display text
+- **sm**: 0.875rem (14px), line-height 1.5, compact sizing, letter-spacing -0.2px
+- **base**: 1rem (16px), line-height 1.6, default body text, letter-spacing -0.1px
+- **lg**: 1.125rem (18px), line-height 1.7, larger text blocks
+- **xl**: 1.25rem (20px), line-height 1.8, extra large display text
 
 ### Font Weights
+- Light: 300
 - Normal: 400
+- Medium: 500
 - Semibold: 600
 - Bold: 700
 
-### Colors
-- Default: #1e293b (dark text)
-- Muted: #64748b (lighter gray for secondary text)
-- Subtle: #94a3b8 (very light gray for hints)
-- Accent: #2563eb (primary blue for highlights)
+### Colors (with Variants)
+- **Default**: #1e293b (dark text)
+- **Muted**: #64748b (lighter gray for secondary text)
+- **Subtle**: #94a3b8 (very light gray for hints)
+- **Accent**: #2563eb (primary blue for highlights)
+- **Success**: #10b981 (success/positive messages)
+- **Danger**: #ef4444 (error/danger messages)
+- **Warning**: #f59e0b (warning messages)
+- Custom colors via color prop
 
-### Spacing
-- Margin-bottom: 16px (natural spacing between paragraphs)
+### Spacing & Readability
+- Margin-bottom: 20px (natural spacing between paragraphs)
 - Margin-top: 0
-- Letter-spacing: 0.3px (subtle letter spacing for better readability)
-- Word-spacing: 0.05em (improved word spacing)
+- Margin-left: 0
+- Margin-right: 0
+- Letter-spacing: Varies by size (see Font Sizes section)
+- Word-spacing: normal
+- Word-break: break-word (handle long words gracefully)
+- Display: block (ensure proper block flow)
+
+### Variants
+- **Leading**: Tight (1.2), Normal (1.5), Relaxed (1.8)
+- **Tracking**: Tight (-0.2px), Normal (0px), Wide (0.2px)
 
 ## Rendering Logic
 1. Create p (paragraph) element with className 'text'
