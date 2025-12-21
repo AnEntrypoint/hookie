@@ -1,4 +1,4 @@
-const PAT_KEY = 'github_pat';
+const PAT_KEY = 'github_token';
 const API_BASE = 'https://api.github.com';
 
 function getToken() {

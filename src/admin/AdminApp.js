@@ -6,6 +6,7 @@ import StyleEditor from './StyleEditor.js';
 import ComponentCreator from './ComponentCreator.js';
 import PublishManager from './PublishManager.js';
 import Auth from './Auth.js';
+import Settings from './Settings.js';
 import { contentManager } from '../lib/contentManager.js';
 import { liveReload } from '../lib/liveReload.js';
 import { componentRegistry } from '../lib/componentRegistry.js';
@@ -504,8 +505,10 @@ const AdminApp = () => {
     if (route === '#/admin/settings') {
       return (
         <div style={styles.main}>
-          <h1 style={{ color: colors.textDark }}>Settings</h1>
-          <p style={{ color: colors.textLight }}>Repository configuration and preferences</p>
+          <Settings onSettingsSaved={(settings) => {
+            setRepoInfo({ owner: settings.owner, repo: settings.repo });
+            window.location.reload();
+          }} />
         </div>
       );
     }
