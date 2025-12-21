@@ -1,0 +1,26 @@
+{
+  "name": "hello-world",
+  "title": "Hello World",
+  "components": [
+    {
+      "id": "root-1766302647233",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1766302647233",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Welcome to hello-world"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
