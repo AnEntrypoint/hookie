@@ -1,0 +1,26 @@
+{
+  "name": "my-test-page",
+  "title": "My Test Page",
+  "components": [
+    {
+      "id": "container-1766313497939",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1766313497939",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to My Test Page"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
