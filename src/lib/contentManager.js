@@ -142,12 +142,21 @@ export async function listPages(owner, repo) {
   try {
     try {
       const structure = await github.getRepoStructure(owner, repo);
-      if (!Array.isArray(structure)) return [];
 
-      return structure
-        .filter(f => f.path && f.path.startsWith('/content/pages/') && f.path.endsWith('.json'))
-        .map(f => f.path.replace('/content/pages/', '').replace('.json', ''))
-        .sort();
+      if (typeof structure === 'object' && structure !== null) {
+        const pages = [];
+        const pageDir = structure['/content/pages'] || structure['content/pages'] || [];
+
+        pageDir.forEach(file => {
+          if (file.name && file.name.endsWith('.json')) {
+            pages.push(file.name.replace('.json', ''));
+          }
+        });
+
+        return pages.sort();
+      }
+
+      return [];
     } catch (err) {
       if (err.message.includes('not implemented')) {
         return ['home', 'about', 'contact'];
