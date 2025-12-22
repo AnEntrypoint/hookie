@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "write-file": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["/home/user/hookie/.claude/mcp/write-file.cjs"]
-    }
-  }
-}

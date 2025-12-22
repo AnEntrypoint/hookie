@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { componentRegistry } from '../lib/componentRegistry.js';
 import Button from '../components/Button.js';
 import Text from '../components/Text.js';
 import Container from '../components/Container.js';
+import Section from '../components/Section.js';
 import Heading from '../components/Heading.js';
 import Image from '../components/Image.js';
-import Divider from '../components/Divider.js';
-import Section from '../components/Section.js';
 import Grid from '../components/Grid.js';
+import Divider from '../components/Divider.js';
 import Link from '../components/Link.js';
 import List from '../components/List.js';
 
@@ -15,21 +15,22 @@ const COMPONENT_MAP = {
   Button,
   Text,
   Container,
+  Section,
   Heading,
   Image,
-  Divider,
-  Section,
   Grid,
+  Divider,
   Link,
   List
 };
 
 const getDefaultProps = (schema) => {
   const defaults = {};
-  if (!schema || !schema.props) return defaults;
+  
+  if (!schema.props) return defaults;
 
   Object.entries(schema.props).forEach(([propName, propSchema]) => {
-    if (propSchema && propSchema.default !== undefined) {
+    if (propSchema.default !== undefined) {
       defaults[propName] = propSchema.default;
     }
   });
@@ -37,115 +38,140 @@ const getDefaultProps = (schema) => {
   return defaults;
 };
 
-const Renderer = ({ pageData, onSelectComponent, selectedId, mode = 'view' }) => {
-  const renderComponent = useMemo(() => {
-    return (component, index) => {
-      if (!component) return null;
+const Renderer = ({ 
+  pageData, 
+  mode = 'view',
+  selectedId,
+  onSelectComponent,
+  onPropsChange
+}) => {
+  
+  const renderComponent = (component, index, parent) => {
+    if (!component) return null;
+    
+    const { id, type, props, style, children } = component;
 
-      const { id, type, props = {}, style = {}, children } = component;
-
-      const schema = componentRegistry.getComponent(type);
-      if (!schema) {
-        console.warn(`Component type "${type}" not found in registry`);
-        return (
-          <div key={id || index} className="component-error" style={{
-            padding: '20px',
-            backgroundColor: '#ffe6e6',
-            border: '1px solid #ff9999',
-            borderRadius: '4px',
-            margin: '10px 0',
-            fontFamily: 'monospace',
-            fontSize: '12px',
-            color: '#cc0000'
-          }}>
-            Unknown component: {type}
-          </div>
-        );
-      }
-
-      const Component = COMPONENT_MAP[type];
-      if (!Component) {
-        console.warn(`Component implementation for "${type}" not found`);
-        return (
-          <div key={id || index} className="component-error" style={{
-            padding: '20px',
-            backgroundColor: '#ffe6e6',
-            border: '1px solid #ff9999',
-            borderRadius: '4px',
-            margin: '10px 0',
-            fontFamily: 'monospace',
-            fontSize: '12px',
-            color: '#cc0000'
-          }}>
-            Component not implemented: {type}
-          </div>
-        );
-      }
-
-      const mergedProps = { ...getDefaultProps(schema), ...props };
-      const mergedStyle = { ...schema.defaultStyle, ...style };
-
-      const renderedChildren = children && children.length > 0
-        ? children.map((child, i) => renderComponent(child, i))
-        : undefined;
-
-      if (mode === 'edit') {
-        return (
-          <div
-            key={id || index}
-            className={`component-wrapper ${selectedId === id ? 'selected' : ''}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (onSelectComponent) {
-                onSelectComponent(id);
-              }
-            }}
-            data-component-id={id}
-            data-component-type={type}
-            style={{
-              border: selectedId === id ? '2px solid #007bff' : '1px solid #e0e0e0',
-              padding: '4px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            <Component
-              {...mergedProps}
-              style={mergedStyle}
-              children={renderedChildren}
-            />
-          </div>
-        );
-      }
-
+    // Get component schema from registry
+    const schema = componentRegistry.getComponent(type);
+    if (!schema) {
       return (
-        <Component
-          key={id || index}
-          {...mergedProps}
-          style={mergedStyle}
-          children={renderedChildren}
-        />
+        <div key={id || index} style={{
+          padding: '12px',
+          backgroundColor: '#fee2e2',
+          border: '1px solid #fecaca',
+          borderRadius: '4px',
+          color: '#991b1b',
+          fontSize: '14px'
+        }}>
+          Unknown component: {type}
+        </div>
       );
+    }
+
+    // Get React component implementation
+    const Component = COMPONENT_MAP[type];
+    if (!Component) {
+      return (
+        <div key={id || index} style={{
+          padding: '12px',
+          backgroundColor: '#fee2e2',
+          border: '1px solid #fecaca',
+          borderRadius: '4px',
+          color: '#991b1b',
+          fontSize: '14px'
+        }}>
+          Component not implemented: {type}
+        </div>
+      );
+    }
+
+    // Merge schema default props with instance props
+    const mergedProps = { ...getDefaultProps(schema), ...(props || {}) };
+
+    // Merge default style with instance style
+    const mergedStyle = { ...schema.defaultStyle, ...(style || {}) };
+
+    // Render children recursively
+    const renderedChildren = children && children.length > 0
+      ? children.map((child, i) => renderComponent(child, i, component))
+      : undefined;
+
+    // Build final props for component
+    const componentProps = {
+      ...mergedProps,
+      style: mergedStyle,
+      children: renderedChildren
     };
-  }, [mode, selectedId, onSelectComponent]);
+
+    // In edit mode, wrap with selection handling and visual feedback
+    if (mode === 'edit') {
+      const isSelected = selectedId === id;
+      
+      const handleClick = (e) => {
+        e.stopPropagation();
+        if (onSelectComponent) {
+          onSelectComponent(id);
+        }
+      };
+      
+      return (
+        <div
+          key={id || index}
+          className={`builder-component-wrapper ${isSelected ? 'selected' : ''}`}
+          onClick={handleClick}
+          data-component-id={id}
+          data-component-type={type}
+          style={{
+            position: 'relative',
+            outline: isSelected ? '2px solid #2563eb' : 'none',
+            backgroundColor: isSelected ? 'rgba(37, 99, 235, 0.05)' : 'transparent',
+            borderRadius: '4px',
+            transition: 'all 150ms ease-in-out',
+            cursor: 'pointer'
+          }}
+        >
+          <Component {...componentProps} />
+          
+          {isSelected && (
+            <div style={{
+              position: 'absolute',
+              top: '-24px',
+              left: '0',
+              fontSize: '11px',
+              color: '#2563eb',
+              fontWeight: '600',
+              backgroundColor: '#dbeafe',
+              padding: '2px 8px',
+              borderRadius: '3px',
+              whiteSpace: 'nowrap',
+              pointerEvents: 'none',
+              zIndex: 10
+            }}>
+              {type}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // View mode: render component directly without wrappers
+    return (
+      <Component
+        key={id || index}
+        {...componentProps}
+      />
+    );
+  };
 
   if (!pageData || !pageData.components) {
-    return (
-      <div style={{
-        padding: '20px',
-        textAlign: 'center',
-        color: '#999',
-        fontFamily: 'sans-serif'
-      }}>
-        No content to display
-      </div>
-    );
+    return <div style={{ padding: '20px', color: '#64748b' }}>No content to display</div>;
   }
 
   return (
-    <div className="renderer">
-      {pageData.components.map((component, index) => renderComponent(component, index))}
+    <div className="renderer" style={{ width: '100%' }}>
+      {pageData.components.map((component, index) => 
+        renderComponent(component, index, null)
+      )}
     </div>
   );
 };

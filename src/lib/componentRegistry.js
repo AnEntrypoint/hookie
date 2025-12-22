@@ -102,3 +102,5 @@ export const componentRegistry = {
   validateComponentProps,
   canContainChild
 };
+
+export default componentRegistry;

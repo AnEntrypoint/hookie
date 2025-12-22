@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Renderer from './Renderer.js';
-import { contentManager } from '../lib/contentManager.js';
+import contentManager from '../lib/contentManager.js';
 
 const Router = ({ owner, repo, defaultPage = 'home' }) => {
   const [currentPage, setCurrentPage] = useState(null);

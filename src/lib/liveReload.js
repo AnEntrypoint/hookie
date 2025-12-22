@@ -7,3 +7,5 @@ export const liveReload = {
   startWatching,
   stopWatching
 };
+
+export default liveReload;

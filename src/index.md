@@ -2,6 +2,37 @@
 
 Modern, fully-featured dynamic CMS application with sleek admin interface and beautiful public site renderer.
 
+## Component Type
+React entry point - REFACTORED INTO SMALLER MODULES (under 200 lines each)
+
+## Module Structure
+This entry point is split into three files to stay under 200 lines each:
+
+### 1. index.js (main entry, ~100L)
+Main application entry that mounts React app.
+- Detects admin vs public route
+- Renders AdminApp or public App
+- Includes GlobalStyles
+- Mounts to #root
+- Imports: React, ReactDOM, AdminApp, App (public), GlobalStyles
+
+### 2. GlobalStyles.js (global CSS, ~120L)
+Global CSS-in-JS styles component.
+- Defines CSS variables for theme
+- Normalize and reset styles
+- Base typography and form styles
+- Exports GlobalStyles component
+
+### 3. theme.js (design tokens, ~100L)
+Centralized design system tokens.
+- Color palette constants
+- Typography scale
+- Spacing values
+- Shadow definitions
+- Border radius values
+- Transition timings
+- Exports all tokens as named exports
+
 ## Global Design System
 
 ### Color Palette
@@ -94,14 +125,7 @@ Modern, fully-featured dynamic CMS application with sleek admin interface and be
 - Mount React app to #root element with global styles
 
 ### Component Mounting
-```jsx
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <GlobalStyles />
-    {pathIncludesAdmin ? <AdminApp /> : <App />}
-  </React.StrictMode>
-)
-```
+The root element is mounted using ReactDOM.createRoot with the 'root' element. Inside React.StrictMode, render the GlobalStyles component followed by a conditional rendering: if the path includes 'admin', render AdminApp component, otherwise render the public App component.
 
 ### Error Handling
 - Catch render errors and display elegant error overlay

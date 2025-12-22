@@ -179,3 +179,5 @@ export const github = {
   compareCommits,
   getUser
 };
+
+export default github;
