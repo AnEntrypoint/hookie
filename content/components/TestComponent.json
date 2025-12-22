@@ -1,0 +1,9 @@
+{
+  "name": "TestComponent",
+  "description": "",
+  "props": {},
+  "allowedChildren": [
+    "*"
+  ],
+  "defaultStyle": {}
+}
