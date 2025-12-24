@@ -1,0 +1,9 @@
+{
+  "name": "RealGitHubTest",
+  "description": "Testing real GitHub integration",
+  "props": {},
+  "allowedChildren": [
+    "*"
+  ],
+  "defaultStyle": {}
+}
