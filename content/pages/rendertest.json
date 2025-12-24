@@ -1,0 +1,26 @@
+{
+  "name": "rendertest",
+  "title": "Rendertest",
+  "components": [
+    {
+      "id": "container-1766597983664",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1766597983664",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to Rendertest"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
