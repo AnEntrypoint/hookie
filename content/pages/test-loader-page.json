@@ -1,0 +1,26 @@
+{
+  "name": "test-loader-page",
+  "title": "Test Loader Page",
+  "components": [
+    {
+      "id": "container-1766596210918",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1766596210918",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to Test Loader Page"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
