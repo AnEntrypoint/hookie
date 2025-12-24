@@ -1,0 +1,15 @@
+{
+  "name": "RenderTestButton",
+  "description": "A test button to verify custom component rendering",
+  "props": {
+    "label": {
+      "type": "string",
+      "required": false,
+      "default": "Render Test"
+    }
+  },
+  "allowedChildren": [
+    "*"
+  ],
+  "defaultStyle": {}
+}
