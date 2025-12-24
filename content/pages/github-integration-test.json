@@ -1,0 +1,26 @@
+{
+  "name": "github-integration-test",
+  "title": "Github Integration Test",
+  "components": [
+    {
+      "id": "container-1766594985399",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1766594985399",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to Github Integration Test"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
