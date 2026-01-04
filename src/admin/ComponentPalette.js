@@ -565,7 +565,7 @@ const styles = {
 
   palette: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' },
   paletteTablet: { display: 'grid', gridTemplateColumns: '1fr', gap: '12px' },
-  paletteMobile: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', padding: '0 8px' },
+  paletteMobile: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', padding: '0 12px' },
 
   card: {
     display: 'flex',
@@ -583,11 +583,11 @@ const styles = {
     minHeight: 'auto',
     maxHeight: 'auto',
     minWidth: '60px',
-    padding: '8px',
+    padding: '12px',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '4px',
+    gap: '8px',
   },
   cardTablet: {
     minHeight: '80px',
@@ -725,12 +725,12 @@ const styles = {
   cardInfo: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '6px',
+    gap: '8px',
   },
   cardHeader: {
     display: 'flex',
     alignItems: 'center',
-    gap: '6px',
+    gap: '8px',
     justifyContent: 'space-between',
   },
   componentType: {

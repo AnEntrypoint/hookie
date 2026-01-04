@@ -99,12 +99,12 @@ const PropInput = ({ propName, propSchema, value, error, onChange, isFirstField,
 };
 
 const getFieldWrapperStyle = (isMobile) => ({
-  marginBottom: isMobile ? '24px' : '16px',
+  marginBottom: isMobile ? '24px' : '20px',
 });
 
 const getLabelStyle = (isMobile) => ({
   display: 'block',
-  marginBottom: isMobile ? '8px' : '4px',
+  marginBottom: isMobile ? '8px' : '8px',
   fontWeight: '600',
   fontSize: isMobile ? '16px' : '14px',
   color: DEFAULT_COLORS.textDark,

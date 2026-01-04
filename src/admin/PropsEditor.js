@@ -174,7 +174,7 @@ const getMobileContainerStyle = () => ({
 const getDesktopContainerStyle = () => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: '24px',
   padding: '0',
 });
 
@@ -212,7 +212,7 @@ const getCloseButtonStyle = () => ({
 });
 
 const getFieldWrapperStyle = (index, total) => ({
-  paddingBottom: '20px',
+  paddingBottom: '24px',
   borderBottom: index < total - 1 ? `1px solid ${DEFAULT_COLORS.border}` : 'none',
 });
 

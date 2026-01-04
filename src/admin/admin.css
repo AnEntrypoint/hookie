@@ -102,7 +102,7 @@
     border-left: none;
     border-top: 1px solid #e2e8f0;
     max-height: 300px;
-    padding: 12px;
+    padding: 16px;
   }
 
   .admin-loading {
@@ -123,7 +123,7 @@
 @media (max-width: 1024px) {
   .admin-builder-sidebar {
     width: 280px;
-    padding: 12px;
+    padding: 16px;
   }
 }
 
