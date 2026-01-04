@@ -2,10 +2,19 @@ import React, { useState, useEffect } from 'react';
 
 export default function AppLayout({ children, repoInfo, showAdmin = false }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
@@ -49,7 +58,7 @@ export default function AppLayout({ children, repoInfo, showAdmin = false }) {
             <a href="#/about" style={styles.navLink}>About</a>
             <a href="#/contact" style={styles.navLink}>Contact</a>
           </nav>
-          <button style={styles.mobileMenuToggle} onClick={toggleMobileMenu}>
+          <button style={{...styles.mobileMenuToggle, display: isMobile ? 'flex' : 'none'}} onClick={toggleMobileMenu}>
             ☰
           </button>
         </div>
@@ -93,9 +102,13 @@ const styles = {
     left: 0,
     background: '#000',
     color: '#fff',
-    padding: '8px',
+    padding: '12px',
+    minHeight: '44px',
+    minWidth: '44px',
     textDecoration: 'none',
-    zIndex: 100
+    zIndex: 100,
+    display: 'flex',
+    alignItems: 'center'
   },
   
   appHeader: {
@@ -108,12 +121,13 @@ const styles = {
   },
   
   headerContainer: {
-    maxWidth: '1200px',
+    maxWidth: '100%',
     margin: '0 auto',
-    padding: '1rem 2rem',
+    padding: '0.75rem 1rem',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    width: '100%'
   },
   
   logo: {
@@ -124,14 +138,20 @@ const styles = {
   
   mainNav: {
     display: 'flex',
-    gap: '2rem'
+    gap: '1rem'
   },
   
   navLink: {
     color: '#ffffff',
     textDecoration: 'none',
     fontWeight: '500',
-    transition: 'opacity 0.2s'
+    transition: 'opacity 0.2s',
+    minWidth: '44px',
+    minHeight: '44px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '8px 12px'
   },
   
   mobileMenuToggle: {
@@ -140,7 +160,15 @@ const styles = {
     border: 'none',
     color: '#ffffff',
     fontSize: '1.5rem',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    minWidth: '44px',
+    minHeight: '44px',
+    padding: '8px',
+    '@media (max-width: 768px)': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
   },
   
   mobileNav: {
@@ -154,16 +182,21 @@ const styles = {
   mobileNavLink: {
     color: '#ffffff',
     textDecoration: 'none',
-    padding: '0.5rem 0',
-    fontWeight: '500'
+    padding: '12px 8px',
+    fontWeight: '500',
+    minHeight: '44px',
+    display: 'flex',
+    alignItems: 'center'
   },
   
   appMain: {
     flex: '1',
     width: '100%',
-    maxWidth: '1200px',
+    maxWidth: '100%',
     margin: '0 auto',
-    padding: '2rem'
+    padding: '1rem',
+    boxSizing: 'border-box',
+    overflowX: 'hidden'
   },
   
   appFooter: {
@@ -191,6 +224,11 @@ const styles = {
     color: '#2563eb',
     textDecoration: 'none',
     fontSize: '0.875rem',
-    fontWeight: '600'
+    fontWeight: '600',
+    minHeight: '44px',
+    minWidth: '44px',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '8px 12px'
   }
 };

@@ -2,6 +2,45 @@ import React, { useState, useEffect, useRef } from 'react';
 import Renderer from './Renderer.js';
 import contentManager from '../lib/contentManager.js';
 
+const FALLBACK_PAGES = {
+  about: {
+    title: 'About',
+    meta: { description: 'About our site' },
+    components: [
+      {
+        id: 'about-section',
+        type: 'Section',
+        props: { title: 'About Us' },
+        children: [
+          {
+            id: 'about-text',
+            type: 'Text',
+            props: { content: 'This is a placeholder About page. Configure your GitHub repository to customize this content.' }
+          }
+        ]
+      }
+    ]
+  },
+  contact: {
+    title: 'Contact',
+    meta: { description: 'Contact us' },
+    components: [
+      {
+        id: 'contact-section',
+        type: 'Section',
+        props: { title: 'Contact Us' },
+        children: [
+          {
+            id: 'contact-text',
+            type: 'Text',
+            props: { content: 'This is a placeholder Contact page. Configure your GitHub repository to customize this content.' }
+          }
+        ]
+      }
+    ]
+  }
+};
+
 const Router = ({ owner, repo, defaultPage = 'home' }) => {
   const [currentPage, setCurrentPage] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -36,15 +75,23 @@ const Router = ({ owner, repo, defaultPage = 'home' }) => {
     setNotFound(false);
 
     try {
-      const pageData = await loadPageWithCache(pageName);
+      let pageData = await loadPageWithCache(pageName);
 
       if (pageData) {
         setCurrentPage(pageData);
+      } else if (FALLBACK_PAGES[pageName]) {
+        // Use fallback for pages like "about" and "contact"
+        setCurrentPage(FALLBACK_PAGES[pageName]);
       } else {
         setNotFound(true);
       }
     } catch (err) {
-      setError(err.message);
+      // If GitHub API fails, try fallback pages
+      if (FALLBACK_PAGES[pageName]) {
+        setCurrentPage(FALLBACK_PAGES[pageName]);
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
