@@ -2,6 +2,7 @@ import React from 'react';
 import PropEditor from './PropEditor';
 import CodeEditor from './CodeEditor';
 import { styles } from './componentCreatorStyles';
+import './admin.css';
 
 export default function ComponentCreatorForm({
   componentName, setComponentName, nameErrors,
@@ -14,12 +15,12 @@ export default function ComponentCreatorForm({
   onSubmit, onReset
 }) {
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>{isEditMode ? `Edit ${componentName}` : 'Create Custom Component'}</h2>
+    <div style={styles.container} className="creator-container">
+      <h2 style={styles.heading} className="creator-heading">{isEditMode ? `Edit ${componentName}` : 'Create Custom Component'}</h2>
 
       <form onSubmit={onSubmit} style={styles.form}>
         <section style={styles.section}>
-          <h3 style={styles.sectionHeading}>Component Info</h3>
+          <h3 style={styles.sectionHeading} className="creator-section-heading">Component Info</h3>
 
           <div style={styles.field}>
             <label style={styles.label}>Component Name</label>
@@ -58,7 +59,7 @@ export default function ComponentCreatorForm({
         </section>
 
         <section style={styles.section}>
-          <h3 style={styles.sectionHeading}>Props</h3>
+          <h3 style={styles.sectionHeading} className="creator-section-heading">Props</h3>
           <div style={styles.helperText}>Define the properties users can pass to this component</div>
 
           {props.map((prop, index) => (
@@ -84,7 +85,7 @@ export default function ComponentCreatorForm({
         />
 
         <section style={styles.section}>
-          <h3 style={styles.sectionHeading}>Children Rules</h3>
+          <h3 style={styles.sectionHeading} className="creator-section-heading">Children Rules</h3>
 
           <div style={styles.radioGroup}>
             <label style={styles.radioLabel}>
@@ -124,7 +125,7 @@ export default function ComponentCreatorForm({
 
         {error && <div style={styles.error}>{error}</div>}
 
-        <div style={styles.actions}>
+        <div style={styles.actions} className="creator-actions">
           <button type="submit" disabled={saving} style={styles.submitButton}>
             {saving ? 'Saving...' : (isEditMode ? 'Update Component' : 'Create Component')}
           </button>

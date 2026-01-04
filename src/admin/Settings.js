@@ -5,6 +5,7 @@ import {
   clearSettingsFromStorage
 } from './settingsStorage';
 import { styles, colors } from './settingsStyles';
+import './admin.css';
 
 const Settings = ({ onUpdate, repoInfo }) => {
   const [token, setToken] = useState('');
@@ -74,10 +75,10 @@ const Settings = ({ onUpdate, repoInfo }) => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>Settings</h1>
-        <p style={styles.description}>Configure your GitHub repository for content management</p>
+    <div style={styles.container} className="settings-container">
+      <div style={styles.header} className="settings-header">
+        <h1 style={styles.title} className="settings-title">Settings</h1>
+        <p style={styles.description} className="settings-description">Configure your GitHub repository for content management</p>
       </div>
 
       {error && (
@@ -98,7 +99,7 @@ const Settings = ({ onUpdate, repoInfo }) => {
         <div style={styles.formGroup}>
           <label style={styles.label}>
             GitHub Personal Access Token
-            <div style={styles.labelHelper}>Create one at github.com/settings/tokens</div>
+            <div style={styles.labelHelper} className="settings-label-helper">Create one at github.com/settings/tokens</div>
           </label>
           <input
             type="password"
@@ -114,7 +115,7 @@ const Settings = ({ onUpdate, repoInfo }) => {
         <div style={styles.formGroup}>
           <label style={styles.label}>
             Repository Owner
-            <div style={styles.labelHelper}>GitHub username or organization</div>
+            <div style={styles.labelHelper} className="settings-label-helper">GitHub username or organization</div>
           </label>
           <input
             type="text"
@@ -130,7 +131,7 @@ const Settings = ({ onUpdate, repoInfo }) => {
         <div style={styles.formGroup}>
           <label style={styles.label}>
             Repository Name
-            <div style={styles.labelHelper}>Name of your content repository</div>
+            <div style={styles.labelHelper} className="settings-label-helper">Name of your content repository</div>
           </label>
           <input
             type="text"
@@ -143,7 +144,7 @@ const Settings = ({ onUpdate, repoInfo }) => {
           />
         </div>
 
-        <div style={styles.buttonGroup}>
+        <div style={styles.buttonGroup} className="settings-button-group">
           <button
             type="submit"
             style={{ ...styles.button, ...styles.primaryButton }}

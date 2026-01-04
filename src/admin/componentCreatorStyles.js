@@ -1,26 +1,16 @@
-import { breakpoints, minTouchSize } from './responsiveStyles';
+import { minTouchSize } from './responsiveStyles';
 
 export const styles = {
   container: {
     padding: '16px',
     maxWidth: '800px',
     margin: '0 auto',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      padding: '24px',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      padding: '32px',
-    },
   },
   heading: {
     fontSize: '1.5rem',
     fontWeight: '700',
     color: '#1e293b',
     marginBottom: '20px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '2rem',
-      marginBottom: '24px',
-    },
   },
   form: { display: 'flex', flexDirection: 'column', gap: '20px' },
   section: { display: 'flex', flexDirection: 'column', gap: '12px' },
@@ -28,9 +18,6 @@ export const styles = {
     fontSize: '1rem',
     fontWeight: '600',
     color: '#1e293b',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '1.25rem',
-    },
   },
   field: { display: 'flex', flexDirection: 'column', gap: '4px' },
   label: { fontSize: '0.875rem', fontWeight: '500', color: '#64748b' },
@@ -82,10 +69,6 @@ export const styles = {
     flexDirection: 'column',
     gap: '12px',
     marginTop: '12px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-    },
   },
   submitButton: {
     ...minTouchSize,

@@ -15,7 +15,8 @@ import componentRegistry from '../lib/componentRegistry';
 import { componentLoader } from '../lib/componentLoader';
 import * as github from '../lib/github';
 import { parseRoute, navigateTo } from './Router';
-import { breakpoints, minTouchSize } from './responsiveStyles';
+import { minTouchSize } from './responsiveStyles';
+import './admin.css';
 
 export default function AdminApp() {
   const [currentRoute, setCurrentRoute] = useState(parseRoute(window.location.hash));
@@ -190,15 +191,15 @@ export default function AdminApp() {
 
     if (route === '/admin/pages/:pageName') {
       if (!currentPage) {
-        return <div style={styles.loading}>Loading page...</div>;
+        return <div style={styles.loading} className="admin-loading">Loading page...</div>;
       }
 
       return (
-        <div style={styles.builderLayout}>
-          <div style={styles.builderMain}>
+        <div style={styles.builderLayout} className="admin-builder-layout">
+          <div style={styles.builderMain} className="admin-builder-main">
             <Builder pageData={currentPage.data} onUpdate={handlePageUpdate} />
           </div>
-          <div style={styles.builderSidebar}>
+          <div style={styles.builderSidebar} className="admin-builder-sidebar">
             {selectedComponentId && (
               <>
                 <PropsEditor
@@ -252,7 +253,7 @@ export default function AdminApp() {
       return <ComponentReuseTestPage />;
     }
 
-    return <div style={styles.notFound}>404 - Page not found</div>;
+    return <div style={styles.notFound} className="admin-not-found">404 - Page not found</div>;
   };
 
   return (
@@ -265,9 +266,9 @@ export default function AdminApp() {
         onDismissNotification={() => setShowNotification(false)}
       />
       {successMessage && (
-        <div style={styles.successBanner}>
+        <div style={styles.successBanner} className="admin-success-banner">
           <span>{successMessage}</span>
-          <button onClick={() => setSuccessMessage(null)} style={styles.dismissButton}>Dismiss</button>
+          <button onClick={() => setSuccessMessage(null)} style={styles.dismissButton} className="admin-dismiss-button">Dismiss</button>
         </div>
       )}
       <main style={styles.main}>{renderCurrentView()}</main>
@@ -291,17 +292,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     height: '100%',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      flexDirection: 'column',
-    },
   },
   builderMain: {
     flex: 1,
     minHeight: 0,
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      order: 1,
-      minHeight: '400px',
-    },
   },
   builderSidebar: {
     width: '320px',
@@ -310,46 +304,18 @@ const styles = {
     padding: '16px',
     overflowY: 'auto',
     overflowX: 'hidden',
-    [`@media (max-width: ${breakpoints.laptop}px)`]: {
-      width: '280px',
-      padding: '12px',
-    },
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      width: '100%',
-      order: 2,
-      borderLeft: 'none',
-      borderTop: '1px solid #e2e8f0',
-      maxHeight: '300px',
-      padding: '12px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      maxHeight: '250px',
-      padding: '8px',
-    },
   },
   loading: {
     padding: '48px 24px',
     textAlign: 'center',
     color: '#64748b',
     fontSize: '1rem',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '32px 16px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '24px 12px',
-    },
   },
   notFound: {
     padding: '48px 24px',
     textAlign: 'center',
     color: '#64748b',
     fontSize: '1rem',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '32px 16px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '24px 12px',
-    },
   },
   successBanner: {
     display: 'flex',
@@ -361,15 +327,6 @@ const styles = {
     color: '#065f46',
     borderBottom: '1px solid #10b981',
     gap: '12px',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '10px 16px',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '8px 12px',
-      fontSize: '0.875rem',
-    },
   },
   dismissButton: {
     background: 'none',
@@ -379,9 +336,5 @@ const styles = {
     fontWeight: '500',
     ...minTouchSize,
     fontSize: '1rem',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '0.875rem',
-      padding: '6px 12px',
-    },
   },
 };

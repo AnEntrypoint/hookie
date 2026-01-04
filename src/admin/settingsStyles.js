@@ -4,7 +4,7 @@
  * Pure object exports - no React dependencies
  */
 
-import { breakpoints, minTouchSize } from './responsiveStyles';
+import { minTouchSize } from './responsiveStyles';
 
 const colors = {
   textDark: '#1e293b',
@@ -30,18 +30,9 @@ export const styles = {
     maxWidth: '700px',
     margin: '0 auto',
     padding: '16px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      padding: '24px',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      padding: '40px 28px',
-    },
   },
   header: {
     marginBottom: '28px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      marginBottom: '40px',
-    },
   },
   title: {
     fontSize: '1.5rem',
@@ -49,17 +40,11 @@ export const styles = {
     color: colors.textDark,
     margin: '0 0 8px 0',
     letterSpacing: '-0.5px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '2rem',
-    },
   },
   description: {
     fontSize: '0.875rem',
     color: colors.textLight,
     margin: 0,
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '0.95rem',
-    },
   },
   form: {
     display: 'flex',
@@ -80,9 +65,6 @@ export const styles = {
     fontSize: '0.75rem',
     color: colors.textMuted,
     fontWeight: 400,
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '0.8125rem',
-    },
   },
   input: {
     padding: '12px 16px',
@@ -107,10 +89,6 @@ export const styles = {
     flexDirection: 'column',
     gap: '12px',
     marginTop: '16px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      flexDirection: 'row',
-      marginTop: '20px',
-    },
   },
   button: {
     ...minTouchSize,

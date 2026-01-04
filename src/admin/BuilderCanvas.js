@@ -3,7 +3,8 @@ import { useDrop } from 'react-dnd';
 import Renderer from '../public/Renderer';
 import componentRegistry from '../lib/componentRegistry';
 import { generateUniqueId } from './builderHelpers';
-import { breakpoints, minTouchSize } from './responsiveStyles';
+import { minTouchSize } from './responsiveStyles';
+import './admin.css';
 
 export default function BuilderCanvas({
   pageData,
@@ -60,11 +61,12 @@ export default function BuilderCanvas({
 
   return (
     <div style={styles.container}>
-      <div style={styles.toolbar}>
+      <div style={styles.toolbar} className="builder-toolbar">
         <button
           onClick={onUndo}
           disabled={!canUndo}
           style={styles.toolbarButton}
+          className="builder-toolbar-button"
           title="Undo (Ctrl+Z)"
         >
           ↶
@@ -73,15 +75,17 @@ export default function BuilderCanvas({
           onClick={onRedo}
           disabled={!canRedo}
           style={styles.toolbarButton}
+          className="builder-toolbar-button"
           title="Redo (Ctrl+Shift+Z)"
         >
           ↷
         </button>
-        <div style={styles.separator} />
+        <div style={styles.separator} className="builder-separator" />
         <select
           value={previewMode}
           onChange={(e) => setPreviewMode(e.target.value)}
           style={styles.select}
+          className="builder-select"
         >
           <option value="desktop">Desktop</option>
           <option value="tablet">Tablet (768px)</option>
@@ -95,8 +99,9 @@ export default function BuilderCanvas({
           ...styles.canvas,
           backgroundColor: isOver ? '#f0f9ff' : '#ffffff',
         }}
+        className="builder-canvas"
       >
-        <div style={{ ...styles.canvasInner, width: getCanvasWidth() }}>
+        <div style={{ ...styles.canvasInner, width: getCanvasWidth() }} className="builder-canvas-inner">
           {pageData && pageData.components ? (
             <Renderer
               pageData={pageData}
@@ -105,7 +110,7 @@ export default function BuilderCanvas({
               onSelectComponent={onSelectComponent}
             />
           ) : (
-            <div style={styles.emptyState}>
+            <div style={styles.emptyState} className="builder-empty-state">
               Drop components here to start building
             </div>
           )}
@@ -113,11 +118,12 @@ export default function BuilderCanvas({
       </div>
 
       {selectedId && (
-        <div style={styles.selectionInfo}>
-          <span style={styles.selectionText}>Selected: {selectedId}</span>
+        <div style={styles.selectionInfo} className="builder-selection-info">
+          <span style={styles.selectionText} className="builder-selection-text">Selected: {selectedId}</span>
           <button
             onClick={() => onSelectComponent(null)}
             style={styles.clearButton}
+            className="builder-clear-button"
           >
             Clear Selection ×
           </button>
@@ -156,14 +162,6 @@ const styles = {
     backgroundColor: '#ffffff',
     borderBottom: '1px solid #e2e8f0',
     flexWrap: 'wrap',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '8px 12px',
-      gap: '6px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '6px 8px',
-      gap: '4px',
-    },
   },
   toolbarButton: {
     padding: '8px 12px',
@@ -174,23 +172,12 @@ const styles = {
     fontSize: '1rem',
     color: '#1e293b',
     ...minTouchSize,
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '6px 10px',
-      fontSize: '0.875rem',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '4px 8px',
-      fontSize: '0.75rem',
-    },
   },
   separator: {
     width: '1px',
     height: '24px',
     backgroundColor: '#e2e8f0',
     margin: '0 8px',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      display: 'none',
-    },
   },
   select: {
     padding: '8px 12px',
@@ -200,14 +187,6 @@ const styles = {
     backgroundColor: '#ffffff',
     cursor: 'pointer',
     ...minTouchSize,
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '6px 10px',
-      fontSize: '0.8125rem',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '4px 8px',
-      fontSize: '0.75rem',
-    },
   },
   canvas: {
     flex: 1,
@@ -216,22 +195,10 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     transition: 'background-color 150ms',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '12px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '8px',
-    },
   },
   canvasInner: {
     transition: 'width 300ms',
     minHeight: '400px',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      minHeight: '300px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      minHeight: '250px',
-    },
   },
   emptyState: {
     padding: '48px 24px',
@@ -241,14 +208,6 @@ const styles = {
     border: '2px dashed #cbd5e1',
     borderRadius: '8px',
     backgroundColor: '#f8fafc',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '32px 16px',
-      fontSize: '0.875rem',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '24px 12px',
-      fontSize: '0.75rem',
-    },
   },
   selectionInfo: {
     display: 'flex',
@@ -259,23 +218,11 @@ const styles = {
     backgroundColor: '#dbeafe',
     borderTop: '1px solid #93c5fd',
     gap: '12px',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '10px 12px',
-      gap: '8px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '8px 8px',
-      gap: '6px',
-      flexWrap: 'wrap',
-    },
   },
   selectionText: {
     fontSize: '0.875rem',
     color: '#1e40af',
     fontWeight: '500',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '0.75rem',
-    },
   },
   clearButton: {
     padding: '6px 12px',
@@ -286,9 +233,5 @@ const styles = {
     fontSize: '0.875rem',
     fontWeight: '500',
     ...minTouchSize,
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '0.75rem',
-      padding: '4px 8px',
-    },
   },
 };
