@@ -1,0 +1,32 @@
+{
+  "name": "demo",
+  "title": "Demo Page",
+  "components": [
+    {
+      "id": "container-demo",
+      "type": "Container",
+      "props": { "maxWidth": "1200px" },
+      "style": { "padding": "2rem" },
+      "children": [
+        {
+          "id": "heading-demo",
+          "type": "Heading",
+          "props": { "level": 1, "text": "Demo Page" },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "card-demo-1",
+          "type": "Card",
+          "props": {
+            "title": "Example Card 1",
+            "description": "This is a demo card component",
+            "variant": "elevated"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
