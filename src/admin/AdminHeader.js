@@ -28,6 +28,7 @@ export default function AdminHeader({
     { href: '#/admin', label: 'Pages', icon: '📄' },
     { href: '#/admin/components', label: 'Components', icon: '🧩' },
     { href: '#/admin/library', label: 'Library', icon: '📚' },
+    { href: '#/admin/layout', label: 'Layout', icon: '🎨' },
     { href: '#/admin/settings', label: 'Settings', icon: '⚙️' },
   ];
 

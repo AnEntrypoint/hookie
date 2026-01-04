@@ -9,6 +9,8 @@ import PropsEditor from './PropsEditor';
 import StyleEditor from './StyleEditor';
 import PublishManager from './PublishManager';
 import ComponentReuseTestPage from './ComponentReuseTestPage';
+import LayoutEditor from './LayoutEditor';
+import LayoutPreview from './LayoutPreview';
 import liveReload from '../lib/liveReload';
 import contentManager from '../lib/contentManager';
 import componentRegistry from '../lib/componentRegistry';
@@ -30,6 +32,7 @@ export default function AdminApp() {
   const [syncStatus, setSyncStatus] = useState({ lastSync: null, online: true, hasRemoteChanges: false });
   const [showNotification, setShowNotification] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [layoutData, setLayoutData] = useState(null);
 
   useEffect(() => {
     const owner = localStorage.getItem('repo_owner');
@@ -70,6 +73,20 @@ export default function AdminApp() {
     if (!repoInfo.owner || !repoInfo.repo) return;
     loadCustomComponents();
   }, [repoInfo]);
+
+  useEffect(() => {
+    if (!repoInfo.owner || !repoInfo.repo) return;
+    loadLayoutData();
+  }, [repoInfo]);
+
+  const loadLayoutData = async () => {
+    try {
+      const data = await github.readFile(repoInfo.owner, repoInfo.repo, 'content/layout.json');
+      const parsed = JSON.parse(data.content);
+      setLayoutData(parsed);
+    } catch (error) {
+    }
+  };
 
   const loadPage = async (pageName) => {
     try {
@@ -243,6 +260,22 @@ export default function AdminApp() {
       return <ComponentReuseTestPage />;
     }
 
+    if (route === '/admin/layout') {
+      return (
+        <div style={styles.layoutContainer}>
+          <div style={styles.layoutEditor}>
+            <LayoutEditor
+              owner={repoInfo.owner}
+              repo={repoInfo.repo}
+            />
+          </div>
+          <div style={styles.layoutPreview}>
+            <LayoutPreview layout={layoutData} />
+          </div>
+        </div>
+      );
+    }
+
     return <div style={styles.notFound} className="admin-not-found">404 - Page not found</div>;
   };
 
@@ -295,6 +328,23 @@ const styles = {
     overflowY: 'auto',
     overflowX: 'hidden',
   },
+  layoutContainer: {
+    display: 'flex',
+    height: '100%',
+    gap: 0,
+  },
+  layoutEditor: {
+    flex: 1,
+    minWidth: 0,
+    borderRight: '1px solid #e2e8f0',
+    overflowY: 'auto',
+  },
+  layoutPreview: {
+    flex: 1,
+    minWidth: 0,
+    overflowY: 'auto',
+    display: 'none',
+  },
   loading: {
     padding: '48px 24px',
     textAlign: 'center',
@@ -328,3 +378,7 @@ const styles = {
     fontSize: '1rem',
   },
 };
+
+if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+  styles.layoutPreview.display = 'block';
+}
