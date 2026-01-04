@@ -28,10 +28,9 @@ export default function LayoutEditor({ owner, repo }) {
     setSaving(true);
     try {
       const content = JSON.stringify(layout, null, 2);
-      const sha = await github.readFile(owner, repo, 'content/layout.json').then(f => f.sha);
       await github.writeFile(
         owner, repo, 'content/layout.json',
-        content, 'Update site layout', sha
+        content, 'Update site layout'
       );
       setSuccess('Layout saved successfully!');
       setError(null);

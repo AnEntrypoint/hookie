@@ -84,13 +84,30 @@ export async function readFile(owner, repo, path) {
 export async function writeFile(owner, repo, path, content, message, sha) {
   try {
     const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+
+    let currentSha = sha;
+    if (!sha) {
+      try {
+        const existing = await apiCall(`${API_BASE}/repos/${owner}/${repo}/contents/${cleanPath}`);
+        currentSha = existing.sha;
+      } catch (err) {
+        if (!err.message?.includes('404')) throw err;
+        currentSha = undefined;
+      }
+    }
+
+    const body = {
+      message,
+      content: btoa(content)
+    };
+
+    if (currentSha) {
+      body.sha = currentSha;
+    }
+
     const data = await apiCall(`${API_BASE}/repos/${owner}/${repo}/contents/${cleanPath}`, {
       method: 'PUT',
-      body: JSON.stringify({
-        message,
-        content: btoa(content),
-        sha
-      })
+      body: JSON.stringify(body)
     });
 
     return { commit: data.commit, content: data.content };
