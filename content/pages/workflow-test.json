@@ -1,0 +1,26 @@
+{
+  "name": "workflow-test",
+  "title": "Workflow Test",
+  "components": [
+    {
+      "id": "container-1767521177601",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1767521177601",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to Workflow Test"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
