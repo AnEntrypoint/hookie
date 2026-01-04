@@ -21,7 +21,7 @@ function getHeaders() {
 
 async function apiCall(url, options = {}) {
   const token = getToken();
-  if (!token) {
+  if (!token && options.requireAuth !== false) {
     throw new Error('401: GitHub token not configured. Please set your token in Settings.');
   }
 
