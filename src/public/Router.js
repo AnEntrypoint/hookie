@@ -50,8 +50,10 @@ const Router = ({ owner, repo, defaultPage = 'home', layout }) => {
 
   const getPageNameFromHash = () => {
     const hash = window.location.hash;
-    const pageName = hash.replace(/^#\/?/, '') || defaultPage;
-    return pageName;
+    const path = hash.replace(/^#\/?/, '') || defaultPage;
+    // Extract page name from /pages/demo format
+    const match = path.match(/pages\/(.+)$/);
+    return match ? match[1] : path;
   };
 
   const loadPageWithCache = async (pageName) => {
