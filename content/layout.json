@@ -1,0 +1,101 @@
+{
+  "version": "1.0.0",
+  "site": {
+    "title": "Hookie CMS",
+    "description": "Dynamic Page Builder CMS",
+    "theme": "light"
+  },
+  "header": {
+    "enabled": true,
+    "height": 64,
+    "backgroundColor": "#ffffff",
+    "borderBottom": "1px solid #e0e0e0",
+    "navigation": [
+      {
+        "label": "Home",
+        "path": "/",
+        "icon": "home"
+      },
+      {
+        "label": "Pages",
+        "path": "/pages",
+        "icon": "document"
+      },
+      {
+        "label": "Components",
+        "path": "/components",
+        "icon": "layers"
+      }
+    ]
+  },
+  "footer": {
+    "enabled": true,
+    "height": 60,
+    "backgroundColor": "#f5f5f5",
+    "borderTop": "1px solid #e0e0e0",
+    "content": "Copyright 2026 Hookie CMS. All rights reserved.",
+    "links": [
+      {
+        "label": "Privacy",
+        "path": "/privacy"
+      },
+      {
+        "label": "Terms",
+        "path": "/terms"
+      }
+    ]
+  },
+  "sidebar": {
+    "enabled": false,
+    "width": 250,
+    "backgroundColor": "#f9f9f9",
+    "collapsible": true
+  },
+  "grid": {
+    "columns": 12,
+    "gap": 16,
+    "maxWidth": 1200
+  },
+  "spacing": {
+    "unit": 8,
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32
+  },
+  "colors": {
+    "primary": "#2563eb",
+    "secondary": "#64748b",
+    "success": "#10b981",
+    "warning": "#f59e0b",
+    "error": "#ef4444",
+    "background": "#ffffff",
+    "surface": "#f8fafc",
+    "text": "#1e293b",
+    "textSecondary": "#64748b",
+    "border": "#e2e8f0"
+  },
+  "typography": {
+    "fontFamily": "system-ui, -apple-system, sans-serif",
+    "fontSize": {
+      "xs": 12,
+      "sm": 14,
+      "base": 16,
+      "lg": 18,
+      "xl": 20,
+      "2xl": 24
+    },
+    "lineHeight": {
+      "tight": 1.2,
+      "normal": 1.5,
+      "relaxed": 1.75
+    },
+    "fontWeight": {
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    }
+  }
+}
