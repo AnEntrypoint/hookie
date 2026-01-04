@@ -1,0 +1,25 @@
+{
+  "name": "TestModal",
+  "description": "A test modal component that demonstrates state management",
+  "props": {
+    "title": {
+      "type": "string",
+      "required": false,
+      "default": "Modal Title"
+    },
+    "content": {
+      "type": "string",
+      "required": false,
+      "default": "Modal content goes here"
+    },
+    "isOpen": {
+      "type": "boolean",
+      "required": false,
+      "default": true
+    }
+  },
+  "allowedChildren": [
+    "*"
+  ],
+  "defaultStyle": {}
+}
