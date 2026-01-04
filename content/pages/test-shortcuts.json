@@ -1,0 +1,26 @@
+{
+  "name": "test-shortcuts",
+  "title": "Test Shortcuts",
+  "components": [
+    {
+      "id": "container-1767520731256",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1767520731256",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to Test Shortcuts"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
