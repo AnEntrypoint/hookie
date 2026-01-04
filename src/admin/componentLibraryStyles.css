@@ -1,0 +1,134 @@
+@media (max-width: 480px) {
+  .component-library-hamburger {
+    display: inline-block !important;
+  }
+
+  .component-library-list {
+    flex: 1;
+  }
+
+  .component-library-detail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .component-library-detail.hidden {
+    display: none !important;
+  }
+
+  .component-library-list.hidden {
+    display: none !important;
+  }
+
+  .component-library-header {
+    padding: 16px;
+  }
+
+  .component-library-title {
+    font-size: 1.5rem;
+  }
+
+  .component-library-filters {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .component-library-search {
+    width: 100%;
+  }
+
+  .component-library-select {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .component-library-detail-content {
+    padding: 16px;
+  }
+
+  .component-library-props-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .component-library-preview {
+    max-height: 300px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .component-library-main {
+    flex-direction: column;
+  }
+
+  .component-library-list {
+    flex: 1;
+    border-right: 1px solid #e2e8f0;
+    min-height: 300px;
+  }
+
+  .component-library-detail {
+    flex: 1;
+  }
+
+  .component-library-props-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+  }
+
+  .component-library-hamburger {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .component-library-list {
+    width: 320px;
+    border-right: 1px solid #e2e8f0;
+  }
+
+  .component-library-props-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  }
+
+  .component-library-hamburger {
+    display: none;
+  }
+}
+
+.component-library-detail-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.component-library-props-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.component-library-back-button {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .component-library-back-button {
+    display: inline-block;
+  }
+}
+
+.component-library-card-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.component-library-detail-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

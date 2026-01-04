@@ -4,6 +4,7 @@ import * as github from '../lib/github';
 import { listComponentSchemas, loadComponentSchema, deleteComponentSchema } from '../lib/componentManager';
 import { componentLoader } from '../lib/componentLoader';
 import PropInput from './PropInput';
+import './componentLibraryStyles.css';
 
 const BREAKPOINTS = {
   mobile: 480,
@@ -208,18 +209,19 @@ export default function ComponentLibrary({ owner, repo }) {
     if (!selectedComponent) return null;
 
     return (
-      <div style={getDetailPanelStyle()}>
+      <div style={getDetailPanelStyle()} className="component-library-detail-panel">
         {isMobile && expandedMobileDetail && (
           <button
             onClick={() => setExpandedMobileDetail(false)}
             style={styles.backButton}
+            className="component-library-back-button"
           >
             Back to List
           </button>
         )}
 
-        <div style={styles.detailHeader}>
-          <h2 style={styles.detailTitle}>{selectedComponent.name}</h2>
+        <div style={styles.detailHeader} className="component-library-detail-header">
+          <h2 style={styles.detailTitle} className="component-library-detail-title">{selectedComponent.name}</h2>
           {selectedComponent.isCustom && (
             <button
               onClick={() => setDeleteConfirm(selectedComponent.name)}
@@ -250,7 +252,7 @@ export default function ComponentLibrary({ owner, repo }) {
           </div>
         )}
 
-        <div style={getDetailContentStyle()}>
+        <div style={getDetailContentStyle()} className="component-library-detail-content">
           <div style={styles.section}>
             <h3 style={styles.sectionTitle}>Description</h3>
             <p style={styles.sectionText}>{selectedComponent.description || 'No description provided'}</p>
@@ -279,7 +281,7 @@ export default function ComponentLibrary({ owner, repo }) {
           <div style={styles.section}>
             <h3 style={styles.sectionTitle}>Properties</h3>
             {Object.keys(selectedComponent.props || {}).length > 0 ? (
-              <div style={getPropsGridStyle()}>
+              <div style={getPropsGridStyle()} className="component-library-props-grid">
                 {Object.entries(selectedComponent.props || {}).map(([propName, propSchema]) => (
                   <div key={propName} style={styles.propField}>
                     <label style={styles.propLabel}>
@@ -305,7 +307,7 @@ export default function ComponentLibrary({ owner, repo }) {
             )}
           </div>
 
-          <div style={getPreviewSectionStyle()}>
+          <div style={getPreviewSectionStyle()} className="component-library-preview">
             <h3 style={styles.sectionTitle}>Live Preview</h3>
             {renderComponentPreview()}
           </div>
@@ -424,30 +426,32 @@ export default function ComponentLibrary({ owner, repo }) {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={getHeaderStyle()}>
+    <div style={styles.container} className="component-library-container">
+      <div style={getHeaderStyle()} className="component-library-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? '12px' : '0' }}>
-          <h2 style={{ ...styles.title, margin: 0, fontSize: isMobile ? '1.5rem' : '1.875rem' }}>Component Library</h2>
+          <h2 style={{ ...styles.title, margin: 0, fontSize: isMobile ? '1.5rem' : '1.875rem' }} className="component-library-title">Component Library</h2>
           {isMobile && (
             <button
               onClick={() => setShowMobileMenu(!showMobileMenu)}
               style={styles.hamburgerButton}
+              className="component-library-hamburger"
               title="Toggle menu"
             >
               ☰
             </button>
           )}
         </div>
-        <div style={getFiltersStyle()}>
+        <div style={getFiltersStyle()} className="component-library-filters">
           <input
             type="text"
             placeholder="Search components..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{ ...styles.searchInput, flex: 1 }}
+            className="component-library-search"
           />
           {!isMobile && (
-            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={styles.filterSelect}>
+            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={styles.filterSelect} className="component-library-filter-select">
               <option value="all">All</option>
               <option value="builtin">Built-in</option>
               <option value="custom">Custom</option>
@@ -459,6 +463,7 @@ export default function ComponentLibrary({ owner, repo }) {
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
             style={{ ...styles.filterSelect, marginTop: '8px', width: '100%' }}
+            className="component-library-select"
           >
             <option value="all">All Components</option>
             <option value="builtin">Built-in Only</option>
@@ -467,14 +472,16 @@ export default function ComponentLibrary({ owner, repo }) {
         )}
       </div>
 
-      <div style={getMainLayoutStyle()}>
-        <div style={getListPanelStyle()}>
+      <div style={getMainLayoutStyle()} className="component-library-main">
+        <div style={getListPanelStyle()} className={`component-library-list ${expandedMobileDetail ? 'hidden' : ''}`}>
           <div style={styles.componentsList}>
             {filteredComponents.map(renderMobileListItem)}
           </div>
         </div>
 
-        {renderDetailPanel()}
+        <div className={`component-library-detail ${!selectedComponent || !expandedMobileDetail && isMobile ? 'hidden' : ''}`}>
+          {renderDetailPanel()}
+        </div>
       </div>
     </div>
   );

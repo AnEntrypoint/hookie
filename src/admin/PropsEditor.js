@@ -76,9 +76,15 @@ const PropsEditor = ({ component, schema, onChange, onClose, isMobile, component
   const propEntries = Object.entries(activeSchema.props);
 
   if (isMobile) {
+    const handleBackdropClick = (e) => {
+      if (e.target === e.currentTarget && onClose) {
+        onClose();
+      }
+    };
+
     return (
-      <div style={getMobileWrapperStyle()}>
-        <form style={getMobileContainerStyle()}>
+      <div style={getMobileWrapperStyle()} onClick={handleBackdropClick}>
+        <form style={getMobileContainerStyle()} onClick={(e) => e.stopPropagation()}>
           {onClose && (
             <div style={getMobileHeaderStyle()}>
               <h3 style={{ margin: '0 0 0 0', fontSize: '18px', fontWeight: 600, color: DEFAULT_COLORS.textDark }}>

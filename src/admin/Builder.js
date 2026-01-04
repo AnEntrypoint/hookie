@@ -30,6 +30,7 @@ export default function Builder({ pageData, onUpdate }) {
   const [history, setHistory] = useState([deepClone(pageData)]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [paletteVisible, setPaletteVisible] = useState(true);
+  const [showMobilePropsPanel, setShowMobilePropsPanel] = useState(false);
   const screenSize = useResponsiveBuilder();
   const isMobile = screenSize === 'mobile';
   const isTablet = screenSize === 'tablet';
@@ -173,11 +174,46 @@ export default function Builder({ pageData, onUpdate }) {
           />
         </div>
 
+        {isMobile && showMobilePropsPanel ? (
+          <PropsEditor
+            component={selectedComponentId ? findComponentById(pageData, selectedComponentId) : null}
+            schema={selectedComponentId ? componentRegistry.getComponent(findComponentById(pageData, selectedComponentId)?.type) : null}
+            onChange={(updatedProps) => {
+              const newPageData = deepClone(pageData);
+              const comp = findComponentById(newPageData, selectedComponentId);
+              if (comp) {
+                comp.props = updatedProps;
+                handleUpdate(newPageData);
+              }
+            }}
+            onClose={() => setShowMobilePropsPanel(false)}
+            isMobile={true}
+          />
+        ) : null}
+
         <div style={isMobile ? styles.rightMobile : isTablet ? styles.rightTablet : styles.right}>
           {selectedComponentId ? (() => {
             const component = findComponentById(pageData, selectedComponentId);
             const schema = component ? componentRegistry.getComponent(component.type) : null;
-            return (
+            return isMobile ? (
+              <button
+                onClick={() => setShowMobilePropsPanel(true)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  backgroundColor: '#2563eb',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  minHeight: '44px',
+                }}
+              >
+                Edit Properties
+              </button>
+            ) : (
               <PropsEditor
                 component={component}
                 schema={schema}
@@ -189,7 +225,7 @@ export default function Builder({ pageData, onUpdate }) {
                     handleUpdate(newPageData);
                   }
                 }}
-                isMobile={isMobile}
+                isMobile={false}
               />
             );
           })() : (
