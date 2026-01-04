@@ -54,8 +54,22 @@ export async function getRepoStructure(owner, repo) {
 
     for (const dir of dirs) {
       try {
-        const data = await apiCall(`${API_BASE}/repos/${owner}/${repo}/contents/${dir}`);
-        structure[dir] = Array.isArray(data) ? data : [data];
+        // Try unauthenticated API call first
+        const response = await fetch(`${API_BASE}/repos/${owner}/${repo}/contents/${dir}`, {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json'
+            // No Authorization header for public repos
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          structure[dir] = Array.isArray(data) ? data : [data];
+        } else if (response.status === 404) {
+          structure[dir] = [];
+        } else {
+          throw new Error(`${response.status}: ${response.statusText}`);
+        }
       } catch (err) {
         if (err.message?.includes('404')) {
           structure[dir] = [];
@@ -74,10 +88,33 @@ export async function getRepoStructure(owner, repo) {
 export async function readFile(owner, repo, path) {
   try {
     const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-    const data = await apiCall(`${API_BASE}/repos/${owner}/${repo}/contents/${cleanPath}`);
-    const content = atob(data.content);
+    // Read file from raw.githubusercontent.com (works for public repos without auth)
+    const response = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${cleanPath}`);
 
-    return { content, sha: data.sha, path };
+    if (!response.ok) {
+      throw new Error(`${response.status}: Not found`);
+    }
+
+    const content = await response.text();
+
+    // Try to get SHA from API (for write operations), but don't fail if unavailable
+    let sha = null;
+    try {
+      const token = getToken();
+      if (token) {
+        const apiResponse = await fetch(`${API_BASE}/repos/${owner}/${repo}/contents/${cleanPath}`, {
+          headers: { ...getHeaders() }
+        });
+        if (apiResponse.ok) {
+          const data = await apiResponse.json();
+          sha = data.sha;
+        }
+      }
+    } catch (err) {
+      // SHA not available, but content read succeeded
+    }
+
+    return { content, sha: sha || null, path };
   } catch (err) {
     throw err;
   }
