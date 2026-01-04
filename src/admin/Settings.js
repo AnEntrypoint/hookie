@@ -6,7 +6,7 @@ import {
 } from './settingsStorage';
 import { styles, colors } from './settingsStyles';
 
-const Settings = ({ onSettingsSaved }) => {
+const Settings = ({ onUpdate, repoInfo }) => {
   const [token, setToken] = useState('');
   const [owner, setOwner] = useState('');
   const [repo, setRepo] = useState('');
@@ -20,6 +20,13 @@ const Settings = ({ onSettingsSaved }) => {
     setOwner(settings.owner);
     setRepo(settings.repo);
   }, []);
+
+  useEffect(() => {
+    if (repoInfo?.owner && repoInfo?.repo) {
+      setOwner(repoInfo.owner);
+      setRepo(repoInfo.repo);
+    }
+  }, [repoInfo]);
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -47,8 +54,8 @@ const Settings = ({ onSettingsSaved }) => {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
 
-      if (onSettingsSaved) {
-        onSettingsSaved({ token, owner, repo });
+      if (onUpdate) {
+        onUpdate({ owner, repo });
       }
     } catch (err) {
       setError('Failed to save settings: ' + err.message);

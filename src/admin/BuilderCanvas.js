@@ -46,8 +46,6 @@ export default function BuilderCanvas({
     onSelectComponent(newComponent.id);
   };
 
-  const handleComponentPropsChange = (componentId, newProps) => {
-  };
 
   const getCanvasWidth = () => {
     switch (previewMode) {
@@ -102,7 +100,6 @@ export default function BuilderCanvas({
               mode="edit"
               selectedId={selectedId}
               onSelectComponent={onSelectComponent}
-              onPropsChange={handleComponentPropsChange}
             />
           ) : (
             <div style={styles.emptyState}>

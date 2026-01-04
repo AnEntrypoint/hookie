@@ -10,6 +10,8 @@ import PublishManager from './PublishManager';
 import liveReload from '../lib/liveReload';
 import contentManager from '../lib/contentManager';
 import componentRegistry from '../lib/componentRegistry';
+import { componentLoader } from '../lib/componentLoader';
+import * as github from '../lib/github';
 import { parseRoute, navigateTo } from './Router';
 
 export default function AdminApp() {
@@ -24,6 +26,14 @@ export default function AdminApp() {
   const [syncStatus, setSyncStatus] = useState({ lastSync: null, online: true, hasRemoteChanges: false });
   const [showNotification, setShowNotification] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  useEffect(() => {
+    const owner = localStorage.getItem('repo_owner');
+    const repo = localStorage.getItem('repo_name');
+    if (owner && repo) {
+      setRepoInfo({ owner, repo });
+    }
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -50,6 +60,11 @@ export default function AdminApp() {
     });
 
     return () => liveReload.stopWatching();
+  }, [repoInfo]);
+
+  useEffect(() => {
+    if (!repoInfo.owner || !repoInfo.repo) return;
+    loadCustomComponents();
   }, [repoInfo]);
 
   const loadPage = async (pageName) => {
@@ -98,8 +113,27 @@ export default function AdminApp() {
       for (const name of componentNames) {
         const schema = await contentManager.loadComponentSchema(repoInfo.owner, repoInfo.repo, name);
         componentRegistry.registerComponent(name, schema);
+
+        try {
+          const codeContent = await github.readFile(repoInfo.owner, repoInfo.repo, `src/components/${name}.js`);
+          let code = codeContent.content;
+
+          const transformedCode = code.replace(/export\s+default\s+/, 'module.exports.default = ');
+
+          const mod = { exports: {} };
+          new Function('React', 'module', 'exports', transformedCode)(window.React, mod, mod.exports);
+          const Component = mod.exports.default;
+          if (Component && typeof Component === 'function') {
+            componentLoader.registerComponentImplementation(name, Component);
+          } else if (!Component) {
+            console.warn(`Component ${name} has no default export`);
+          }
+        } catch (err) {
+          console.warn(`Failed to load implementation for ${name}:`, err.message);
+        }
       }
     } catch (error) {
+      console.warn('Error loading custom components:', error.message);
     }
   };
 

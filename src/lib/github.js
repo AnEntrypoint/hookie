@@ -8,7 +8,7 @@ function getToken() {
 function getHeaders() {
   const token = getToken();
   return {
-    'Authorization': token ? `token ${token}` : '',
+    'Authorization': token ? `Bearer ${token}` : '',
     'Accept': 'application/vnd.github.v3+json',
     'Content-Type': 'application/json'
   };

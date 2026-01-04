@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import PropEditor from './PropEditor';
+import CodeEditor from './CodeEditor';
 import { validateComponentName, validatePropName, parseDefaultValue } from './validators';
 import contentManager from '../lib/contentManager';
 import componentRegistry from '../lib/componentRegistry';
+import * as github from '../lib/github';
 import { styles } from './componentCreatorStyles';
 
 export default function ComponentCreator({ owner, repo, onComponentCreated }) {
   const [componentName, setComponentName] = useState('');
   const [description, setDescription] = useState('');
+  const [componentCode, setComponentCode] = useState('');
   const [props, setProps] = useState([]);
   const [allowedChildren, setAllowedChildren] = useState('all');
   const [specificChildren, setSpecificChildren] = useState([]);
@@ -76,6 +79,12 @@ export default function ComponentCreator({ owner, repo, onComponentCreated }) {
     setSaving(true);
     try {
       await contentManager.saveComponentSchema(owner, repo, componentName, schema);
+
+      if (componentCode.trim()) {
+        const codePath = `src/components/${componentName}.js`;
+        await github.writeFile(owner, repo, codePath, componentCode, `Create component implementation: ${componentName}`);
+      }
+
       componentRegistry.registerComponent(componentName, schema);
       if (onComponentCreated) {
         onComponentCreated(componentName);
@@ -91,6 +100,7 @@ export default function ComponentCreator({ owner, repo, onComponentCreated }) {
   const handleReset = () => {
     setComponentName('');
     setDescription('');
+    setComponentCode('');
     setProps([]);
     setAllowedChildren('all');
     setSpecificChildren([]);
@@ -146,6 +156,12 @@ export default function ComponentCreator({ owner, repo, onComponentCreated }) {
             + Add Prop
           </button>
         </section>
+
+        <CodeEditor
+          value={componentCode}
+          onChange={setComponentCode}
+          componentName={componentName}
+        />
 
         <section style={styles.section}>
           <h3 style={styles.sectionHeading}>Children Rules</h3>

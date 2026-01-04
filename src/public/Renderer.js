@@ -1,5 +1,6 @@
 import React from 'react';
 import { componentRegistry } from '../lib/componentRegistry.js';
+import { componentLoader } from '../lib/componentLoader.js';
 import Button from '../components/Button.js';
 import Text from '../components/Text.js';
 import Container from '../components/Container.js';
@@ -68,8 +69,7 @@ const Renderer = ({
       );
     }
 
-    // Get React component implementation
-    const Component = COMPONENT_MAP[type];
+    const Component = componentLoader.getComponentImplementation(type) || COMPONENT_MAP[type];
     if (!Component) {
       return (
         <div key={id || index} style={{
@@ -106,14 +106,16 @@ const Renderer = ({
     // In edit mode, wrap with selection handling and visual feedback
     if (mode === 'edit') {
       const isSelected = selectedId === id;
-      
+      const isContainer = schema.allowedChildren && schema.allowedChildren.length > 0;
+      const isEmpty = !renderedChildren || renderedChildren.length === 0;
+
       const handleClick = (e) => {
         e.stopPropagation();
         if (onSelectComponent) {
           onSelectComponent(id);
         }
       };
-      
+
       return (
         <div
           key={id || index}
@@ -123,11 +125,12 @@ const Renderer = ({
           data-component-type={type}
           style={{
             position: 'relative',
-            outline: isSelected ? '2px solid #2563eb' : 'none',
-            backgroundColor: isSelected ? 'rgba(37, 99, 235, 0.05)' : 'transparent',
+            outline: isSelected ? '2px solid #2563eb' : (isContainer && isEmpty ? '2px dashed #cbd5e1' : 'none'),
+            backgroundColor: isSelected ? 'rgba(37, 99, 235, 0.05)' : (isContainer && isEmpty ? 'rgba(203, 213, 225, 0.05)' : 'transparent'),
             borderRadius: '4px',
             transition: 'all 150ms ease-in-out',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            minHeight: isContainer && isEmpty ? '80px' : undefined
           }}
         >
           <Component {...componentProps} />
