@@ -1,0 +1,9 @@
+{
+  "name": "AlertBox",
+  "description": "An alert box component",
+  "props": {},
+  "allowedChildren": [
+    "*"
+  ],
+  "defaultStyle": {}
+}
