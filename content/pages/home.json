@@ -718,7 +718,12 @@
                     "text": "Demo",
                     "variant": "default"
                   },
-                  "style": {},
+                  "style": {
+                    "marginTop": "46px",
+                    "marginRight": "46px",
+                    "marginBottom": "46px",
+                    "marginLeft": "46px"
+                  },
                   "children": []
                 },
                 {
