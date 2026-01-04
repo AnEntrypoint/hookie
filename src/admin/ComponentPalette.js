@@ -19,10 +19,32 @@ function getComponentTypeInfo(componentName) {
   return typeMap[componentName] || { type: 'unknown', icon: '▪', color: '#64748b' };
 }
 
-export default function ComponentPalette({ pageData, selectedId, onSelect, onDelete, onDuplicate }) {
+function useResponsive() {
+  const [screenSize, setScreenSize] = useState(() => {
+    if (typeof window === 'undefined') return 'desktop';
+    return window.innerWidth < 768 ? 'mobile' : window.innerWidth < 1024 ? 'tablet' : 'desktop';
+  });
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setScreenSize(width < 768 ? 'mobile' : width < 1024 ? 'tablet' : 'desktop');
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return screenSize;
+}
+
+export default function ComponentPalette({ pageData, selectedId, onSelect, onDelete, onDuplicate, isVisible, onToggleVisibility }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [dragLongPressed, setDragLongPressed] = useState(null);
+  const screenSize = useResponsive();
   const allComponents = componentRegistry.getAllComponents();
+  const isMobile = screenSize === 'mobile';
+  const isTablet = screenSize === 'tablet';
 
   const filteredComponents = allComponents.filter(name => {
     const schema = componentRegistry.getComponent(name);
@@ -32,15 +54,46 @@ export default function ComponentPalette({ pageData, selectedId, onSelect, onDel
            description.toLowerCase().includes(searchLower);
   });
 
+  const containerStyle = isMobile
+    ? { ...styles.container, ...styles.containerMobile, display: isVisible ? 'flex' : 'none' }
+    : isTablet
+    ? { ...styles.container, ...styles.containerTablet }
+    : styles.container;
+
   return (
     <>
-      <div style={styles.container}>
-        <div style={styles.section}>
+      {isMobile && (
+        <>
+          <button
+            onClick={() => onToggleVisibility(!isVisible)}
+            style={styles.paletteToggle}
+            title="Toggle components palette"
+          >
+            ◆
+          </button>
+          {isVisible && <div style={styles.mobileOverlay} onClick={() => onToggleVisibility(false)} />}
+        </>
+      )}
+
+      <div style={containerStyle}>
+        <div style={isMobile ? styles.mobileHeader : {}}>
+          {isMobile && (
+            <button
+              onClick={() => onToggleVisibility(false)}
+              style={styles.closeButton}
+              title="Close palette"
+            >
+              ✕
+            </button>
+          )}
           <h3 style={styles.heading}>Components</h3>
+        </div>
+
+        <div style={styles.section}>
           <div style={styles.searchContainer}>
             <input
               type="text"
-              placeholder="Search components..."
+              placeholder={isMobile ? "Search..." : "Search components..."}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={styles.searchInput}
@@ -55,9 +108,11 @@ export default function ComponentPalette({ pageData, selectedId, onSelect, onDel
               </button>
             )}
           </div>
-          <div style={styles.resultCounter}>
-            Showing {filteredComponents.length} of {allComponents.length} components
-          </div>
+          {!isMobile && (
+            <div style={styles.resultCounter}>
+              Showing {filteredComponents.length} of {allComponents.length}
+            </div>
+          )}
           {allComponents.length === 0 ? (
             <div style={styles.emptyStateContainer}>
               <div style={styles.emptyIcon}>🔧</div>
@@ -70,30 +125,39 @@ export default function ComponentPalette({ pageData, selectedId, onSelect, onDel
           ) : filteredComponents.length === 0 ? (
             <div style={styles.noResults}>No components found</div>
           ) : (
-            <div style={styles.palette}>
+            <div style={isMobile ? styles.paletteMobile : isTablet ? styles.paletteTablet : styles.palette}>
               {filteredComponents.map(type => (
-                <ComponentCard key={type} type={type} />
+                <ComponentCard
+                  key={type}
+                  type={type}
+                  isMobile={isMobile}
+                  isTablet={isTablet}
+                  dragLongPressed={dragLongPressed}
+                  setDragLongPressed={setDragLongPressed}
+                />
               ))}
             </div>
           )}
         </div>
 
-        <div style={styles.section}>
-          <h3 style={styles.heading}>Page Structure</h3>
-          <div style={styles.tree}>
-            {pageData && pageData.components && pageData.components.map(component => (
-              <TreeNode
-                key={component.id}
-                component={component}
-                selectedId={selectedId}
-                onSelect={onSelect}
-                onDelete={onDelete}
-                onDuplicate={onDuplicate}
-                setDeleteConfirm={setDeleteConfirm}
-              />
-            ))}
+        {!isMobile && (
+          <div style={styles.section}>
+            <h3 style={styles.heading}>Page Structure</h3>
+            <div style={styles.tree}>
+              {pageData && pageData.components && pageData.components.map(component => (
+                <TreeNode
+                  key={component.id}
+                  component={component}
+                  selectedId={selectedId}
+                  onSelect={onSelect}
+                  onDelete={onDelete}
+                  onDuplicate={onDuplicate}
+                  setDeleteConfirm={setDeleteConfirm}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {deleteConfirm && (
@@ -242,7 +306,9 @@ function getPreviewButtonStyle() {
   };
 }
 
-function ComponentCard({ type }) {
+function ComponentCard({ type, isMobile, isTablet, dragLongPressed, setDragLongPressed }) {
+  const [pressTimer, setPressTimer] = React.useState(null);
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'COMPONENT',
     item: { componentType: type },
@@ -251,34 +317,67 @@ function ComponentCard({ type }) {
     }),
   }));
 
+  const handleMouseDown = () => {
+    if (isMobile) {
+      const timer = setTimeout(() => {
+        setDragLongPressed(type);
+      }, 500);
+      setPressTimer(timer);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      setPressTimer(null);
+    }
+  };
+
   const schema = componentRegistry.getComponent(type);
   const description = schema?.description || 'No description';
   const props = schema?.props ? Object.keys(schema.props).slice(0, 4) : [];
   const componentType = getComponentType(type);
+  const typeInfo = getComponentTypeInfo(type);
+
+  const cardStyle = isMobile
+    ? { ...styles.card, ...styles.cardMobile, opacity: isDragging || dragLongPressed === type ? 0.7 : 1 }
+    : isTablet
+    ? { ...styles.card, ...styles.cardTablet, opacity: isDragging ? 0.7 : 1 }
+    : { ...styles.card, opacity: isDragging ? 0.7 : 1 };
 
   return (
     <div
       ref={drag}
-      style={{
-        ...styles.card,
-        opacity: isDragging ? 0.7 : 1,
-      }}
+      style={cardStyle}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
     >
-      <div style={styles.cardPreview}>
-        <ComponentPreview type={type} />
-      </div>
-      <div style={styles.cardInfo}>
-        <div style={styles.cardHeader}>
-          <div style={styles.cardName}>{type}</div>
-          <div style={styles.componentType}>{componentType}</div>
-        </div>
-        <div style={styles.cardDescription}>{description}</div>
-        {props.length > 0 && (
-          <div style={styles.cardProps}>
-            Props: {props.join(', ')}
+      <div style={isMobile ? styles.cardPreviewMobile : styles.cardPreview}>
+        {isMobile ? (
+          <div style={styles.mobileIconContainer}>
+            <span style={styles.mobileIcon}>{typeInfo.icon}</span>
+            <span style={styles.mobileLabel}>{type.slice(0, 3)}</span>
           </div>
+        ) : (
+          <ComponentPreview type={type} />
         )}
       </div>
+      {!isMobile && (
+        <div style={styles.cardInfo}>
+          <div style={styles.cardHeader}>
+            <div style={styles.cardName}>{type}</div>
+            <div style={styles.componentType}>{componentType}</div>
+          </div>
+          <div style={styles.cardDescription}>{description}</div>
+          {props.length > 0 && (
+            <div style={styles.cardProps}>
+              Props: {props.join(', ')}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -386,7 +485,68 @@ function TreeNode({ component, selectedId, onSelect, onDelete, onDuplicate, setD
 }
 
 const styles = {
-  container: { display: 'flex', flexDirection: 'column', gap: '24px', height: '100%', overflowY: 'auto' },
+  container: { display: 'flex', flexDirection: 'column', gap: '24px', height: '100%', overflowY: 'auto', backgroundColor: '#ffffff' },
+  containerMobile: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '65vh',
+    borderRadius: '16px 16px 0 0',
+    borderTop: '1px solid #e2e8f0',
+    boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.1)',
+    zIndex: 50,
+    animation: 'slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+  },
+  containerTablet: {
+    width: '200px',
+  },
+  mobileOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    zIndex: 40,
+    animation: 'fadeIn 200ms ease-in',
+  },
+  mobileHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '16px',
+    borderBottom: '1px solid #e2e8f0',
+    position: 'relative',
+  },
+  paletteToggle: {
+    position: 'fixed',
+    bottom: '24px',
+    right: '24px',
+    width: '56px',
+    height: '56px',
+    borderRadius: '50%',
+    backgroundColor: '#2563eb',
+    color: '#ffffff',
+    border: 'none',
+    fontSize: '1.5rem',
+    cursor: 'pointer',
+    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+    zIndex: 45,
+    transition: 'all 200ms',
+  },
+  closeButton: {
+    position: 'absolute',
+    left: '16px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: 'none',
+    border: 'none',
+    fontSize: '1.5rem',
+    color: '#1e293b',
+    cursor: 'pointer',
+    padding: '4px 8px',
+  },
   section: { display: 'flex', flexDirection: 'column', gap: '12px' },
   heading: { fontSize: '1rem', fontWeight: '600', color: '#1e293b', margin: 0 },
   searchContainer: { position: 'relative', display: 'flex' },
@@ -400,6 +560,8 @@ const styles = {
   emptyDescription: { fontSize: '0.95rem', color: '#6b7280', marginBottom: '24px', lineHeight: '1.6', margin: '0 0 24px 0' },
 
   palette: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' },
+  paletteTablet: { display: 'grid', gridTemplateColumns: '1fr', gap: '12px' },
+  paletteMobile: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', padding: '0 8px' },
 
   card: {
     display: 'flex',
@@ -412,6 +574,53 @@ const styles = {
     minHeight: '200px',
     maxHeight: '250px',
     overflow: 'hidden'
+  },
+  cardMobile: {
+    minHeight: 'auto',
+    maxHeight: 'auto',
+    minWidth: '60px',
+    padding: '8px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '4px',
+  },
+  cardTablet: {
+    minHeight: '80px',
+    maxHeight: '100px',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  cardPreviewMobile: {
+    height: '40px',
+    width: '100%',
+    backgroundColor: '#f8fafc',
+    borderRadius: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginBottom: '0',
+  },
+  mobileIconContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '4px',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  mobileIcon: {
+    fontSize: '1.5rem',
+    display: 'block',
+  },
+  mobileLabel: {
+    fontSize: '0.65rem',
+    fontWeight: '600',
+    color: '#1e293b',
+    textAlign: 'center',
   },
   tree: { display: 'flex', flexDirection: 'column' },
   treeNode: { display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 12px', cursor: 'pointer', transition: 'background-color 150ms, border-left-color 150ms', position: 'relative' },

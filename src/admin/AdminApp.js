@@ -15,6 +15,7 @@ import componentRegistry from '../lib/componentRegistry';
 import { componentLoader } from '../lib/componentLoader';
 import * as github from '../lib/github';
 import { parseRoute, navigateTo } from './Router';
+import { breakpoints, minTouchSize } from './responsiveStyles';
 
 export default function AdminApp() {
   const [currentRoute, setCurrentRoute] = useState(parseRoute(window.location.hash));
@@ -270,13 +271,112 @@ export default function AdminApp() {
 }
 
 const styles = {
-  adminApp: { display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#f8fafc' },
-  main: { flex: 1, overflowY: 'auto' },
-  builderLayout: { display: 'flex', height: '100%' },
-  builderMain: { flex: 1 },
-  builderSidebar: { width: '320px', borderLeft: '1px solid #e2e8f0', backgroundColor: '#ffffff', padding: '16px', overflowY: 'auto' },
-  loading: { padding: '48px', textAlign: 'center', color: '#64748b', fontSize: '1rem' },
-  notFound: { padding: '48px', textAlign: 'center', color: '#64748b', fontSize: '1rem' },
-  successBanner: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px', backgroundColor: '#ecfdf5', color: '#065f46', borderBottom: '1px solid #10b981' },
-  dismissButton: { background: 'none', border: 'none', color: '#065f46', cursor: 'pointer', fontWeight: '500' },
+  adminApp: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    backgroundColor: '#f8fafc',
+  },
+  main: {
+    flex: 1,
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  builderLayout: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '100%',
+    [`@media (max-width: ${breakpoints.tablet}px)`]: {
+      flexDirection: 'column',
+    },
+  },
+  builderMain: {
+    flex: 1,
+    minHeight: 0,
+    [`@media (max-width: ${breakpoints.tablet}px)`]: {
+      order: 1,
+      minHeight: '400px',
+    },
+  },
+  builderSidebar: {
+    width: '320px',
+    borderLeft: '1px solid #e2e8f0',
+    backgroundColor: '#ffffff',
+    padding: '16px',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    [`@media (max-width: ${breakpoints.laptop}px)`]: {
+      width: '280px',
+      padding: '12px',
+    },
+    [`@media (max-width: ${breakpoints.tablet}px)`]: {
+      width: '100%',
+      order: 2,
+      borderLeft: 'none',
+      borderTop: '1px solid #e2e8f0',
+      maxHeight: '300px',
+      padding: '12px',
+    },
+    [`@media (max-width: ${breakpoints.mobile}px)`]: {
+      maxHeight: '250px',
+      padding: '8px',
+    },
+  },
+  loading: {
+    padding: '48px 24px',
+    textAlign: 'center',
+    color: '#64748b',
+    fontSize: '1rem',
+    [`@media (max-width: ${breakpoints.tablet}px)`]: {
+      padding: '32px 16px',
+    },
+    [`@media (max-width: ${breakpoints.mobile}px)`]: {
+      padding: '24px 12px',
+    },
+  },
+  notFound: {
+    padding: '48px 24px',
+    textAlign: 'center',
+    color: '#64748b',
+    fontSize: '1rem',
+    [`@media (max-width: ${breakpoints.tablet}px)`]: {
+      padding: '32px 16px',
+    },
+    [`@media (max-width: ${breakpoints.mobile}px)`]: {
+      padding: '24px 12px',
+    },
+  },
+  successBanner: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '12px 24px',
+    backgroundColor: '#ecfdf5',
+    color: '#065f46',
+    borderBottom: '1px solid #10b981',
+    gap: '12px',
+    [`@media (max-width: ${breakpoints.tablet}px)`]: {
+      padding: '10px 16px',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+    [`@media (max-width: ${breakpoints.mobile}px)`]: {
+      padding: '8px 12px',
+      fontSize: '0.875rem',
+    },
+  },
+  dismissButton: {
+    background: 'none',
+    border: 'none',
+    color: '#065f46',
+    cursor: 'pointer',
+    fontWeight: '500',
+    ...minTouchSize,
+    fontSize: '1rem',
+    [`@media (max-width: ${breakpoints.mobile}px)`]: {
+      fontSize: '0.875rem',
+      padding: '6px 12px',
+    },
+  },
 };

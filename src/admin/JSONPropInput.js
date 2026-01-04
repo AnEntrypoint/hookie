@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DEFAULT_COLORS } from './propsEditorHelpers';
 
-const JSONPropInput = ({ value, type, onChange, onBlur, error }) => {
+const JSONPropInput = ({ value, type, onChange, onBlur, error, isMobile }) => {
   const [localValue, setLocalValue] = useState('');
 
   useEffect(() => {
@@ -23,40 +23,26 @@ const JSONPropInput = ({ value, type, onChange, onBlur, error }) => {
     }
   };
 
-  const handleBlur = (e) => {
+  const handleBlurCallback = (e) => {
     if (onBlur) {
       onBlur(e);
     }
   };
 
-  const textareaStyle = {
-    width: '100%',
-    padding: '8px',
-    border: `1px solid ${error ? '#dc3545' : '#ddd'}`,
-    borderRadius: '4px',
-    fontSize: '13px',
-    fontFamily: 'monospace',
-    outline: 'none',
-    transition: 'border-color 0.2s ease',
-    resize: 'vertical',
-  };
-
-  const errorStyle = {
-    color: '#dc3545',
-    fontSize: '12px',
-    marginTop: '4px',
-    display: 'block',
-  };
+  const textareaStyle = getTextareaStyle(isMobile, error);
+  const errorStyle = getErrorStyle(isMobile);
 
   const handleFocus = (e) => {
     if (!error) {
       e.target.style.borderColor = DEFAULT_COLORS.primary;
+      e.target.style.boxShadow = `0 0 0 3px ${DEFAULT_COLORS.primaryLight}`;
     }
   };
 
   const handleBlurStyle = (e) => {
     if (!error) {
       e.target.style.borderColor = '#ddd';
+      e.target.style.boxShadow = 'none';
     }
   };
 
@@ -66,11 +52,11 @@ const JSONPropInput = ({ value, type, onChange, onBlur, error }) => {
         value={localValue}
         onChange={handleChange}
         onBlur={(e) => {
-          handleBlur(e);
+          handleBlurCallback(e);
           handleBlurStyle(e);
         }}
         onFocus={handleFocus}
-        rows={6}
+        rows={isMobile ? 8 : 6}
         style={textareaStyle}
         placeholder={type === 'array' ? '[\n  "item1",\n  "item2"\n]' : '{\n  "key": "value"\n}'}
       />
@@ -78,5 +64,28 @@ const JSONPropInput = ({ value, type, onChange, onBlur, error }) => {
     </div>
   );
 };
+
+const getTextareaStyle = (isMobile, error) => ({
+  width: '100%',
+  padding: isMobile ? '12px' : '8px',
+  border: `1px solid ${error ? '#dc3545' : '#ddd'}`,
+  borderRadius: '4px',
+  fontSize: isMobile ? '15px' : '13px',
+  fontFamily: 'monospace',
+  outline: 'none',
+  transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+  resize: 'vertical',
+  minHeight: isMobile ? '200px' : 'auto',
+  lineHeight: '1.6',
+  lineBreak: 'auto',
+});
+
+const getErrorStyle = (isMobile) => ({
+  color: '#dc3545',
+  fontSize: isMobile ? '14px' : '12px',
+  marginTop: '8px',
+  display: 'block',
+  lineHeight: '1.4',
+});
 
 export default JSONPropInput;

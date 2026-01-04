@@ -5,6 +5,12 @@ import { listComponentSchemas, loadComponentSchema, deleteComponentSchema } from
 import { componentLoader } from '../lib/componentLoader';
 import PropInput from './PropInput';
 
+const BREAKPOINTS = {
+  mobile: 480,
+  tablet: 768,
+  desktop: 1024
+};
+
 export default function ComponentLibrary({ owner, repo }) {
   const [components, setComponents] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
@@ -14,6 +20,20 @@ export default function ComponentLibrary({ owner, repo }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [filterType, setFilterType] = useState('all');
+  const [screenSize, setScreenSize] = useState(getScreenSize());
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [expandedMobileDetail, setExpandedMobileDetail] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenSize(getScreenSize());
+      if (getScreenSize() > BREAKPOINTS.tablet && showMobileMenu) {
+        setShowMobileMenu(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [showMobileMenu]);
 
   useEffect(() => {
     loadComponents();
@@ -102,6 +122,10 @@ export default function ComponentLibrary({ owner, repo }) {
     setDeleteConfirm(null);
   };
 
+  const isMobile = screenSize <= BREAKPOINTS.mobile;
+  const isTablet = screenSize > BREAKPOINTS.mobile && screenSize <= BREAKPOINTS.tablet;
+  const isDesktop = screenSize > BREAKPOINTS.tablet;
+
   const handlePropChange = (propName, propSchema) => (value) => {
     const coerceValue = (val, type) => {
       if (type === 'number') return isNaN(val) ? val : Number(val);
@@ -153,159 +177,311 @@ export default function ComponentLibrary({ owner, repo }) {
     return <div style={styles.loading}>Loading components...</div>;
   }
 
+  const renderMobileListItem = (comp) => (
+    <div
+      key={comp.name}
+      onClick={() => {
+        setSelectedComponent(comp);
+        setExpandedMobileDetail(true);
+        setShowMobileMenu(false);
+      }}
+      style={{
+        ...styles.componentCard,
+        ...(selectedComponent?.name === comp.name ? styles.componentCardActive : {})
+      }}
+    >
+      <div style={styles.cardHeader}>
+        <h3 style={styles.componentName}>{comp.name}</h3>
+        {comp.isCustom && <span style={styles.customBadge}>Custom</span>}
+      </div>
+      <p style={styles.componentDesc}>{comp.description || 'No description'}</p>
+      <div style={styles.cardFooter}>
+        <span style={styles.propCount}>{Object.keys(comp.props || {}).length} props</span>
+        {pageUsage[comp.name] && (
+          <span style={styles.usageCount}>Used in {pageUsage[comp.name].length} page(s)</span>
+        )}
+      </div>
+    </div>
+  );
+
+  const renderDetailPanel = () => {
+    if (!selectedComponent) return null;
+
+    return (
+      <div style={getDetailPanelStyle()}>
+        {isMobile && expandedMobileDetail && (
+          <button
+            onClick={() => setExpandedMobileDetail(false)}
+            style={styles.backButton}
+          >
+            Back to List
+          </button>
+        )}
+
+        <div style={styles.detailHeader}>
+          <h2 style={styles.detailTitle}>{selectedComponent.name}</h2>
+          {selectedComponent.isCustom && (
+            <button
+              onClick={() => setDeleteConfirm(selectedComponent.name)}
+              style={styles.deleteButton}
+            >
+              Delete
+            </button>
+          )}
+        </div>
+
+        {deleteConfirm === selectedComponent.name && (
+          <div style={styles.confirmDialog}>
+            <p>Are you sure? This cannot be undone.</p>
+            <div style={styles.confirmActions}>
+              <button
+                onClick={() => handleDeleteComponent(selectedComponent.name)}
+                style={styles.confirmDeleteBtn}
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                style={styles.confirmCancelBtn}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div style={getDetailContentStyle()}>
+          <div style={styles.section}>
+            <h3 style={styles.sectionTitle}>Description</h3>
+            <p style={styles.sectionText}>{selectedComponent.description || 'No description provided'}</p>
+          </div>
+
+          {pageUsage[selectedComponent.name] && pageUsage[selectedComponent.name].length > 0 && (
+            <div style={styles.section}>
+              <h3 style={styles.sectionTitle}>Used in Pages</h3>
+              <ul style={styles.usageList}>
+                {pageUsage[selectedComponent.name].map(page => (
+                  <li key={page} style={styles.usageItem}>{page}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {selectedComponent.allowedChildren && (
+            <div style={styles.section}>
+              <h3 style={styles.sectionTitle}>Allowed Children</h3>
+              <p style={styles.sectionText}>
+                {selectedComponent.allowedChildren.includes('*') ? 'Any component' : selectedComponent.allowedChildren.join(', ')}
+              </p>
+            </div>
+          )}
+
+          <div style={styles.section}>
+            <h3 style={styles.sectionTitle}>Properties</h3>
+            {Object.keys(selectedComponent.props || {}).length > 0 ? (
+              <div style={getPropsGridStyle()}>
+                {Object.entries(selectedComponent.props || {}).map(([propName, propSchema]) => (
+                  <div key={propName} style={styles.propField}>
+                    <label style={styles.propLabel}>
+                      {propName}
+                      <span style={styles.propType}>({propSchema?.type || 'unknown'})</span>
+                    </label>
+                    <PropInput
+                      propName={propName}
+                      propSchema={propSchema}
+                      value={previewProps[propName] !== undefined ? previewProps[propName] : (propSchema?.default || '')}
+                      onChange={handlePropChange(propName, propSchema)}
+                    />
+                    {propSchema?.default !== undefined && (
+                      <span style={styles.defaultValue}>
+                        Default: {JSON.stringify(propSchema.default)}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p style={styles.sectionText}>No props available</p>
+            )}
+          </div>
+
+          <div style={getPreviewSectionStyle()}>
+            <h3 style={styles.sectionTitle}>Live Preview</h3>
+            {renderComponentPreview()}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const getHeaderStyle = () => {
+    const base = {
+      padding: isMobile ? '16px' : '24px',
+      backgroundColor: '#ffffff',
+      borderBottom: '1px solid #e2e8f0',
+      position: 'relative',
+    };
+    return base;
+  };
+
+  const getFiltersStyle = () => {
+    const base = {
+      display: 'flex',
+      gap: '12px',
+      flexDirection: isMobile ? 'column' : 'row',
+    };
+    return base;
+  };
+
+  const getMainLayoutStyle = () => {
+    if (isMobile) {
+      return {
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        overflow: 'hidden',
+      };
+    }
+    if (isTablet) {
+      return {
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        overflow: 'hidden',
+      };
+    }
+    return {
+      display: 'flex',
+      flex: 1,
+      overflow: 'hidden',
+    };
+  };
+
+  const getListPanelStyle = () => {
+    const base = {
+      backgroundColor: '#ffffff',
+      overflowY: 'auto',
+    };
+
+    if (isMobile) {
+      if (expandedMobileDetail) {
+        return { ...base, display: 'none' };
+      }
+      return { ...base, flex: 1, borderRight: 'none' };
+    }
+
+    if (isTablet) {
+      return { ...base, flex: 1, borderRight: '1px solid #e2e8f0', minHeight: '300px' };
+    }
+
+    return { ...base, width: '320px', borderRight: '1px solid #e2e8f0' };
+  };
+
+  const getDetailPanelStyle = () => {
+    const base = {
+      backgroundColor: '#ffffff',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+    };
+
+    if (isMobile) {
+      if (!expandedMobileDetail) {
+        return { ...base, display: 'none' };
+      }
+      return { ...base, flex: 1, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50 };
+    }
+
+    if (isTablet) {
+      return { ...base, flex: 1 };
+    }
+
+    return { ...base, flex: 1 };
+  };
+
+  const getDetailContentStyle = () => {
+    return {
+      flex: 1,
+      padding: isMobile ? '16px' : '24px',
+      overflowY: 'auto',
+    };
+  };
+
+  const getPropsGridStyle = () => {
+    return {
+      display: 'grid',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(auto-fit, minmax(200px, 1fr))' : 'repeat(auto-fit, minmax(280px, 1fr))',
+      gap: '16px',
+    };
+  };
+
+  const getPreviewSectionStyle = () => {
+    return {
+      padding: isMobile ? '16px' : '24px',
+      borderTop: '1px solid #e2e8f0',
+      maxHeight: isMobile ? '300px' : '400px',
+    };
+  };
+
   return (
     <div style={styles.container}>
-      <div style={styles.header}>
-        <h2 style={styles.title}>Component Library</h2>
-        <div style={styles.filters}>
+      <div style={getHeaderStyle()}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? '12px' : '0' }}>
+          <h2 style={{ ...styles.title, margin: 0, fontSize: isMobile ? '1.5rem' : '1.875rem' }}>Component Library</h2>
+          {isMobile && (
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              style={styles.hamburgerButton}
+              title="Toggle menu"
+            >
+              ☰
+            </button>
+          )}
+        </div>
+        <div style={getFiltersStyle()}>
           <input
             type="text"
             placeholder="Search components..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={styles.searchInput}
+            style={{ ...styles.searchInput, flex: 1 }}
           />
-          <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={styles.filterSelect}>
+          {!isMobile && (
+            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} style={styles.filterSelect}>
+              <option value="all">All</option>
+              <option value="builtin">Built-in</option>
+              <option value="custom">Custom</option>
+            </select>
+          )}
+        </div>
+        {isMobile && (
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            style={{ ...styles.filterSelect, marginTop: '8px', width: '100%' }}
+          >
             <option value="all">All Components</option>
             <option value="builtin">Built-in Only</option>
             <option value="custom">Custom Only</option>
           </select>
-        </div>
+        )}
       </div>
 
-      <div style={styles.mainLayout}>
-        <div style={styles.listPanel}>
+      <div style={getMainLayoutStyle()}>
+        <div style={getListPanelStyle()}>
           <div style={styles.componentsList}>
-            {filteredComponents.map(comp => (
-              <div
-                key={comp.name}
-                onClick={() => setSelectedComponent(comp)}
-                style={{
-                  ...styles.componentCard,
-                  ...(selectedComponent?.name === comp.name ? styles.componentCardActive : {})
-                }}
-              >
-                <div style={styles.cardHeader}>
-                  <h3 style={styles.componentName}>{comp.name}</h3>
-                  {comp.isCustom && <span style={styles.customBadge}>Custom</span>}
-                </div>
-                <p style={styles.componentDesc}>{comp.description || 'No description'}</p>
-                <div style={styles.cardFooter}>
-                  <span style={styles.propCount}>
-                    {Object.keys(comp.props || {}).length} props
-                  </span>
-                  {pageUsage[comp.name] && (
-                    <span style={styles.usageCount}>
-                      Used in {pageUsage[comp.name].length} page(s)
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
+            {filteredComponents.map(renderMobileListItem)}
           </div>
         </div>
 
-        {selectedComponent && (
-          <div style={styles.detailPanel}>
-            <div style={styles.detailHeader}>
-              <h2 style={styles.detailTitle}>{selectedComponent.name}</h2>
-              {selectedComponent.isCustom && (
-                <button
-                  onClick={() => setDeleteConfirm(selectedComponent.name)}
-                  style={styles.deleteButton}
-                >
-                  Delete
-                </button>
-              )}
-            </div>
-
-            {deleteConfirm === selectedComponent.name && (
-              <div style={styles.confirmDialog}>
-                <p>Are you sure? This cannot be undone.</p>
-                <div style={styles.confirmActions}>
-                  <button
-                    onClick={() => handleDeleteComponent(selectedComponent.name)}
-                    style={styles.confirmDeleteBtn}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() => setDeleteConfirm(null)}
-                    style={styles.confirmCancelBtn}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            )}
-
-            <div style={styles.detailContent}>
-              <div style={styles.section}>
-                <h3 style={styles.sectionTitle}>Description</h3>
-                <p style={styles.sectionText}>{selectedComponent.description || 'No description provided'}</p>
-              </div>
-
-              {pageUsage[selectedComponent.name] && pageUsage[selectedComponent.name].length > 0 && (
-                <div style={styles.section}>
-                  <h3 style={styles.sectionTitle}>Used in Pages</h3>
-                  <ul style={styles.usageList}>
-                    {pageUsage[selectedComponent.name].map(page => (
-                      <li key={page} style={styles.usageItem}>{page}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {selectedComponent.allowedChildren && (
-                <div style={styles.section}>
-                  <h3 style={styles.sectionTitle}>Allowed Children</h3>
-                  <p style={styles.sectionText}>
-                    {selectedComponent.allowedChildren.includes('*') ? 'Any component' : selectedComponent.allowedChildren.join(', ')}
-                  </p>
-                </div>
-              )}
-
-              <div style={styles.section}>
-                <h3 style={styles.sectionTitle}>Properties</h3>
-                {Object.keys(selectedComponent.props || {}).length > 0 ? (
-                  <div style={styles.propsGrid}>
-                    {Object.entries(selectedComponent.props || {}).map(([propName, propSchema]) => (
-                      <div key={propName} style={styles.propField}>
-                        <label style={styles.propLabel}>
-                          {propName}
-                          <span style={styles.propType}>({propSchema?.type || 'unknown'})</span>
-                        </label>
-                        <PropInput
-                          propName={propName}
-                          propSchema={propSchema}
-                          value={previewProps[propName] !== undefined ? previewProps[propName] : (propSchema?.default || '')}
-                          onChange={{
-                            ...handlePropChange(propName, propSchema)
-                          }}
-                        />
-                        {propSchema?.default !== undefined && (
-                          <span style={styles.defaultValue}>
-                            Default: {JSON.stringify(propSchema.default)}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p style={styles.sectionText}>No props available</p>
-                )}
-              </div>
-            </div>
-
-            <div style={styles.previewSection}>
-              <h3 style={styles.sectionTitle}>Live Preview</h3>
-              {renderComponentPreview()}
-            </div>
-          </div>
-        )}
+        {renderDetailPanel()}
       </div>
     </div>
   );
+}
+
+function getScreenSize() {
+  return typeof window !== 'undefined' ? window.innerWidth : 1024;
 }
 
 const styles = {
@@ -337,6 +513,27 @@ const styles = {
   filters: {
     display: 'flex',
     gap: '12px',
+  },
+  hamburgerButton: {
+    display: 'none',
+    background: 'none',
+    border: 'none',
+    fontSize: '1.5rem',
+    cursor: 'pointer',
+    color: '#1e293b',
+    padding: '4px 8px',
+  },
+  backButton: {
+    padding: '12px 16px',
+    backgroundColor: '#f1f5f9',
+    color: '#1e293b',
+    border: '1px solid #e2e8f0',
+    borderRadius: '6px',
+    fontSize: '0.875rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    margin: '16px',
+    marginBottom: '0',
   },
   searchInput: {
     flex: 1,
@@ -375,6 +572,7 @@ const styles = {
     borderBottom: '1px solid #e2e8f0',
     cursor: 'pointer',
     transition: 'background-color 150ms',
+    userSelect: 'none',
   },
   componentCardActive: {
     backgroundColor: '#dbeafe',
@@ -384,12 +582,17 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '8px',
+    gap: '8px',
   },
   componentName: {
     margin: 0,
     fontSize: '0.95rem',
     fontWeight: '600',
     color: '#1e293b',
+    flex: 1,
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   customBadge: {
     padding: '2px 8px',
@@ -398,18 +601,26 @@ const styles = {
     fontSize: '0.7rem',
     borderRadius: '3px',
     fontWeight: '600',
+    whiteSpace: 'nowrap',
   },
   componentDesc: {
     margin: '0 0 12px 0',
     fontSize: '0.8rem',
     color: '#64748b',
     lineHeight: '1.4',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
   },
   cardFooter: {
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: '0.75rem',
     color: '#94a3b8',
+    flexWrap: 'wrap',
+    gap: '8px',
   },
   propCount: {
     fontWeight: '500',
@@ -431,12 +642,17 @@ const styles = {
     alignItems: 'center',
     padding: '24px',
     borderBottom: '1px solid #e2e8f0',
+    gap: '12px',
+    flexWrap: 'wrap',
   },
   detailTitle: {
     margin: 0,
     fontSize: '1.875rem',
     fontWeight: '700',
     color: '#1e293b',
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   deleteButton: {
     padding: '8px 16px',
@@ -448,6 +664,7 @@ const styles = {
     fontWeight: '600',
     cursor: 'pointer',
     transition: 'background-color 150ms',
+    whiteSpace: 'nowrap',
   },
   confirmDialog: {
     padding: '12px 24px',
@@ -460,6 +677,7 @@ const styles = {
     display: 'flex',
     gap: '8px',
     marginTop: '12px',
+    flexWrap: 'wrap',
   },
   confirmDeleteBtn: {
     padding: '6px 12px',

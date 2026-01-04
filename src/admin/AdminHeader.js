@@ -1,57 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Auth from './Auth';
+import { breakpoints, minTouchSize } from './responsiveStyles';
 
-export default function AdminHeader({ 
-  currentRoute, 
-  syncStatus, 
-  showNotification, 
-  onRefresh, 
-  onDismissNotification 
+export default function AdminHeader({
+  currentRoute,
+  syncStatus,
+  showNotification,
+  onRefresh,
+  onDismissNotification
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   const isActive = (route) => currentRoute && currentRoute.startsWith(route);
+
+  const navItems = [
+    { href: '#/admin', label: 'Pages', icon: '📄' },
+    { href: '#/admin/components', label: 'Components', icon: '🧩' },
+    { href: '#/admin/library', label: 'Library', icon: '📚' },
+    { href: '#/admin/settings', label: 'Settings', icon: '⚙️' },
+  ];
+
+  const handleNavClick = (href) => {
+    window.location.hash = href;
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
+      {mobileMenuOpen && (
+        <div
+          style={styles.backdrop}
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       <header style={styles.header}>
         <div style={styles.headerLeft}>
           <h1 style={styles.logo}>CMS Admin</h1>
           <nav style={styles.nav}>
-            <a
-              href="#/admin"
-              style={{
-                ...styles.navLink,
-                ...(isActive('/admin') && !isActive('/admin/pages') && !isActive('/admin/components') && !isActive('/admin/library') && !isActive('/admin/settings') ? styles.navLinkActive : {})
-              }}
-            >
-              Pages
-            </a>
-            <a
-              href="#/admin/components"
-              style={{
-                ...styles.navLink,
-                ...(isActive('/admin/components') ? styles.navLinkActive : {})
-              }}
-            >
-              Components
-            </a>
-            <a
-              href="#/admin/library"
-              style={{
-                ...styles.navLink,
-                ...(isActive('/admin/library') ? styles.navLinkActive : {})
-              }}
-            >
-              Library
-            </a>
-            <a
-              href="#/admin/settings"
-              style={{
-                ...styles.navLink,
-                ...(isActive('/admin/settings') ? styles.navLinkActive : {})
-              }}
-            >
-              Settings
-            </a>
+            {navItems.map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                style={{
+                  ...styles.navLink,
+                  ...(isActive(item.href) && item.href !== '#/admin' ? styles.navLinkActive : isActive(item.href) && item.href === '#/admin' && !navItems.slice(1).some(n => isActive(n.href)) ? styles.navLinkActive : {})
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
         </div>
 
@@ -68,8 +78,59 @@ export default function AdminHeader({
             </div>
           )}
           <Auth />
+          <button
+            style={{ ...styles.mobileMenuButton }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? (
+              <span style={styles.hamburgerX}>✕</span>
+            ) : (
+              <>
+                <span style={styles.hamburgerLine} />
+                <span style={styles.hamburgerLine} />
+                <span style={styles.hamburgerLine} />
+              </>
+            )}
+          </button>
         </div>
       </header>
+
+      {mobileMenuOpen && (
+        <nav style={styles.mobileMenuDrawer}>
+          <div style={styles.menuHeader}>
+            <h2 style={styles.menuTitle}>Navigation</h2>
+            <button
+              style={styles.closeButton}
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div style={styles.menuContent}>
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(item.href);
+                }}
+                style={{
+                  ...styles.menuItem,
+                  ...(isActive(item.href) && item.href !== '#/admin' ? styles.menuItemActive : isActive(item.href) && item.href === '#/admin' && !navItems.slice(1).some(n => isActive(n.href)) ? styles.menuItemActive : {}),
+                }}
+              >
+                <span style={styles.menuItemIcon}>{item.icon}</span>
+                <span style={styles.menuItemLabel}>{item.label}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
 
       {showNotification && (
         <div style={styles.notification}>
@@ -107,34 +168,67 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '16px 24px',
+    padding: '12px 16px',
     backgroundColor: '#ffffff',
     borderBottom: '1px solid #e2e8f0',
     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+    height: '56px',
+    transition: 'padding 300ms ease, height 300ms ease',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      padding: '12px 24px',
+      height: '64px',
+    },
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      padding: '16px 24px',
+      height: '72px',
+    },
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '32px',
+    gap: '16px',
+    flex: 1,
+    minWidth: 0,
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      gap: '24px',
+    },
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      gap: '32px',
+    },
   },
   logo: {
     margin: 0,
-    fontSize: '1.5rem',
+    fontSize: '1.25rem',
     fontWeight: '700',
     color: '#1e293b',
+    whiteSpace: 'nowrap',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      fontSize: '1.375rem',
+    },
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      fontSize: '1.5rem',
+    },
   },
   nav: {
-    display: 'flex',
+    display: 'none',
     gap: '8px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      display: 'flex',
+    },
   },
   navLink: {
-    padding: '8px 16px',
+    padding: '8px 12px',
     textDecoration: 'none',
     color: '#64748b',
     fontWeight: '500',
-    fontSize: '0.875rem',
+    fontSize: '0.8rem',
     borderRadius: '6px',
     transition: 'all 150ms',
+    whiteSpace: 'nowrap',
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      padding: '8px 16px',
+      fontSize: '0.875rem',
+    },
   },
   navLinkActive: {
     backgroundColor: '#dbeafe',
@@ -143,10 +237,16 @@ const styles = {
   headerRight: {
     display: 'flex',
     alignItems: 'center',
-    gap: '16px',
+    gap: '12px',
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      gap: '16px',
+    },
   },
   syncStatus: {
-    fontSize: '0.875rem',
+    fontSize: '0.75rem',
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      fontSize: '0.875rem',
+    },
   },
   syncOnline: {
     color: '#10b981',
@@ -156,19 +256,133 @@ const styles = {
     color: '#64748b',
     fontWeight: '500',
   },
+  mobileMenuButton: {
+    ...minTouchSize,
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '6px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'background-color 150ms',
+    borderRadius: '6px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      display: 'none',
+    },
+  },
+  hamburgerLine: {
+    width: '24px',
+    height: '2px',
+    backgroundColor: '#1e293b',
+    borderRadius: '1px',
+    transition: 'all 300ms ease',
+  },
+  hamburgerX: {
+    fontSize: '1.5rem',
+    color: '#1e293b',
+  },
+  backdrop: {
+    position: 'fixed',
+    inset: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 39,
+    animation: 'fadeIn 300ms ease',
+  },
+  mobileMenuDrawer: {
+    position: 'fixed',
+    left: 0,
+    top: '56px',
+    height: 'calc(100vh - 56px)',
+    width: '280px',
+    backgroundColor: '#ffffff',
+    boxShadow: '2px 0 8px rgba(0, 0, 0, 0.1)',
+    zIndex: 40,
+    display: 'flex',
+    flexDirection: 'column',
+    animation: 'slideIn 300ms ease',
+  },
+  menuHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '16px',
+    borderBottom: '1px solid #e2e8f0',
+    gap: '12px',
+  },
+  menuTitle: {
+    margin: 0,
+    fontSize: '1rem',
+    fontWeight: '600',
+    color: '#1e293b',
+  },
+  closeButton: {
+    width: '40px',
+    height: '40px',
+    padding: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    border: 'none',
+    fontSize: '1.5rem',
+    color: '#64748b',
+    cursor: 'pointer',
+    transition: 'all 150ms',
+    borderRadius: '6px',
+  },
+  menuContent: {
+    flex: 1,
+    overflowY: 'auto',
+    paddingTop: '8px',
+  },
+  menuItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '12px 16px',
+    color: '#64748b',
+    textDecoration: 'none',
+    fontSize: '0.95rem',
+    fontWeight: '500',
+    transition: 'all 150ms',
+    borderLeft: '3px solid transparent',
+  },
+  menuItemActive: {
+    backgroundColor: '#dbeafe',
+    color: '#2563eb',
+    borderLeftColor: '#2563eb',
+  },
+  menuItemIcon: {
+    fontSize: '1.25rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+  },
+  menuItemLabel: {
+    flex: 1,
+  },
   notification: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '12px 24px',
+    padding: '12px 16px',
     backgroundColor: '#dbeafe',
     borderBottom: '1px solid #93c5fd',
     color: '#1e40af',
     fontSize: '0.875rem',
+    gap: '12px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      padding: '12px 24px',
+    },
   },
   notificationActions: {
     display: 'flex',
     gap: '8px',
+    marginLeft: 'auto',
   },
   refreshButton: {
     padding: '6px 12px',
@@ -179,6 +393,7 @@ const styles = {
     fontSize: '0.875rem',
     cursor: 'pointer',
     fontWeight: '500',
+    transition: 'background-color 150ms',
   },
   dismissButton: {
     padding: '6px 12px',
@@ -189,5 +404,26 @@ const styles = {
     fontSize: '0.875rem',
     cursor: 'pointer',
     fontWeight: '500',
+    transition: 'background-color 150ms',
   },
 };
+
+if (typeof document !== 'undefined') {
+  const stylesStr = `
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+  `;
+
+  if (!document.getElementById('admin-header-animations')) {
+    const style = document.createElement('style');
+    style.id = 'admin-header-animations';
+    style.textContent = stylesStr;
+    document.head.appendChild(style);
+  }
+}
