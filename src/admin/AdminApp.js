@@ -113,32 +113,22 @@ export default function AdminApp() {
   const loadCustomComponents = async () => {
     if (!repoInfo.owner || !repoInfo.repo) return;
     try {
-      const componentNames = await contentManager.listComponentSchemas(repoInfo.owner, repoInfo.repo);
-      for (const name of componentNames) {
-        const schema = await contentManager.loadComponentSchema(repoInfo.owner, repoInfo.repo, name);
-        componentRegistry.registerComponent(name, schema);
+      const schemaModules = import.meta.glob('../../content/components/*.json', { eager: true });
 
-        try {
-          const codeContent = await github.readFile(repoInfo.owner, repoInfo.repo, `src/components/${name}.js`);
-          let code = codeContent.content;
+      for (const [path, module] of Object.entries(schemaModules)) {
+        const schema = module.default;
+        const componentName = path.split('/').pop().replace('.json', '');
+        componentRegistry.registerComponent(componentName, schema);
+      }
 
-          // Remove import statements - they're not supported in new Function()
-          code = code.replace(/import\s+.*?from\s+['"](.*?)['"]\s*;?/g, '');
-          // Replace export default with module.exports
-          code = code.replace(/export\s+default\s+/, 'module.exports.default = ');
+      const componentModules = import.meta.glob('../components/*.js', { eager: true });
 
-          const mod = { exports: {} };
-          // Pass React and other utilities to the function scope
-          const fn = new Function('React', 'module', 'exports', code);
-          fn(window.React, mod, mod.exports);
-          const Component = mod.exports.default;
-          if (Component && typeof Component === 'function') {
-            componentLoader.registerComponentImplementation(name, Component);
-          } else if (!Component) {
-            console.warn(`Component ${name} has no default export`);
-          }
-        } catch (err) {
-          console.warn(`Failed to load implementation for ${name}:`, err.message);
+      for (const [path, module] of Object.entries(componentModules)) {
+        const componentName = path.split('/').pop().replace('.js', '');
+        const Component = module.default;
+
+        if (Component && typeof Component === 'function') {
+          componentLoader.registerComponentImplementation(componentName, Component);
         }
       }
     } catch (error) {
