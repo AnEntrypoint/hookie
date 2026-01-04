@@ -1,0 +1,606 @@
+{
+  "name": "demo",
+  "title": "Demo Page",
+  "components": [
+    {
+      "id": "demo-hero",
+      "type": "Section",
+      "props": {
+        "background": "gradient-purple",
+        "padding": "lg",
+        "fullWidth": true
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "demo-title",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Component Showcase"
+          },
+          "style": {
+            "fontSize": "2.5rem",
+            "fontWeight": "900",
+            "color": "#581c87",
+            "margin": "0 0 12px 0"
+          },
+          "children": []
+        },
+        {
+          "id": "demo-subtitle",
+          "type": "Text",
+          "props": {
+            "content": "Explore the variety of components available in Hookie CMS for building professional pages."
+          },
+          "style": {
+            "fontSize": "1.125rem",
+            "color": "#581c87",
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "demo-buttons-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "buttons-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Button Variations"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-container",
+          "type": "Container",
+          "props": {
+            "maxWidth": "xl"
+          },
+          "style": {
+            "display": "flex",
+            "gap": "16px",
+            "justifyContent": "center",
+            "flexWrap": "wrap",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "btn-primary",
+              "type": "Button",
+              "props": {
+                "label": "Primary Button",
+                "variant": "primary",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-secondary",
+              "type": "Button",
+              "props": {
+                "label": "Secondary Button",
+                "variant": "secondary",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-accent",
+              "type": "Button",
+              "props": {
+                "label": "Accent Button",
+                "variant": "accent",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-danger",
+              "type": "Button",
+              "props": {
+                "label": "Danger Button",
+                "variant": "danger",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-text-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "subtle"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "text-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Text Content"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "text-container",
+          "type": "Container",
+          "props": {
+            "maxWidth": "lg"
+          },
+          "style": {
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "text-body",
+              "type": "Text",
+              "props": {
+                "content": "This is a demonstration of text content in Hookie CMS. The Text component is a flexible, responsive component for displaying paragraphs, descriptions, and body content. You can style it with colors, sizing, and alignment options. The component automatically handles text wrapping and responsive sizing for different screen widths."
+              },
+              "style": {
+                "fontSize": "1rem",
+                "lineHeight": "1.75",
+                "color": "#334155",
+                "marginBottom": "16px"
+              },
+              "children": []
+            },
+            {
+              "id": "text-secondary",
+              "type": "Text",
+              "props": {
+                "content": "Paragraphs can be combined to create longer-form content. Each paragraph maintains proper spacing and typography hierarchy, making it easy to read complex information."
+              },
+              "style": {
+                "fontSize": "0.95rem",
+                "lineHeight": "1.7",
+                "color": "#64748b",
+                "marginBottom": "0"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-heading-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Heading Levels"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "headings-container",
+          "type": "Container",
+          "props": {
+            "maxWidth": "xl"
+          },
+          "style": {
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "h1-demo",
+              "type": "Heading",
+              "props": {
+                "level": 1,
+                "text": "This is an H1 Heading"
+              },
+              "style": {
+                "marginBottom": "20px"
+              },
+              "children": []
+            },
+            {
+              "id": "h2-demo",
+              "type": "Heading",
+              "props": {
+                "level": 2,
+                "text": "This is an H2 Heading"
+              },
+              "style": {
+                "marginBottom": "20px"
+              },
+              "children": []
+            },
+            {
+              "id": "h3-demo",
+              "type": "Heading",
+              "props": {
+                "level": 3,
+                "text": "This is an H3 Heading"
+              },
+              "style": {
+                "marginBottom": "20px"
+              },
+              "children": []
+            },
+            {
+              "id": "h4-demo",
+              "type": "Heading",
+              "props": {
+                "level": 4,
+                "text": "This is an H4 Heading"
+              },
+              "style": {
+                "marginBottom": "0"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-links-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "subtle"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "links-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Link Variations"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-container",
+          "type": "Container",
+          "props": {
+            "maxWidth": "xl"
+          },
+          "style": {
+            "display": "flex",
+            "gap": "24px",
+            "justifyContent": "center",
+            "flexWrap": "wrap",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "link-default",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Default Link",
+                "variant": "default"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-underline",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Underline Link",
+                "variant": "underline"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-button",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Button Style Link",
+                "variant": "button",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-pill",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Pill Style Link",
+                "variant": "pill",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-grid-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "grid-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Grid Layout"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "grid-demo",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "grid-item-1",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "backgroundColor": "#f0f9ff",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "border": "1px solid #e0f2fe"
+              },
+              "children": [
+                {
+                  "id": "grid-item-1-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Card One"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#0369a1"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "grid-item-1-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "This is a card in a 3-column grid. Cards are perfect for organizing content into digestible sections."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-item-2",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "backgroundColor": "#f0fdf4",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "border": "1px solid #dcfce7"
+              },
+              "children": [
+                {
+                  "id": "grid-item-2-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Card Two"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#15803d"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "grid-item-2-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Each card has consistent styling and spacing. The grid automatically handles responsive behavior."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-item-3",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "backgroundColor": "#faf5ff",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "border": "1px solid #f3e8ff"
+              },
+              "children": [
+                {
+                  "id": "grid-item-3-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Card Three"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#7e22ce"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "grid-item-3-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Combine sections and grids to create sophisticated, organized layouts with minimal effort."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-footer",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "light",
+        "fullWidth": true
+      },
+      "style": {
+        "borderTop": "1px solid #e2e8f0",
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "footer-heading",
+          "type": "Heading",
+          "props": {
+            "level": 3,
+            "text": "Ready to Build?"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "footer-text",
+          "type": "Text",
+          "props": {
+            "content": "Start creating amazing pages with Hookie CMS. Visit the admin interface to build your own pages."
+          },
+          "style": {
+            "marginBottom": "20px",
+            "color": "#64748b"
+          },
+          "children": []
+        },
+        {
+          "id": "footer-links",
+          "type": "Container",
+          "props": {
+            "maxWidth": "2xl"
+          },
+          "style": {
+            "display": "flex",
+            "gap": "16px",
+            "justifyContent": "center",
+            "flexWrap": "wrap"
+          },
+          "children": [
+            {
+              "id": "footer-link-home",
+              "type": "Link",
+              "props": {
+                "href": "/",
+                "text": "Back to Home",
+                "variant": "button",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "footer-link-admin",
+              "type": "Link",
+              "props": {
+                "href": "#/admin",
+                "text": "Go to Admin",
+                "variant": "pill",
+                "size": "md",
+                "color": "primary"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

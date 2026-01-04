@@ -1,42 +1,740 @@
 {
   "name": "home",
-  "title": "Home",
+  "title": "Hookie CMS",
   "components": [
     {
-      "id": "container-1",
-      "type": "Container",
+      "id": "hero-section",
+      "type": "Section",
       "props": {
-        "maxWidth": "1200px"
+        "background": "gradient-blue",
+        "padding": "xl",
+        "fullWidth": true
       },
       "style": {
-        "padding": "40px 20px"
+        "textAlign": "center"
       },
       "children": [
         {
-          "id": "heading-1",
+          "id": "hero-heading",
           "type": "Heading",
           "props": {
             "level": 1,
-            "text": "Welcome to the Dynamic CMS"
+            "text": "Hookie CMS"
           },
           "style": {
-            "textAlign": "center",
-            "marginBottom": "20px"
+            "fontSize": "3.5rem",
+            "fontWeight": "900",
+            "margin": "0 0 16px 0",
+            "color": "#0c4a6e",
+            "letterSpacing": "-0.02em"
           },
           "children": []
         },
         {
-          "id": "text-1",
+          "id": "hero-subtitle",
           "type": "Text",
           "props": {
-            "content": "This is a dynamic content management system powered by React and GitHub. You can create, edit, and manage your content through an intuitive interface."
+            "content": "A modern, headless CMS built with React and GitHub. Create stunning websites without leaving your editor."
+          },
+          "style": {
+            "fontSize": "1.25rem",
+            "color": "#0c4a6e",
+            "marginBottom": "32px",
+            "fontWeight": "500",
+            "lineHeight": "1.6"
+          },
+          "children": []
+        },
+        {
+          "id": "hero-buttons",
+          "type": "Container",
+          "props": {
+            "maxWidth": "xl"
+          },
+          "style": {
+            "display": "flex",
+            "gap": "16px",
+            "justifyContent": "center",
+            "flexWrap": "wrap"
+          },
+          "children": [
+            {
+              "id": "btn-admin",
+              "type": "Link",
+              "props": {
+                "href": "#/admin",
+                "text": "Go to Admin",
+                "variant": "button",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-demo",
+              "type": "Link",
+              "props": {
+                "href": "/pages/demo",
+                "text": "View Demo",
+                "variant": "pill",
+                "size": "lg",
+                "color": "primary"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "features-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "features-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What is Hookie CMS?"
           },
           "style": {
             "textAlign": "center",
-            "marginBottom": "40px",
-            "fontSize": "18px"
+            "marginBottom": "40px"
           },
           "children": []
+        },
+        {
+          "id": "features-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg",
+            "autoFit": false
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "feature-1",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "feature-1-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Visual Editor"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#0c4a6e"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "feature-1-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Drag and drop interface for building pages. No coding required. See changes in real-time as you design."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "feature-2",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "feature-2-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "GitHub Powered"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#0c4a6e"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "feature-2-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Content stored as JSON in your GitHub repo. Full version control, collaboration, and deployment automation."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "feature-3",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "feature-3-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Component Based"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#0c4a6e"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "feature-3-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Build with reusable components. Easily add custom components to the library for greater flexibility."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "facts-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "subtle",
+        "fullWidth": true
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "facts-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "System Overview"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "40px"
+          },
+          "children": []
+        },
+        {
+          "id": "facts-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "fact-1",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "textAlign": "center",
+                "padding": "20px"
+              },
+              "children": [
+                {
+                  "id": "fact-1-number",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "12+"
+                  },
+                  "style": {
+                    "margin": "0 0 8px 0",
+                    "color": "#2563eb",
+                    "fontSize": "2rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "fact-1-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "Built-in Components"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "fact-2",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "textAlign": "center",
+                "padding": "20px"
+              },
+              "children": [
+                {
+                  "id": "fact-2-number",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "100%"
+                  },
+                  "style": {
+                    "margin": "0 0 8px 0",
+                    "color": "#2563eb",
+                    "fontSize": "2rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "fact-2-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "Customizable"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "fact-3",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "textAlign": "center",
+                "padding": "20px"
+              },
+              "children": [
+                {
+                  "id": "fact-3-number",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "∞"
+                  },
+                  "style": {
+                    "margin": "0 0 8px 0",
+                    "color": "#2563eb",
+                    "fontSize": "2rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "fact-3-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "Pages Possible"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "fact-4",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "textAlign": "center",
+                "padding": "20px"
+              },
+              "children": [
+                {
+                  "id": "fact-4-number",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Git"
+                  },
+                  "style": {
+                    "margin": "0 0 8px 0",
+                    "color": "#2563eb",
+                    "fontSize": "2rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "fact-4-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "Version Control"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nav-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "nav-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Get Started"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "40px"
+          },
+          "children": []
+        },
+        {
+          "id": "nav-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "nav-card-1",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "backgroundColor": "#f0f9ff",
+                "borderRadius": "8px",
+                "padding": "32px",
+                "border": "1px solid #e0f2fe",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "nav-card-1-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Admin Interface"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#0c4a6e"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "nav-card-1-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Access the visual page builder and manage your content."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "20px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "nav-card-1-link",
+                  "type": "Link",
+                  "props": {
+                    "href": "#/admin",
+                    "text": "Open Admin",
+                    "variant": "button",
+                    "size": "md"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "nav-card-2",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "backgroundColor": "#f0fdf4",
+                "borderRadius": "8px",
+                "padding": "32px",
+                "border": "1px solid #dcfce7",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "nav-card-2-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Component Library"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#166534"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "nav-card-2-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Browse and manage all available components for building pages."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "20px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "nav-card-2-link",
+                  "type": "Link",
+                  "props": {
+                    "href": "#/admin/library",
+                    "text": "View Library",
+                    "variant": "button",
+                    "size": "md",
+                    "color": "primary"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "nav-card-3",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "backgroundColor": "#faf5ff",
+                "borderRadius": "8px",
+                "padding": "32px",
+                "border": "1px solid #f3e8ff",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "nav-card-3-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Demo Page"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "12px",
+                    "color": "#581c87"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "nav-card-3-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Explore example pages built with Hookie CMS components."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "20px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "nav-card-3-link",
+                  "type": "Link",
+                  "props": {
+                    "href": "/pages/demo",
+                    "text": "View Demo",
+                    "variant": "button",
+                    "size": "md",
+                    "color": "primary"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "light",
+        "fullWidth": true
+      },
+      "style": {
+        "borderTop": "1px solid #e2e8f0"
+      },
+      "children": [
+        {
+          "id": "footer-container",
+          "type": "Container",
+          "props": {
+            "maxWidth": "xl"
+          },
+          "style": {
+            "textAlign": "center"
+          },
+          "children": [
+            {
+              "id": "footer-text",
+              "type": "Text",
+              "props": {
+                "content": "Hookie CMS - A modern, headless content management system built with React and GitHub."
+              },
+              "style": {
+                "color": "#64748b",
+                "marginBottom": "16px"
+              },
+              "children": []
+            },
+            {
+              "id": "footer-links",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl"
+              },
+              "style": {
+                "display": "flex",
+                "gap": "24px",
+                "justifyContent": "center",
+                "flexWrap": "wrap"
+              },
+              "children": [
+                {
+                  "id": "footer-link-1",
+                  "type": "Link",
+                  "props": {
+                    "href": "#/admin",
+                    "text": "Admin",
+                    "variant": "default"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "footer-link-2",
+                  "type": "Link",
+                  "props": {
+                    "href": "/pages/demo",
+                    "text": "Demo",
+                    "variant": "default"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "footer-link-3",
+                  "type": "Link",
+                  "props": {
+                    "href": "#/admin/library",
+                    "text": "Components",
+                    "variant": "default"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
         }
       ]
     }
