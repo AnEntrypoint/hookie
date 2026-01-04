@@ -31,7 +31,7 @@ document.head.appendChild(styleSheet);
 window.React = React;
 initializeDebugGlobals();
 
-const isAdmin = window.location.pathname.includes('/admin');
+const isAdmin = window.location.hash.includes('/admin') || window.location.pathname.includes('/admin');
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(

@@ -49,19 +49,21 @@ export function logout() {
 
 export async function getRepoStructure(owner, repo) {
   try {
-    const data = await apiCall(`${API_BASE}/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`);
     const structure = {};
+    const dirs = ['content/pages', 'content/components', 'src/components'];
 
-    data.tree.forEach(item => {
-      const dir = item.path.split('/').slice(0, -1).join('/') || '/';
-      if (!structure[dir]) structure[dir] = [];
-      structure[dir].push({
-        name: item.path.split('/').pop(),
-        path: '/' + item.path,
-        type: item.type,
-        sha: item.sha
-      });
-    });
+    for (const dir of dirs) {
+      try {
+        const data = await apiCall(`${API_BASE}/repos/${owner}/${repo}/contents/${dir}`);
+        structure[dir] = Array.isArray(data) ? data : [data];
+      } catch (err) {
+        if (err.message?.includes('404')) {
+          structure[dir] = [];
+        } else {
+          throw err;
+        }
+      }
+    }
 
     return structure;
   } catch (err) {
