@@ -7,23 +7,33 @@ function getToken() {
 
 function getHeaders() {
   const token = getToken();
-  return {
-    'Authorization': token ? `Bearer ${token}` : '',
+  const headers = {
     'Accept': 'application/vnd.github.v3+json',
     'Content-Type': 'application/json'
   };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  return headers;
 }
 
 async function apiCall(url, options = {}) {
+  const token = getToken();
+  if (!token) {
+    throw new Error('401: GitHub token not configured. Please set your token in Settings.');
+  }
+
   const response = await fetch(url, {
     ...options,
     headers: { ...getHeaders(), ...options.headers }
   });
 
   if (response.status === 404) throw new Error('404: Not found');
-  if (response.status === 401) throw new Error('401: Authentication failed');
-  if (response.status === 403) throw new Error('403: Access denied');
-  if (response.status === 429) throw new Error('429: Rate limit exceeded');
+  if (response.status === 401) throw new Error('401: Authentication failed. Verify your token is valid.');
+  if (response.status === 403) throw new Error('403: Access denied. Check repository permissions.');
+  if (response.status === 429) throw new Error('429: Rate limit exceeded. Try again in a few minutes.');
   if (!response.ok) throw new Error(`${response.status}: ${response.statusText}`);
 
   return response.json();
