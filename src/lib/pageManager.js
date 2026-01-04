@@ -40,8 +40,8 @@ export async function listPages(owner, repo) {
     const structure = await github.getRepoStructure(owner, repo);
     const pageFiles = (structure['content/pages'] || [])
       .filter(file => file.name.endsWith('.json'))
-      .map(file => file.name.replace('.json', ''))
-      .sort();
+      .map(file => ({ name: file.name.replace('.json', '') }))
+      .sort((a, b) => a.name.localeCompare(b.name));
     return pageFiles;
   } catch (error) {
     if (error.message?.includes('404')) {

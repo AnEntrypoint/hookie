@@ -11,6 +11,7 @@ import Grid from '../components/Grid.js';
 import Divider from '../components/Divider.js';
 import Link from '../components/Link.js';
 import List from '../components/List.js';
+import Card from '../components/Card.js';
 
 const COMPONENT_MAP = {
   Button,
@@ -22,7 +23,8 @@ const COMPONENT_MAP = {
   Grid,
   Divider,
   Link,
-  List
+  List,
+  Card
 };
 
 const getDefaultProps = (schema) => {

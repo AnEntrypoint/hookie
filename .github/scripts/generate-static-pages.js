@@ -27,6 +27,12 @@ const builtInComponents = {
   Divider: (props) => `<hr style="${styleToString(props.style || {})}" />`,
   Section: (props, children) => `<section style="${styleToString(props.style || {})}">${children}</section>`,
   Grid: (props, children) => `<div style="display: grid; ${styleToString(props.style || {})}">${children}</div>`,
+  Card: (props) => {
+    const shadowMap = { small: '0 1px 3px rgba(0,0,0,0.12)', medium: '0 4px 6px rgba(0,0,0,0.1)', large: '0 10px 25px rgba(0,0,0,0.15)' };
+    const shadowSize = props.shadowSize || 'medium';
+    const cardStyle = `${styleToString(props.style || {})}; background-color: ${props.backgroundColor || '#fff'}; border-radius: ${props.borderRadius || '8px'}; padding: ${props.padding || '20px'}; box-shadow: ${shadowMap[shadowSize]}; border: 2px solid ${props.accentColor || '#007bff'}; transition: transform 200ms ease, box-shadow 200ms ease;`;
+    return `<div style="${cardStyle}">${props.imageUrl ? `<img src="${props.imageUrl}" alt="${props.imageAlt || props.title || ''}" style="width: 100%; height: auto; border-radius: ${props.borderRadius || '8px'}; margin-bottom: 16px; display: block; object-fit: cover;" />` : ''}${props.title ? `<h3 style="margin: 0 0 12px 0; font-size: 20px; font-weight: 600; color: ${props.accentColor || '#007bff'}">${props.title}</h3>` : ''}${props.description ? `<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #555">${props.description}</p>` : ''}</div>`;
+  },
 };
 
 function styleToString(style) {
