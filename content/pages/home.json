@@ -74,7 +74,7 @@
               "id": "btn-demo",
               "type": "Link",
               "props": {
-                "href": "/pages/demo",
+                "href": "#/pages/demo",
                 "text": "View Demo",
                 "variant": "pill",
                 "size": "lg",
@@ -637,7 +637,7 @@
                   "id": "nav-card-3-link",
                   "type": "Link",
                   "props": {
-                    "href": "/pages/demo",
+                    "href": "#/pages/demo",
                     "text": "View Demo",
                     "variant": "button",
                     "size": "md",
@@ -714,7 +714,7 @@
                   "id": "footer-link-2",
                   "type": "Link",
                   "props": {
-                    "href": "/pages/demo",
+                    "href": "#/pages/demo",
                     "text": "Demo",
                     "variant": "default"
                   },
