@@ -3,10 +3,12 @@ import AdminHeader from './AdminHeader';
 import PageManager from './PageManager';
 import Builder from './Builder';
 import ComponentCreator from './ComponentCreator';
+import ComponentLibrary from './ComponentLibrary';
 import Settings from './Settings';
 import PropsEditor from './PropsEditor';
 import StyleEditor from './StyleEditor';
 import PublishManager from './PublishManager';
+import ComponentReuseTestPage from './ComponentReuseTestPage';
 import liveReload from '../lib/liveReload';
 import contentManager from '../lib/contentManager';
 import componentRegistry from '../lib/componentRegistry';
@@ -227,8 +229,21 @@ export default function AdminApp() {
       );
     }
 
+    if (route === '/admin/library') {
+      return (
+        <ComponentLibrary
+          owner={repoInfo.owner}
+          repo={repoInfo.repo}
+        />
+      );
+    }
+
     if (route === '/admin/settings') {
       return <Settings repoInfo={repoInfo} onUpdate={setRepoInfo} />;
+    }
+
+    if (route === '/admin/component-reuse-test') {
+      return <ComponentReuseTestPage />;
     }
 
     return <div style={styles.notFound}>404 - Page not found</div>;

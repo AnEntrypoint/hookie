@@ -68,6 +68,24 @@ const schemas = {
     props: { items: { type: 'array', default: [] } },
     allowedChildren: [],
     defaultStyle: { listStyle: 'none', padding: '0' }
+  },
+  Card: {
+    name: 'Card',
+    description: 'A reusable card component for displaying content with customizable styling',
+    version: '1.0.0',
+    props: {
+      title: { type: 'string', default: '' },
+      description: { type: 'string', default: '' },
+      imageUrl: { type: 'string', default: '' },
+      imageAlt: { type: 'string', default: '' },
+      accentColor: { type: 'string', default: '#007bff' },
+      backgroundColor: { type: 'string', default: '#ffffff' },
+      padding: { type: 'string', default: '20px' },
+      borderRadius: { type: 'string', default: '8px' },
+      shadowSize: { type: 'string', default: 'medium' }
+    },
+    allowedChildren: [],
+    defaultStyle: { display: 'inline-block', minWidth: '250px', maxWidth: '400px' }
   }
 };
 

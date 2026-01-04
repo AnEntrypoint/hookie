@@ -1,0 +1,64 @@
+{
+  "name": "Card",
+  "description": "A reusable card component for displaying content with customizable styling",
+  "version": "1.0.0",
+  "props": {
+    "title": {
+      "type": "string",
+      "default": "",
+      "description": "Card title text"
+    },
+    "description": {
+      "type": "string",
+      "default": "",
+      "description": "Card description text"
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "",
+      "description": "URL of the card image"
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": "",
+      "description": "Alt text for the image"
+    },
+    "accentColor": {
+      "type": "string",
+      "default": "#007bff",
+      "description": "Accent color for border and title"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Background color of the card"
+    },
+    "padding": {
+      "type": "string",
+      "default": "20px",
+      "description": "Internal padding of the card"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "8px",
+      "description": "Border radius of the card"
+    },
+    "shadowSize": {
+      "type": "string",
+      "default": "medium",
+      "description": "Shadow size: small, medium, or large"
+    }
+  },
+  "allowedChildren": [],
+  "defaultStyle": {
+    "display": "inline-block",
+    "minWidth": "250px",
+    "maxWidth": "400px"
+  },
+  "metadata": {
+    "category": "components",
+    "tags": ["card", "reusable", "container"],
+    "author": "system",
+    "createdAt": "2026-01-04"
+  }
+}

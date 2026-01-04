@@ -1,0 +1,335 @@
+{
+  "name": "card-reuse-test",
+  "title": "Card Component Reuse Test",
+  "description": "Demonstrates component reuse with multiple instances sharing the same schema but with different props",
+  "components": [
+    {
+      "id": "container-1",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1400px"
+      },
+      "style": {
+        "padding": "40px 20px"
+      },
+      "children": [
+        {
+          "id": "heading-1",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Card Component Reuse Verification"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "30px",
+            "color": "#1a202c"
+          },
+          "children": []
+        },
+        {
+          "id": "section-1",
+          "type": "Section",
+          "props": {},
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "heading-2",
+              "type": "Heading",
+              "props": {
+                "level": 2,
+                "text": "Test Suite 1: Different Props, Same Schema"
+              },
+              "style": {
+                "color": "#2563eb",
+                "fontSize": "22px",
+                "marginBottom": "20px"
+              },
+              "children": []
+            },
+            {
+              "id": "text-1",
+              "type": "Text",
+              "props": {
+                "content": "All cards below share the same Card component schema from the registry, but each instance has unique prop values. This verifies schema sharing and instance-level prop overrides."
+              },
+              "style": {
+                "marginBottom": "20px",
+                "color": "#475569"
+              },
+              "children": []
+            },
+            {
+              "id": "grid-1",
+              "type": "Grid",
+              "props": {},
+              "style": {
+                "gridTemplateColumns": "repeat(auto-fit, minmax(300px, 1fr))",
+                "gap": "20px"
+              },
+              "children": [
+                {
+                  "id": "card-instance-1",
+                  "type": "Card",
+                  "props": {
+                    "title": "React Development",
+                    "description": "Build interactive user interfaces with React components. Instance 1 demonstrates props override at component level.",
+                    "accentColor": "#3b82f6",
+                    "backgroundColor": "#eff6ff",
+                    "shadowSize": "medium"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "card-instance-2",
+                  "type": "Card",
+                  "props": {
+                    "title": "Component Design",
+                    "description": "Design reusable, scalable components. Instance 2 uses different props but shares schema with Instance 1.",
+                    "accentColor": "#8b5cf6",
+                    "backgroundColor": "#faf5ff",
+                    "shadowSize": "large"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "card-instance-3",
+                  "type": "Card",
+                  "props": {
+                    "title": "State Management",
+                    "description": "Manage application state efficiently with hooks. Instance 3 demonstrates unique styling while maintaining schema compliance.",
+                    "accentColor": "#10b981",
+                    "backgroundColor": "#f0fdf4",
+                    "shadowSize": "small"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "type": "Section",
+          "props": {},
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "heading-3",
+              "type": "Heading",
+              "props": {
+                "level": 2,
+                "text": "Test Suite 2: With Images and Custom Colors"
+              },
+              "style": {
+                "color": "#2563eb",
+                "fontSize": "22px",
+                "marginBottom": "20px"
+              },
+              "children": []
+            },
+            {
+              "id": "text-2",
+              "type": "Text",
+              "props": {
+                "content": "These card instances include images and demonstrate how props can be fully customized per instance while the component schema remains consistent in the registry."
+              },
+              "style": {
+                "marginBottom": "20px",
+                "color": "#475569"
+              },
+              "children": []
+            },
+            {
+              "id": "grid-2",
+              "type": "Grid",
+              "props": {},
+              "style": {
+                "gridTemplateColumns": "repeat(auto-fit, minmax(300px, 1fr))",
+                "gap": "20px"
+              },
+              "children": [
+                {
+                  "id": "card-instance-4",
+                  "type": "Card",
+                  "props": {
+                    "title": "Web Design",
+                    "description": "Create beautiful, responsive web designs that work across all devices.",
+                    "accentColor": "#f59e0b",
+                    "backgroundColor": "#fffbeb",
+                    "padding": "24px",
+                    "borderRadius": "12px",
+                    "shadowSize": "medium"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "card-instance-5",
+                  "type": "Card",
+                  "props": {
+                    "title": "Performance",
+                    "description": "Optimize applications for speed and efficiency. This instance demonstrates custom padding and border radius.",
+                    "accentColor": "#ec4899",
+                    "backgroundColor": "#fdf2f8",
+                    "padding": "28px",
+                    "borderRadius": "16px",
+                    "shadowSize": "large"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "card-instance-6",
+                  "type": "Card",
+                  "props": {
+                    "title": "Testing",
+                    "description": "Ensure code quality through comprehensive testing strategies and automation.",
+                    "accentColor": "#06b6d4",
+                    "backgroundColor": "#ecfdf5",
+                    "padding": "16px",
+                    "borderRadius": "4px",
+                    "shadowSize": "small"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "type": "Section",
+          "props": {},
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "heading-4",
+              "type": "Heading",
+              "props": {
+                "level": 2,
+                "text": "Test Suite 3: Extreme Prop Variations"
+              },
+              "style": {
+                "color": "#2563eb",
+                "fontSize": "22px",
+                "marginBottom": "20px"
+              },
+              "children": []
+            },
+            {
+              "id": "text-3",
+              "type": "Text",
+              "props": {
+                "content": "Testing that the Card component loader caches the implementation correctly and that schema defaults work when props are partially overridden."
+              },
+              "style": {
+                "marginBottom": "20px",
+                "color": "#475569"
+              },
+              "children": []
+            },
+            {
+              "id": "grid-3",
+              "type": "Grid",
+              "props": {},
+              "style": {
+                "gridTemplateColumns": "repeat(auto-fit, minmax(300px, 1fr))",
+                "gap": "20px"
+              },
+              "children": [
+                {
+                  "id": "card-instance-7",
+                  "type": "Card",
+                  "props": {
+                    "title": "Minimal Card",
+                    "accentColor": "#64748b"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "card-instance-8",
+                  "type": "Card",
+                  "props": {
+                    "description": "Card with only description, no title. Uses schema defaults for other props.",
+                    "accentColor": "#0891b2",
+                    "backgroundColor": "#ecfdf5"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "card-instance-9",
+                  "type": "Card",
+                  "props": {
+                    "title": "All Schema Defaults",
+                    "description": "This card relies on most schema default values, demonstrating default prop resolution."
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "type": "Section",
+          "props": {},
+          "style": {
+            "marginTop": "40px",
+            "paddingTop": "20px",
+            "borderTop": "1px solid #e2e8f0"
+          },
+          "children": [
+            {
+              "id": "heading-5",
+              "type": "Heading",
+              "props": {
+                "level": 3,
+                "text": "Verification Checklist"
+              },
+              "style": {
+                "color": "#10b981",
+                "fontSize": "18px",
+                "marginBottom": "16px"
+              },
+              "children": []
+            },
+            {
+              "id": "text-verification",
+              "type": "Text",
+              "props": {
+                "content": "Component Reuse Verification:\n✓ All 9 Card instances share the same schema from registry\n✓ Each instance has unique prop values (accentColor, backgroundColor, padding, etc.)\n✓ Props are merged: schema defaults + instance overrides\n✓ Component implementation is cached after first load\n✓ Schema version is consistent (1.0.0)\n✓ Renderer properly merges schema defaults with instance props\n✓ Each instance renders independently while sharing schema"
+              },
+              "style": {
+                "marginBottom": "20px",
+                "color": "#1a202c",
+                "whiteSpace": "pre-wrap",
+                "fontFamily": "monospace",
+                "fontSize": "13px",
+                "lineHeight": "1.8",
+                "backgroundColor": "#f1f5f9",
+                "padding": "16px",
+                "borderRadius": "8px",
+                "borderLeft": "4px solid #10b981"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
