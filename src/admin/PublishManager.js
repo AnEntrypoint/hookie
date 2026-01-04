@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ChangesList from './ChangesList';
 import CommitForm from './CommitForm';
 import PublishStatus from './PublishStatus';
+import * as github from '../lib/github';
 
 const PublishManager = ({ owner, repo, changes, onRefresh }) => {
   const [commitMessage, setCommitMessage] = useState('');
@@ -40,23 +41,20 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
     setStatus(null);
 
     try {
-      const { writeFile, deleteFile, getBranchInfo } = await import('../lib/github');
-
       for (const change of changes) {
         if (change.status === 'deleted') {
-          await deleteFile(owner, repo, change.path, commitMessage, change.sha);
+          await github.deleteFile(owner, repo, change.path, commitMessage, change.sha);
         } else {
-          await writeFile(owner, repo, change.path, change.content, commitMessage, change.sha);
+          await github.writeFile(owner, repo, change.path, change.content, commitMessage, change.sha);
         }
       }
 
-      const branchInfo = await getBranchInfo(owner, repo, 'main');
+      const branchInfo = await github.getBranchInfo(owner, repo, 'main');
       const commitInfo = {
         sha: branchInfo.commit.sha,
-        message: branchInfo.commit.commit.message,
-        author: branchInfo.commit.commit.author.name,
-        timestamp: branchInfo.commit.commit.author.date,
-        url: branchInfo.commit.html_url
+        message: commitMessage,
+        timestamp: new Date().toISOString(),
+        url: branchInfo.commit.url
       };
 
       setLastCommit(commitInfo);
@@ -73,18 +71,16 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
       }
 
     } catch (err) {
-      let errorMessage = 'Failed to publish. Please try again.';
-      
-      if (err.status === 401 || err.status === 403) {
+      let errorMessage = err.message || 'Failed to publish. Please try again.';
+
+      if (err.message?.includes('401') || err.message?.includes('403')) {
         errorMessage = 'Authentication failed. Please re-authenticate.';
-      } else if (err.status === 404) {
+      } else if (err.message?.includes('404')) {
         errorMessage = 'Repository not found. Check owner and repo settings.';
-      } else if (err.status === 429) {
+      } else if (err.message?.includes('429')) {
         errorMessage = 'GitHub API rate limit exceeded. Try again in a few minutes.';
       } else if (err.message?.includes('Network')) {
         errorMessage = 'Network error. Check your connection.';
-      } else if (err.message?.includes('validation')) {
-        errorMessage = 'Invalid file data. Please review changes.';
       }
 
       setError(errorMessage);
