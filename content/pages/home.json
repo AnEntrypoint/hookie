@@ -719,10 +719,10 @@
                     "variant": "default"
                   },
                   "style": {
-                    "marginTop": "18px",
-                    "marginRight": "18px",
-                    "marginBottom": "18px",
-                    "marginLeft": "18px"
+                    "marginTop": "11px",
+                    "marginRight": "11px",
+                    "marginBottom": "11px",
+                    "marginLeft": "11px"
                   },
                   "children": []
                 },
