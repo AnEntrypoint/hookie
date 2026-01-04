@@ -1,0 +1,26 @@
+{
+  "name": "terminal-state-test",
+  "title": "Terminal State Test",
+  "components": [
+    {
+      "id": "container-1767525188229",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "heading-1767525188229",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "children": "Welcome to Terminal State Test"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}
