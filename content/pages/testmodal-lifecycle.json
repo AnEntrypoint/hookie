@@ -1,0 +1,35 @@
+{
+  "name": "testmodal-lifecycle",
+  "title": "TestModal Lifecycle Test",
+  "description": "Page to test TestModal component creation and rendering",
+  "components": [
+    {
+      "id": "comp-root",
+      "type": "Container",
+      "props": {
+        "maxWidth": "1200px"
+      },
+      "children": [
+        {
+          "id": "comp-heading",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "TestModal Component Lifecycle Test"
+          },
+          "children": []
+        },
+        {
+          "id": "comp-modal-1",
+          "type": "TestModal",
+          "props": {
+            "title": "Welcome to TestModal",
+            "content": "This is a test modal component demonstrating the full lifecycle.",
+            "isOpen": true
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}
