@@ -16,17 +16,17 @@ export default function AdminHeader({
         <div style={styles.headerLeft}>
           <h1 style={styles.logo}>CMS Admin</h1>
           <nav style={styles.nav}>
-            <a 
-              href="#/admin" 
+            <a
+              href="#/admin"
               style={{
                 ...styles.navLink,
-                ...(isActive('/admin') && !isActive('/admin/pages') && !isActive('/admin/components') && !isActive('/admin/settings') ? styles.navLinkActive : {})
+                ...(isActive('/admin') && !isActive('/admin/pages') && !isActive('/admin/components') && !isActive('/admin/library') && !isActive('/admin/settings') ? styles.navLinkActive : {})
               }}
             >
               Pages
             </a>
-            <a 
-              href="#/admin/components" 
+            <a
+              href="#/admin/components"
               style={{
                 ...styles.navLink,
                 ...(isActive('/admin/components') ? styles.navLinkActive : {})
@@ -34,8 +34,17 @@ export default function AdminHeader({
             >
               Components
             </a>
-            <a 
-              href="#/admin/settings" 
+            <a
+              href="#/admin/library"
+              style={{
+                ...styles.navLink,
+                ...(isActive('/admin/library') ? styles.navLinkActive : {})
+              }}
+            >
+              Library
+            </a>
+            <a
+              href="#/admin/settings"
               style={{
                 ...styles.navLink,
                 ...(isActive('/admin/settings') ? styles.navLinkActive : {})
