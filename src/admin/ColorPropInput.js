@@ -41,33 +41,34 @@ const ColorPropInput = ({ value, onChange, isMobile }) => {
 
 const getWrapperStyle = (isMobile) => ({
   display: 'flex',
-  gap: isMobile ? '12px' : '8px',
-  alignItems: 'center',
+  gap: '12px',
+  alignItems: 'stretch',
   flexDirection: isMobile ? 'column' : 'row',
 });
 
 const getColorPickerStyle = (isMobile) => ({
-  width: isMobile ? '100%' : '50px',
-  height: isMobile ? '48px' : '38px',
+  width: isMobile ? '100%' : '44px',
+  minHeight: '44px',
+  minWidth: isMobile ? 'auto' : '44px',
   border: '1px solid #ddd',
   borderRadius: '4px',
   cursor: 'pointer',
   outline: 'none',
   transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-  minHeight: isMobile ? '48px' : 'auto',
 });
 
 const getTextInputStyle = (isMobile) => ({
   flex: 1,
   width: isMobile ? '100%' : 'auto',
-  padding: isMobile ? '12px' : '8px',
+  padding: '12px',
   border: '1px solid #ddd',
   borderRadius: '4px',
   fontSize: isMobile ? '16px' : '14px',
   outline: 'none',
   transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-  minHeight: isMobile ? '44px' : 'auto',
+  minHeight: '44px',
   lineHeight: '1.5',
+  boxSizing: 'border-box',
 });
 
 export default ColorPropInput;

@@ -46,7 +46,26 @@ const Auth = () => {
   if (!isAuthenticated) {
     return (
       <div className="auth">
-        <a href="#/admin/settings" className="auth-login" style={{ textDecoration: 'none', color: 'white' }}>
+        <a
+          href="#/admin/settings"
+          style={{
+            textDecoration: 'none',
+            color: '#ffffff',
+            minWidth: '44px',
+            minHeight: '44px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '8px 16px',
+            backgroundColor: '#2563eb',
+            borderRadius: '6px',
+            fontWeight: '500',
+            fontSize: '0.875rem',
+            transition: 'background-color 150ms'
+          }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#1e40af'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = '#2563eb'}
+        >
           Add GitHub Token
         </a>
       </div>
@@ -62,7 +81,24 @@ const Auth = () => {
         style={{ width: '32px', height: '32px', borderRadius: '50%' }}
       />
       <span className="auth-username">{user.name || user.login}</span>
-      <button className="auth-logout" onClick={handleLogout}>
+      <button
+        onClick={handleLogout}
+        style={{
+          minWidth: '44px',
+          minHeight: '44px',
+          padding: '8px 12px',
+          backgroundColor: '#ef4444',
+          color: '#ffffff',
+          border: 'none',
+          borderRadius: '6px',
+          fontWeight: '500',
+          fontSize: '0.875rem',
+          cursor: 'pointer',
+          transition: 'background-color 150ms'
+        }}
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#dc2626'}
+        onMouseLeave={(e) => e.target.style.backgroundColor = '#ef4444'}
+      >
         Logout
       </button>
     </div>

@@ -128,6 +128,39 @@ export default function GlobalStyles() {
           transform: rotate(360deg);
         }
       }
+
+      .auth-logout {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
+        background-color: #ef4444;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.875rem;
+      }
+
+      .auth-logout:hover {
+        background-color: #dc2626;
+      }
+
+      .auth-login {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        background-color: ${colors.primary};
+        color: #ffffff;
+        border-radius: 6px;
+        font-weight: 500;
+      }
+
+      .auth-login:hover {
+        background-color: ${colors.primaryDark};
+      }
     `}</style>
   );
 }

@@ -23,15 +23,17 @@ const getWrapperStyle = (isMobile) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
-  minHeight: isMobile ? '44px' : '38px',
-  padding: isMobile ? '8px 0' : '0',
+  minHeight: '44px',
+  padding: '6px 0',
 });
 
 const getCheckboxStyle = (isMobile) => ({
-  width: isMobile ? '24px' : '18px',
-  height: isMobile ? '24px' : '18px',
+  width: '20px',
+  height: '20px',
   cursor: 'pointer',
-  minWidth: isMobile ? '24px' : '18px',
+  minWidth: '20px',
+  minHeight: '20px',
+  accentColor: '#2563eb',
 });
 
 const getCheckboxLabelStyle = (isMobile) => ({

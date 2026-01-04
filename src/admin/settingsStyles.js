@@ -4,6 +4,8 @@
  * Pure object exports - no React dependencies
  */
 
+import { breakpoints, minTouchSize } from './responsiveStyles';
+
 const colors = {
   textDark: '#1e293b',
   textLight: '#64748b',
@@ -27,27 +29,42 @@ export const styles = {
   container: {
     maxWidth: '700px',
     margin: '0 auto',
-    padding: '40px 28px',
+    padding: '16px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      padding: '24px',
+    },
+    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
+      padding: '40px 28px',
+    },
   },
   header: {
-    marginBottom: '40px',
+    marginBottom: '28px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      marginBottom: '40px',
+    },
   },
   title: {
-    fontSize: '2rem',
+    fontSize: '1.5rem',
     fontWeight: 800,
     color: colors.textDark,
     margin: '0 0 8px 0',
     letterSpacing: '-0.5px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      fontSize: '2rem',
+    },
   },
   description: {
-    fontSize: '0.95rem',
+    fontSize: '0.875rem',
     color: colors.textLight,
     margin: 0,
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      fontSize: '0.95rem',
+    },
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    gap: '20px',
   },
   formGroup: {
     display: 'flex',
@@ -60,19 +77,25 @@ export const styles = {
     color: colors.textDark,
   },
   labelHelper: {
-    fontSize: '0.8125rem',
+    fontSize: '0.75rem',
     color: colors.textMuted,
     fontWeight: 400,
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      fontSize: '0.8125rem',
+    },
   },
   input: {
     padding: '12px 16px',
-    fontSize: '0.95rem',
+    fontSize: '1rem',
     border: `1px solid ${colors.border}`,
     borderRadius: '8px',
     fontFamily: 'system-ui, -apple-system, sans-serif',
     backgroundColor: colors.white,
     transition: 'all 150ms cubic-bezier(0.4, 0, 0.2, 1)',
     color: colors.textDark,
+    minHeight: '44px',
+    width: '100%',
+    boxSizing: 'border-box',
   },
   inputFocus: {
     borderColor: colors.primary,
@@ -81,10 +104,16 @@ export const styles = {
   },
   buttonGroup: {
     display: 'flex',
+    flexDirection: 'column',
     gap: '12px',
-    marginTop: '20px',
+    marginTop: '16px',
+    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
+      flexDirection: 'row',
+      marginTop: '20px',
+    },
   },
   button: {
+    ...minTouchSize,
     flex: 1,
     padding: '12px 20px',
     fontSize: '0.95rem',
