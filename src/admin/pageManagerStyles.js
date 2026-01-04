@@ -6,15 +6,6 @@ export const styles = {
     maxWidth: '1400px',
     margin: '0 auto',
     backgroundColor: '#ffffff',
-    [`@media (max-width: ${breakpoints.laptop}px)`]: {
-      padding: '32px 20px',
-    },
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '24px 16px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '16px 12px',
-    },
   },
   header: {
     display: 'flex',
@@ -26,20 +17,6 @@ export const styles = {
     background: 'linear-gradient(to bottom, #ffffff, #f8fafc)',
     boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
     gap: '16px',
-    [`@media (max-width: ${breakpoints.laptop}px)`]: {
-      padding: '24px 20px',
-      marginBottom: '24px',
-    },
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '16px 16px',
-      marginBottom: '16px',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '12px 12px',
-      marginBottom: '12px',
-    },
   },
   heading: {
     margin: 0,
@@ -48,12 +25,6 @@ export const styles = {
     color: '#1e293b',
     letterSpacing: '-0.5px',
     textShadow: '0 1px 2px rgba(0,0,0,0.05)',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      fontSize: '1.5rem',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '1.25rem',
-    },
   },
   newButton: {
     padding: '12px 16px',
@@ -66,15 +37,6 @@ export const styles = {
     cursor: 'pointer',
     ...minTouchSize,
     whiteSpace: 'nowrap',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      width: '100%',
-      fontSize: '0.8125rem',
-      padding: '10px 14px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '0.75rem',
-      padding: '8px 12px',
-    },
   },
   loading: {
     display: 'flex',
@@ -84,12 +46,6 @@ export const styles = {
     padding: '48px',
     gap: '16px',
     color: '#64748b',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '32px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '24px',
-    },
   },
   spinner: {
     width: '48px',
@@ -119,28 +75,17 @@ export const styles = {
     maxWidth: '500px',
     width: '90%',
     boxShadow: '0 25px 50px rgba(0,0,0,0.15)',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '20px',
-      borderRadius: '8px',
-    },
   },
   modalTitle: {
     margin: '0 0 24px',
     fontSize: '1.5rem',
     fontWeight: '700',
     color: '#1e293b',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '1.25rem',
-      marginBottom: '16px',
-    },
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      gap: '12px',
-    },
   },
   input: {
     padding: '12px 16px',
@@ -149,18 +94,11 @@ export const styles = {
     fontSize: '1rem',
     transition: '150ms ease-in-out',
     minHeight: '44px',
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '16px',
-      padding: '10px 12px',
-    },
   },
   modalActions: {
     display: 'flex',
     gap: '12px',
     justifyContent: 'flex-end',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      flexDirection: 'column',
-    },
   },
   createButton: {
     padding: '12px 16px',
@@ -172,13 +110,6 @@ export const styles = {
     fontWeight: '500',
     cursor: 'pointer',
     ...minTouchSize,
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      width: '100%',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '0.75rem',
-      padding: '10px 14px',
-    },
   },
   cancelButton: {
     padding: '12px 16px',
@@ -190,13 +121,6 @@ export const styles = {
     fontWeight: '500',
     cursor: 'pointer',
     ...minTouchSize,
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      width: '100%',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      fontSize: '0.75rem',
-      padding: '10px 14px',
-    },
   },
   error: {
     display: 'flex',
@@ -212,16 +136,6 @@ export const styles = {
     letterSpacing: '-0.2px',
     boxShadow: '0 4px 12px rgba(239,68,68,0.2)',
     gap: '12px',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '12px 16px',
-      fontSize: '0.875rem',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '10px 12px',
-      fontSize: '0.75rem',
-    },
   },
   dismissButton: {
     background: 'none',
@@ -244,35 +158,11 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      padding: '32px 16px',
-      minHeight: '200px',
-      fontSize: '0.875rem',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '24px 12px',
-      minHeight: '150px',
-      fontSize: '0.75rem',
-    },
   },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
     gap: '24px',
     padding: '28px',
-    [`@media (max-width: ${breakpoints.laptop}px)`]: {
-      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-      gap: '20px',
-      padding: '20px',
-    },
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      gridTemplateColumns: '1fr',
-      gap: '16px',
-      padding: '16px',
-    },
-    [`@media (max-width: ${breakpoints.mobile}px)`]: {
-      padding: '12px',
-      gap: '12px',
-    },
   },
 };

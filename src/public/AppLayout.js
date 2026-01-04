@@ -155,7 +155,6 @@ const styles = {
   },
   
   mobileMenuToggle: {
-    display: 'none',
     background: 'none',
     border: 'none',
     color: '#ffffff',
@@ -163,12 +162,7 @@ const styles = {
     cursor: 'pointer',
     minWidth: '44px',
     minHeight: '44px',
-    padding: '8px',
-    '@media (max-width: 768px)': {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
+    padding: '8px'
   },
   
   mobileNav: {

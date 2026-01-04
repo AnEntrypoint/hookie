@@ -86,6 +86,18 @@ const schemas = {
     },
     allowedChildren: [],
     defaultStyle: { display: 'inline-block', minWidth: '250px', maxWidth: '400px' }
+  },
+  AlertBox: {
+    name: 'AlertBox',
+    description: 'An alert/notification component with different types',
+    props: {
+      type: { type: 'string', default: 'info', enum: ['info', 'warning', 'error', 'success'] },
+      title: { type: 'string', default: '' },
+      message: { type: 'string', default: '' },
+      onClose: { type: 'function' }
+    },
+    allowedChildren: [],
+    defaultStyle: {}
   }
 };
 

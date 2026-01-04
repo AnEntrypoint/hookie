@@ -174,14 +174,6 @@ const styles = {
     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
     height: '56px',
     transition: 'padding 300ms ease, height 300ms ease',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      padding: '12px 24px',
-      height: '64px',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      padding: '16px 24px',
-      height: '72px',
-    },
   },
   headerLeft: {
     display: 'flex',
@@ -190,12 +182,6 @@ const styles = {
     flex: 1,
     minWidth: 0,
     overflow: 'hidden',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      gap: '16px',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      gap: '24px',
-    },
   },
   logo: {
     margin: 0,
@@ -204,24 +190,11 @@ const styles = {
     color: '#1e293b',
     whiteSpace: 'nowrap',
     flexShrink: 0,
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '1.25rem',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      fontSize: '1.375rem',
-    },
   },
   nav: {
     display: 'none',
     gap: '4px',
     flexShrink: 0,
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      display: 'flex',
-      gap: '6px',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      gap: '8px',
-    },
   },
   navLink: {
     padding: '6px 8px',
@@ -235,14 +208,6 @@ const styles = {
     minHeight: '44px',
     display: 'flex',
     alignItems: 'center',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      padding: '8px 12px',
-      fontSize: '0.8rem',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      padding: '8px 16px',
-      fontSize: '0.875rem',
-    },
   },
   navLinkActive: {
     backgroundColor: '#dbeafe',
@@ -253,9 +218,6 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     flexShrink: 0,
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      gap: '12px',
-    },
   },
   syncStatus: {
     fontSize: '0.65rem',
@@ -264,15 +226,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     whiteSpace: 'nowrap',
-    [`@media (max-width: ${breakpoints.tablet}px)`]: {
-      display: 'none',
-    },
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      fontSize: '0.75rem',
-    },
-    [`@media (min-width: ${breakpoints.laptop + 1}px)`]: {
-      fontSize: '0.875rem',
-    },
   },
   syncOnline: {
     color: '#10b981',
@@ -295,9 +248,6 @@ const styles = {
     cursor: 'pointer',
     transition: 'background-color 150ms',
     borderRadius: '6px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      display: 'none',
-    },
   },
   hamburgerLine: {
     width: '24px',
@@ -402,21 +352,12 @@ const styles = {
     color: '#1e40af',
     fontSize: '0.75rem',
     gap: '12px',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      flexDirection: 'row',
-      padding: '12px 24px',
-      fontSize: '0.875rem',
-      alignItems: 'center',
-    },
   },
   notificationActions: {
     display: 'flex',
     gap: '8px',
     marginLeft: 'auto',
     width: '100%',
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      width: 'auto',
-    },
   },
   refreshButton: {
     ...minTouchSize,
@@ -430,11 +371,6 @@ const styles = {
     fontWeight: '500',
     transition: 'background-color 150ms',
     flex: 1,
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      flex: 0,
-      fontSize: '0.875rem',
-      padding: '6px 12px',
-    },
   },
   dismissButton: {
     ...minTouchSize,
@@ -448,11 +384,6 @@ const styles = {
     fontWeight: '500',
     transition: 'background-color 150ms',
     flex: 1,
-    [`@media (min-width: ${breakpoints.tablet + 1}px)`]: {
-      flex: 0,
-      fontSize: '0.875rem',
-      padding: '6px 12px',
-    },
   },
 };
 

@@ -121,10 +121,15 @@ export default function AdminApp() {
           const codeContent = await github.readFile(repoInfo.owner, repoInfo.repo, `src/components/${name}.js`);
           let code = codeContent.content;
 
-          const transformedCode = code.replace(/export\s+default\s+/, 'module.exports.default = ');
+          // Remove import statements - they're not supported in new Function()
+          code = code.replace(/import\s+.*?from\s+['"](.*?)['"]\s*;?/g, '');
+          // Replace export default with module.exports
+          code = code.replace(/export\s+default\s+/, 'module.exports.default = ');
 
           const mod = { exports: {} };
-          new Function('React', 'module', 'exports', transformedCode)(window.React, mod, mod.exports);
+          // Pass React and other utilities to the function scope
+          const fn = new Function('React', 'module', 'exports', code);
+          fn(window.React, mod, mod.exports);
           const Component = mod.exports.default;
           if (Component && typeof Component === 'function') {
             componentLoader.registerComponentImplementation(name, Component);
