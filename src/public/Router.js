@@ -41,7 +41,7 @@ const FALLBACK_PAGES = {
   }
 };
 
-const Router = ({ owner, repo, defaultPage = 'home' }) => {
+const Router = ({ owner, repo, defaultPage = 'home', layout }) => {
   const [currentPage, setCurrentPage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -223,7 +223,7 @@ const Router = ({ owner, repo, defaultPage = 'home' }) => {
         opacity: loading ? 0.5 : 1,
         transition: 'opacity 0.3s ease'
       }}>
-        <Renderer pageData={currentPage} mode="view" />
+        <Renderer pageData={currentPage} mode="view" layout={layout} />
       </div>
     );
   }

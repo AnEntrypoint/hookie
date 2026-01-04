@@ -50,3 +50,14 @@ export async function listPages(owner, repo) {
     throw error;
   }
 }
+
+export async function loadLayout(owner, repo) {
+  try {
+    const path = 'content/layout.json';
+    const { content } = await github.readFile(owner, repo, path);
+    const layoutData = JSON.parse(content);
+    return layoutData;
+  } catch (error) {
+    return null;
+  }
+}

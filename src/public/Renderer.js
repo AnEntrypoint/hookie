@@ -13,6 +13,7 @@ import Link from '../components/Link.js';
 import List from '../components/List.js';
 import Card from '../components/Card.js';
 import AlertBox from '../components/AlertBox.js';
+import PageLayout from '../components/PageLayout.js';
 
 const COMPONENT_MAP = {
   Button,
@@ -43,12 +44,13 @@ const getDefaultProps = (schema) => {
   return defaults;
 };
 
-const Renderer = ({ 
-  pageData, 
+const Renderer = ({
+  pageData,
   mode = 'view',
   selectedId,
   onSelectComponent,
-  onPropsChange
+  onPropsChange,
+  layout
 }) => {
   
   const renderComponent = (component, index, parent) => {
@@ -171,15 +173,24 @@ const Renderer = ({
   };
 
   if (!pageData || !pageData.components) {
-    return <div style={{ padding: '20px', color: '#64748b' }}>No content to display</div>;
+    const content = <div style={{ padding: '20px', color: '#64748b' }}>No content to display</div>;
+    return layout ? <PageLayout layout={layout} pageTitle={pageData?.title}>{content}</PageLayout> : content;
   }
 
-  return (
+  const renderedContent = (
     <div className="renderer" style={{ width: '100%' }}>
-      {pageData.components.map((component, index) => 
+      {pageData.components.map((component, index) =>
         renderComponent(component, index, null)
       )}
     </div>
+  );
+
+  return layout ? (
+    <PageLayout layout={layout} pageTitle={pageData?.title}>
+      {renderedContent}
+    </PageLayout>
+  ) : (
+    renderedContent
   );
 };
 

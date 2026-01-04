@@ -3,6 +3,7 @@ import AppLayout from './AppLayout.js';
 import Router from './Router.js';
 import AdminApp from '../admin/AdminApp.js';
 import { getCurrentRoute, isAdminRoute as checkAdminRoute, addRouteChangeListener } from './AppRoutes.js';
+import { useLayout } from '../lib/useLayout.js';
 
 export const RepoContext = createContext(null);
 
@@ -38,15 +39,16 @@ function getRepoInfo() {
 export default function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
   const [repoInfo, setRepoInfo] = useState({ owner: '', repo: '' });
+  const { layout, loading: layoutLoading } = useLayout(repoInfo.owner || '', repoInfo.repo || '');
 
   useEffect(() => {
     const currentRoute = getCurrentRoute();
     setIsAdminRoute(checkAdminRoute(currentRoute));
-    
+
     const cleanup = addRouteChangeListener((route) => {
       setIsAdminRoute(checkAdminRoute(route));
     });
-    
+
     return cleanup;
   }, []);
 
@@ -112,7 +114,7 @@ export default function App() {
         <AdminApp owner={repoInfo.owner} repo={repoInfo.repo} />
       ) : (
         <AppLayout repoInfo={repoInfo} showAdmin={true}>
-          <Router owner={repoInfo.owner} repo={repoInfo.repo} defaultPage="home" />
+          <Router owner={repoInfo.owner} repo={repoInfo.repo} defaultPage="home" layout={layout} />
         </AppLayout>
       )}
     </RepoContext.Provider>

@@ -47,44 +47,10 @@ export default function AppLayout({ children, repoInfo, showAdmin = false }) {
       <a href="#main-content" style={styles.skipLink}>
         Skip to main content
       </a>
-      
-      <header className="app-header" style={styles.appHeader}>
-        <div style={styles.headerContainer}>
-          <div style={styles.logo}>
-            <a href="/" style={{ color: 'inherit', textDecoration: 'none' }}>Site Name</a>
-          </div>
-          <nav style={styles.mainNav}>
-            <a href="/" style={styles.navLink}>Home</a>
-            <a href="#/about" style={styles.navLink}>About</a>
-            <a href="#/contact" style={styles.navLink}>Contact</a>
-          </nav>
-          <button style={{...styles.mobileMenuToggle, display: isMobile ? 'flex' : 'none'}} onClick={toggleMobileMenu}>
-            ☰
-          </button>
-        </div>
-        {mobileMenuOpen && (
-          <nav style={styles.mobileNav}>
-            <a href="/" onClick={closeMobileMenu} style={styles.mobileNavLink}>Home</a>
-            <a href="#/about" onClick={closeMobileMenu} style={styles.mobileNavLink}>About</a>
-            <a href="#/contact" onClick={closeMobileMenu} style={styles.mobileNavLink}>Contact</a>
-          </nav>
-        )}
-      </header>
-      
+
       <main id="main-content" style={styles.appMain}>
         {children}
       </main>
-      
-      <footer style={styles.appFooter}>
-        <div style={styles.footerContainer}>
-          <p style={styles.footerText}>
-            {repoInfo && `Powered by ${repoInfo.owner}/${repoInfo.repo}`}
-          </p>
-          {showAdmin && (
-            <a href="#/admin" style={styles.adminLink}>Admin</a>
-          )}
-        </div>
-      </footer>
     </div>
   );
 }
