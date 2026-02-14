@@ -1,3 +1,5 @@
+import { KEYS } from '../admin/settingsStorage.js';
+
 export const debugHelpers = {
   component: {
     get: (id) => {
@@ -243,7 +245,7 @@ export const debugHelpers = {
   check: {
     auth: () => {
       const repo = window.__debug?.state?.repoInfo;
-      const token = localStorage.getItem('github_token');
+      const token = localStorage.getItem(KEYS.token);
       console.log('Auth check:', {
         owner: repo?.owner || 'NOT SET',
         repo: repo?.repo || 'NOT SET',

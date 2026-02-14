@@ -1,9 +1,0 @@
-{
-  "name": "TestCreateElement",
-  "description": "Test React.createElement implementation",
-  "props": {},
-  "allowedChildren": [
-    "*"
-  ],
-  "defaultStyle": {}
-}

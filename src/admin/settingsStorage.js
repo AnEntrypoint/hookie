@@ -1,42 +1,46 @@
-/**
- * settingsStorage.js
- * Pure utility functions for GitHub settings localStorage operations
- * No React dependencies - can be used in any JavaScript context
- */
-
-/**
- * Load GitHub settings from localStorage
- * @returns {Object} Settings object with token, owner, and repo properties
- */
-export const loadSettingsFromStorage = () => {
-  const token = localStorage.getItem('github_token') || '';
-  const owner = localStorage.getItem('repo_owner') || '';
-  const repo = localStorage.getItem('repo_name') || '';
-
-  return {
-    token,
-    owner,
-    repo
-  };
+export const KEYS = {
+  token: 'github_token',
+  owner: 'github_owner',
+  repo: 'github_repo',
+  lastPage: 'hookie_last_page',
 };
 
-/**
- * Save GitHub settings to localStorage
- * @param {string} token - GitHub personal access token
- * @param {string} owner - Repository owner username or organization
- * @param {string} repo - Repository name
- */
+const LEGACY_KEYS = {
+  owner: ['repo_owner'],
+  repo: ['repo_name'],
+};
+
+export const migrateStorageKeys = () => {
+  for (const [field, oldKeys] of Object.entries(LEGACY_KEYS)) {
+    const canonical = KEYS[field];
+    if (localStorage.getItem(canonical)) continue;
+    for (const oldKey of oldKeys) {
+      const val = localStorage.getItem(oldKey);
+      if (val) {
+        localStorage.setItem(canonical, val);
+        break;
+      }
+    }
+  }
+  for (const oldKeys of Object.values(LEGACY_KEYS)) {
+    for (const k of oldKeys) localStorage.removeItem(k);
+  }
+};
+
+export const loadSettingsFromStorage = () => ({
+  token: localStorage.getItem(KEYS.token) || '',
+  owner: localStorage.getItem(KEYS.owner) || '',
+  repo: localStorage.getItem(KEYS.repo) || '',
+});
+
 export const saveSettingsToStorage = (token, owner, repo) => {
-  localStorage.setItem('github_token', token);
-  localStorage.setItem('repo_owner', owner);
-  localStorage.setItem('repo_name', repo);
+  localStorage.setItem(KEYS.token, token);
+  localStorage.setItem(KEYS.owner, owner);
+  localStorage.setItem(KEYS.repo, repo);
 };
 
-/**
- * Clear all GitHub settings from localStorage
- */
 export const clearSettingsFromStorage = () => {
-  localStorage.removeItem('github_token');
-  localStorage.removeItem('repo_owner');
-  localStorage.removeItem('repo_name');
+  localStorage.removeItem(KEYS.token);
+  localStorage.removeItem(KEYS.owner);
+  localStorage.removeItem(KEYS.repo);
 };

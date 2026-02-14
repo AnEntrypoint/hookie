@@ -22,3 +22,5 @@ coverage/
 .tsc
 tsconfig*.json
 .playwright-mcp/
+.glootie-stop-verified
+pages-dist/

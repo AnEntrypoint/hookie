@@ -1,8 +1,9 @@
-const PAT_KEY = 'github_token';
+import { KEYS } from '../admin/settingsStorage.js';
+
 const API_BASE = 'https://api.github.com';
 
 function getToken() {
-  return localStorage.getItem(PAT_KEY) || '';
+  return localStorage.getItem(KEYS.token) || '';
 }
 
 function getHeaders() {
@@ -44,7 +45,7 @@ export function getAuthToken() {
 }
 
 export function logout() {
-  localStorage.removeItem(PAT_KEY);
+  localStorage.removeItem(KEYS.token);
 }
 
 export async function getRepoStructure(owner, repo) {

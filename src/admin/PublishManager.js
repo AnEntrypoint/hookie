@@ -117,8 +117,11 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
         <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#10b981', marginBottom: '8px' }}>
           All Changes Published
         </h2>
-        <p style={{ color: '#64748b' }}>
+        <p style={{ color: '#64748b', marginBottom: '16px' }}>
           No pending changes to publish
+        </p>
+        <p style={{ color: '#94a3b8', fontSize: '0.875rem', maxWidth: '400px', margin: '0 auto', lineHeight: '1.5' }}>
+          Changes you make in the builder are saved locally. When you are ready, come back here to commit them to GitHub.
         </p>
       </div>
     );
