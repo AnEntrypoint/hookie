@@ -1,47 +1,67 @@
 {
   "version": "1.0.0",
   "site": {
-    "title": "Hookie CMS",
-    "description": "Dynamic Page Builder CMS",
+    "title": "Hookie - Visual Page Builder CMS",
+    "description": "Build beautiful websites with a drag-and-drop page builder powered by GitHub",
     "theme": "light"
   },
   "header": {
     "enabled": true,
     "height": 64,
     "backgroundColor": "#ffffff",
-    "borderBottom": "1px solid #e0e0e0",
-    "navigation": [
+    "borderBottom": "1px solid #e2e8f0",
+    "position": "sticky",
+    "padding": "0.75rem 2rem",
+    "items": [
       {
-        "label": "Home",
-        "path": "/",
-        "icon": "home"
+        "type": "logo",
+        "text": "Hookie"
       },
       {
-        "label": "Pages",
-        "path": "/pages",
-        "icon": "document"
-      },
-      {
-        "label": "Components",
-        "path": "/components",
-        "icon": "layers"
+        "type": "nav",
+        "links": [
+          { "label": "Home", "path": "#/" },
+          { "label": "Components", "path": "#/pages/components" },
+          { "label": "About", "path": "#/pages/about" },
+          { "label": "Pricing", "path": "#/pages/pricing" },
+          { "label": "Blog", "path": "#/pages/blog" }
+        ]
       }
     ]
   },
   "footer": {
     "enabled": true,
-    "height": 60,
-    "backgroundColor": "#f5f5f5",
-    "borderTop": "1px solid #e0e0e0",
-    "content": "Copyright 2026 Hookie CMS. All rights reserved.",
-    "links": [
+    "backgroundColor": "#1e293b",
+    "color": "#94a3b8",
+    "padding": "3rem 2rem",
+    "borderTop": "none",
+    "sections": [
       {
-        "label": "Privacy",
-        "path": "/privacy"
+        "title": "Product",
+        "links": [
+          { "label": "Features", "path": "#/" },
+          { "label": "Pricing", "path": "#/pages/pricing" },
+          { "label": "Components", "path": "#/pages/components" },
+          { "label": "Blog", "path": "#/pages/blog" }
+        ]
       },
       {
-        "label": "Terms",
-        "path": "/terms"
+        "title": "Company",
+        "links": [
+          { "label": "About", "path": "#/pages/about" },
+          { "label": "Contact", "path": "mailto:hello@hookie.dev" }
+        ]
+      },
+      {
+        "title": "Resources",
+        "links": [
+          { "label": "Documentation", "path": "#/docs" },
+          { "label": "GitHub", "path": "https://github.com" }
+        ]
+      },
+      {
+        "title": "Legal",
+        "text": "2026 Hookie. All rights reserved."
       }
     ]
   },
@@ -66,7 +86,7 @@
   },
   "colors": {
     "primary": "#2563eb",
-    "secondary": "#64748b",
+    "secondary": "#7c3aed",
     "success": "#10b981",
     "warning": "#f59e0b",
     "error": "#ef4444",

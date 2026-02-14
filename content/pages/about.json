@@ -1,0 +1,467 @@
+{
+  "name": "about",
+  "title": "About",
+  "components": [
+    {
+      "id": "hero-section",
+      "type": "Section",
+      "props": {
+        "background": "gradient-green",
+        "padding": "2xl",
+        "fullWidth": true
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "hero-heading",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "About Hookie"
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "fontSize": "3rem",
+            "fontWeight": "900",
+            "margin": "0 0 16px 0",
+            "letterSpacing": "-0.02em"
+          },
+          "children": []
+        },
+        {
+          "id": "hero-subtitle",
+          "type": "Text",
+          "props": {
+            "content": "An open-source CMS that puts developers first"
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "fontSize": "1.25rem",
+            "fontWeight": "500",
+            "lineHeight": "1.6",
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "mission-section",
+      "type": "Section",
+      "props": {
+        "padding": "xl"
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "mission-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Our Mission"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "24px"
+          },
+          "children": []
+        },
+        {
+          "id": "mission-text",
+          "type": "Text",
+          "props": {
+            "content": "We believe web publishing should be accessible to everyone without sacrificing developer experience. Hookie is built around GitHub-native tools and workflows, giving teams full version control, seamless collaboration, and zero vendor lock-in. Our goal is to bridge the gap between visual content editing and the Git-powered infrastructure developers already trust."
+          },
+          "style": {
+            "fontSize": "1.125rem",
+            "color": "#64748b",
+            "textAlign": "center",
+            "lineHeight": "1.8",
+            "maxWidth": "800px",
+            "margin": "0 auto 40px auto"
+          },
+          "children": []
+        },
+        {
+          "id": "mission-divider",
+          "type": "Divider",
+          "props": {
+            "variant": "gradient",
+            "color": "blue-gradient",
+            "thickness": "thick",
+            "margin": "lg"
+          },
+          "style": {
+            "maxWidth": "200px",
+            "margin": "0 auto"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "team-section",
+      "type": "Section",
+      "props": {
+        "background": "light",
+        "padding": "xl"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "team-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Meet the Team"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "40px"
+          },
+          "children": []
+        },
+        {
+          "id": "team-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "team-card-alex",
+              "type": "Card",
+              "props": {
+                "title": "Alex Chen",
+                "description": "Lead Developer - Passionate about developer tools and open source",
+                "imageUrl": "https://picsum.photos/seed/team1/300/300",
+                "imageAlt": "Alex Chen",
+                "accentColor": "#10b981",
+                "shadowSize": "medium",
+                "borderRadius": "12px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "team-card-jordan",
+              "type": "Card",
+              "props": {
+                "title": "Jordan Rivera",
+                "description": "Designer - Making complex tools feel simple and intuitive",
+                "imageUrl": "https://picsum.photos/seed/team2/300/300",
+                "imageAlt": "Jordan Rivera",
+                "accentColor": "#2563eb",
+                "shadowSize": "medium",
+                "borderRadius": "12px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "team-card-sam",
+              "type": "Card",
+              "props": {
+                "title": "Sam Patel",
+                "description": "DevOps - Automating deployments so you don't have to",
+                "imageUrl": "https://picsum.photos/seed/team3/300/300",
+                "imageAlt": "Sam Patel",
+                "accentColor": "#8b5cf6",
+                "shadowSize": "medium",
+                "borderRadius": "12px"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "values-section",
+      "type": "Section",
+      "props": {
+        "padding": "xl"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "values-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Our Values"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "40px"
+          },
+          "children": []
+        },
+        {
+          "id": "values-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 2,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "value-open-source",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "12px",
+                "padding": "32px"
+              },
+              "children": [
+                {
+                  "id": "value-open-source-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Open Source"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "16px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "value-open-source-list",
+                  "type": "List",
+                  "props": {
+                    "items": ["Transparent development", "Community driven", "MIT licensed"],
+                    "bulletStyle": "check",
+                    "color": "success",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "value-developer-first",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "12px",
+                "padding": "32px"
+              },
+              "children": [
+                {
+                  "id": "value-developer-first-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Developer First"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "16px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "value-developer-first-list",
+                  "type": "List",
+                  "props": {
+                    "items": ["Git-native workflow", "No vendor lock-in", "Full control"],
+                    "bulletStyle": "check",
+                    "color": "primary",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "value-simplicity",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "12px",
+                "padding": "32px"
+              },
+              "children": [
+                {
+                  "id": "value-simplicity-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Simplicity"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "16px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "value-simplicity-list",
+                  "type": "List",
+                  "props": {
+                    "items": ["Visual editing", "Zero config", "Convention over code"],
+                    "bulletStyle": "check",
+                    "color": "success",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "value-performance",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "12px",
+                "padding": "32px"
+              },
+              "children": [
+                {
+                  "id": "value-performance-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Performance"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "16px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "value-performance-list",
+                  "type": "List",
+                  "props": {
+                    "items": ["Static generation", "No runtime database", "Edge deployable"],
+                    "bulletStyle": "check",
+                    "color": "primary",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact-section",
+      "type": "Section",
+      "props": {
+        "background": "gradient-purple",
+        "padding": "xl",
+        "fullWidth": true
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "contact-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Get in Touch"
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "contact-text",
+          "type": "Text",
+          "props": {
+            "content": "Have questions or want to contribute?"
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "fontSize": "1.125rem",
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "contact-buttons",
+          "type": "Container",
+          "props": {},
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "gap": "16px",
+            "flexWrap": "wrap"
+          },
+          "children": [
+            {
+              "id": "contact-link-github",
+              "type": "Link",
+              "props": {
+                "href": "https://github.com",
+                "text": "GitHub",
+                "variant": "button",
+                "color": "primary",
+                "newTab": true
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "contact-link-email",
+              "type": "Link",
+              "props": {
+                "href": "mailto:hello@hookie.dev",
+                "text": "Email Us",
+                "variant": "pill",
+                "color": "success"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

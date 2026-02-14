@@ -1,0 +1,3243 @@
+{
+  "name": "components",
+  "title": "Component Showcase",
+  "components": [
+    {
+      "id": "hero-section",
+      "type": "Section",
+      "props": {
+        "background": "gradient-purple",
+        "padding": "xl",
+        "fullWidth": true
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "hero-heading",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Component Showcase",
+            "color": "#581c87",
+            "align": "center",
+            "weight": "bold"
+          },
+          "style": {
+            "fontSize": "3.5rem",
+            "letterSpacing": "-0.03em"
+          },
+          "children": []
+        },
+        {
+          "id": "hero-subtitle",
+          "type": "Text",
+          "props": {
+            "content": "A comprehensive reference of every Hookie CMS component, demonstrating all available props, variants, sizes, and style options.",
+            "size": "lg",
+            "color": "#6b21a8",
+            "weight": "semibold",
+            "align": "center"
+          },
+          "style": {
+            "maxWidth": "720px",
+            "margin": "0 auto 20px auto"
+          },
+          "children": []
+        }
+      ]
+    },
+
+    {
+      "id": "headings-section",
+      "type": "Section",
+      "props": {
+        "background": "white",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "headings-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Headings",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "headings-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "All six heading levels with different colors, alignments, and weights.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "heading-h1-default",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Heading Level 1 - Default",
+            "color": "#1e293b",
+            "align": "left",
+            "weight": "bold"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "heading-h2-blue-center",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Heading Level 2 - Blue, Center",
+            "color": "#2563eb",
+            "align": "center",
+            "weight": "bold"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "heading-h3-purple",
+          "type": "Heading",
+          "props": {
+            "level": 3,
+            "text": "Heading Level 3 - Purple",
+            "color": "#7c3aed",
+            "align": "left",
+            "weight": "bold"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "heading-h4-green-right",
+          "type": "Heading",
+          "props": {
+            "level": 4,
+            "text": "Heading Level 4 - Green, Right Aligned",
+            "color": "#10b981",
+            "align": "right",
+            "weight": "bold"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "heading-h5-amber",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Heading Level 5 - Amber",
+            "color": "#f59e0b",
+            "align": "left",
+            "weight": "semibold"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "heading-h6-red",
+          "type": "Heading",
+          "props": {
+            "level": 6,
+            "text": "Heading Level 6 - Red",
+            "color": "#ef4444",
+            "align": "left",
+            "weight": "bold"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-headings",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "text-section",
+      "type": "Section",
+      "props": {
+        "background": "subtle",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "text-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Text",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "text-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "All four text sizes with different font weights, colors, and alignments.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "text-sm-normal",
+          "type": "Text",
+          "props": {
+            "content": "Text size sm, weight normal - Small text for captions, footnotes, and secondary information that does not need prominent visibility.",
+            "size": "sm",
+            "weight": "normal",
+            "color": "#64748b",
+            "align": "left"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "text-base-semibold",
+          "type": "Text",
+          "props": {
+            "content": "Text size base, weight semibold - Standard body text used for paragraphs, descriptions, and general content. This is the default size.",
+            "size": "base",
+            "weight": "semibold",
+            "color": "#1e293b",
+            "align": "left"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "text-lg-bold",
+          "type": "Text",
+          "props": {
+            "content": "Text size lg, weight bold - Larger text for lead paragraphs, introductions, and emphasized content blocks.",
+            "size": "lg",
+            "weight": "bold",
+            "color": "#2563eb",
+            "align": "left"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "text-xl-normal",
+          "type": "Text",
+          "props": {
+            "content": "Text size xl, weight normal - Extra large text for hero subtitles, featured quotes, and prominent callouts.",
+            "size": "xl",
+            "weight": "normal",
+            "color": "#7c3aed",
+            "align": "center"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-text",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "buttons-section",
+      "type": "Section",
+      "props": {
+        "background": "white",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "buttons-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Buttons",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "All five button variants (primary, secondary, danger, ghost, success) in all three sizes (sm, md, lg).",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-primary-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Primary Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-primary-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "btn-primary-sm",
+              "type": "Button",
+              "props": {
+                "label": "Primary SM",
+                "variant": "primary",
+                "size": "sm"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-primary-md",
+              "type": "Button",
+              "props": {
+                "label": "Primary MD",
+                "variant": "primary",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-primary-lg",
+              "type": "Button",
+              "props": {
+                "label": "Primary LG",
+                "variant": "primary",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "buttons-secondary-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Secondary Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-secondary-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "btn-secondary-sm",
+              "type": "Button",
+              "props": {
+                "label": "Secondary SM",
+                "variant": "secondary",
+                "size": "sm"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-secondary-md",
+              "type": "Button",
+              "props": {
+                "label": "Secondary MD",
+                "variant": "secondary",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-secondary-lg",
+              "type": "Button",
+              "props": {
+                "label": "Secondary LG",
+                "variant": "secondary",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "buttons-danger-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Danger Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-danger-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "btn-danger-sm",
+              "type": "Button",
+              "props": {
+                "label": "Danger SM",
+                "variant": "danger",
+                "size": "sm"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-danger-md",
+              "type": "Button",
+              "props": {
+                "label": "Danger MD",
+                "variant": "danger",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-danger-lg",
+              "type": "Button",
+              "props": {
+                "label": "Danger LG",
+                "variant": "danger",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "buttons-ghost-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Ghost Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-ghost-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "btn-ghost-sm",
+              "type": "Button",
+              "props": {
+                "label": "Ghost SM",
+                "variant": "ghost",
+                "size": "sm"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-ghost-md",
+              "type": "Button",
+              "props": {
+                "label": "Ghost MD",
+                "variant": "ghost",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-ghost-lg",
+              "type": "Button",
+              "props": {
+                "label": "Ghost LG",
+                "variant": "ghost",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "buttons-success-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Success Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "buttons-success-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "btn-success-sm",
+              "type": "Button",
+              "props": {
+                "label": "Success SM",
+                "variant": "success",
+                "size": "sm"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-success-md",
+              "type": "Button",
+              "props": {
+                "label": "Success MD",
+                "variant": "success",
+                "size": "md"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "btn-success-lg",
+              "type": "Button",
+              "props": {
+                "label": "Success LG",
+                "variant": "success",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-buttons",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "links-section",
+      "type": "Section",
+      "props": {
+        "background": "subtle",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "links-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Links",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "All four link variants (default, underline, button, pill) in all four colors (primary, success, danger, muted).",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-default-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Default Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-default-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "link-default-primary",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Default Primary",
+                "variant": "default",
+                "color": "primary"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-default-success",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Default Success",
+                "variant": "default",
+                "color": "success"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-default-danger",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Default Danger",
+                "variant": "default",
+                "color": "danger"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-default-muted",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Default Muted",
+                "variant": "default",
+                "color": "muted"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "links-underline-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Underline Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-underline-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "link-underline-primary",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Underline Primary",
+                "variant": "underline",
+                "color": "primary"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-underline-success",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Underline Success",
+                "variant": "underline",
+                "color": "success"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-underline-danger",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Underline Danger",
+                "variant": "underline",
+                "color": "danger"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-underline-muted",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Underline Muted",
+                "variant": "underline",
+                "color": "muted"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "links-button-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Button Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-button-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "link-button-primary",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Button Primary",
+                "variant": "button",
+                "color": "primary"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-button-success",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Button Success",
+                "variant": "button",
+                "color": "success"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-button-danger",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Button Danger",
+                "variant": "button",
+                "color": "danger"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-button-muted",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Button Muted",
+                "variant": "button",
+                "color": "muted"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "links-pill-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Pill Variant",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "links-pill-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "28px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "id": "link-pill-primary",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Pill Primary",
+                "variant": "pill",
+                "color": "primary"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-pill-success",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Pill Success",
+                "variant": "pill",
+                "color": "success"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-pill-danger",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Pill Danger",
+                "variant": "pill",
+                "color": "danger"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "link-pill-muted",
+              "type": "Link",
+              "props": {
+                "href": "#",
+                "text": "Pill Muted",
+                "variant": "pill",
+                "color": "muted"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-links",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "images-section",
+      "type": "Section",
+      "props": {
+        "background": "white",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "images-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Images",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "images-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "Demonstrating borderRadius, shadow, and hover effect options on the Image component.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "images-radius-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Border Radius: xs, sm, md, lg, xl, full",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "images-radius-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "img-radius-xs",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie1/400/300",
+                "alt": "Border radius xs",
+                "borderRadius": "xs",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "100%",
+                "height": "200px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-radius-sm",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie2/400/300",
+                "alt": "Border radius sm",
+                "borderRadius": "sm",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "100%",
+                "height": "200px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-radius-md",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie3/400/300",
+                "alt": "Border radius md",
+                "borderRadius": "md",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "100%",
+                "height": "200px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-radius-lg",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie4/400/300",
+                "alt": "Border radius lg",
+                "borderRadius": "lg",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "100%",
+                "height": "200px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-radius-xl",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie5/400/300",
+                "alt": "Border radius xl",
+                "borderRadius": "xl",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "100%",
+                "height": "200px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-radius-full",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie6/400/400",
+                "alt": "Border radius full",
+                "borderRadius": "full",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "200px",
+                "height": "200px"
+              },
+              "style": {
+                "margin": "0 auto"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "images-shadow-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Shadow: none, sm, md, lg, xl",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "images-shadow-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 5,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "img-shadow-none",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie7/300/200",
+                "alt": "Shadow none",
+                "borderRadius": "md",
+                "shadow": "none",
+                "effect": "none",
+                "width": "100%",
+                "height": "140px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-shadow-sm",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie8/300/200",
+                "alt": "Shadow sm",
+                "borderRadius": "md",
+                "shadow": "sm",
+                "effect": "none",
+                "width": "100%",
+                "height": "140px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-shadow-md",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie9/300/200",
+                "alt": "Shadow md",
+                "borderRadius": "md",
+                "shadow": "md",
+                "effect": "none",
+                "width": "100%",
+                "height": "140px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-shadow-lg",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie10/300/200",
+                "alt": "Shadow lg",
+                "borderRadius": "md",
+                "shadow": "lg",
+                "effect": "none",
+                "width": "100%",
+                "height": "140px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-shadow-xl",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie11/300/200",
+                "alt": "Shadow xl",
+                "borderRadius": "md",
+                "shadow": "xl",
+                "effect": "none",
+                "width": "100%",
+                "height": "140px"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "images-effect-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Hover Effects: lift, zoom, glow, none",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "images-effect-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "lg"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": [
+            {
+              "id": "img-effect-lift",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie12/400/300",
+                "alt": "Effect lift",
+                "borderRadius": "md",
+                "shadow": "md",
+                "effect": "lift",
+                "width": "100%",
+                "height": "180px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-effect-zoom",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie13/400/300",
+                "alt": "Effect zoom",
+                "borderRadius": "md",
+                "shadow": "md",
+                "effect": "zoom",
+                "width": "100%",
+                "height": "180px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-effect-glow",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie14/400/300",
+                "alt": "Effect glow",
+                "borderRadius": "md",
+                "shadow": "md",
+                "effect": "glow",
+                "width": "100%",
+                "height": "180px"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "img-effect-none",
+              "type": "Image",
+              "props": {
+                "src": "https://picsum.photos/seed/hookie15/400/300",
+                "alt": "Effect none",
+                "borderRadius": "md",
+                "shadow": "md",
+                "effect": "none",
+                "width": "100%",
+                "height": "180px"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-images",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "cards-section",
+      "type": "Section",
+      "props": {
+        "background": "subtle",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "cards-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Cards",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "cards-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "Card component with various shadow sizes, accent colors, and optional images.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "cards-with-images-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Cards with Images - Shadow Sizes",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "cards-with-images-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "card-img-small-shadow",
+              "type": "Card",
+              "props": {
+                "title": "Small Shadow",
+                "description": "Card with an image and small shadow. Subtle elevation for minimal depth.",
+                "imageUrl": "https://picsum.photos/seed/hookie20/600/400",
+                "imageAlt": "Card image small shadow",
+                "accentColor": "#2563eb",
+                "shadowSize": "small"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "card-img-medium-shadow",
+              "type": "Card",
+              "props": {
+                "title": "Medium Shadow",
+                "description": "Card with an image and medium shadow. Default elevation for standard cards.",
+                "imageUrl": "https://picsum.photos/seed/hookie21/600/400",
+                "imageAlt": "Card image medium shadow",
+                "accentColor": "#10b981",
+                "shadowSize": "medium"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "card-img-large-shadow",
+              "type": "Card",
+              "props": {
+                "title": "Large Shadow",
+                "description": "Card with an image and large shadow. Strong elevation for prominent cards.",
+                "imageUrl": "https://picsum.photos/seed/hookie22/600/400",
+                "imageAlt": "Card image large shadow",
+                "accentColor": "#7c3aed",
+                "shadowSize": "large"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "cards-no-images-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Cards without Images - Accent Colors",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "cards-no-images-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": [
+            {
+              "id": "card-accent-blue",
+              "type": "Card",
+              "props": {
+                "title": "Blue Accent",
+                "description": "Card with blue accent border and no image. Used for informational content.",
+                "accentColor": "#2563eb",
+                "shadowSize": "medium"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "card-accent-green",
+              "type": "Card",
+              "props": {
+                "title": "Green Accent",
+                "description": "Card with green accent border and no image. Used for success states.",
+                "accentColor": "#10b981",
+                "shadowSize": "medium"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "card-accent-red",
+              "type": "Card",
+              "props": {
+                "title": "Red Accent",
+                "description": "Card with red accent border and no image. Used for warnings or errors.",
+                "accentColor": "#ef4444",
+                "shadowSize": "small"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "card-accent-purple",
+              "type": "Card",
+              "props": {
+                "title": "Purple Accent",
+                "description": "Card with purple accent border and no image. Used for creative content.",
+                "accentColor": "#7c3aed",
+                "shadowSize": "large"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-cards",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "alertbox-section",
+      "type": "Section",
+      "props": {
+        "background": "white",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "alertbox-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Alert Boxes",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "alertbox-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "All four alert types: info, warning, error, and success. Each with a title and descriptive message.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "alert-info",
+          "type": "AlertBox",
+          "props": {
+            "type": "info",
+            "title": "Information",
+            "message": "This is an informational alert. Use it to provide neutral tips, guidance, or context to the user."
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "alert-warning",
+          "type": "AlertBox",
+          "props": {
+            "type": "warning",
+            "title": "Warning",
+            "message": "This is a warning alert. Use it to caution users about potential issues or actions that need attention."
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "alert-error",
+          "type": "AlertBox",
+          "props": {
+            "type": "error",
+            "title": "Error",
+            "message": "This is an error alert. Use it to communicate failures, validation errors, or critical problems."
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "alert-success",
+          "type": "AlertBox",
+          "props": {
+            "type": "success",
+            "title": "Success",
+            "message": "This is a success alert. Use it to confirm completed actions, saved data, or positive outcomes."
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-alerts",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "lists-section",
+      "type": "Section",
+      "props": {
+        "background": "subtle",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "lists-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Lists",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "lists-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "Unordered lists with all bullet styles and ordered lists with all number styles.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "lists-ul-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Unordered Lists - Bullet Styles",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "lists-ul-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "list-ul-disc",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ul-disc-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "bulletStyle: disc",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ul-disc-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ul",
+                    "items": ["First item", "Second item", "Third item"],
+                    "bulletStyle": "disc",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ul-circle",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ul-circle-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "bulletStyle: circle",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ul-circle-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ul",
+                    "items": ["First item", "Second item", "Third item"],
+                    "bulletStyle": "circle",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ul-square",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ul-square-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "bulletStyle: square",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ul-square-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ul",
+                    "items": ["First item", "Second item", "Third item"],
+                    "bulletStyle": "square",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ul-check",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ul-check-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "bulletStyle: check",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ul-check-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ul",
+                    "items": ["Completed task", "Another done", "All finished"],
+                    "bulletStyle": "check",
+                    "color": "success",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ul-arrow",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ul-arrow-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "bulletStyle: arrow",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ul-arrow-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ul",
+                    "items": ["Navigate here", "Go to this", "Follow along"],
+                    "bulletStyle": "arrow",
+                    "color": "primary",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ul-dot",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ul-dot-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "bulletStyle: dot",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ul-dot-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ul",
+                    "items": ["Point one", "Point two", "Point three"],
+                    "bulletStyle": "dot",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lists-ol-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Ordered Lists - Number Styles",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        },
+        {
+          "id": "lists-ol-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": [
+            {
+              "id": "list-ol-decimal",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ol-decimal-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "numberStyle: decimal",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ol-decimal-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ol",
+                    "items": ["First step", "Second step", "Third step"],
+                    "numberStyle": "decimal",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ol-roman",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ol-roman-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "numberStyle: roman",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ol-roman-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ol",
+                    "items": ["Chapter one", "Chapter two", "Chapter three"],
+                    "numberStyle": "roman",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "list-ol-alpha",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "8px",
+                "padding": "20px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "list-ol-alpha-label",
+                  "type": "Text",
+                  "props": {
+                    "content": "numberStyle: alpha",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": "#64748b"
+                  },
+                  "style": {
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "list-ol-alpha-items",
+                  "type": "List",
+                  "props": {
+                    "type": "ol",
+                    "items": ["Option alpha", "Option bravo", "Option charlie"],
+                    "numberStyle": "alpha",
+                    "spacing": "sm"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-lists",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "dividers-section",
+      "type": "Section",
+      "props": {
+        "background": "white",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "dividers-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Dividers",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "dividers-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "All divider variants, thicknesses, named colors, and gradient options.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "dividers-variants-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Variants: solid, dashed, dotted, gradient",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "8px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-variant-solid",
+          "type": "Text",
+          "props": {
+            "content": "Solid",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-solid-example",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "primary",
+            "thickness": "normal",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-variant-dashed-label",
+          "type": "Text",
+          "props": {
+            "content": "Dashed",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-dashed-example",
+          "type": "Divider",
+          "props": {
+            "variant": "dashed",
+            "color": "primary",
+            "thickness": "normal",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-variant-dotted-label",
+          "type": "Text",
+          "props": {
+            "content": "Dotted",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-dotted-example",
+          "type": "Divider",
+          "props": {
+            "variant": "dotted",
+            "color": "primary",
+            "thickness": "normal",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-variant-gradient-label",
+          "type": "Text",
+          "props": {
+            "content": "Gradient",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-gradient-example",
+          "type": "Divider",
+          "props": {
+            "variant": "gradient",
+            "color": "primary",
+            "thickness": "normal",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "dividers-thickness-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Thicknesses: thin, normal, thick, xl",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginTop": "32px",
+            "marginBottom": "8px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-thickness-thin-label",
+          "type": "Text",
+          "props": {
+            "content": "Thin (0.5px)",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-thin-example",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "dark",
+            "thickness": "thin",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-thickness-normal-label",
+          "type": "Text",
+          "props": {
+            "content": "Normal (1px)",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-normal-example",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "dark",
+            "thickness": "normal",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-thickness-thick-label",
+          "type": "Text",
+          "props": {
+            "content": "Thick (2px)",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-thick-example",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "dark",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-thickness-xl-label",
+          "type": "Text",
+          "props": {
+            "content": "XL (3px)",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-xl-example",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "dark",
+            "thickness": "xl",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "dividers-colors-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Named Colors",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginTop": "32px",
+            "marginBottom": "8px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-default-label",
+          "type": "Text",
+          "props": {
+            "content": "default",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-default",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "default",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-color-dark-label",
+          "type": "Text",
+          "props": {
+            "content": "dark",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-dark",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "dark",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-color-primary-label",
+          "type": "Text",
+          "props": {
+            "content": "primary",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-primary",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "primary",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-color-success-label",
+          "type": "Text",
+          "props": {
+            "content": "success",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-success",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "success",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-color-danger-label",
+          "type": "Text",
+          "props": {
+            "content": "danger",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-danger",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "danger",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-color-muted-label",
+          "type": "Text",
+          "props": {
+            "content": "muted",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-color-muted",
+          "type": "Divider",
+          "props": {
+            "variant": "solid",
+            "color": "muted",
+            "thickness": "thick",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "dividers-gradients-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Gradient Colors",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginTop": "32px",
+            "marginBottom": "8px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-blue-gradient-label",
+          "type": "Text",
+          "props": {
+            "content": "blue-gradient",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-blue-gradient",
+          "type": "Divider",
+          "props": {
+            "color": "blue-gradient",
+            "thickness": "xl",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "divider-rainbow-label",
+          "type": "Text",
+          "props": {
+            "content": "rainbow",
+            "size": "sm",
+            "color": "#64748b"
+          },
+          "style": {
+            "marginBottom": "4px"
+          },
+          "children": []
+        },
+        {
+          "id": "divider-rainbow",
+          "type": "Divider",
+          "props": {
+            "color": "rainbow",
+            "thickness": "xl",
+            "margin": "sm"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    },
+
+    {
+      "id": "divider-after-dividers",
+      "type": "Divider",
+      "props": {
+        "color": "default",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
+      },
+      "style": {},
+      "children": []
+    },
+
+    {
+      "id": "layout-section",
+      "type": "Section",
+      "props": {
+        "background": "subtle",
+        "padding": "lg"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "layout-section-title",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Layout Components",
+            "color": "#1e293b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "layout-section-desc",
+          "type": "Text",
+          "props": {
+            "content": "Grid column layouts and Section background options.",
+            "size": "base",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": []
+        },
+        {
+          "id": "grid-columns-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Grid: 2 Columns",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "grid-2-columns",
+          "type": "Grid",
+          "props": {
+            "columns": 2,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": [
+            {
+              "id": "grid-2-col-a",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#dbeafe",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-2-col-a-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Column 1 of 2",
+                    "weight": "semibold",
+                    "color": "#1e40af",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-2-col-b",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#dbeafe",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-2-col-b-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Column 2 of 2",
+                    "weight": "semibold",
+                    "color": "#1e40af",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "grid-3-columns-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Grid: 3 Columns",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "grid-3-columns",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "md"
+          },
+          "style": {
+            "marginBottom": "32px"
+          },
+          "children": [
+            {
+              "id": "grid-3-col-a",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#dcfce7",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-3-col-a-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Column 1 of 3",
+                    "weight": "semibold",
+                    "color": "#166534",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-3-col-b",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#dcfce7",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-3-col-b-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Column 2 of 3",
+                    "weight": "semibold",
+                    "color": "#166534",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-3-col-c",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#dcfce7",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-3-col-c-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Column 3 of 3",
+                    "weight": "semibold",
+                    "color": "#166534",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "grid-4-autofit-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Grid: 4 Columns with autoFit",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "grid-4-autofit",
+          "type": "Grid",
+          "props": {
+            "columns": 4,
+            "gap": "md",
+            "autoFit": true,
+            "minItemWidth": "200px"
+          },
+          "style": {
+            "marginBottom": "40px"
+          },
+          "children": [
+            {
+              "id": "grid-4-col-a",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#e9d5ff",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-4-col-a-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Auto 1",
+                    "weight": "semibold",
+                    "color": "#581c87",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-4-col-b",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#e9d5ff",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-4-col-b-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Auto 2",
+                    "weight": "semibold",
+                    "color": "#581c87",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-4-col-c",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#e9d5ff",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-4-col-c-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Auto 3",
+                    "weight": "semibold",
+                    "color": "#581c87",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "grid-4-col-d",
+              "type": "Container",
+              "props": {
+                "maxWidth": "2xl",
+                "padding": "md"
+              },
+              "style": {
+                "backgroundColor": "#e9d5ff",
+                "borderRadius": "8px",
+                "padding": "24px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "grid-4-col-d-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Auto 4",
+                    "weight": "semibold",
+                    "color": "#581c87",
+                    "align": "center"
+                  },
+                  "style": {
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-backgrounds-label",
+          "type": "Heading",
+          "props": {
+            "level": 5,
+            "text": "Section Backgrounds",
+            "color": "#1e293b"
+          },
+          "style": {
+            "marginBottom": "16px"
+          },
+          "children": []
+        }
+      ]
+    },
+
+    {
+      "id": "section-bg-transparent",
+      "type": "Section",
+      "props": {
+        "background": "transparent",
+        "padding": "sm"
+      },
+      "style": {
+        "border": "2px dashed #e2e8f0",
+        "borderRadius": "8px",
+        "marginBottom": "12px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-transparent-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: transparent",
+            "weight": "semibold",
+            "color": "#64748b",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "section-bg-light",
+      "type": "Section",
+      "props": {
+        "background": "light",
+        "padding": "sm"
+      },
+      "style": {
+        "borderRadius": "8px",
+        "marginBottom": "12px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-light-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: light",
+            "weight": "semibold",
+            "color": "#475569",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "section-bg-white",
+      "type": "Section",
+      "props": {
+        "background": "white",
+        "padding": "sm"
+      },
+      "style": {
+        "borderRadius": "8px",
+        "marginBottom": "12px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-white-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: white",
+            "weight": "semibold",
+            "color": "#475569",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "section-bg-subtle",
+      "type": "Section",
+      "props": {
+        "background": "subtle",
+        "padding": "sm"
+      },
+      "style": {
+        "borderRadius": "8px",
+        "marginBottom": "12px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-subtle-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: subtle",
+            "weight": "semibold",
+            "color": "#475569",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "section-bg-gradient-blue",
+      "type": "Section",
+      "props": {
+        "background": "gradient-blue",
+        "padding": "sm"
+      },
+      "style": {
+        "borderRadius": "8px",
+        "marginBottom": "12px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-gradient-blue-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: gradient-blue",
+            "weight": "semibold",
+            "color": "#1e40af",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "section-bg-gradient-green",
+      "type": "Section",
+      "props": {
+        "background": "gradient-green",
+        "padding": "sm"
+      },
+      "style": {
+        "borderRadius": "8px",
+        "marginBottom": "12px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-gradient-green-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: gradient-green",
+            "weight": "semibold",
+            "color": "#166534",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "section-bg-gradient-purple",
+      "type": "Section",
+      "props": {
+        "background": "gradient-purple",
+        "padding": "sm"
+      },
+      "style": {
+        "borderRadius": "8px",
+        "marginBottom": "24px",
+        "maxWidth": "1120px"
+      },
+      "children": [
+        {
+          "id": "section-bg-gradient-purple-text",
+          "type": "Text",
+          "props": {
+            "content": "Section background: gradient-purple",
+            "weight": "semibold",
+            "color": "#581c87",
+            "align": "center"
+          },
+          "style": {
+            "marginBottom": "0"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

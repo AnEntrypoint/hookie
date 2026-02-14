@@ -1,0 +1,757 @@
+{
+  "name": "pricing",
+  "title": "Pricing",
+  "components": [
+    {
+      "id": "pricing-hero",
+      "type": "Section",
+      "props": {
+        "background": "gradient-blue",
+        "padding": "xl",
+        "fullWidth": true
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "pricing-hero-heading",
+          "type": "Heading",
+          "props": {
+            "level": 1,
+            "text": "Simple, Transparent Pricing"
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "margin": "0 0 16px 0"
+          },
+          "children": []
+        },
+        {
+          "id": "pricing-hero-text",
+          "type": "Text",
+          "props": {
+            "content": "Hookie is open source and free forever. Here's what you get."
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "fontSize": "1.25rem",
+            "lineHeight": "1.6"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "pricing-cards-section",
+      "type": "Section",
+      "props": {
+        "padding": "xl"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "pricing-cards-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "1200px",
+            "margin": "0 auto",
+            "alignItems": "start"
+          },
+          "children": [
+            {
+              "id": "tier-starter",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "16px",
+                "padding": "32px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "starter-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Starter"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "starter-price",
+                  "type": "Heading",
+                  "props": {
+                    "level": 1,
+                    "text": "$0"
+                  },
+                  "style": {
+                    "color": "#2563eb",
+                    "margin": "0 0 4px 0",
+                    "fontSize": "3rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "starter-subtitle",
+                  "type": "Text",
+                  "props": {
+                    "content": "per month, forever"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "16px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "starter-divider",
+                  "type": "Divider",
+                  "props": {
+                    "thickness": "thin"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "starter-features",
+                  "type": "List",
+                  "props": {
+                    "bulletStyle": "check",
+                    "items": [
+                      "Unlimited pages",
+                      "15+ components",
+                      "GitHub Pages deploy",
+                      "Community support"
+                    ]
+                  },
+                  "style": {
+                    "textAlign": "left",
+                    "marginBottom": "24px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "starter-cta",
+                  "type": "Link",
+                  "props": {
+                    "href": "#/admin",
+                    "text": "Get Started",
+                    "variant": "button",
+                    "color": "primary"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "tier-pro",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "border": "2px solid #2563eb",
+                "backgroundColor": "#f0f7ff",
+                "borderRadius": "16px",
+                "padding": "32px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "pro-badge",
+                  "type": "Text",
+                  "props": {
+                    "content": "MOST POPULAR"
+                  },
+                  "style": {
+                    "fontSize": "0.75rem",
+                    "fontWeight": "700",
+                    "color": "white",
+                    "backgroundColor": "#2563eb",
+                    "display": "inline-block",
+                    "padding": "4px 12px",
+                    "borderRadius": "9999px",
+                    "marginBottom": "16px",
+                    "letterSpacing": "0.05em"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "pro-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Pro"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "pro-price",
+                  "type": "Heading",
+                  "props": {
+                    "level": 1,
+                    "text": "$0"
+                  },
+                  "style": {
+                    "color": "#2563eb",
+                    "margin": "0 0 4px 0",
+                    "fontSize": "3rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "pro-subtitle",
+                  "type": "Text",
+                  "props": {
+                    "content": "yes, really free"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "16px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "pro-divider",
+                  "type": "Divider",
+                  "props": {
+                    "thickness": "thin",
+                    "color": "primary"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "pro-features",
+                  "type": "List",
+                  "props": {
+                    "bulletStyle": "check",
+                    "color": "primary",
+                    "items": [
+                      "Everything in Starter",
+                      "Custom components",
+                      "Layout editor",
+                      "Code editor",
+                      "Priority issues"
+                    ]
+                  },
+                  "style": {
+                    "textAlign": "left",
+                    "marginBottom": "24px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "pro-cta",
+                  "type": "Link",
+                  "props": {
+                    "href": "#/admin",
+                    "text": "Get Started",
+                    "variant": "button",
+                    "color": "primary"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "tier-enterprise",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "16px",
+                "padding": "32px",
+                "textAlign": "center"
+              },
+              "children": [
+                {
+                  "id": "enterprise-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Enterprise"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "enterprise-price",
+                  "type": "Heading",
+                  "props": {
+                    "level": 1,
+                    "text": "$0"
+                  },
+                  "style": {
+                    "color": "#2563eb",
+                    "margin": "0 0 4px 0",
+                    "fontSize": "3rem"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "enterprise-subtitle",
+                  "type": "Text",
+                  "props": {
+                    "content": "open source ftw"
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "marginBottom": "16px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "enterprise-divider",
+                  "type": "Divider",
+                  "props": {
+                    "thickness": "thin"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "enterprise-features",
+                  "type": "List",
+                  "props": {
+                    "bulletStyle": "check",
+                    "items": [
+                      "Everything in Pro",
+                      "Self-hosted",
+                      "Custom themes",
+                      "API access",
+                      "Fork & modify"
+                    ]
+                  },
+                  "style": {
+                    "textAlign": "left",
+                    "marginBottom": "24px"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "enterprise-cta",
+                  "type": "Link",
+                  "props": {
+                    "href": "https://github.com",
+                    "text": "Fork on GitHub",
+                    "variant": "button",
+                    "color": "primary"
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "feature-comparison-section",
+      "type": "Section",
+      "props": {
+        "background": "light",
+        "padding": "xl"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "comparison-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Everything Included"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "comparison-subtitle",
+          "type": "Text",
+          "props": {
+            "content": "No premium tiers, no paywalls, no surprises"
+          },
+          "style": {
+            "textAlign": "center",
+            "color": "#64748b",
+            "marginBottom": "40px"
+          },
+          "children": []
+        },
+        {
+          "id": "comparison-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 2,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "900px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "core-features-card",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "12px",
+                "padding": "28px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "core-features-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Core Features"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "16px",
+                    "color": "#0c4a6e"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "core-features-list",
+                  "type": "List",
+                  "props": {
+                    "bulletStyle": "check",
+                    "items": [
+                      "Visual page builder",
+                      "Component library",
+                      "Real-time preview",
+                      "Responsive design"
+                    ]
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "dev-features-card",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#ffffff",
+                "borderRadius": "12px",
+                "padding": "28px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "dev-features-title",
+                  "type": "Heading",
+                  "props": {
+                    "level": 3,
+                    "text": "Developer Features"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "16px",
+                    "color": "#0c4a6e"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "dev-features-list",
+                  "type": "List",
+                  "props": {
+                    "bulletStyle": "check",
+                    "items": [
+                      "GitHub integration",
+                      "Version control",
+                      "Custom components",
+                      "Code editor"
+                    ]
+                  },
+                  "style": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "faq-section",
+      "type": "Section",
+      "props": {
+        "padding": "xl"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "faq-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Frequently Asked Questions"
+          },
+          "style": {
+            "textAlign": "center",
+            "marginBottom": "40px"
+          },
+          "children": []
+        },
+        {
+          "id": "faq-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 2,
+            "gap": "lg"
+          },
+          "style": {
+            "maxWidth": "900px",
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "id": "faq-1",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "12px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "faq-1-question",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Is it really free?"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "faq-1-answer",
+                  "type": "Text",
+                  "props": {
+                    "content": "Yes. Hookie is MIT licensed and will always be free."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "faq-2",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "12px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "faq-2-question",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Do I need a server?"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "faq-2-answer",
+                  "type": "Text",
+                  "props": {
+                    "content": "No. Content is stored in GitHub and served via GitHub Pages."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "faq-3",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "12px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "faq-3-question",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Can I use my own domain?"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "faq-3-answer",
+                  "type": "Text",
+                  "props": {
+                    "content": "Yes. GitHub Pages supports custom domains natively."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "faq-4",
+              "type": "Container",
+              "props": {},
+              "style": {
+                "backgroundColor": "#f8fafc",
+                "borderRadius": "12px",
+                "padding": "24px",
+                "border": "1px solid #e2e8f0"
+              },
+              "children": [
+                {
+                  "id": "faq-4-question",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Is it production ready?"
+                  },
+                  "style": {
+                    "marginTop": "0",
+                    "marginBottom": "8px",
+                    "color": "#0f172a"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "faq-4-answer",
+                  "type": "Text",
+                  "props": {
+                    "content": "Hookie is actively maintained and used in production."
+                  },
+                  "style": {
+                    "color": "#64748b",
+                    "lineHeight": "1.6",
+                    "marginBottom": "0"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta-section",
+      "type": "Section",
+      "props": {
+        "background": "gradient-green",
+        "padding": "xl",
+        "fullWidth": true
+      },
+      "style": {
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "id": "cta-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Start Building Today"
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "marginBottom": "12px"
+          },
+          "children": []
+        },
+        {
+          "id": "cta-text",
+          "type": "Text",
+          "props": {
+            "content": "No credit card, no signup, no catch."
+          },
+          "style": {
+            "color": "white",
+            "textAlign": "center",
+            "marginBottom": "24px",
+            "fontSize": "1.125rem"
+          },
+          "children": []
+        },
+        {
+          "id": "cta-button",
+          "type": "Link",
+          "props": {
+            "href": "#/admin",
+            "text": "Open Admin Panel",
+            "variant": "button"
+          },
+          "style": {},
+          "children": []
+        }
+      ]
+    }
+  ]
+}

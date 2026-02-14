@@ -1,0 +1,755 @@
+TASTE/DEMO SITE FOR HOOKIE CMS
+Goal: Exercise every component type, every prop variant, every visual option to prove the system works end-to-end.
+
+DEPENDENCY GRAPH
+================
+WAVE 0 (prerequisite for all pages):
+  [0.1] Update layout.json -- DONE
+WAVE 1 (all independent, launch in parallel after wave 0):
+  [1.1] Create home.json
+  [1.2] Create components.json
+  [1.3] Create about.json
+  [1.4] Create pricing.json
+  [1.5] Create blog.json
+WAVE 2 (after wave 1):
+  [2.1] End-to-end verification of all pages rendering
+
+========================================================================
+[0.1] UPDATE LAYOUT.JSON
+========================================================================
+Blocks: 1.1, 1.2, 1.3, 1.4, 1.5
+Blocked by: nothing
+
+Update content/layout.json with:
+
+HEADER:
+- enabled: true
+- height: 64
+- backgroundColor: "#ffffff"
+- borderBottom: "1px solid #e2e8f0"
+- position: "sticky"
+- padding: "0.75rem 2rem"
+- items array with:
+  - type "logo", text "Hookie CMS"
+  - type "nav", links array:
+    - { label: "Home", path: "#/" }
+    - { label: "Components", path: "#/pages/components" }
+    - { label: "About", path: "#/pages/about" }
+    - { label: "Pricing", path: "#/pages/pricing" }
+    - { label: "Blog", path: "#/pages/blog" }
+
+FOOTER:
+- enabled: true
+- backgroundColor: "#1e293b"
+- color: "#94a3b8"
+- padding: "3rem 2rem"
+- borderTop: "none"
+- sections array with 4 sections:
+  - Section 1: title "Hookie CMS", text "A modern headless CMS built with React and GitHub. Create sites without leaving your editor."
+  - Section 2: title "Pages", links: Home (#/), Components (#/pages/components), About (#/pages/about), Pricing (#/pages/pricing), Blog (#/pages/blog)
+  - Section 3: title "Resources", links: Admin (#/admin), Component Library (#/admin/library), Documentation (#/docs)
+  - Section 4: title "Connect", links: GitHub (https://github.com), Twitter (https://twitter.com)
+
+Edge cases:
+- Remove old navigation array (header used to have navigation[] instead of items[])
+- Remove old footer.content and footer.links (replaced by footer.sections)
+- Verify Header.js reads items[].type=logo and items[].type=nav with links[]
+- Verify Footer.js reads sections[].title, sections[].text, sections[].links
+- All nav paths must use hash routing format (#/ and #/pages/pagename)
+- Footer sections grid uses auto-fit minmax(250px, 1fr) so 4 sections will wrap properly
+
+========================================================================
+[1.1] CREATE HOME.JSON (content/pages/home.json) - REPLACE EXISTING
+========================================================================
+Blocks: 2.1
+Blocked by: 0.1
+
+Complete landing page. File: content/pages/home.json
+Must replace existing home.json entirely.
+
+SECTION 1 - HERO:
+- Section: background "gradient-blue", padding "2xl", fullWidth true
+- style: textAlign "center"
+- Children:
+  - Heading: level 1, text "Build Anything with Hookie", color "#0c4a6e", weight "bold", align "center"
+  - Text: content "The modern CMS that puts you in control. Visual editing, GitHub-powered, component-based.", size "xl", color "#0c4a6e", weight "normal", align "center"
+  - Container for buttons, style display flex, gap 16px, justifyContent center, flexWrap wrap
+    - Link: variant "button", text "Get Started", href "#/admin", size "lg", color "primary"
+    - Link: variant "pill", text "View Components", href "#/pages/components", size "lg", color "success"
+
+SECTION 2 - FEATURES GRID:
+- Section: padding "xl", background "white"
+- Heading level 2: "Features", align "center"
+- Text subtitle: "Everything you need to build modern websites", align "center", color "#64748b", size "lg"
+- Grid: columns 3, gap "lg"
+  - Card 1: title "Visual Editor", description "Drag and drop interface for building pages. See changes in real-time.", shadowSize "medium", accentColor "#2563eb"
+  - Card 2: title "GitHub Powered", description "Content stored as JSON in your repo. Full version control and collaboration.", shadowSize "medium", accentColor "#10b981"
+  - Card 3: title "Component Based", description "Build with reusable components. Extend the library with custom components.", shadowSize "medium", accentColor "#f59e0b"
+
+SECTION 3 - TESTIMONIALS:
+- Section: padding "xl", background "subtle", fullWidth true
+- Heading level 2: "What People Say", align "center"
+- Grid: columns 3, gap "lg"
+  - Card 1: title "Jane Smith", description "Hookie CMS transformed how we build websites. The visual editor is incredible.", shadowSize "small", accentColor "#8b5cf6"
+  - Card 2: title "Alex Johnson", description "GitHub integration means our content is always versioned and backed up.", shadowSize "small", accentColor "#8b5cf6"
+  - Card 3: title "Maria Garcia", description "The component system makes it easy to maintain consistency across pages.", shadowSize "small", accentColor "#8b5cf6"
+
+SECTION 4 - STATS:
+- Section: padding "lg", background "white"
+- Grid: columns 4, gap "md"
+  - Stat 1: Heading level 3 "12+", Text "Components" (use Container for centering each stat)
+  - Stat 2: Heading level 3 "100%", Text "Customizable"
+  - Stat 3: Heading level 3 "0", Text "Build Steps"
+  - Stat 4: Heading level 3 "Git", Text "Version Control"
+  - Each stat: Heading color "#2563eb", fontSize style override "2.5rem", Text color "#64748b"
+
+SECTION 5 - FINAL CTA:
+- Divider: variant "gradient", color "blue-gradient", thickness "thick", margin "lg"
+- Section: padding "xl", background "gradient-blue", fullWidth true
+- style textAlign center
+- Heading level 2: "Ready to Get Started?", color "#0c4a6e", align "center"
+- Text: "Start building your site today with Hookie CMS.", size "lg", color "#0c4a6e", align "center"
+- Container for button:
+  - Link: variant "button", text "Open Admin Panel", href "#/admin", size "lg"
+
+Edge cases:
+- All component IDs must be unique across the entire page
+- Cards use accentColor not variant
+- Container used for stat layout since Card has no center-align built in
+- Divider is a top-level component (peer to Section), not nested inside Section
+- Button component requires onClick (function), so use Link variant="button" for navigation CTAs
+- Grid columns 4 may need autoFit true on mobile - but keep columns 4 for desktop demo
+
+========================================================================
+[1.2] CREATE COMPONENTS.JSON (content/pages/components.json)
+========================================================================
+Blocks: 2.1
+Blocked by: 0.1
+
+Component showcase page. File: content/pages/components.json
+Must demonstrate EVERY component type and EVERY prop variant.
+
+SECTION 1 - PAGE HEADER:
+- Section: padding "xl", background "gradient-purple"
+- Heading level 1: "Component Showcase", color "#581c87", align "center"
+- Text: "Every component type and prop variant in the Hookie CMS system.", size "lg", color "#581c87", align "center"
+
+SECTION 2 - HEADINGS (all 6 levels):
+- Section: padding "lg", background "white"
+- Heading level 2: "Headings"
+- Divider: variant "solid", color "primary", thickness "thick"
+- Heading level 1: text "Heading Level 1", color "#1e293b", weight "bold", align "left"
+- Heading level 2: text "Heading Level 2", color "#2563eb", weight "bold", align "left"
+- Heading level 3: text "Heading Level 3", color "#10b981", weight "semibold", align "center"
+- Heading level 4: text "Heading Level 4", color "#f59e0b", weight "normal", align "right"
+- Heading level 5: text "Heading Level 5", color "#ef4444", weight "bold", align "left"
+- Heading level 6: text "Heading Level 6", color "#8b5cf6", weight "semibold", align "center"
+
+Props exercised: level (1-6), color (6 values), weight (normal/semibold/bold), align (left/center/right)
+
+SECTION 3 - TEXT (all sizes, weights, alignments):
+- Section: padding "lg", background "subtle"
+- Heading level 2: "Text"
+- Divider: variant "dashed", color "dark"
+- Text: size "sm", content "Small text - 0.875rem", color "#1e293b", weight "normal", align "left"
+- Text: size "base", content "Base text - 1rem", color "#2563eb", weight "normal", align "left"
+- Text: size "lg", content "Large text - 1.125rem", color "#10b981", weight "semibold", align "center"
+- Text: size "xl", content "Extra large text - 1.25rem", color "#ef4444", weight "bold", align "right"
+
+Props exercised: size (sm/base/lg/xl), color (4 values), weight (normal/semibold/bold), align (left/center/right)
+
+SECTION 4 - BUTTONS (all variants, all sizes):
+- Section: padding "lg", background "white"
+- Heading level 2: "Buttons"
+- Divider: variant "dotted", color "success"
+
+Subsection - Button Variants (all at md size):
+- Heading level 4: "Variants"
+- Container style display flex, gap 12px, flexWrap wrap:
+  - Button: variant "primary", label "Primary", size "md"
+  - Button: variant "secondary", label "Secondary", size "md"
+  - Button: variant "danger", label "Danger", size "md"
+  - Button: variant "ghost", label "Ghost", size "md"
+  - Button: variant "success", label "Success", size "md"
+
+Subsection - Button Sizes (all at primary variant):
+- Heading level 4: "Sizes"
+- Container style display flex, gap 12px, flexWrap wrap, alignItems center:
+  - Button: variant "primary", label "Small", size "sm"
+  - Button: variant "primary", label "Medium", size "md"
+  - Button: variant "primary", label "Large", size "lg"
+
+Subsection - Disabled Buttons:
+- Heading level 4: "Disabled"
+- Container style display flex, gap 12px, flexWrap wrap:
+  - Button: variant "primary", label "Disabled Primary", size "md", disabled true
+  - Button: variant "secondary", label "Disabled Secondary", size "md", disabled true
+
+Props exercised: variant (primary/secondary/danger/ghost/success), size (sm/md/lg), disabled (true/false)
+
+SECTION 5 - IMAGES (all borderRadius, shadow, effect options):
+- Section: padding "lg", background "subtle"
+- Heading level 2: "Images"
+- Divider: variant "gradient", color "purple-gradient"
+
+Subsection - Border Radius:
+- Heading level 4: "Border Radius Options"
+- Grid: columns 3, gap "md"
+  - Image: src "https://picsum.photos/seed/hookie1/400/300", borderRadius "xs", shadow "none", effect "none", alt "xs radius"
+  - Image: src "https://picsum.photos/seed/hookie2/400/300", borderRadius "sm", shadow "none", effect "none", alt "sm radius"
+  - Image: src "https://picsum.photos/seed/hookie3/400/300", borderRadius "md", shadow "none", effect "none", alt "md radius"
+  - Image: src "https://picsum.photos/seed/hookie4/400/300", borderRadius "lg", shadow "none", effect "none", alt "lg radius"
+  - Image: src "https://picsum.photos/seed/hookie5/400/300", borderRadius "xl", shadow "none", effect "none", alt "xl radius"
+  - Image: src "https://picsum.photos/seed/hookie6/400/300", borderRadius "full", shadow "none", effect "none", alt "full radius"
+
+Subsection - Shadows:
+- Heading level 4: "Shadow Options"
+- Grid: columns 3, gap "lg"
+  - Image: src "https://picsum.photos/seed/hookie7/400/300", shadow "none", effect "none", alt "no shadow"
+  - Image: src "https://picsum.photos/seed/hookie8/400/300", shadow "sm", effect "none", alt "small shadow"
+  - Image: src "https://picsum.photos/seed/hookie9/400/300", shadow "md", effect "none", alt "medium shadow"
+  - Image: src "https://picsum.photos/seed/hookie10/400/300", shadow "lg", effect "none", alt "large shadow"
+  - Image: src "https://picsum.photos/seed/hookie11/400/300", shadow "xl", effect "none", alt "xl shadow"
+
+Subsection - Hover Effects:
+- Heading level 4: "Hover Effects"
+- Grid: columns 3, gap "lg"
+  - Image: src "https://picsum.photos/seed/hookie12/400/300", effect "lift", alt "lift effect"
+  - Image: src "https://picsum.photos/seed/hookie13/400/300", effect "zoom", alt "zoom effect"
+  - Image: src "https://picsum.photos/seed/hookie14/400/300", effect "glow", alt "glow effect"
+  - Image: src "https://picsum.photos/seed/hookie15/400/300", effect "none", alt "no effect"
+
+Props exercised: borderRadius (xs/sm/md/lg/xl/full), shadow (none/sm/md/lg/xl), effect (lift/zoom/glow/none)
+
+SECTION 6 - LINKS (all variants, all colors):
+- Section: padding "lg", background "white"
+- Heading level 2: "Links"
+- Divider: variant "solid", color "default"
+
+Subsection - Variants:
+- Heading level 4: "Variants"
+- Container style display flex, gap 24px, flexWrap wrap, alignItems center:
+  - Link: variant "default", text "Default Link", href "#", color "primary"
+  - Link: variant "underline", text "Underline Link", href "#", color "primary"
+  - Link: variant "button", text "Button Link", href "#", color "primary", size "md"
+  - Link: variant "pill", text "Pill Link", href "#", color "primary", size "md"
+
+Subsection - Colors (all variants at default):
+- Heading level 4: "Colors"
+- Container style display flex, gap 24px, flexWrap wrap:
+  - Link: variant "default", text "Primary", href "#", color "primary"
+  - Link: variant "default", text "Success", href "#", color "success"
+  - Link: variant "default", text "Danger", href "#", color "danger"
+  - Link: variant "default", text "Muted", href "#", color "muted"
+
+Subsection - Pill Colors:
+- Heading level 4: "Pill Colors"
+- Container style display flex, gap 12px, flexWrap wrap:
+  - Link: variant "pill", text "Primary Pill", href "#", color "primary", size "md"
+  - Link: variant "pill", text "Success Pill", href "#", color "success", size "md"
+  - Link: variant "pill", text "Danger Pill", href "#", color "danger", size "md"
+  - Link: variant "pill", text "Muted Pill", href "#", color "muted", size "md"
+
+Subsection - Sizes (button variant):
+- Heading level 4: "Sizes"
+- Container style display flex, gap 12px, flexWrap wrap, alignItems center:
+  - Link: variant "button", text "Small", href "#", size "sm"
+  - Link: variant "button", text "Medium", href "#", size "md"
+  - Link: variant "button", text "Large", href "#", size "lg"
+
+Props exercised: variant (default/underline/button/pill), color (primary/success/danger/muted), size (sm/md/lg)
+
+SECTION 7 - CARDS (all shadow sizes, with/without images):
+- Section: padding "lg", background "subtle"
+- Heading level 2: "Cards"
+- Divider: variant "dashed", color "muted"
+
+Subsection - Shadow Sizes:
+- Heading level 4: "Shadow Sizes"
+- Grid: columns 3, gap "lg"
+  - Card: title "Small Shadow", description "shadowSize small", shadowSize "small", accentColor "#2563eb"
+  - Card: title "Medium Shadow", description "shadowSize medium", shadowSize "medium", accentColor "#10b981"
+  - Card: title "Large Shadow", description "shadowSize large", shadowSize "large", accentColor "#f59e0b"
+
+Subsection - Cards with Images:
+- Heading level 4: "With Images"
+- Grid: columns 3, gap "lg"
+  - Card: title "Nature", description "Card with landscape image", imageUrl "https://picsum.photos/seed/card1/400/250", shadowSize "medium", accentColor "#2563eb"
+  - Card: title "Architecture", description "Card with architecture image", imageUrl "https://picsum.photos/seed/card2/400/250", shadowSize "medium", accentColor "#10b981"
+  - Card: title "Abstract", description "Card with abstract image", imageUrl "https://picsum.photos/seed/card3/400/250", shadowSize "medium", accentColor "#ef4444"
+
+Subsection - Cards without Images (text only):
+- Heading level 4: "Text Only"
+- Grid: columns 2, gap "md"
+  - Card: title "Feature Card", description "This card has no image. It displays title and description text only with a colored accent border.", accentColor "#8b5cf6", shadowSize "large"
+  - Card: title "Info Card", description "Another text-only card demonstrating different accent colors and shadow configurations.", accentColor "#f59e0b", shadowSize "small"
+
+Props exercised: shadowSize (small/medium/large), imageUrl (present/absent), accentColor (5 colors), title, description, imageAlt
+
+SECTION 8 - ALERT BOXES (all types):
+- Section: padding "lg", background "white"
+- Heading level 2: "Alert Boxes"
+- Divider: variant "gradient", color "rainbow"
+- AlertBox: type "info", title "Information", message "This is an informational alert box. It provides neutral context."
+- AlertBox: type "warning", title "Warning", message "This is a warning alert. Pay attention to this message."
+- AlertBox: type "error", title "Error", message "This is an error alert. Something went wrong."
+- AlertBox: type "success", title "Success", message "This is a success alert. The operation completed."
+
+Props exercised: type (info/warning/error/success), title, message
+
+SECTION 9 - LISTS (all types, bullet styles, number styles):
+- Section: padding "lg", background "subtle"
+- Heading level 2: "Lists"
+- Divider: variant "solid", color "dark", thickness "normal"
+
+Subsection - Unordered Lists:
+- Heading level 4: "Bullet Styles"
+- Grid: columns 3, gap "lg"
+  - Container for each:
+    - Heading level 5: "Disc"
+    - List: type "ul", bulletStyle "disc", items ["First item", "Second item", "Third item"], color "default", spacing "md"
+  - Container:
+    - Heading level 5: "Circle"
+    - List: type "ul", bulletStyle "circle", items ["First item", "Second item", "Third item"], color "primary", spacing "md"
+  - Container:
+    - Heading level 5: "Square"
+    - List: type "ul", bulletStyle "square", items ["First item", "Second item", "Third item"], color "success", spacing "md"
+  - Container:
+    - Heading level 5: "Check"
+    - List: type "ul", bulletStyle "check", items ["Completed task", "Another task", "Final task"], color "success", spacing "sm"
+  - Container:
+    - Heading level 5: "Arrow"
+    - List: type "ul", bulletStyle "arrow", items ["Navigate here", "Go there", "End up here"], color "primary", spacing "sm"
+  - Container:
+    - Heading level 5: "Dot"
+    - List: type "ul", bulletStyle "dot", items ["Point one", "Point two", "Point three"], color "muted", spacing "lg"
+
+Subsection - Ordered Lists:
+- Heading level 4: "Number Styles"
+- Grid: columns 3, gap "lg"
+  - Container:
+    - Heading level 5: "Decimal"
+    - List: type "ol", numberStyle "decimal", items ["Step one", "Step two", "Step three"], color "default", spacing "md"
+  - Container:
+    - Heading level 5: "Roman"
+    - List: type "ol", numberStyle "roman", items ["First", "Second", "Third"], color "primary", spacing "md"
+  - Container:
+    - Heading level 5: "Alpha"
+    - List: type "ol", numberStyle "alpha", items ["Option A", "Option B", "Option C"], color "danger", spacing "md"
+
+Props exercised: type (ul/ol), bulletStyle (disc/circle/square/check/arrow/dot), numberStyle (decimal/roman/alpha), color (default/primary/success/danger/muted), spacing (sm/md/lg)
+
+SECTION 10 - DIVIDERS (all variants, thicknesses, colors):
+- Section: padding "lg", background "white"
+- Heading level 2: "Dividers"
+
+Subsection - Variants:
+- Heading level 4: "Variants"
+- Text: "Solid:", size "sm", color "#64748b"
+- Divider: variant "solid", color "default", thickness "normal"
+- Text: "Dashed:", size "sm", color "#64748b"
+- Divider: variant "dashed", color "default", thickness "normal"
+- Text: "Dotted:", size "sm", color "#64748b"
+- Divider: variant "dotted", color "default", thickness "normal"
+- Text: "Gradient:", size "sm", color "#64748b"
+- Divider: variant "gradient", color "default", thickness "normal"
+
+Subsection - Thicknesses:
+- Heading level 4: "Thicknesses"
+- Text: "Thin:", size "sm", color "#64748b"
+- Divider: variant "solid", color "primary", thickness "thin"
+- Text: "Normal:", size "sm", color "#64748b"
+- Divider: variant "solid", color "primary", thickness "normal"
+- Text: "Thick:", size "sm", color "#64748b"
+- Divider: variant "solid", color "primary", thickness "thick"
+- Text: "XL:", size "sm", color "#64748b"
+- Divider: variant "solid", color "primary", thickness "xl"
+
+Subsection - Colors:
+- Heading level 4: "Colors"
+- Divider: variant "solid", color "default", thickness "thick"
+- Divider: variant "solid", color "dark", thickness "thick"
+- Divider: variant "solid", color "primary", thickness "thick"
+- Divider: variant "solid", color "success", thickness "thick"
+- Divider: variant "solid", color "danger", thickness "thick"
+- Divider: variant "solid", color "muted", thickness "thick"
+
+Subsection - Gradient Colors:
+- Heading level 4: "Gradient Colors"
+- Divider: variant "solid", color "blue-gradient", thickness "thick"
+- Divider: variant "solid", color "green-gradient", thickness "thick"
+- Divider: variant "solid", color "purple-gradient", thickness "thick"
+- Divider: variant "solid", color "rainbow", thickness "thick"
+
+Props exercised: variant (solid/dashed/dotted/gradient), thickness (thin/normal/thick/xl), color (default/dark/primary/success/danger/muted), gradient colors (blue-gradient/green-gradient/purple-gradient/rainbow), margin (sm/md/lg/xl)
+
+SECTION 11 - GRID LAYOUTS:
+- Section: padding "lg", background "subtle"
+- Heading level 2: "Grid Layouts"
+- Divider: variant "solid", color "primary"
+
+Subsection - Column Counts:
+- Heading level 4: "2 Columns"
+- Grid: columns 2, gap "md"
+  - Container style bg #dbeafe, padding 20px, borderRadius 8px: Text "Column 1"
+  - Container style bg #dbeafe, padding 20px, borderRadius 8px: Text "Column 2"
+
+- Heading level 4: "3 Columns"
+- Grid: columns 3, gap "md"
+  - Container style bg #dcfce7, padding 20px, borderRadius 8px: Text "Column 1"
+  - Container style bg #dcfce7, padding 20px, borderRadius 8px: Text "Column 2"
+  - Container style bg #dcfce7, padding 20px, borderRadius 8px: Text "Column 3"
+
+- Heading level 4: "4 Columns"
+- Grid: columns 4, gap "md"
+  - Container style bg #fef3c7, padding 20px, borderRadius 8px: Text "Col 1"
+  - Container style bg #fef3c7, padding 20px, borderRadius 8px: Text "Col 2"
+  - Container style bg #fef3c7, padding 20px, borderRadius 8px: Text "Col 3"
+  - Container style bg #fef3c7, padding 20px, borderRadius 8px: Text "Col 4"
+
+Subsection - Gap Sizes:
+- Heading level 4: "Gap Sizes"
+- Text: "Small gap (12px):", size "sm"
+- Grid: columns 3, gap "sm"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "A"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "B"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "C"
+- Text: "Large gap (32px):", size "sm"
+- Grid: columns 3, gap "lg"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "A"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "B"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "C"
+- Text: "XL gap (48px):", size "sm"
+- Grid: columns 3, gap "xl"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "A"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "B"
+  - Container style bg #e0e7ff, padding 16px, borderRadius 8px: Text "C"
+
+Props exercised: columns (2/3/4), gap (sm/md/lg/xl), autoFit
+
+SECTION 12 - SECTIONS:
+- Section: padding "lg", background "white"
+- Heading level 2: "Sections"
+- Divider: variant "dashed", color "primary"
+
+- Section: padding "sm", background "light", title "Light Background, Small Padding"
+  - Text: "Section with light background and small padding."
+- Section: padding "md", background "subtle", title "Subtle Background, Medium Padding"
+  - Text: "Section with subtle background and medium padding."
+- Section: padding "lg", background "gradient-blue", title "Blue Gradient, Large Padding"
+  - Text: "Section with blue gradient background."
+- Section: padding "lg", background "gradient-green", title "Green Gradient, Large Padding"
+  - Text: "Section with green gradient background."
+- Section: padding "xl", background "gradient-purple", title "Purple Gradient, XL Padding"
+  - Text: "Section with purple gradient background."
+
+Props exercised: padding (sm/md/lg/xl), background (light/subtle/white/gradient-blue/gradient-green/gradient-purple), fullWidth, title, subtitle
+
+SECTION 13 - CONTAINERS:
+- Section: padding "lg", background "subtle"
+- Heading level 2: "Containers"
+- Divider: variant "solid", color "muted"
+- Container: maxWidth "sm", padding "md", style border 1px dashed #cbd5e1
+  - Text: "maxWidth sm (640px)"
+- Container: maxWidth "md", padding "lg", style border 1px dashed #cbd5e1
+  - Text: "maxWidth md (768px)"
+- Container: maxWidth "lg", padding "lg", style border 1px dashed #cbd5e1
+  - Text: "maxWidth lg (1024px)"
+- Container: maxWidth "xl", padding "xl", style border 1px dashed #cbd5e1
+  - Text: "maxWidth xl (1200px)"
+
+Props exercised: maxWidth (sm/md/lg/xl), padding (sm/md/lg/xl/2xl)
+
+Edge cases:
+- Every component ID must be globally unique within the page
+- picsum.photos URLs use seed for deterministic images
+- Button onClick is a function prop - JSON pages cannot set functions, so Button rendered from JSON will not fire onClick but will render correctly visually
+- Custom bullet styles (check/arrow/dot) use listStyleType none and render the symbol as a span prefix
+- Gradient divider colors (blue-gradient, green-gradient, purple-gradient, rainbow) are read via colorMap in Divider.js, they override the variant to produce a linear-gradient background instead of a border
+- AlertBox onClose prop is a function, same limitation as Button onClick - renders but no handler
+- Grid autoFit/autoFill use CSS repeat(auto-fit/auto-fill, minmax(minItemWidth, 1fr))
+- Section title/subtitle are rendered by the Section component itself (not children)
+- Image component uses img tag directly, not wrapped in a container
+
+========================================================================
+[1.3] CREATE ABOUT.JSON (content/pages/about.json)
+========================================================================
+Blocks: 2.1
+Blocked by: 0.1
+
+About page. File: content/pages/about.json
+
+SECTION 1 - HERO:
+- Section: background "gradient-green", padding "2xl", fullWidth true
+- Heading level 1: "About Hookie CMS", color "#166534", align "center"
+- Text: "We believe building websites should be simple, powerful, and fun.", size "xl", color "#166534", align "center"
+
+SECTION 2 - TEAM:
+- Section: padding "xl", background "white"
+- Heading level 2: "Our Team", align "center"
+- Text: "Meet the people behind Hookie CMS.", size "lg", color "#64748b", align "center"
+- Grid: columns 3, gap "lg"
+  - Card: title "Sarah Chen", description "Lead Developer. Passionate about developer experience and clean APIs.", imageUrl "https://picsum.photos/seed/team1/400/400", accentColor "#2563eb", shadowSize "medium"
+  - Card: title "Marcus Rivera", description "UI/UX Designer. Creates intuitive interfaces that delight users.", imageUrl "https://picsum.photos/seed/team2/400/400", accentColor "#10b981", shadowSize "medium"
+  - Card: title "Aisha Patel", description "DevOps Engineer. Ensures reliability and performance at scale.", imageUrl "https://picsum.photos/seed/team3/400/400", accentColor "#f59e0b", shadowSize "medium"
+
+SECTION 3 - MISSION:
+- Section: padding "xl", background "subtle"
+- Heading level 2: "Our Mission", align "center"
+- Container maxWidth "lg", style margin 0 auto:
+  - Text: size "lg", align "center", content "Hookie CMS was born from frustration with bloated, complex content management systems. We set out to build something different: a CMS that is lightweight, developer-friendly, and infinitely extensible."
+  - Text: size "lg", align "center", content "By storing content as JSON in GitHub repositories, we give teams full version control, collaboration workflows, and deployment automation without any proprietary lock-in."
+
+SECTION 4 - VALUES:
+- Section: padding "xl", background "white"
+- Heading level 2: "Our Values", align "center"
+- Grid: columns 2, gap "lg"
+  - Container style padding 24px, bg #f0f9ff, borderRadius 8px:
+    - Heading level 4: "Simplicity First", color "#0c4a6e"
+    - List: type "ul", bulletStyle "check", color "primary", items ["No unnecessary complexity", "Convention over configuration", "Fewer features done well"]
+  - Container style padding 24px, bg #f0fdf4, borderRadius 8px:
+    - Heading level 4: "Developer Experience", color "#166534"
+    - List: type "ul", bulletStyle "check", color "success", items ["Hot reload everything", "Debug-friendly architecture", "Extensible component system"]
+  - Container style padding 24px, bg #faf5ff, borderRadius 8px:
+    - Heading level 4: "Open Standards", color "#581c87"
+    - List: type "ul", bulletStyle "check", color "primary", items ["JSON content format", "Git-based workflows", "No vendor lock-in"]
+  - Container style padding 24px, bg #fff7ed, borderRadius 8px:
+    - Heading level 4: "Reliability", color "#9a3412"
+    - List: type "ul", bulletStyle "check", color "danger", items ["Crash-proof by design", "Automatic recovery", "Graceful degradation"]
+
+SECTION 5 - CONTACT CTA:
+- Divider: variant "gradient", color "green-gradient", thickness "thick"
+- Section: padding "xl", background "gradient-green", fullWidth true
+- style textAlign center
+- Heading level 2: "Get in Touch", color "#166534", align "center"
+- Text: "Have questions? We would love to hear from you.", size "lg", color "#166534", align "center"
+- Container style display flex, gap 16px, justifyContent center:
+  - Link: variant "button", text "Contact Us", href "mailto:hello@hookie.dev", size "lg", color "primary"
+  - Link: variant "pill", text "View on GitHub", href "https://github.com", size "lg", color "success"
+
+Edge cases:
+- Team images are square (400x400) to work well in Card component
+- Card imageAlt should default to title if not set
+- List bulletStyle "check" uses custom marker with listStyleType none
+- mailto links work with Link component since it renders <a> tags
+
+========================================================================
+[1.4] CREATE PRICING.JSON (content/pages/pricing.json)
+========================================================================
+Blocks: 2.1
+Blocked by: 0.1
+
+Pricing page. File: content/pages/pricing.json
+
+SECTION 1 - HERO:
+- Section: background "gradient-purple", padding "xl", fullWidth true
+- Heading level 1: "Pricing", color "#581c87", align "center"
+- Text: "Simple, transparent pricing for every team size.", size "xl", color "#581c87", align "center"
+
+SECTION 2 - PRICING CARDS:
+- Section: padding "xl", background "white"
+- Grid: columns 3, gap "lg"
+
+  Card 1 - Free Tier:
+  - Container wrapper with children:
+    - Card: title "Free", description "For personal projects and experimentation.", accentColor "#64748b", shadowSize "small"
+    - Heading level 3: "$0", color "#64748b"
+    - Text: "per month", color "#64748b", size "sm"
+    - Divider: variant "solid", color "muted", thickness "thin"
+    - List: type "ul", bulletStyle "check", color "success", items ["Up to 3 pages", "12 built-in components", "GitHub storage", "Community support"]
+    - Link: variant "button", text "Get Started", href "#/admin", color "muted", size "md"
+
+  Card 2 - Pro Tier (featured):
+  - Container style border 2px solid #2563eb, borderRadius 12px, padding 0, overflow hidden:
+    - Container style bg #2563eb, padding 8px, textAlign center:
+      - Text: "Most Popular", color "#ffffff", weight "bold", size "sm", align "center"
+    - Card: title "Pro", description "For growing teams and businesses.", accentColor "#2563eb", shadowSize "large"
+    - Container padding md:
+      - Heading level 3: "$29", color "#2563eb"
+      - Text: "per month", color "#64748b", size "sm"
+      - Divider: variant "solid", color "primary", thickness "thin"
+      - List: type "ul", bulletStyle "check", color "success", items ["Unlimited pages", "Custom components", "Priority support", "Advanced analytics", "Team collaboration", "API access"]
+      - Link: variant "button", text "Start Free Trial", href "#/admin", color "primary", size "lg"
+
+  Card 3 - Enterprise Tier:
+  - Container wrapper with children:
+    - Card: title "Enterprise", description "For large organizations with custom needs.", accentColor "#10b981", shadowSize "small"
+    - Heading level 3: "Custom", color "#10b981"
+    - Text: "contact us", color "#64748b", size "sm"
+    - Divider: variant "solid", color "success", thickness "thin"
+    - List: type "ul", bulletStyle "check", color "success", items ["Everything in Pro", "Dedicated support", "Custom integrations", "SLA guarantee", "On-premise option"]
+    - Link: variant "button", text "Contact Sales", href "mailto:sales@hookie.dev", color "success", size "md"
+
+SECTION 3 - FEATURE COMPARISON:
+- Section: padding "xl", background "subtle"
+- Heading level 2: "Compare Plans", align "center"
+- Container maxWidth "lg", style margin 0 auto:
+  - Heading level 4: "All Plans Include"
+  - List: type "ul", bulletStyle "check", color "success", spacing "lg", items ["Visual page builder", "GitHub-powered storage", "Hot reload development", "Component-based architecture", "Responsive design", "SEO-friendly output"]
+  - Divider: variant "dashed", color "muted"
+  - Heading level 4: "Pro and Enterprise Only"
+  - List: type "ul", bulletStyle "arrow", color "primary", spacing "lg", items ["Custom component development", "Advanced theming engine", "Multi-site management", "Role-based access control", "Audit logging", "Webhook integrations"]
+
+SECTION 4 - FAQ:
+- Section: padding "xl", background "white"
+- Heading level 2: "Frequently Asked Questions", align "center"
+- Grid: columns 2, gap "lg"
+  - Container style padding 24px:
+    - Heading level 4: "Can I try before I buy?"
+    - Text: "Yes. The free tier includes all core features. You can upgrade anytime without losing your content."
+  - Container style padding 24px:
+    - Heading level 4: "Is my content locked in?"
+    - Text: "Never. Your content is stored as JSON in your own GitHub repository. You own it completely."
+  - Container style padding 24px:
+    - Heading level 4: "What payment methods do you accept?"
+    - Text: "We accept all major credit cards, PayPal, and wire transfers for enterprise accounts."
+  - Container style padding 24px:
+    - Heading level 4: "Can I cancel anytime?"
+    - Text: "Absolutely. No long-term contracts. Cancel your subscription at any time and keep all your content."
+
+SECTION 5 - CTA:
+- Divider: variant "gradient", color "purple-gradient", thickness "thick"
+- Section: padding "xl", background "gradient-purple", fullWidth true
+- style textAlign center
+- Heading level 2: "Start Building Today", color "#581c87", align "center"
+- Text: "Join thousands of developers building with Hookie CMS.", size "lg", color "#581c87", align "center"
+- Link: variant "button", text "Get Started Free", href "#/admin", size "lg"
+
+Edge cases:
+- Pricing cards need nested Container wrappers since Card does not support children in the component tree (allowedChildren is empty array)
+- Pro card "featured" border is achieved via Container wrapper with border style, not via Card props
+- The "Most Popular" badge is a Container with background color containing a Text
+- Card allowedChildren is [] per Card.json schema, so pricing details (list, link, heading) go as siblings after the Card within a parent Container, not as Card children
+- Each pricing column should be wrapped in a single Container parent so the Grid treats it as one cell
+
+========================================================================
+[1.5] CREATE BLOG.JSON (content/pages/blog.json)
+========================================================================
+Blocks: 2.1
+Blocked by: 0.1
+
+Blog-style page. File: content/pages/blog.json
+
+SECTION 1 - HERO:
+- Section: background "subtle", padding "xl", fullWidth true
+- Heading level 1: "Blog", color "#1e293b", align "center"
+- Text: "Insights, tutorials, and updates from the Hookie CMS team.", size "lg", color "#64748b", align "center"
+
+SECTION 2 - FEATURED POST:
+- Section: padding "xl", background "white"
+- Heading level 5: "Featured Post", color "#2563eb"
+- Card: title "Introducing Hookie CMS 2.0", description "A complete rewrite with hot reload, crash-proof architecture, and a new visual editor. Learn about the design decisions and technical challenges.", imageUrl "https://picsum.photos/seed/blog-featured/1200/500", accentColor "#2563eb", shadowSize "large"
+- Container style display flex, gap 16px, marginTop 16px:
+  - Text: "January 15, 2026", size "sm", color "#64748b"
+  - Text: "8 min read", size "sm", color "#64748b"
+  - Link: variant "default", text "Read More", href "#", color "primary"
+
+SECTION 3 - POSTS GRID (sidebar layout):
+- Section: padding "xl", background "subtle"
+- Grid: columns 3, gap "lg"
+
+  Main content area (spans 2 columns via Container style gridColumn "1 / 3"):
+  - Container style gridColumn "1 / 3":
+    - Heading level 3: "Recent Posts"
+    - Divider: variant "solid", color "primary", thickness "normal"
+
+    Post 1:
+    - Card: title "Building Custom Components", description "Learn how to create reusable components for your Hookie CMS site. From simple text blocks to complex interactive widgets.", imageUrl "https://picsum.photos/seed/blog1/800/400", accentColor "#10b981", shadowSize "medium"
+    - Container style display flex, gap 16px, marginTop 12px, marginBottom 32px:
+      - Text: "January 10, 2026", size "sm", color "#64748b"
+      - Text: "5 min read", size "sm", color "#64748b"
+
+    Post 2:
+    - Card: title "GitHub as a CMS Backend", description "Why we chose GitHub for content storage and how it enables powerful collaboration workflows for content teams.", imageUrl "https://picsum.photos/seed/blog2/800/400", accentColor "#f59e0b", shadowSize "medium"
+    - Container style display flex, gap 16px, marginTop 12px, marginBottom 32px:
+      - Text: "January 5, 2026", size "sm", color "#64748b"
+      - Text: "6 min read", size "sm", color "#64748b"
+
+    Post 3:
+    - Card: title "Hot Reload Architecture", description "Deep dive into how Hookie CMS achieves zero-downtime hot reload. Atomic handler swaps, state preservation, and module boundaries.", accentColor "#8b5cf6", shadowSize "medium"
+    - Container style display flex, gap 16px, marginTop 12px:
+      - Text: "December 28, 2025", size "sm", color "#64748b"
+      - Text: "10 min read", size "sm", color "#64748b"
+
+  Sidebar (column 3):
+  - Container style padding 0:
+    - Heading level 4: "Categories"
+    - List: type "ul", bulletStyle "arrow", color "primary", items ["Tutorials", "Architecture", "Release Notes", "Case Studies", "Tips and Tricks"]
+
+    - Divider: variant "dashed", color "muted", margin "md"
+
+    - Heading level 4: "Tags"
+    - Container style display flex, gap 8px, flexWrap wrap:
+      - Link: variant "pill", text "React", href "#", color "primary", size "sm"
+      - Link: variant "pill", text "GitHub", href "#", color "success", size "sm"
+      - Link: variant "pill", text "CMS", href "#", color "muted", size "sm"
+      - Link: variant "pill", text "Components", href "#", color "danger", size "sm"
+      - Link: variant "pill", text "JSON", href "#", color "primary", size "sm"
+      - Link: variant "pill", text "Hot Reload", href "#", color "success", size "sm"
+
+    - Divider: variant "dashed", color "muted", margin "md"
+
+    - Heading level 4: "Newsletter"
+    - Text: "Stay up to date with the latest from Hookie CMS.", size "sm", color "#64748b"
+    - AlertBox: type "info", title "Subscribe", message "Newsletter signup coming soon. Follow us on GitHub for updates."
+
+SECTION 4 - RELATED POSTS:
+- Section: padding "xl", background "white"
+- Heading level 3: "You Might Also Like", align "center"
+- Grid: columns 3, gap "lg"
+  - Card: title "Getting Started Guide", description "Everything you need to know to set up your first Hookie CMS site.", imageUrl "https://picsum.photos/seed/related1/400/250", accentColor "#2563eb", shadowSize "small"
+  - Card: title "Theming Deep Dive", description "Master the theming system to create unique visual identities.", imageUrl "https://picsum.photos/seed/related2/400/250", accentColor "#10b981", shadowSize "small"
+  - Card: title "Deployment Strategies", description "From GitHub Pages to custom servers. Deploy your Hookie CMS site anywhere.", imageUrl "https://picsum.photos/seed/related3/400/250", accentColor "#f59e0b", shadowSize "small"
+
+Edge cases:
+- Sidebar layout uses CSS Grid gridColumn "1 / 3" on a Container child to span 2 of 3 columns
+- Grid treats each direct child as one cell, so sidebar content must be in a single Container
+- Featured post uses a Card with large imageUrl (1200x500) for full-width feel
+- Blog post dates are just Text components, no date formatting component exists
+- Post 3 has no imageUrl to demonstrate text-only Card in blog context
+- Tag pills use Link variant "pill" size "sm" which produces small rounded chip-like elements
+
+========================================================================
+[2.1] END-TO-END VERIFICATION
+========================================================================
+Blocks: nothing
+Blocked by: 0.1, 1.1, 1.2, 1.3, 1.4, 1.5
+
+Verification checklist:
+- Start dev server (npm run dev)
+- Navigate to each page via hash routes:
+  - #/ (home)
+  - #/pages/components
+  - #/pages/about
+  - #/pages/pricing
+  - #/pages/blog
+- Verify header renders with logo and all 5 nav links
+- Verify footer renders with 4 sections
+- Verify no "Unknown component" or "Component not implemented" error divs appear
+- Verify all picsum.photos images load
+- Verify all component types render without console errors
+- Verify mobile menu toggle works (resize to < 768px)
+- Check every component variant is visually distinct
+- Confirm Card shadows differ between small/medium/large
+- Confirm Image hover effects (lift/zoom/glow) trigger on mouseover
+- Confirm Link variants (default/underline/button/pill) look different
+- Confirm AlertBox types (info/warning/error/success) have different colors
+- Confirm List bullet styles (disc/circle/square/check/arrow/dot) render correctly
+- Confirm Divider variants (solid/dashed/dotted/gradient) are visually distinct
+- Confirm Grid column counts match (2/3/4 columns)
+- Confirm Section backgrounds (light/subtle/gradient-blue/gradient-green/gradient-purple) render
+- Confirm blog sidebar layout (gridColumn span) works
+
+COMPONENT COVERAGE MATRIX:
+- Heading: levels 1-6, colors x6, weights x3 (normal/semibold/bold), aligns x3 (left/center/right)
+- Text: sizes x4 (sm/base/lg/xl), colors x4+, weights x3, aligns x3
+- Button: variants x5 (primary/secondary/danger/ghost/success), sizes x3 (sm/md/lg), disabled x2
+- Image: borderRadius x6 (xs/sm/md/lg/xl/full), shadow x5 (none/sm/md/lg/xl), effect x4 (lift/zoom/glow/none)
+- Link: variants x4 (default/underline/button/pill), colors x4 (primary/success/danger/muted), sizes x3
+- Card: shadowSize x3 (small/medium/large), with/without imageUrl, accentColor x5+
+- AlertBox: types x4 (info/warning/error/success)
+- List: types x2 (ul/ol), bulletStyle x6 (disc/circle/square/check/arrow/dot), numberStyle x3 (decimal/roman/alpha), colors x5, spacing x3
+- Divider: variants x4 (solid/dashed/dotted/gradient), thickness x4 (thin/normal/thick/xl), colors x6+, gradient colors x4 (blue-gradient/green-gradient/purple-gradient/rainbow)
+- Grid: columns x3 (2/3/4), gap x4 (sm/md/lg/xl), autoFit
+- Section: padding x5 (sm/md/lg/xl/2xl), background x7 (transparent/light/white/subtle/gradient-blue/gradient-green/gradient-purple), fullWidth, title, subtitle
+- Container: maxWidth x4 (sm/md/lg/xl), padding x5 (sm/md/lg/xl/2xl)
