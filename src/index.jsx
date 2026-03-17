@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import GlobalStyles from './GlobalStyles.js';
-import AdminApp from './admin/AdminApp.js';
 import App from './public/App.js';
 import { initializeDebugGlobals } from './lib/debuggingSetup.js';
 
@@ -43,28 +42,22 @@ const errorStyles = {
 
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .spinner { animation: spin 0.8s linear infinite; }
 `;
 document.head.appendChild(styleSheet);
 
 window.React = React;
 initializeDebugGlobals();
 
-const isAdmin = window.location.hash.includes('/admin') || window.location.pathname.includes('/admin');
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
   <React.StrictMode>
     <AppErrorBoundary>
       <GlobalStyles />
-      {isAdmin ? <AdminApp /> : <App />}
+      <App />
     </AppErrorBoundary>
   </React.StrictMode>
 );
