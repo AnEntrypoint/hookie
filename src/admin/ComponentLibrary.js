@@ -94,8 +94,7 @@ export default function ComponentLibrary({ owner, repo }) {
       }
 
       setPageUsage(usage);
-    } catch (error) {
-      console.error('Error loading components:', error);
+    } catch {
     } finally {
       setLoading(false);
     }
@@ -117,8 +116,7 @@ export default function ComponentLibrary({ owner, repo }) {
         delete updated[componentName];
         return updated;
       });
-    } catch (error) {
-      console.error('Error deleting component:', error);
+    } catch {
     }
     setDeleteConfirm(null);
   };

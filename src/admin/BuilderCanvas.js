@@ -8,6 +8,7 @@ import './admin.css';
 
 export default function BuilderCanvas({
   pageData, selectedId, onUpdate, onSelectComponent,
+  onDelete, onDuplicate,
   canUndo, canRedo, onUndo, onRedo,
   paletteVisible = true, isMobile = false
 }) {
@@ -63,7 +64,7 @@ export default function BuilderCanvas({
       <div ref={drop} style={{ ...styles.canvas, backgroundColor: isOver ? '#f0f9ff' : '#ffffff' }} className="builder-canvas">
         <div style={{ ...styles.canvasInner, width: getCanvasWidth() }} className="builder-canvas-inner">
           {pageData && pageData.components && pageData.components.length > 0 ? (
-            <Renderer pageData={pageData} mode="edit" selectedId={selectedId} onSelectComponent={onSelectComponent} />
+            <Renderer pageData={pageData} mode="edit" selectedId={selectedId} onSelectComponent={onSelectComponent} onDelete={onDelete} onDuplicate={onDuplicate} />
           ) : (
             <EmptyCanvas onAddComponent={handleDropComponent} isMobileView={!paletteVisible && typeof window !== 'undefined' && window.innerWidth < 768} />
           )}

@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { getComponentTitle } from './builderHelpers';
 import { styles } from './componentPaletteStyles';
+import componentRegistry from '../lib/componentRegistry';
+
+const CATEGORY_COLORS = {
+  Layout: '#3b82f6',
+  Content: '#ec4899',
+  Interactive: '#8b5cf6',
+  Display: '#f59e0b',
+};
 
 function getComponentTypeInfo(componentName) {
-  const typeMap = {
-    Container: { icon: '[ ]', color: '#3b82f6' },
-    Section: { icon: '[ ]', color: '#3b82f6' },
-    Grid: { icon: '[ ]', color: '#3b82f6' },
-    Button: { icon: '[x]', color: '#8b5cf6' },
-    Link: { icon: '[x]', color: '#8b5cf6' },
-    Text: { icon: 'Aa', color: '#ec4899' },
-    Heading: { icon: 'H', color: '#ec4899' },
-    Image: { icon: 'Img', color: '#ec4899' },
-    Divider: { icon: '---', color: '#ec4899' },
-    List: { icon: '=', color: '#ec4899' },
+  const schema = componentRegistry.getComponent(componentName);
+  const category = schema?.category || 'Custom';
+  return {
+    icon: schema?.icon || '*',
+    color: CATEGORY_COLORS[category] || '#64748b',
   };
-  return typeMap[componentName] || { icon: '*', color: '#64748b' };
 }
 
 export { getComponentTypeInfo };

@@ -165,6 +165,8 @@ export default function Builder({ pageData, onUpdate }) {
             selectedId={selectedComponentId}
             onUpdate={handleUpdate}
             onSelectComponent={handleSelectComponent}
+            onDelete={handleDelete}
+            onDuplicate={handleDuplicate}
             canUndo={historyIndex > 0}
             canRedo={historyIndex < history.length - 1}
             onUndo={handleUndo}
