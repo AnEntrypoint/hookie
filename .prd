@@ -1,46 +1,12 @@
 [
   {
-    "id": "refactor-componentlibrary",
-    "subject": "Refactor ComponentLibrary.js from 798 lines into focused modules",
-    "status": "pending",
-    "description": "Extract ComponentLibraryList (left list panel), ComponentLibraryDetail (right detail panel), ComponentLibraryPreview (preview area). Main ComponentLibrary.js becomes orchestrator under 200L.",
-    "blocking": [
-      "final-polish-and-docs"
-    ],
-    "blockedBy": [],
-    "effort": "large",
-    "category": "refactor",
-    "acceptance": [
-      "ComponentLibrary.js under 200 lines",
-      "All extracted files under 200 lines",
-      "All existing functionality preserved (search, filter, delete, preview)",
-      "No visual regressions",
-      "No broken imports"
-    ],
-    "edge_cases": [
-      "Component deletion still works",
-      "Preview prop reactivity preserved"
-    ]
-  },
-  {
     "id": "final-polish-and-docs",
     "subject": "Final polish - update README, CLAUDE.md, commit and push all changes",
     "status": "pending",
-    "description": "Update README with accurate setup. Update CLAUDE.md with architecture notes. Commit all changes and push branch.",
+    "description": "Update README with accurate setup (PAT scopes, repo structure, deployment). Update CLAUDE.md with architecture decisions, key constraints, gotchas.",
     "blocking": [],
-    "blockedBy": [
-      "refactor-componentlibrary"
-    ],
+    "blockedBy": [],
     "effort": "medium",
-    "category": "docs",
-    "acceptance": [
-      "README accurate and beginner-friendly",
-      "CLAUDE.md has architecture notes",
-      "All changes committed with descriptive messages",
-      "Branch pushed to origin"
-    ],
-    "edge_cases": [
-      "README must work for zero-prior-Hookie user"
-    ]
+    "category": "docs"
   }
 ]

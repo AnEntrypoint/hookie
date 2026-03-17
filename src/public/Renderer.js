@@ -20,210 +20,61 @@ import FooterBlock from '../components/FooterBlock.js';
 import PricingCard from '../components/PricingCard.js';
 import ContactForm from '../components/ContactForm.js';
 import PageLayout from '../components/PageLayout.js';
+import RendererEditWrapper from './RendererEditWrapper.js';
 
-const COMPONENT_MAP = {
-  Button,
-  Text,
-  Container,
-  Section,
-  Heading,
-  Image,
-  Grid,
-  Divider,
-  Link,
-  List,
-  Card,
-  AlertBox,
-  Hero,
-  Testimonial,
-  Navbar,
-  FooterBlock,
-  PricingCard,
-  ContactForm
-};
+const COMPONENT_MAP = { Button, Text, Container, Section, Heading, Image, Grid, Divider, Link, List, Card, AlertBox, Hero, Testimonial, Navbar, FooterBlock, PricingCard, ContactForm };
 
 const getDefaultProps = (schema) => {
+  if (!schema.props) return {};
   const defaults = {};
-  
-  if (!schema.props) return defaults;
-
-  Object.entries(schema.props).forEach(([propName, propSchema]) => {
-    if (propSchema.default !== undefined) {
-      defaults[propName] = propSchema.default;
-    }
-  });
-
+  Object.entries(schema.props).forEach(([k, v]) => { if (v.default !== undefined) defaults[k] = v.default; });
   return defaults;
 };
 
-const Renderer = ({
-  pageData,
-  mode = 'view',
-  selectedId,
-  onSelectComponent,
-  onPropsChange,
-  onDelete,
-  onDuplicate,
-  layout
-}) => {
-  
-  const renderComponent = (component, index, parent) => {
+const unknownStyle = { padding: '12px', backgroundColor: '#fee2e2', border: '1px solid #fecaca', borderRadius: '4px', color: '#991b1b', fontSize: '14px' };
+
+const Renderer = ({ pageData, mode = 'view', selectedId, onSelectComponent, onDelete, onDuplicate, layout }) => {
+  const renderComponent = (component, index) => {
     if (!component) return null;
-    
     const { id, type, props, style, children } = component;
 
-    // Get component schema from registry
     const schema = componentRegistry.getComponent(type);
-    if (!schema) {
-      return (
-        <div key={id || index} style={{
-          padding: '12px',
-          backgroundColor: '#fee2e2',
-          border: '1px solid #fecaca',
-          borderRadius: '4px',
-          color: '#991b1b',
-          fontSize: '14px'
-        }}>
-          Unknown component: {type}
-        </div>
-      );
-    }
+    if (!schema) return <div key={id || index} style={unknownStyle}>Unknown component: {type}</div>;
 
     const Component = componentLoader.getComponentImplementation(type) || COMPONENT_MAP[type];
-    if (!Component) {
-      return (
-        <div key={id || index} style={{
-          padding: '12px',
-          backgroundColor: '#fee2e2',
-          border: '1px solid #fecaca',
-          borderRadius: '4px',
-          color: '#991b1b',
-          fontSize: '14px'
-        }}>
-          Component not implemented: {type}
-        </div>
-      );
-    }
+    if (!Component) return <div key={id || index} style={unknownStyle}>Component not implemented: {type}</div>;
 
-    // Merge schema default props with instance props
     const mergedProps = { ...getDefaultProps(schema), ...(props || {}) };
-
-    // Merge default style with instance style
     const mergedStyle = { ...schema.defaultStyle, ...(style || {}) };
+    const renderedChildren = children?.length > 0 ? children.map((child, i) => renderComponent(child, i)) : undefined;
+    const componentProps = { ...mergedProps, style: mergedStyle, children: renderedChildren };
 
-    // Render children recursively
-    const renderedChildren = children && children.length > 0
-      ? children.map((child, i) => renderComponent(child, i, component))
-      : undefined;
-
-    // Build final props for component
-    const componentProps = {
-      ...mergedProps,
-      style: mergedStyle,
-      children: renderedChildren
-    };
-
-    // In edit mode, wrap with selection handling and visual feedback
     if (mode === 'edit') {
       const isSelected = selectedId === id;
-      const isContainer = schema.allowedChildren && schema.allowedChildren.length > 0;
+      const isContainer = schema.allowedChildren?.length > 0;
       const isEmpty = !renderedChildren || renderedChildren.length === 0;
-
-      const handleClick = (e) => {
-        e.stopPropagation();
-        if (onSelectComponent) {
-          onSelectComponent(id);
-        }
-      };
-
       return (
-        <div
-          key={id || index}
-          className={`builder-component-wrapper ${isSelected ? 'selected' : ''}`}
-          onClick={handleClick}
-          data-component-id={id}
-          data-component-type={type}
-          style={{
-            position: 'relative',
-            outline: isSelected ? '2px solid #2563eb' : (isContainer && isEmpty ? '2px dashed #cbd5e1' : 'none'),
-            backgroundColor: isSelected ? 'rgba(37, 99, 235, 0.05)' : (isContainer && isEmpty ? 'rgba(203, 213, 225, 0.05)' : 'transparent'),
-            borderRadius: '4px',
-            transition: 'all 150ms ease-in-out',
-            cursor: 'pointer',
-            minHeight: isContainer && isEmpty ? '80px' : undefined
-          }}
-        >
+        <RendererEditWrapper key={id || index} id={id} type={type} index={index} isSelected={isSelected} isContainer={isContainer} isEmpty={isEmpty} onSelect={onSelectComponent} onDelete={onDelete} onDuplicate={onDuplicate}>
           <Component {...componentProps} />
-          
-          {isSelected && (
-            <div style={{
-              position: 'absolute',
-              top: '-32px',
-              left: '0',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              zIndex: 10,
-              pointerEvents: 'auto',
-            }}>
-              <span style={{
-                fontSize: '11px',
-                color: '#2563eb',
-                fontWeight: '600',
-                backgroundColor: '#dbeafe',
-                padding: '2px 8px',
-                borderRadius: '3px',
-                whiteSpace: 'nowrap',
-              }}>{type}</span>
-              {onDuplicate && (
-                <button
-                  onClick={(e) => { e.stopPropagation(); onDuplicate(id); }}
-                  style={{ fontSize: '11px', padding: '2px 8px', backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '3px', cursor: 'pointer', color: '#475569', fontWeight: '600', whiteSpace: 'nowrap' }}
-                  title="Duplicate (Ctrl+D)"
-                >Copy</button>
-              )}
-              {onDelete && (
-                <button
-                  onClick={(e) => { e.stopPropagation(); onDelete(id); }}
-                  style={{ fontSize: '11px', padding: '2px 8px', backgroundColor: '#fee2e2', border: '1px solid #fecaca', borderRadius: '3px', cursor: 'pointer', color: '#991b1b', fontWeight: '600', whiteSpace: 'nowrap' }}
-                  title="Delete (Del)"
-                >Delete</button>
-              )}
-            </div>
-          )}
-        </div>
+        </RendererEditWrapper>
       );
     }
 
-    // View mode: render component directly without wrappers
-    return (
-      <Component
-        key={id || index}
-        {...componentProps}
-      />
-    );
+    return <Component key={id || index} {...componentProps} />;
   };
 
-  if (!pageData || !pageData.components) {
+  if (!pageData?.components) {
     const content = <div style={{ padding: '20px', color: '#64748b' }}>No content to display</div>;
     return layout ? <PageLayout layout={layout} pageTitle={pageData?.title}>{content}</PageLayout> : content;
   }
 
   const renderedContent = (
     <div className="renderer" style={{ width: '100%' }}>
-      {pageData.components.map((component, index) =>
-        renderComponent(component, index, null)
-      )}
+      {pageData.components.map((component, index) => renderComponent(component, index))}
     </div>
   );
 
-  return layout ? (
-    <PageLayout layout={layout} pageTitle={pageData?.title}>
-      {renderedContent}
-    </PageLayout>
-  ) : (
-    renderedContent
-  );
+  return layout ? <PageLayout layout={layout} pageTitle={pageData?.title}>{renderedContent}</PageLayout> : renderedContent;
 };
 
 export default Renderer;
