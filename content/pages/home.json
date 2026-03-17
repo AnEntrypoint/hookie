@@ -3,180 +3,74 @@
   "title": "Home",
   "components": [
     {
-      "id": "hero-section",
+      "id": "home-hero-section",
       "type": "Section",
       "props": {
         "background": "gradient-blue",
         "padding": "2xl",
         "fullWidth": true
       },
-      "style": {},
+      "style": { "textAlign": "center" },
       "children": [
         {
-          "id": "hero-container",
-          "type": "Container",
-          "props": {
-            "maxWidth": "lg",
-            "padding": "none"
-          },
-          "style": {
-            "textAlign": "center"
-          },
-          "children": [
-            {
-              "id": "hero-heading",
-              "type": "Heading",
-              "props": {
-                "level": 1,
-                "text": "Build Beautiful Sites with GitHub",
-                "color": "#ffffff",
-                "align": "center"
-              },
-              "style": {
-                "textShadow": "0 2px 8px rgba(0, 0, 0, 0.15)"
-              },
-              "children": []
-            },
-            {
-              "id": "hero-subtitle",
-              "type": "Text",
-              "props": {
-                "content": "The visual page builder CMS that stores everything in your GitHub repository. No database needed.",
-                "size": "xl",
-                "color": "rgba(255, 255, 255, 0.9)",
-                "align": "center"
-              },
-              "style": {
-                "marginBottom": "40px"
-              },
-              "children": []
-            },
-            {
-              "id": "hero-cta-row",
-              "type": "Container",
-              "props": {
-                "maxWidth": "md",
-                "padding": "none"
-              },
-              "style": {
-                "display": "flex",
-                "flexDirection": "row",
-                "gap": "16px",
-                "justifyContent": "center",
-                "flexWrap": "wrap"
-              },
-              "children": [
-                {
-                  "id": "hero-cta-get-started",
-                  "type": "Link",
-                  "props": {
-                    "href": "#/admin",
-                    "text": "Get Started",
-                    "variant": "button",
-                    "color": "primary",
-                    "size": "lg"
-                  },
-                  "style": {},
-                  "children": []
-                },
-                {
-                  "id": "hero-cta-view-components",
-                  "type": "Link",
-                  "props": {
-                    "href": "#/pages/components",
-                    "text": "View Components",
-                    "variant": "pill",
-                    "color": "primary",
-                    "size": "lg"
-                  },
-                  "style": {},
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "features-section",
-      "type": "Section",
-      "props": {
-        "background": "light",
-        "padding": "xl",
-        "fullWidth": true
-      },
-      "style": {},
-      "children": [
-        {
-          "id": "features-heading",
+          "id": "home-hero-heading",
           "type": "Heading",
           "props": {
-            "level": 2,
-            "text": "Why Hookie?",
+            "level": 1,
+            "text": "Build Anything with Hookie",
+            "color": "#0c4a6e",
+            "weight": "bold",
             "align": "center"
           },
           "style": {},
           "children": []
         },
         {
-          "id": "features-subtitle",
+          "id": "home-hero-text",
           "type": "Text",
           "props": {
-            "content": "Everything you need to build and manage content, powered by the tools you already use.",
-            "align": "center",
-            "color": "#64748b"
+            "content": "The modern CMS that puts you in control. Visual editing, GitHub-powered, component-based.",
+            "size": "xl",
+            "color": "#0c4a6e",
+            "weight": "normal",
+            "align": "center"
           },
-          "style": {
-            "maxWidth": "600px",
-            "margin": "0 auto 40px auto"
-          },
+          "style": {},
           "children": []
         },
         {
-          "id": "features-grid",
-          "type": "Grid",
-          "props": {
-            "columns": 3,
-            "gap": "lg"
-          },
+          "id": "home-hero-buttons",
+          "type": "Container",
+          "props": {},
           "style": {
-            "maxWidth": "1200px",
-            "margin": "0 auto"
+            "display": "flex",
+            "gap": "16px",
+            "justifyContent": "center",
+            "flexWrap": "wrap"
           },
           "children": [
             {
-              "id": "feature-card-github",
-              "type": "Card",
+              "id": "home-hero-get-started",
+              "type": "Link",
               "props": {
-                "title": "GitHub-Powered",
-                "description": "Your content lives in your repo. Version controlled, portable, and yours forever.",
-                "accentColor": "#2563eb",
-                "shadowSize": "medium"
+                "variant": "button",
+                "text": "Get Started",
+                "href": "#/admin",
+                "size": "lg",
+                "color": "primary"
               },
               "style": {},
               "children": []
             },
             {
-              "id": "feature-card-builder",
-              "type": "Card",
+              "id": "home-hero-view-components",
+              "type": "Link",
               "props": {
-                "title": "Visual Builder",
-                "description": "Drag-and-drop page builder with real-time preview. No code required.",
-                "accentColor": "#10b981",
-                "shadowSize": "medium"
-              },
-              "style": {},
-              "children": []
-            },
-            {
-              "id": "feature-card-deploy",
-              "type": "Card",
-              "props": {
-                "title": "Deploy Anywhere",
-                "description": "Built with Vite and React. Deploy to GitHub Pages, Netlify, or Vercel.",
-                "accentColor": "#8b5cf6",
-                "shadowSize": "medium"
+                "variant": "pill",
+                "text": "View Components",
+                "href": "#/pages/components",
+                "size": "lg",
+                "color": "success"
               },
               "style": {},
               "children": []
@@ -186,190 +80,294 @@
       ]
     },
     {
-      "id": "stats-section",
+      "id": "home-features-section",
       "type": "Section",
       "props": {
-        "padding": "lg",
+        "padding": "xl",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "home-features-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "Features",
+            "align": "center"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "home-features-subtitle",
+          "type": "Text",
+          "props": {
+            "content": "Everything you need to build modern websites",
+            "align": "center",
+            "color": "#64748b",
+            "size": "lg"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "home-features-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {},
+          "children": [
+            {
+              "id": "home-feature-card-1",
+              "type": "Card",
+              "props": {
+                "title": "Visual Editor",
+                "description": "Drag and drop interface for building pages. See changes in real-time.",
+                "shadowSize": "medium",
+                "accentColor": "#2563eb"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "home-feature-card-2",
+              "type": "Card",
+              "props": {
+                "title": "GitHub Powered",
+                "description": "Content stored as JSON in your repo. Full version control and collaboration.",
+                "shadowSize": "medium",
+                "accentColor": "#10b981"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "home-feature-card-3",
+              "type": "Card",
+              "props": {
+                "title": "Component Based",
+                "description": "Build with reusable components. Extend the library with custom components.",
+                "shadowSize": "medium",
+                "accentColor": "#f59e0b"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "home-testimonials-section",
+      "type": "Section",
+      "props": {
+        "padding": "xl",
+        "background": "subtle",
         "fullWidth": true
       },
       "style": {},
       "children": [
         {
-          "id": "stats-grid",
+          "id": "home-testimonials-heading",
+          "type": "Heading",
+          "props": {
+            "level": 2,
+            "text": "What People Say",
+            "align": "center"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "home-testimonials-grid",
+          "type": "Grid",
+          "props": {
+            "columns": 3,
+            "gap": "lg"
+          },
+          "style": {},
+          "children": [
+            {
+              "id": "home-testimonial-card-1",
+              "type": "Card",
+              "props": {
+                "title": "Jane Smith",
+                "description": "Hookie CMS transformed how we build websites. The visual editor is incredible.",
+                "shadowSize": "small",
+                "accentColor": "#8b5cf6"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "home-testimonial-card-2",
+              "type": "Card",
+              "props": {
+                "title": "Alex Johnson",
+                "description": "GitHub integration means our content is always versioned and backed up.",
+                "shadowSize": "small",
+                "accentColor": "#8b5cf6"
+              },
+              "style": {},
+              "children": []
+            },
+            {
+              "id": "home-testimonial-card-3",
+              "type": "Card",
+              "props": {
+                "title": "Maria Garcia",
+                "description": "The component system makes it easy to maintain consistency across pages.",
+                "shadowSize": "small",
+                "accentColor": "#8b5cf6"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "home-stats-section",
+      "type": "Section",
+      "props": {
+        "padding": "lg",
+        "background": "white"
+      },
+      "style": {},
+      "children": [
+        {
+          "id": "home-stats-grid",
           "type": "Grid",
           "props": {
             "columns": 4,
             "gap": "md"
           },
-          "style": {
-            "maxWidth": "1200px",
-            "margin": "0 auto"
-          },
+          "style": {},
           "children": [
             {
-              "id": "stat-components",
+              "id": "home-stat-1",
               "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "none"
-              },
-              "style": {
-                "textAlign": "center",
-                "padding": "24px"
-              },
+              "props": {},
+              "style": { "textAlign": "center" },
               "children": [
                 {
-                  "id": "stat-components-number",
+                  "id": "home-stat-1-heading",
                   "type": "Heading",
                   "props": {
                     "level": 3,
-                    "text": "15+",
-                    "align": "center",
-                    "color": "#2563eb"
+                    "text": "12+",
+                    "color": "#2563eb",
+                    "align": "center"
                   },
-                  "style": {
-                    "fontSize": "2.5rem",
-                    "margin": "0 0 8px 0"
-                  },
+                  "style": { "fontSize": "2.5rem" },
                   "children": []
                 },
                 {
-                  "id": "stat-components-label",
+                  "id": "home-stat-1-text",
                   "type": "Text",
                   "props": {
                     "content": "Components",
-                    "align": "center",
-                    "color": "#64748b"
+                    "color": "#64748b",
+                    "align": "center"
                   },
-                  "style": {
-                    "marginBottom": "0"
-                  },
+                  "style": {},
                   "children": []
                 }
               ]
             },
             {
-              "id": "stat-opensource",
+              "id": "home-stat-2",
               "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "none"
-              },
-              "style": {
-                "textAlign": "center",
-                "padding": "24px"
-              },
+              "props": {},
+              "style": { "textAlign": "center" },
               "children": [
                 {
-                  "id": "stat-opensource-number",
+                  "id": "home-stat-2-heading",
                   "type": "Heading",
                   "props": {
                     "level": 3,
                     "text": "100%",
-                    "align": "center",
-                    "color": "#2563eb"
+                    "color": "#2563eb",
+                    "align": "center"
                   },
-                  "style": {
-                    "fontSize": "2.5rem",
-                    "margin": "0 0 8px 0"
-                  },
+                  "style": { "fontSize": "2.5rem" },
                   "children": []
                 },
                 {
-                  "id": "stat-opensource-label",
+                  "id": "home-stat-2-text",
                   "type": "Text",
                   "props": {
-                    "content": "Open Source",
-                    "align": "center",
-                    "color": "#64748b"
+                    "content": "Customizable",
+                    "color": "#64748b",
+                    "align": "center"
                   },
-                  "style": {
-                    "marginBottom": "0"
-                  },
+                  "style": {},
                   "children": []
                 }
               ]
             },
             {
-              "id": "stat-databases",
+              "id": "home-stat-3",
               "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "none"
-              },
-              "style": {
-                "textAlign": "center",
-                "padding": "24px"
-              },
+              "props": {},
+              "style": { "textAlign": "center" },
               "children": [
                 {
-                  "id": "stat-databases-number",
+                  "id": "home-stat-3-heading",
                   "type": "Heading",
                   "props": {
                     "level": 3,
                     "text": "0",
-                    "align": "center",
-                    "color": "#2563eb"
+                    "color": "#2563eb",
+                    "align": "center"
                   },
-                  "style": {
-                    "fontSize": "2.5rem",
-                    "margin": "0 0 8px 0"
-                  },
+                  "style": { "fontSize": "2.5rem" },
                   "children": []
                 },
                 {
-                  "id": "stat-databases-label",
+                  "id": "home-stat-3-text",
                   "type": "Text",
                   "props": {
-                    "content": "Databases Required",
-                    "align": "center",
-                    "color": "#64748b"
+                    "content": "Build Steps",
+                    "color": "#64748b",
+                    "align": "center"
                   },
-                  "style": {
-                    "marginBottom": "0"
-                  },
+                  "style": {},
                   "children": []
                 }
               ]
             },
             {
-              "id": "stat-possibilities",
+              "id": "home-stat-4",
               "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "none"
-              },
-              "style": {
-                "textAlign": "center",
-                "padding": "24px"
-              },
+              "props": {},
+              "style": { "textAlign": "center" },
               "children": [
                 {
-                  "id": "stat-possibilities-number",
+                  "id": "home-stat-4-heading",
                   "type": "Heading",
                   "props": {
                     "level": 3,
-                    "text": "\u221e",
-                    "align": "center",
-                    "color": "#2563eb"
+                    "text": "Git",
+                    "color": "#2563eb",
+                    "align": "center"
                   },
-                  "style": {
-                    "fontSize": "2.5rem",
-                    "margin": "0 0 8px 0"
-                  },
+                  "style": { "fontSize": "2.5rem" },
                   "children": []
                 },
                 {
-                  "id": "stat-possibilities-label",
+                  "id": "home-stat-4-text",
                   "type": "Text",
                   "props": {
-                    "content": "Possibilities",
-                    "align": "center",
-                    "color": "#64748b"
+                    "content": "Version Control",
+                    "color": "#64748b",
+                    "align": "center"
                   },
-                  "style": {
-                    "marginBottom": "0"
-                  },
+                  "style": {},
                   "children": []
                 }
               ]
@@ -379,230 +377,70 @@
       ]
     },
     {
-      "id": "how-it-works-section",
-      "type": "Section",
+      "id": "home-cta-divider",
+      "type": "Divider",
       "props": {
-        "background": "subtle",
-        "padding": "xl",
-        "fullWidth": true
+        "variant": "gradient",
+        "color": "blue-gradient",
+        "thickness": "thick",
+        "margin": "lg"
       },
       "style": {},
-      "children": [
-        {
-          "id": "how-it-works-heading",
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "How It Works",
-            "align": "center"
-          },
-          "style": {},
-          "children": []
-        },
-        {
-          "id": "how-it-works-grid",
-          "type": "Grid",
-          "props": {
-            "columns": 3,
-            "gap": "lg"
-          },
-          "style": {
-            "maxWidth": "1200px",
-            "margin": "0 auto"
-          },
-          "children": [
-            {
-              "id": "step-fork",
-              "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "lg"
-              },
-              "style": {
-                "textAlign": "center",
-                "backgroundColor": "#ffffff",
-                "borderRadius": "12px",
-                "border": "1px solid #e2e8f0"
-              },
-              "children": [
-                {
-                  "id": "step-fork-number",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "1. Fork & Clone",
-                    "align": "center",
-                    "color": "#2563eb"
-                  },
-                  "style": {},
-                  "children": []
-                },
-                {
-                  "id": "step-fork-description",
-                  "type": "Text",
-                  "props": {
-                    "content": "Fork the repository and clone it locally.",
-                    "align": "center",
-                    "color": "#64748b"
-                  },
-                  "style": {
-                    "marginBottom": "0"
-                  },
-                  "children": []
-                }
-              ]
-            },
-            {
-              "id": "step-build",
-              "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "lg"
-              },
-              "style": {
-                "textAlign": "center",
-                "backgroundColor": "#ffffff",
-                "borderRadius": "12px",
-                "border": "1px solid #e2e8f0"
-              },
-              "children": [
-                {
-                  "id": "step-build-number",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "2. Build Pages",
-                    "align": "center",
-                    "color": "#10b981"
-                  },
-                  "style": {},
-                  "children": []
-                },
-                {
-                  "id": "step-build-description",
-                  "type": "Text",
-                  "props": {
-                    "content": "Use the visual builder to create pages.",
-                    "align": "center",
-                    "color": "#64748b"
-                  },
-                  "style": {
-                    "marginBottom": "0"
-                  },
-                  "children": []
-                }
-              ]
-            },
-            {
-              "id": "step-deploy",
-              "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "lg"
-              },
-              "style": {
-                "textAlign": "center",
-                "backgroundColor": "#ffffff",
-                "borderRadius": "12px",
-                "border": "1px solid #e2e8f0"
-              },
-              "children": [
-                {
-                  "id": "step-deploy-number",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "3. Deploy",
-                    "align": "center",
-                    "color": "#8b5cf6"
-                  },
-                  "style": {},
-                  "children": []
-                },
-                {
-                  "id": "step-deploy-description",
-                  "type": "Text",
-                  "props": {
-                    "content": "Push to GitHub and deploy automatically.",
-                    "align": "center",
-                    "color": "#64748b"
-                  },
-                  "style": {
-                    "marginBottom": "0"
-                  },
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "children": []
     },
     {
-      "id": "cta-section",
+      "id": "home-cta-section",
       "type": "Section",
       "props": {
-        "background": "gradient-purple",
         "padding": "xl",
+        "background": "gradient-blue",
         "fullWidth": true
       },
-      "style": {
-        "textAlign": "center"
-      },
+      "style": { "textAlign": "center" },
       "children": [
         {
-          "id": "cta-divider",
-          "type": "Divider",
-          "props": {
-            "variant": "gradient",
-            "color": "rainbow",
-            "thickness": "thick",
-            "margin": "md"
-          },
-          "style": {
-            "marginTop": "0"
-          },
-          "children": []
-        },
-        {
-          "id": "cta-heading",
+          "id": "home-cta-heading",
           "type": "Heading",
           "props": {
             "level": 2,
-            "text": "Ready to Build?",
-            "color": "#ffffff",
+            "text": "Ready to Get Started?",
+            "color": "#0c4a6e",
             "align": "center"
-          },
-          "style": {
-            "textShadow": "0 2px 8px rgba(0, 0, 0, 0.1)"
-          },
-          "children": []
-        },
-        {
-          "id": "cta-subtitle",
-          "type": "Text",
-          "props": {
-            "content": "Start building your site in minutes.",
-            "color": "rgba(255, 255, 255, 0.9)",
-            "align": "center"
-          },
-          "style": {
-            "marginBottom": "32px"
-          },
-          "children": []
-        },
-        {
-          "id": "cta-button",
-          "type": "Link",
-          "props": {
-            "href": "#/admin",
-            "text": "Open Admin Panel",
-            "variant": "button",
-            "color": "primary",
-            "size": "lg"
           },
           "style": {},
           "children": []
+        },
+        {
+          "id": "home-cta-text",
+          "type": "Text",
+          "props": {
+            "content": "Start building your site today with Hookie CMS.",
+            "size": "lg",
+            "color": "#0c4a6e",
+            "align": "center"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "home-cta-button-container",
+          "type": "Container",
+          "props": {},
+          "style": { "display": "flex", "justifyContent": "center" },
+          "children": [
+            {
+              "id": "home-cta-button",
+              "type": "Link",
+              "props": {
+                "variant": "button",
+                "text": "Open Admin Panel",
+                "href": "#/admin",
+                "size": "lg"
+              },
+              "style": {},
+              "children": []
+            }
+          ]
         }
       ]
     }

@@ -24,3 +24,4 @@ tsconfig*.json
 .playwright-mcp/
 .glootie-stop-verified
 pages-dist/
+.gm-stop-verified

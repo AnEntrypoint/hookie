@@ -138,7 +138,7 @@ export async function writeFile(owner, repo, path, content, message, sha) {
 
     const body = {
       message,
-      content: btoa(content)
+      content: btoa(unescape(encodeURIComponent(content)))
     };
 
     if (currentSha) {

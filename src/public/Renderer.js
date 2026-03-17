@@ -13,6 +13,12 @@ import Link from '../components/Link.js';
 import List from '../components/List.js';
 import Card from '../components/Card.js';
 import AlertBox from '../components/AlertBox.js';
+import Hero from '../components/Hero.js';
+import Testimonial from '../components/Testimonial.js';
+import Navbar from '../components/Navbar.js';
+import FooterBlock from '../components/FooterBlock.js';
+import PricingCard from '../components/PricingCard.js';
+import ContactForm from '../components/ContactForm.js';
 import PageLayout from '../components/PageLayout.js';
 
 const COMPONENT_MAP = {
@@ -27,7 +33,13 @@ const COMPONENT_MAP = {
   Link,
   List,
   Card,
-  AlertBox
+  AlertBox,
+  Hero,
+  Testimonial,
+  Navbar,
+  FooterBlock,
+  PricingCard,
+  ContactForm
 };
 
 const getDefaultProps = (schema) => {
