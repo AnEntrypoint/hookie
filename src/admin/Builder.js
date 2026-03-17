@@ -32,8 +32,6 @@ export default function Builder({ pageData, onUpdate }) {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [paletteVisible, setPaletteVisible] = useState(true);
   const [showMobilePropsPanel, setShowMobilePropsPanel] = useState(false);
-  const [recoveryInfo, setRecoveryInfo] = useState(null);
-  const autoSaveRef = useRef(null);
   const screenSize = useResponsiveBuilder();
   const isMobile = screenSize === 'mobile';
   const isTablet = screenSize === 'tablet';
@@ -43,16 +41,6 @@ export default function Builder({ pageData, onUpdate }) {
       addToHistory(pageData);
     }
   }, [pageData]);
-
-  useEffect(() => {
-    if (!pageData?.name) return;
-    const mgr = new AutoSaveManager(pageData.name);
-    autoSaveRef.current = mgr;
-    const info = mgr.getRecoveryInfo();
-    if (info && !info.isEmpty) setRecoveryInfo(info);
-    mgr.start(() => pageData);
-    return () => mgr.stop();
-  }, [pageData?.name]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -76,7 +64,6 @@ export default function Builder({ pageData, onUpdate }) {
   const handleUpdate = (updatedPageData) => {
     addToHistory(updatedPageData);
     onUpdate(updatedPageData);
-    if (autoSaveRef.current) autoSaveRef.current.save(updatedPageData);
   };
 
   const handleUndo = () => {
@@ -105,13 +92,6 @@ export default function Builder({ pageData, onUpdate }) {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {recoveryInfo && (
-        <RecoveryDialog
-          recovery={recoveryInfo}
-          onRecover={() => { handleUpdate(recoveryInfo.pageData); setRecoveryInfo(null); autoSaveRef.current?.clear(); }}
-          onDiscard={() => { setRecoveryInfo(null); autoSaveRef.current?.clear(); }}
-        />
-      )}
       <div style={styles.builder}>
         {!isMobile && (
           <div style={isTablet ? styles.leftTablet : styles.left}>
