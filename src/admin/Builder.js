@@ -5,6 +5,7 @@ import ComponentPalette from './ComponentPalette';
 import BuilderCanvas from './BuilderCanvas';
 import PropsEditor from './PropsEditor';
 import BuilderPropsPanel from './BuilderPropsPanel';
+import componentRegistry from '../lib/componentRegistry';
 import { deepClone, removeComponentById, findComponentById } from './builderHelpers';
 import { styles } from './builderStyles.js';
 
