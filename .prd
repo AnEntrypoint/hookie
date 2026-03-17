@@ -1,12 +1,1 @@
-[
-  {
-    "id": "final-polish-and-docs",
-    "subject": "Final polish - update README, CLAUDE.md, commit and push all changes",
-    "status": "pending",
-    "description": "Update README with accurate setup (PAT scopes, repo structure, deployment). Update CLAUDE.md with architecture decisions, key constraints, gotchas.",
-    "blocking": [],
-    "blockedBy": [],
-    "effort": "medium",
-    "category": "docs"
-  }
-]
+[]
