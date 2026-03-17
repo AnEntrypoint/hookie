@@ -62,6 +62,8 @@ const Renderer = ({
   selectedId,
   onSelectComponent,
   onPropsChange,
+  onDelete,
+  onDuplicate,
   layout
 }) => {
   
@@ -156,19 +158,37 @@ const Renderer = ({
           {isSelected && (
             <div style={{
               position: 'absolute',
-              top: '-24px',
+              top: '-32px',
               left: '0',
-              fontSize: '11px',
-              color: '#2563eb',
-              fontWeight: '600',
-              backgroundColor: '#dbeafe',
-              padding: '2px 8px',
-              borderRadius: '3px',
-              whiteSpace: 'nowrap',
-              pointerEvents: 'none',
-              zIndex: 10
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              zIndex: 10,
+              pointerEvents: 'auto',
             }}>
-              {type}
+              <span style={{
+                fontSize: '11px',
+                color: '#2563eb',
+                fontWeight: '600',
+                backgroundColor: '#dbeafe',
+                padding: '2px 8px',
+                borderRadius: '3px',
+                whiteSpace: 'nowrap',
+              }}>{type}</span>
+              {onDuplicate && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); onDuplicate(id); }}
+                  style={{ fontSize: '11px', padding: '2px 8px', backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '3px', cursor: 'pointer', color: '#475569', fontWeight: '600', whiteSpace: 'nowrap' }}
+                  title="Duplicate (Ctrl+D)"
+                >Copy</button>
+              )}
+              {onDelete && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); onDelete(id); }}
+                  style={{ fontSize: '11px', padding: '2px 8px', backgroundColor: '#fee2e2', border: '1px solid #fecaca', borderRadius: '3px', cursor: 'pointer', color: '#991b1b', fontWeight: '600', whiteSpace: 'nowrap' }}
+                  title="Delete (Del)"
+                >Delete</button>
+              )}
             </div>
           )}
         </div>

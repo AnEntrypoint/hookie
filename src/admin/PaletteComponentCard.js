@@ -4,15 +4,9 @@ import componentRegistry from '../lib/componentRegistry';
 import { getComponentTypeInfo } from './PaletteTreeNode';
 import { styles } from './componentPaletteStyles';
 
-const CATEGORY_LABELS = {
-  Container: 'Layout', Section: 'Layout', Grid: 'Layout',
-  Heading: 'Content', Text: 'Content', Image: 'Content', List: 'Content',
-  Button: 'Interactive', Link: 'Interactive',
-  Card: 'Display', AlertBox: 'Display', Divider: 'Display',
-};
-
 function getCategoryLabel(name) {
-  return CATEGORY_LABELS[name] || 'Custom';
+  const schema = componentRegistry.getComponent(name);
+  return schema?.category || 'Custom';
 }
 
 function ComponentPreview({ type }) {
