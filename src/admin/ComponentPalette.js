@@ -99,7 +99,10 @@ export default function ComponentPalette({ pageData, selectedId, onSelect, onDel
               <p style={styles.emptyDescription}>Create components to extend your design system.</p>
             </div>
           ) : filteredComponents.length === 0 ? (
-            <div style={styles.noResults}>No components found</div>
+            <div style={styles.emptyStateContainer}>
+              <div style={styles.emptyIcon}>?</div>
+              <p style={styles.emptyDescription}>No components match "{searchTerm}"</p>
+            </div>
           ) : searchTerm || isMobile ? (
             <div style={isMobile ? styles.paletteMobile : isTablet ? styles.paletteTablet : styles.palette}>
               {filteredComponents.map(type => (

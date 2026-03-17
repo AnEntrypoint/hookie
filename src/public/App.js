@@ -5,7 +5,6 @@ import AdminApp from '../admin/AdminApp.js';
 import { getCurrentRoute, isAdminRoute as checkAdminRoute, addRouteChangeListener } from './AppRoutes.js';
 import { useLayout } from '../lib/useLayout.js';
 import { KEYS, migrateStorageKeys } from '../admin/settingsStorage.js';
-import { styles as S, colors } from '../admin/settingsStyles.js';
 
 export const RepoContext = createContext(null);
 
@@ -45,44 +44,14 @@ export default function App() {
 
   useEffect(() => { setRepoInfo(getRepoInfo()); }, []);
 
-  function handleConfigSubmit(e) {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const owner = fd.get('owner'), repo = fd.get('repo');
-    if (owner && repo) {
-      localStorage.setItem(KEYS.owner, owner);
-      localStorage.setItem(KEYS.repo, repo);
-      setRepoInfo({ owner, repo });
-    }
-  }
-
   if (!repoInfo.owner || !repoInfo.repo) {
-    return (
-      <div style={configStyles.container}>
-        <div style={configStyles.box}>
-          <h1 style={S.title}>Repository Configuration</h1>
-          <p style={S.description}>Connect to your GitHub repository to load your site content.</p>
-          <form onSubmit={handleConfigSubmit} style={S.form}>
-            <div style={S.formGroup}>
-              <label style={S.label}>Repository Owner</label>
-              <input type="text" name="owner" placeholder="your-username" required style={S.input} />
-            </div>
-            <div style={S.formGroup}>
-              <label style={S.label}>Repository Name</label>
-              <input type="text" name="repo" placeholder="my-site" required style={S.input} />
-            </div>
-            <button type="submit" style={{ ...S.button, ...S.primaryButton, marginTop: '8px' }}>Save Configuration</button>
-          </form>
-          <p style={configStyles.hint}>You can also set VITE_GITHUB_OWNER and VITE_GITHUB_REPO environment variables.</p>
-        </div>
-      </div>
-    );
+    return <WelcomePage />;
   }
 
   return (
     <RepoContext.Provider value={repoInfo}>
       {isAdminRoute ? (
-        <AdminApp owner={repoInfo.owner} repo={repoInfo.repo} />
+        <AdminApp />
       ) : (
         <AppLayout repoInfo={repoInfo} showAdmin={true}>
           <Router owner={repoInfo.owner} repo={repoInfo.repo} defaultPage="home" layout={layout} />
@@ -92,27 +61,61 @@ export default function App() {
   );
 }
 
-const configStyles = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '100vh',
-    backgroundColor: colors.background,
-    padding: '2rem',
-  },
-  box: {
-    backgroundColor: colors.white,
-    borderRadius: '12px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    padding: '3rem',
-    maxWidth: '500px',
-    width: '100%',
-  },
-  hint: {
-    fontSize: '0.8rem',
-    color: colors.textMuted,
-    marginTop: '1.5rem',
-    textAlign: 'center',
-  },
+function WelcomePage() {
+  return (
+    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '80px 32px', textAlign: 'center' }}>
+        <div style={{ fontSize: '3rem', marginBottom: '24px' }}>🪝</div>
+        <h1 style={{ fontSize: '3rem', fontWeight: 800, color: '#1e293b', margin: '0 0 16px', letterSpacing: '-1px' }}>
+          Hookie CMS
+        </h1>
+        <p style={{ fontSize: '1.25rem', color: '#64748b', margin: '0 0 48px', lineHeight: 1.6, maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
+          Build websites visually and store everything in GitHub. No servers, no databases — just your repo.
+        </p>
+
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '64px' }}>
+          <a href="#/admin/settings" style={ctaBtn}>
+            Get Started →
+          </a>
+          <a href="#/admin" style={secondaryBtn}>
+            Open Admin
+          </a>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px', textAlign: 'left' }}>
+          {[
+            { icon: '🎨', title: 'Visual Builder', desc: 'Drag and drop components to build pages without writing code.' },
+            { icon: '🐙', title: 'GitHub Storage', desc: 'Pages stored as JSON in your repo. Full git history and version control.' },
+            { icon: '🧩', title: '19 Components', desc: 'Hero, Card, Grid, Testimonial, PricingCard, ContactForm and more.' },
+            { icon: '⚡', title: 'No Build Step', desc: 'Deploy to GitHub Pages or any static host. Zero configuration.' },
+          ].map((f, i) => (
+            <div key={i} style={featureCard}>
+              <div style={{ fontSize: '1.75rem', marginBottom: '12px' }}>{f.icon}</div>
+              <h3 style={{ margin: '0 0 8px', fontSize: '1rem', fontWeight: 700, color: '#1e293b' }}>{f.title}</h3>
+              <p style={{ margin: 0, fontSize: '0.875rem', color: '#64748b', lineHeight: 1.6 }}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const ctaBtn = {
+  display: 'inline-flex', alignItems: 'center', padding: '16px 32px',
+  backgroundColor: '#2563eb', color: '#ffffff', borderRadius: '12px',
+  textDecoration: 'none', fontWeight: 700, fontSize: '1rem',
+  boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
+};
+
+const secondaryBtn = {
+  display: 'inline-flex', alignItems: 'center', padding: '16px 32px',
+  backgroundColor: '#ffffff', color: '#1e293b', borderRadius: '12px',
+  textDecoration: 'none', fontWeight: 600, fontSize: '1rem',
+  border: '2px solid #e2e8f0',
+};
+
+const featureCard = {
+  backgroundColor: '#ffffff', borderRadius: '12px',
+  padding: '24px', border: '1px solid #e2e8f0',
 };

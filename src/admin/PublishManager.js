@@ -104,48 +104,20 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
 
   if (!changes || changes.length === 0) {
     return (
-      <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '40px',
-        background: '#ffffff',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-        textAlign: 'center'
-      }}>
-        <div style={{ fontSize: '64px', marginBottom: '16px' }}>✓</div>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#10b981', marginBottom: '8px' }}>
-          All Changes Published
+      <div style={{ padding: '40px', textAlign: 'center' }}>
+        <div style={{ fontSize: '48px', marginBottom: '16px', color: '#10b981' }}>✓</div>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#10b981', marginBottom: '8px' }}>
+          No pending changes
         </h2>
-        <p style={{ color: '#64748b', marginBottom: '16px' }}>
-          No pending changes to publish
-        </p>
-        <p style={{ color: '#94a3b8', fontSize: '0.875rem', maxWidth: '400px', margin: '0 auto', lineHeight: '1.5' }}>
-          Changes you make in the builder are saved locally. When you are ready, come back here to commit them to GitHub.
+        <p style={{ color: '#64748b', fontSize: '0.875rem', lineHeight: '1.5', maxWidth: '320px', margin: '0 auto' }}>
+          Changes you make in the builder are tracked here. Publish when you're ready to commit to GitHub.
         </p>
       </div>
     );
   }
 
   return (
-    <div style={{
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '40px',
-      background: '#ffffff',
-      borderRadius: '12px',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-      transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)'
-    }}>
-      <h2 style={{
-        fontSize: '2rem',
-        fontWeight: '700',
-        marginBottom: '32px',
-        color: '#1e293b'
-      }}>
-        Publish Changes
-      </h2>
-
+    <div style={{ padding: '24px' }}>
       <PublishStatus
         status={status}
         lastCommit={lastCommit}
