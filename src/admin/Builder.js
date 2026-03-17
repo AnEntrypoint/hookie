@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import ComponentPalette from './ComponentPalette';
 import BuilderCanvas from './BuilderCanvas';
 import PropsEditor from './PropsEditor';
-import RecoveryDialog from './RecoveryDialog';
 import componentRegistry from '../lib/componentRegistry';
-import { deepClone, removeComponentById, findComponentById, updateComponentProps } from './builderHelpers';
-import { AutoSaveManager } from './autoSaveManager';
+import { deepClone, removeComponentById, findComponentById } from './builderHelpers';
+import { styles } from './builderStyles.js';
 
 function useResponsiveBuilder() {
   const [screenSize, setScreenSize] = useState(() => {
@@ -33,8 +32,6 @@ export default function Builder({ pageData, onUpdate }) {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [paletteVisible, setPaletteVisible] = useState(true);
   const [showMobilePropsPanel, setShowMobilePropsPanel] = useState(false);
-  const [recoveryInfo, setRecoveryInfo] = useState(null);
-  const autoSaveRef = useRef(null);
   const screenSize = useResponsiveBuilder();
   const isMobile = screenSize === 'mobile';
   const isTablet = screenSize === 'tablet';
@@ -44,16 +41,6 @@ export default function Builder({ pageData, onUpdate }) {
       addToHistory(pageData);
     }
   }, [pageData]);
-
-  useEffect(() => {
-    if (!pageData?.name) return;
-    const mgr = new AutoSaveManager(pageData.name);
-    autoSaveRef.current = mgr;
-    const info = mgr.getRecoveryInfo();
-    if (info && !info.isEmpty) setRecoveryInfo(info);
-    mgr.start(() => pageData);
-    return () => mgr.stop();
-  }, [pageData?.name]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -85,13 +72,11 @@ export default function Builder({ pageData, onUpdate }) {
   const addToHistory = (newPageData) => {
     const newHistory = history.slice(0, historyIndex + 1);
     newHistory.push(deepClone(newPageData));
-    
     if (newHistory.length > 50) {
       newHistory.shift();
     } else {
       setHistoryIndex(historyIndex + 1);
     }
-    
     setHistory(newHistory);
   };
 
@@ -137,7 +122,7 @@ export default function Builder({ pageData, onUpdate }) {
 
     const newPageData = deepClone(pageData);
     newPageData.components.push(duplicated);
-    
+
     handleUpdate(newPageData);
     setSelectedComponentId(duplicated.id);
   };
@@ -148,7 +133,7 @@ export default function Builder({ pageData, onUpdate }) {
     <DndProvider backend={HTML5Backend}>
       <div style={styles.builder}>
         {paletteShouldShow && (
-          <div style={isMobile ? styles.leftMobile : isTablet ? styles.leftTablet : styles.left}>
+          <div style={isTablet ? styles.leftTablet : styles.left}>
             <ComponentPalette
               pageData={pageData}
               selectedId={selectedComponentId}
@@ -254,15 +239,3 @@ export default function Builder({ pageData, onUpdate }) {
     </DndProvider>
   );
 }
-
-const styles = {
-  builder: { display: 'flex', height: '100vh', backgroundColor: '#f8fafc' },
-  left: { width: '20%', minWidth: '250px', borderRight: '1px solid #e2e8f0', padding: '16px', backgroundColor: '#ffffff', overflowY: 'auto', transition: 'width 300ms ease-in-out' },
-  leftMobile: { display: 'none' },
-  leftTablet: { width: '200px', minWidth: 'unset', padding: '12px' },
-  center: { flex: '1', display: 'flex', flexDirection: 'column', transition: 'flex 300ms ease-in-out' },
-  right: { width: '25%', minWidth: '300px', borderLeft: '1px solid #e2e8f0', padding: '16px', backgroundColor: '#ffffff', overflowY: 'auto' },
-  rightMobile: { display: 'none' },
-  rightTablet: { width: '100%', minWidth: 'unset', borderLeft: 'none', borderTop: '1px solid #e2e8f0', height: 'auto', maxHeight: '200px', padding: '12px' },
-  placeholder: { padding: '16px', backgroundColor: '#f1f5f9', borderRadius: '8px', textAlign: 'center', color: '#64748b', fontSize: '0.875rem' },
-};
