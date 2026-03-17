@@ -8,6 +8,7 @@ export default function LayoutEditor({ owner, repo }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [activeTab, setActiveTab] = useState('header');
+  const [commitMessage, setCommitMessage] = useState('Update site layout');
 
   useEffect(() => {
     loadLayout();
@@ -25,12 +26,13 @@ export default function LayoutEditor({ owner, repo }) {
   };
 
   const handleSave = async () => {
+    if (!commitMessage.trim()) { setError('Please enter a commit message.'); return; }
     setSaving(true);
     try {
       const content = JSON.stringify(layout, null, 2);
       await github.writeFile(
         owner, repo, 'content/layout.json',
-        content, 'Update site layout'
+        content, commitMessage.trim()
       );
       setSuccess('Layout saved successfully!');
       setError(null);
@@ -101,12 +103,19 @@ export default function LayoutEditor({ owner, repo }) {
       {success && <div style={styles.success}>{success}</div>}
 
       <div style={styles.footer}>
+        <input
+          type="text"
+          value={commitMessage}
+          onChange={e => setCommitMessage(e.target.value)}
+          placeholder="Commit message..."
+          style={{ flex: 1, padding: '8px 12px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.875rem' }}
+        />
         <button
           onClick={handleSave}
           disabled={saving}
           style={styles.saveButton}
         >
-          {saving ? 'Saving...' : 'Save Layout'}
+          {saving ? 'Saving...' : 'Save to GitHub'}
         </button>
         <button
           onClick={loadLayout}

@@ -3,10 +3,10 @@
   "title": "Blog",
   "components": [
     {
-      "id": "blog-hero",
+      "id": "blog-hero-section",
       "type": "Section",
       "props": {
-        "background": "gradient-purple",
+        "background": "subtle",
         "padding": "xl",
         "fullWidth": true
       },
@@ -18,19 +18,19 @@
           "props": {
             "level": 1,
             "text": "Blog",
-            "color": "#ffffff",
+            "color": "#1e293b",
             "align": "center"
           },
           "style": {},
           "children": []
         },
         {
-          "id": "blog-hero-subtitle",
+          "id": "blog-hero-text",
           "type": "Text",
           "props": {
-            "content": "News, tutorials, and updates from the Hookie team",
-            "size": "xl",
-            "color": "rgba(255, 255, 255, 0.9)",
+            "content": "Insights, tutorials, and updates from the Hookie CMS team.",
+            "size": "lg",
+            "color": "#64748b",
             "align": "center"
           },
           "style": {},
@@ -39,52 +39,53 @@
       ]
     },
     {
-      "id": "blog-featured",
+      "id": "blog-featured-section",
       "type": "Section",
       "props": {
         "padding": "xl",
-        "fullWidth": true
+        "background": "white"
       },
       "style": {},
       "children": [
         {
-          "id": "blog-featured-container",
-          "type": "Container",
+          "id": "blog-featured-label",
+          "type": "Heading",
           "props": {
-            "maxWidth": "lg",
-            "padding": "none"
+            "level": 5,
+            "text": "Featured Post",
+            "color": "#2563eb"
           },
           "style": {},
+          "children": []
+        },
+        {
+          "id": "blog-featured-card",
+          "type": "Card",
+          "props": {
+            "title": "Introducing Hookie CMS 2.0",
+            "description": "A complete rewrite with hot reload, crash-proof architecture, and a new visual editor. Learn about the design decisions and technical challenges.",
+            "imageUrl": "https://picsum.photos/seed/blog-featured/1200/500",
+            "accentColor": "#2563eb",
+            "shadowSize": "large"
+          },
+          "style": {},
+          "children": []
+        },
+        {
+          "id": "blog-featured-meta",
+          "type": "Container",
+          "props": {},
+          "style": {
+            "display": "flex",
+            "gap": "16px",
+            "marginTop": "16px"
+          },
           "children": [
             {
-              "id": "blog-featured-image",
-              "type": "Image",
-              "props": {
-                "src": "https://picsum.photos/seed/blog-featured/1200/400",
-                "alt": "Introducing Hookie 1.0",
-                "width": "100%",
-                "borderRadius": "lg",
-                "shadow": "xl",
-                "effect": "none"
-              },
-              "style": {},
-              "children": []
-            },
-            {
-              "id": "blog-featured-title",
-              "type": "Heading",
-              "props": {
-                "level": 2,
-                "text": "Introducing Hookie 1.0: A New Way to Build Websites"
-              },
-              "style": {},
-              "children": []
-            },
-            {
-              "id": "blog-featured-meta",
+              "id": "blog-featured-date",
               "type": "Text",
               "props": {
-                "content": "February 14, 2026 \u00b7 5 min read",
+                "content": "January 15, 2026",
                 "size": "sm",
                 "color": "#64748b"
               },
@@ -92,11 +93,12 @@
               "children": []
             },
             {
-              "id": "blog-featured-excerpt",
+              "id": "blog-featured-readtime",
               "type": "Text",
               "props": {
-                "content": "We're excited to announce the release of Hookie 1.0, a visual page builder CMS that uses GitHub as its backend. After months of development, we've created a tool that makes web publishing accessible to everyone while keeping developers in control.",
-                "size": "lg"
+                "content": "8 min read",
+                "size": "sm",
+                "color": "#64748b"
               },
               "style": {},
               "children": []
@@ -105,9 +107,9 @@
               "id": "blog-featured-link",
               "type": "Link",
               "props": {
-                "href": "#",
+                "variant": "default",
                 "text": "Read More",
-                "variant": "button",
+                "href": "#",
                 "color": "primary"
               },
               "style": {},
@@ -118,91 +120,186 @@
       ]
     },
     {
-      "id": "blog-grid-section",
+      "id": "blog-posts-section",
       "type": "Section",
       "props": {
-        "background": "light",
         "padding": "xl",
-        "fullWidth": true
+        "background": "subtle"
       },
       "style": {},
       "children": [
         {
-          "id": "blog-grid-layout",
+          "id": "blog-posts-grid",
           "type": "Grid",
           "props": {
             "columns": 3,
             "gap": "lg"
           },
-          "style": {
-            "maxWidth": "1200px",
-            "margin": "0 auto"
-          },
+          "style": {},
           "children": [
             {
-              "id": "blog-main-content",
+              "id": "blog-posts-main",
               "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "none"
-              },
-              "style": {
-                "gridColumn": "1 / 3"
-              },
+              "props": {},
+              "style": { "gridColumn": "1 / 3" },
               "children": [
                 {
-                  "id": "blog-posts-grid",
-                  "type": "Grid",
+                  "id": "blog-recent-heading",
+                  "type": "Heading",
                   "props": {
-                    "columns": 2,
-                    "gap": "lg"
+                    "level": 3,
+                    "text": "Recent Posts"
                   },
                   "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-recent-divider",
+                  "type": "Divider",
+                  "props": {
+                    "variant": "solid",
+                    "color": "primary",
+                    "thickness": "normal"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-post-1-card",
+                  "type": "Card",
+                  "props": {
+                    "title": "Building Custom Components",
+                    "description": "Learn how to create reusable components for your Hookie CMS site. From simple text blocks to complex interactive widgets.",
+                    "imageUrl": "https://picsum.photos/seed/blog1/800/400",
+                    "accentColor": "#10b981",
+                    "shadowSize": "medium"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-post-1-meta",
+                  "type": "Container",
+                  "props": {},
+                  "style": {
+                    "display": "flex",
+                    "gap": "16px",
+                    "marginTop": "12px",
+                    "marginBottom": "32px"
+                  },
                   "children": [
                     {
-                      "id": "blog-post-1",
-                      "type": "Card",
+                      "id": "blog-post-1-date",
+                      "type": "Text",
                       "props": {
-                        "title": "Getting Started with Hookie",
-                        "description": "Learn how to set up your first Hookie site in under 5 minutes.",
-                        "imageUrl": "https://picsum.photos/seed/blog1/600/300",
-                        "shadowSize": "medium"
+                        "content": "January 10, 2026",
+                        "size": "sm",
+                        "color": "#64748b"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "blog-post-2",
-                      "type": "Card",
+                      "id": "blog-post-1-readtime",
+                      "type": "Text",
                       "props": {
-                        "title": "Custom Components Guide",
-                        "description": "Build your own components and extend the CMS with custom functionality.",
-                        "imageUrl": "https://picsum.photos/seed/blog2/600/300",
-                        "shadowSize": "medium"
+                        "content": "5 min read",
+                        "size": "sm",
+                        "color": "#64748b"
+                      },
+                      "style": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": "blog-post-2-card",
+                  "type": "Card",
+                  "props": {
+                    "title": "GitHub as a CMS Backend",
+                    "description": "Why we chose GitHub for content storage and how it enables powerful collaboration workflows for content teams.",
+                    "imageUrl": "https://picsum.photos/seed/blog2/800/400",
+                    "accentColor": "#f59e0b",
+                    "shadowSize": "medium"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-post-2-meta",
+                  "type": "Container",
+                  "props": {},
+                  "style": {
+                    "display": "flex",
+                    "gap": "16px",
+                    "marginTop": "12px",
+                    "marginBottom": "32px"
+                  },
+                  "children": [
+                    {
+                      "id": "blog-post-2-date",
+                      "type": "Text",
+                      "props": {
+                        "content": "January 5, 2026",
+                        "size": "sm",
+                        "color": "#64748b"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "blog-post-3",
-                      "type": "Card",
+                      "id": "blog-post-2-readtime",
+                      "type": "Text",
                       "props": {
-                        "title": "Deploying to GitHub Pages",
-                        "description": "Step-by-step guide to deploying your Hookie site to GitHub Pages.",
-                        "imageUrl": "https://picsum.photos/seed/blog3/600/300",
-                        "shadowSize": "medium"
+                        "content": "6 min read",
+                        "size": "sm",
+                        "color": "#64748b"
+                      },
+                      "style": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": "blog-post-3-card",
+                  "type": "Card",
+                  "props": {
+                    "title": "Hot Reload Architecture",
+                    "description": "Deep dive into how Hookie CMS achieves zero-downtime hot reload. Atomic handler swaps, state preservation, and module boundaries.",
+                    "accentColor": "#8b5cf6",
+                    "shadowSize": "medium"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-post-3-meta",
+                  "type": "Container",
+                  "props": {},
+                  "style": {
+                    "display": "flex",
+                    "gap": "16px",
+                    "marginTop": "12px"
+                  },
+                  "children": [
+                    {
+                      "id": "blog-post-3-date",
+                      "type": "Text",
+                      "props": {
+                        "content": "December 28, 2025",
+                        "size": "sm",
+                        "color": "#64748b"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "blog-post-4",
-                      "type": "Card",
+                      "id": "blog-post-3-readtime",
+                      "type": "Text",
                       "props": {
-                        "title": "The Power of Git-Based CMS",
-                        "description": "Why storing content in Git is the future of web publishing.",
-                        "imageUrl": "https://picsum.photos/seed/blog4/600/300",
-                        "shadowSize": "medium"
+                        "content": "10 min read",
+                        "size": "sm",
+                        "color": "#64748b"
                       },
                       "style": {},
                       "children": []
@@ -214,14 +311,11 @@
             {
               "id": "blog-sidebar",
               "type": "Container",
-              "props": {
-                "maxWidth": "2xl",
-                "padding": "none"
-              },
-              "style": {},
+              "props": {},
+              "style": { "padding": "0" },
               "children": [
                 {
-                  "id": "sidebar-categories-heading",
+                  "id": "blog-sidebar-categories-heading",
                   "type": "Heading",
                   "props": {
                     "level": 4,
@@ -231,24 +325,36 @@
                   "children": []
                 },
                 {
-                  "id": "sidebar-categories-list",
+                  "id": "blog-sidebar-categories-list",
                   "type": "List",
                   "props": {
-                    "items": ["Tutorials", "Announcements", "Deep Dives", "Community"],
-                    "bulletStyle": "arrow"
+                    "type": "ul",
+                    "bulletStyle": "arrow",
+                    "color": "primary",
+                    "items": [
+                      "Tutorials",
+                      "Architecture",
+                      "Release Notes",
+                      "Case Studies",
+                      "Tips and Tricks"
+                    ]
                   },
                   "style": {},
                   "children": []
                 },
                 {
-                  "id": "sidebar-divider-1",
+                  "id": "blog-sidebar-divider-1",
                   "type": "Divider",
-                  "props": {},
+                  "props": {
+                    "variant": "dashed",
+                    "color": "muted",
+                    "margin": "md"
+                  },
                   "style": {},
                   "children": []
                 },
                 {
-                  "id": "sidebar-tags-heading",
+                  "id": "blog-sidebar-tags-heading",
                   "type": "Heading",
                   "props": {
                     "level": 4,
@@ -258,87 +364,89 @@
                   "children": []
                 },
                 {
-                  "id": "sidebar-tags-container",
+                  "id": "blog-sidebar-tags",
                   "type": "Container",
-                  "props": {
-                    "maxWidth": "2xl",
-                    "padding": "none"
-                  },
+                  "props": {},
                   "style": {
                     "display": "flex",
-                    "flexDirection": "row",
-                    "flexWrap": "wrap",
-                    "gap": "8px"
+                    "gap": "8px",
+                    "flexWrap": "wrap"
                   },
                   "children": [
                     {
-                      "id": "tag-react",
+                      "id": "blog-tag-react",
                       "type": "Link",
                       "props": {
-                        "href": "#",
+                        "variant": "pill",
                         "text": "React",
-                        "variant": "pill",
-                        "color": "muted"
+                        "href": "#",
+                        "color": "primary",
+                        "size": "sm"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "tag-github",
+                      "id": "blog-tag-github",
                       "type": "Link",
                       "props": {
-                        "href": "#",
+                        "variant": "pill",
                         "text": "GitHub",
-                        "variant": "pill",
-                        "color": "muted"
+                        "href": "#",
+                        "color": "success",
+                        "size": "sm"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "tag-cms",
+                      "id": "blog-tag-cms",
                       "type": "Link",
                       "props": {
-                        "href": "#",
+                        "variant": "pill",
                         "text": "CMS",
-                        "variant": "pill",
-                        "color": "muted"
+                        "href": "#",
+                        "color": "muted",
+                        "size": "sm"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "tag-vite",
+                      "id": "blog-tag-components",
                       "type": "Link",
                       "props": {
-                        "href": "#",
-                        "text": "Vite",
                         "variant": "pill",
-                        "color": "muted"
+                        "text": "Components",
+                        "href": "#",
+                        "color": "danger",
+                        "size": "sm"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "tag-opensource",
+                      "id": "blog-tag-json",
                       "type": "Link",
                       "props": {
-                        "href": "#",
-                        "text": "Open Source",
                         "variant": "pill",
-                        "color": "muted"
+                        "text": "JSON",
+                        "href": "#",
+                        "color": "primary",
+                        "size": "sm"
                       },
                       "style": {},
                       "children": []
                     },
                     {
-                      "id": "tag-tutorial",
+                      "id": "blog-tag-hotreload",
                       "type": "Link",
                       "props": {
-                        "href": "#",
-                        "text": "Tutorial",
                         "variant": "pill",
-                        "color": "muted"
+                        "text": "Hot Reload",
+                        "href": "#",
+                        "color": "success",
+                        "size": "sm"
                       },
                       "style": {},
                       "children": []
@@ -346,19 +454,44 @@
                   ]
                 },
                 {
-                  "id": "sidebar-divider-2",
+                  "id": "blog-sidebar-divider-2",
                   "type": "Divider",
-                  "props": {},
+                  "props": {
+                    "variant": "dashed",
+                    "color": "muted",
+                    "margin": "md"
+                  },
                   "style": {},
                   "children": []
                 },
                 {
-                  "id": "sidebar-newsletter",
+                  "id": "blog-sidebar-newsletter-heading",
+                  "type": "Heading",
+                  "props": {
+                    "level": 4,
+                    "text": "Newsletter"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-sidebar-newsletter-text",
+                  "type": "Text",
+                  "props": {
+                    "content": "Stay up to date with the latest from Hookie CMS.",
+                    "size": "sm",
+                    "color": "#64748b"
+                  },
+                  "style": {},
+                  "children": []
+                },
+                {
+                  "id": "blog-sidebar-newsletter-alert",
                   "type": "AlertBox",
                   "props": {
                     "type": "info",
-                    "title": "Newsletter",
-                    "message": "Subscribe to get the latest updates delivered to your inbox."
+                    "title": "Subscribe",
+                    "message": "Newsletter signup coming soon. Follow us on GitHub for updates."
                   },
                   "style": {},
                   "children": []
@@ -370,11 +503,11 @@
       ]
     },
     {
-      "id": "blog-related",
+      "id": "blog-related-section",
       "type": "Section",
       "props": {
         "padding": "xl",
-        "fullWidth": true
+        "background": "white"
       },
       "style": {},
       "children": [
@@ -382,7 +515,7 @@
           "id": "blog-related-heading",
           "type": "Heading",
           "props": {
-            "level": 2,
+            "level": 3,
             "text": "You Might Also Like",
             "align": "center"
           },
@@ -396,43 +529,43 @@
             "columns": 3,
             "gap": "lg"
           },
-          "style": {
-            "maxWidth": "1200px",
-            "margin": "0 auto"
-          },
+          "style": {},
           "children": [
             {
-              "id": "related-post-1",
+              "id": "blog-related-card-1",
               "type": "Card",
               "props": {
-                "title": "Why We Chose GitHub",
-                "description": "The technical decisions behind using GitHub as a CMS backend.",
-                "imageUrl": "https://picsum.photos/seed/related1/600/300",
-                "shadowSize": "medium"
+                "title": "Getting Started Guide",
+                "description": "Everything you need to know to set up your first Hookie CMS site.",
+                "imageUrl": "https://picsum.photos/seed/related1/400/250",
+                "accentColor": "#2563eb",
+                "shadowSize": "small"
               },
               "style": {},
               "children": []
             },
             {
-              "id": "related-post-2",
+              "id": "blog-related-card-2",
               "type": "Card",
               "props": {
-                "title": "Component Architecture",
-                "description": "How Hookie's component system works under the hood.",
-                "imageUrl": "https://picsum.photos/seed/related2/600/300",
-                "shadowSize": "medium"
+                "title": "Theming Deep Dive",
+                "description": "Master the theming system to create unique visual identities.",
+                "imageUrl": "https://picsum.photos/seed/related2/400/250",
+                "accentColor": "#10b981",
+                "shadowSize": "small"
               },
               "style": {},
               "children": []
             },
             {
-              "id": "related-post-3",
+              "id": "blog-related-card-3",
               "type": "Card",
               "props": {
-                "title": "Roadmap 2026",
-                "description": "What's coming next for Hookie CMS.",
-                "imageUrl": "https://picsum.photos/seed/related3/600/300",
-                "shadowSize": "medium"
+                "title": "Deployment Strategies",
+                "description": "From GitHub Pages to custom servers. Deploy your Hookie CMS site anywhere.",
+                "imageUrl": "https://picsum.photos/seed/related3/400/250",
+                "accentColor": "#f59e0b",
+                "shadowSize": "small"
               },
               "style": {},
               "children": []
