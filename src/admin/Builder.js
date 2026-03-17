@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import ComponentPalette from './ComponentPalette';
 import BuilderCanvas from './BuilderCanvas';
 import PropsEditor from './PropsEditor';
+import RecoveryDialog from './RecoveryDialog';
 import componentRegistry from '../lib/componentRegistry';
 import { deepClone, removeComponentById, findComponentById, updateComponentProps } from './builderHelpers';
+import { AutoSaveManager } from './autoSaveManager';
 
 function useResponsiveBuilder() {
   const [screenSize, setScreenSize] = useState(() => {
@@ -31,6 +33,8 @@ export default function Builder({ pageData, onUpdate }) {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [paletteVisible, setPaletteVisible] = useState(true);
   const [showMobilePropsPanel, setShowMobilePropsPanel] = useState(false);
+  const [recoveryInfo, setRecoveryInfo] = useState(null);
+  const autoSaveRef = useRef(null);
   const screenSize = useResponsiveBuilder();
   const isMobile = screenSize === 'mobile';
   const isTablet = screenSize === 'tablet';
@@ -40,6 +44,16 @@ export default function Builder({ pageData, onUpdate }) {
       addToHistory(pageData);
     }
   }, [pageData]);
+
+  useEffect(() => {
+    if (!pageData?.name) return;
+    const mgr = new AutoSaveManager(pageData.name);
+    autoSaveRef.current = mgr;
+    const info = mgr.getRecoveryInfo();
+    if (info && !info.isEmpty) setRecoveryInfo(info);
+    mgr.start(() => pageData);
+    return () => mgr.stop();
+  }, [pageData?.name]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {

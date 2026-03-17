@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import GlobalStyles from './GlobalStyles.js';
 import App from './public/App.js';
-import { initializeDebugGlobals } from './lib/debuggingSetup.js';
 
 class AppErrorBoundary extends React.Component {
   constructor(props) {
@@ -50,7 +49,6 @@ styleSheet.textContent = `
 document.head.appendChild(styleSheet);
 
 window.React = React;
-initializeDebugGlobals();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
