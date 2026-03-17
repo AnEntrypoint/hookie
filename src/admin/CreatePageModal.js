@@ -1,44 +1,58 @@
 import React, { useState, useMemo } from 'react';
 import { styles as baseStyles } from './pageManagerStyles';
 
+function uid() { return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`; }
+
 const TEMPLATES = [
   {
     id: 'blank',
-    label: 'Blank Page',
-    description: 'Empty canvas to build from scratch',
-    icon: '+',
-    build: (title) => [],
+    label: 'Blank',
+    description: 'Empty canvas',
+    icon: '○',
+    build: () => [],
   },
   {
     id: 'landing',
     label: 'Landing Page',
-    description: 'Hero section, features grid, and call-to-action',
-    icon: 'L',
+    description: 'Hero + features + CTA',
+    icon: '🚀',
     build: (title) => [
-      { id: `hero-${Date.now()}`, type: 'Container', props: { maxWidth: '1200px' }, style: { padding: '64px 24px', textAlign: 'center' }, children: [
-        { id: `h-${Date.now()}`, type: 'Heading', props: { level: 1, children: title }, style: {}, children: [] },
-        { id: `sub-${Date.now()}`, type: 'Text', props: { children: 'A brief description of what this page is about.' }, style: {}, children: [] },
-        { id: `cta-${Date.now()}`, type: 'Button', props: { children: 'Get Started', variant: 'primary' }, style: {}, children: [] },
-      ]},
-      { id: `feat-${Date.now()}`, type: 'Grid', props: { columns: 3, gap: '24px' }, style: { padding: '48px 24px' }, children: [
-        { id: `c1-${Date.now()}`, type: 'Card', props: { title: 'Feature One', children: 'Description of the first feature.' }, style: {}, children: [] },
-        { id: `c2-${Date.now()+1}`, type: 'Card', props: { title: 'Feature Two', children: 'Description of the second feature.' }, style: {}, children: [] },
-        { id: `c3-${Date.now()+2}`, type: 'Card', props: { title: 'Feature Three', children: 'Description of the third feature.' }, style: {}, children: [] },
+      { id: uid(), type: 'Hero', props: { headline: title, subheadline: 'A brief description of what this page is about.', ctaText: 'Get Started', ctaHref: '#', background: 'blue' }, style: {}, children: [] },
+      { id: uid(), type: 'Section', props: { title: 'Features', padding: 'xl', background: 'white' }, style: {}, children: [
+        { id: uid(), type: 'Grid', props: { columns: 3, gap: 'md' }, style: {}, children: [
+          { id: uid(), type: 'Card', props: { title: 'Feature One', description: 'Description of the first feature.' }, style: {}, children: [] },
+          { id: uid(), type: 'Card', props: { title: 'Feature Two', description: 'Description of the second feature.' }, style: {}, children: [] },
+          { id: uid(), type: 'Card', props: { title: 'Feature Three', description: 'Description of the third feature.' }, style: {}, children: [] },
+        ]},
       ]},
     ],
   },
   {
-    id: 'content',
-    label: 'Content Page',
-    description: 'Heading with text sections for articles or docs',
-    icon: 'C',
+    id: 'about',
+    label: 'About Page',
+    description: 'Heading + text sections',
+    icon: '👤',
     build: (title) => [
-      { id: `cont-${Date.now()}`, type: 'Container', props: { maxWidth: '800px' }, style: { padding: '48px 24px' }, children: [
-        { id: `h1-${Date.now()}`, type: 'Heading', props: { level: 1, children: title }, style: {}, children: [] },
-        { id: `t1-${Date.now()}`, type: 'Text', props: { children: 'Introduction paragraph. Replace this with your content.' }, style: {}, children: [] },
-        { id: `d1-${Date.now()}`, type: 'Divider', props: {}, style: { margin: '32px 0' }, children: [] },
-        { id: `h2-${Date.now()}`, type: 'Heading', props: { level: 2, children: 'Section Title' }, style: {}, children: [] },
-        { id: `t2-${Date.now()+1}`, type: 'Text', props: { children: 'Section content goes here.' }, style: {}, children: [] },
+      { id: uid(), type: 'Section', props: { title, padding: 'xl', background: 'light' }, style: {}, children: [
+        { id: uid(), type: 'Text', props: { content: 'Write your introduction here. Tell visitors who you are and what you do.' }, style: {}, children: [] },
+      ]},
+      { id: uid(), type: 'Divider', props: {}, style: {}, children: [] },
+      { id: uid(), type: 'Section', props: { title: 'Our Story', padding: 'lg', background: 'white' }, style: {}, children: [
+        { id: uid(), type: 'Text', props: { content: 'Share your story here.' }, style: {}, children: [] },
+      ]},
+    ],
+  },
+  {
+    id: 'blog',
+    label: 'Blog Post',
+    description: 'Heading + date + content',
+    icon: '✍',
+    build: (title) => [
+      { id: uid(), type: 'Section', props: { padding: 'lg', background: 'white' }, style: {}, children: [
+        { id: uid(), type: 'Heading', props: { text: title, level: 1 }, style: {}, children: [] },
+        { id: uid(), type: 'Text', props: { content: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), color: '#64748b', size: 'sm' }, style: {}, children: [] },
+        { id: uid(), type: 'Divider', props: {}, style: {}, children: [] },
+        { id: uid(), type: 'Text', props: { content: 'Start writing your blog post here. Replace this placeholder text with your actual content.' }, style: {}, children: [] },
       ]},
     ],
   },

@@ -61,7 +61,7 @@
             { "id": "comp-btn-secondary", "type": "Button", "props": { "variant": "secondary", "label": "Secondary", "size": "md" }, "style": {}, "children": [] },
             { "id": "comp-btn-danger", "type": "Button", "props": { "variant": "danger", "label": "Danger", "size": "md" }, "style": {}, "children": [] },
             { "id": "comp-btn-ghost", "type": "Button", "props": { "variant": "ghost", "label": "Ghost", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-btn-success", "type": "Button", "props": { "variant": "success", "label": "Success", "size": "md" }, "style": {}, "children": [] }
+            { "id": "comp-btn-success-v", "type": "Button", "props": { "variant": "success", "label": "Success", "size": "md" }, "style": {}, "children": [] }
           ]
         },
         { "id": "comp-btn-sizes-h", "type": "Heading", "props": { "level": 4, "text": "Sizes" }, "style": {}, "children": [] },
@@ -71,9 +71,9 @@
           "props": {},
           "style": { "display": "flex", "gap": "12px", "flexWrap": "wrap", "alignItems": "center" },
           "children": [
-            { "id": "comp-btn-sm", "type": "Button", "props": { "variant": "primary", "label": "Small", "size": "sm" }, "style": {}, "children": [] },
-            { "id": "comp-btn-md", "type": "Button", "props": { "variant": "primary", "label": "Medium", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-btn-lg", "type": "Button", "props": { "variant": "primary", "label": "Large", "size": "lg" }, "style": {}, "children": [] }
+            { "id": "comp-btn-sz-sm", "type": "Button", "props": { "variant": "primary", "label": "Small", "size": "sm" }, "style": {}, "children": [] },
+            { "id": "comp-btn-sz-md", "type": "Button", "props": { "variant": "primary", "label": "Medium", "size": "md" }, "style": {}, "children": [] },
+            { "id": "comp-btn-sz-lg", "type": "Button", "props": { "variant": "primary", "label": "Large", "size": "lg" }, "style": {}, "children": [] }
           ]
         },
         { "id": "comp-btn-disabled-h", "type": "Heading", "props": { "level": 4, "text": "Disabled" }, "style": {}, "children": [] },
@@ -83,8 +83,8 @@
           "props": {},
           "style": { "display": "flex", "gap": "12px", "flexWrap": "wrap" },
           "children": [
-            { "id": "comp-btn-dis-primary", "type": "Button", "props": { "variant": "primary", "label": "Disabled Primary", "size": "md", "disabled": true }, "style": {}, "children": [] },
-            { "id": "comp-btn-dis-secondary", "type": "Button", "props": { "variant": "secondary", "label": "Disabled Secondary", "size": "md", "disabled": true }, "style": {}, "children": [] }
+            { "id": "comp-btn-dis-p", "type": "Button", "props": { "variant": "primary", "label": "Disabled Primary", "size": "md", "disabled": true }, "style": {}, "children": [] },
+            { "id": "comp-btn-dis-s", "type": "Button", "props": { "variant": "secondary", "label": "Disabled Secondary", "size": "md", "disabled": true }, "style": {}, "children": [] }
           ]
         }
       ]
@@ -108,7 +108,7 @@
             { "id": "comp-img-sm", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie2/400/300", "borderRadius": "sm", "shadow": "none", "effect": "none", "alt": "sm radius" }, "style": {}, "children": [] },
             { "id": "comp-img-md", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie3/400/300", "borderRadius": "md", "shadow": "none", "effect": "none", "alt": "md radius" }, "style": {}, "children": [] },
             { "id": "comp-img-lg", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie4/400/300", "borderRadius": "lg", "shadow": "none", "effect": "none", "alt": "lg radius" }, "style": {}, "children": [] },
-            { "id": "comp-img-xl", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie5/400/300", "borderRadius": "xl", "shadow": "none", "effect": "none", "alt": "xl radius" }, "style": {}, "children": [] },
+            { "id": "comp-img-xl-r", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie5/400/300", "borderRadius": "xl", "shadow": "none", "effect": "none", "alt": "xl radius" }, "style": {}, "children": [] },
             { "id": "comp-img-full", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie6/400/300", "borderRadius": "full", "shadow": "none", "effect": "none", "alt": "full radius" }, "style": {}, "children": [] }
           ]
         },
@@ -119,11 +119,11 @@
           "props": { "columns": 3, "gap": "lg" },
           "style": {},
           "children": [
-            { "id": "comp-img-shadow-none", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie7/400/300", "shadow": "none", "effect": "none", "alt": "no shadow" }, "style": {}, "children": [] },
-            { "id": "comp-img-shadow-sm", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie8/400/300", "shadow": "sm", "effect": "none", "alt": "small shadow" }, "style": {}, "children": [] },
-            { "id": "comp-img-shadow-md", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie9/400/300", "shadow": "md", "effect": "none", "alt": "medium shadow" }, "style": {}, "children": [] },
-            { "id": "comp-img-shadow-lg", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie10/400/300", "shadow": "lg", "effect": "none", "alt": "large shadow" }, "style": {}, "children": [] },
-            { "id": "comp-img-shadow-xl", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie11/400/300", "shadow": "xl", "effect": "none", "alt": "xl shadow" }, "style": {}, "children": [] }
+            { "id": "comp-img-sh-none", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie7/400/300", "shadow": "none", "effect": "none", "alt": "no shadow" }, "style": {}, "children": [] },
+            { "id": "comp-img-sh-sm", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie8/400/300", "shadow": "sm", "effect": "none", "alt": "small shadow" }, "style": {}, "children": [] },
+            { "id": "comp-img-sh-md", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie9/400/300", "shadow": "md", "effect": "none", "alt": "medium shadow" }, "style": {}, "children": [] },
+            { "id": "comp-img-sh-lg", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie10/400/300", "shadow": "lg", "effect": "none", "alt": "large shadow" }, "style": {}, "children": [] },
+            { "id": "comp-img-sh-xl", "type": "Image", "props": { "src": "https://picsum.photos/seed/hookie11/400/300", "shadow": "xl", "effect": "none", "alt": "xl shadow" }, "style": {}, "children": [] }
           ]
         },
         { "id": "comp-images-effect-h", "type": "Heading", "props": { "level": 4, "text": "Hover Effects" }, "style": {}, "children": [] },
@@ -148,55 +148,43 @@
       "children": [
         { "id": "comp-links-title", "type": "Heading", "props": { "level": 2, "text": "Links" }, "style": {}, "children": [] },
         { "id": "comp-links-divider", "type": "Divider", "props": { "variant": "solid", "color": "default" }, "style": {}, "children": [] },
-        { "id": "comp-links-variants-h", "type": "Heading", "props": { "level": 4, "text": "Variants" }, "style": {}, "children": [] },
+        { "id": "comp-lv-h", "type": "Heading", "props": { "level": 4, "text": "Variants" }, "style": {}, "children": [] },
         {
-          "id": "comp-links-variants-row",
+          "id": "comp-lv-row",
           "type": "Container",
           "props": {},
           "style": { "display": "flex", "gap": "24px", "flexWrap": "wrap", "alignItems": "center" },
           "children": [
-            { "id": "comp-link-default", "type": "Link", "props": { "variant": "default", "text": "Default Link", "href": "#", "color": "primary" }, "style": {}, "children": [] },
-            { "id": "comp-link-underline", "type": "Link", "props": { "variant": "underline", "text": "Underline Link", "href": "#", "color": "primary" }, "style": {}, "children": [] },
-            { "id": "comp-link-button", "type": "Link", "props": { "variant": "button", "text": "Button Link", "href": "#", "color": "primary", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-link-pill", "type": "Link", "props": { "variant": "pill", "text": "Pill Link", "href": "#", "color": "primary", "size": "md" }, "style": {}, "children": [] }
+            { "id": "comp-lv-default", "type": "Link", "props": { "variant": "default", "text": "Default Link", "href": "#", "color": "primary" }, "style": {}, "children": [] },
+            { "id": "comp-lv-underline", "type": "Link", "props": { "variant": "underline", "text": "Underline Link", "href": "#", "color": "primary" }, "style": {}, "children": [] },
+            { "id": "comp-lv-button", "type": "Link", "props": { "variant": "button", "text": "Button Link", "href": "#", "color": "primary", "size": "md" }, "style": {}, "children": [] },
+            { "id": "comp-lv-pill", "type": "Link", "props": { "variant": "pill", "text": "Pill Link", "href": "#", "color": "primary", "size": "md" }, "style": {}, "children": [] }
           ]
         },
-        { "id": "comp-links-colors-h", "type": "Heading", "props": { "level": 4, "text": "Colors" }, "style": {}, "children": [] },
+        { "id": "comp-lc-h", "type": "Heading", "props": { "level": 4, "text": "Colors" }, "style": {}, "children": [] },
         {
-          "id": "comp-links-colors-row",
+          "id": "comp-lc-row",
           "type": "Container",
           "props": {},
           "style": { "display": "flex", "gap": "24px", "flexWrap": "wrap" },
           "children": [
-            { "id": "comp-link-c-primary", "type": "Link", "props": { "variant": "default", "text": "Primary", "href": "#", "color": "primary" }, "style": {}, "children": [] },
-            { "id": "comp-link-c-success", "type": "Link", "props": { "variant": "default", "text": "Success", "href": "#", "color": "success" }, "style": {}, "children": [] },
-            { "id": "comp-link-c-danger", "type": "Link", "props": { "variant": "default", "text": "Danger", "href": "#", "color": "danger" }, "style": {}, "children": [] },
-            { "id": "comp-link-c-muted", "type": "Link", "props": { "variant": "default", "text": "Muted", "href": "#", "color": "muted" }, "style": {}, "children": [] }
+            { "id": "comp-lc-primary", "type": "Link", "props": { "variant": "default", "text": "Primary", "href": "#", "color": "primary" }, "style": {}, "children": [] },
+            { "id": "comp-lc-success", "type": "Link", "props": { "variant": "default", "text": "Success", "href": "#", "color": "success" }, "style": {}, "children": [] },
+            { "id": "comp-lc-danger", "type": "Link", "props": { "variant": "default", "text": "Danger", "href": "#", "color": "danger" }, "style": {}, "children": [] },
+            { "id": "comp-lc-muted", "type": "Link", "props": { "variant": "default", "text": "Muted", "href": "#", "color": "muted" }, "style": {}, "children": [] }
           ]
         },
-        { "id": "comp-links-pill-h", "type": "Heading", "props": { "level": 4, "text": "Pill Colors" }, "style": {}, "children": [] },
+        { "id": "comp-lp-h", "type": "Heading", "props": { "level": 4, "text": "Pill Colors" }, "style": {}, "children": [] },
         {
-          "id": "comp-links-pills-row",
+          "id": "comp-lp-row",
           "type": "Container",
           "props": {},
           "style": { "display": "flex", "gap": "12px", "flexWrap": "wrap" },
           "children": [
-            { "id": "comp-pill-primary", "type": "Link", "props": { "variant": "pill", "text": "Primary Pill", "href": "#", "color": "primary", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-pill-success", "type": "Link", "props": { "variant": "pill", "text": "Success Pill", "href": "#", "color": "success", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-pill-danger", "type": "Link", "props": { "variant": "pill", "text": "Danger Pill", "href": "#", "color": "danger", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-pill-muted", "type": "Link", "props": { "variant": "pill", "text": "Muted Pill", "href": "#", "color": "muted", "size": "md" }, "style": {}, "children": [] }
-          ]
-        },
-        { "id": "comp-links-sizes-h", "type": "Heading", "props": { "level": 4, "text": "Sizes" }, "style": {}, "children": [] },
-        {
-          "id": "comp-links-sizes-row",
-          "type": "Container",
-          "props": {},
-          "style": { "display": "flex", "gap": "12px", "flexWrap": "wrap", "alignItems": "center" },
-          "children": [
-            { "id": "comp-link-sz-sm", "type": "Link", "props": { "variant": "button", "text": "Small", "href": "#", "size": "sm" }, "style": {}, "children": [] },
-            { "id": "comp-link-sz-md", "type": "Link", "props": { "variant": "button", "text": "Medium", "href": "#", "size": "md" }, "style": {}, "children": [] },
-            { "id": "comp-link-sz-lg", "type": "Link", "props": { "variant": "button", "text": "Large", "href": "#", "size": "lg" }, "style": {}, "children": [] }
+            { "id": "comp-lp-primary", "type": "Link", "props": { "variant": "pill", "text": "Primary Pill", "href": "#", "color": "primary", "size": "md" }, "style": {}, "children": [] },
+            { "id": "comp-lp-success", "type": "Link", "props": { "variant": "pill", "text": "Success Pill", "href": "#", "color": "success", "size": "md" }, "style": {}, "children": [] },
+            { "id": "comp-lp-danger", "type": "Link", "props": { "variant": "pill", "text": "Danger Pill", "href": "#", "color": "danger", "size": "md" }, "style": {}, "children": [] },
+            { "id": "comp-lp-muted", "type": "Link", "props": { "variant": "pill", "text": "Muted Pill", "href": "#", "color": "muted", "size": "md" }, "style": {}, "children": [] }
           ]
         }
       ]
@@ -232,17 +220,6 @@
             { "id": "comp-card-img-2", "type": "Card", "props": { "title": "Architecture", "description": "Card with architecture image", "imageUrl": "https://picsum.photos/seed/card2/400/250", "shadowSize": "medium", "accentColor": "#10b981" }, "style": {}, "children": [] },
             { "id": "comp-card-img-3", "type": "Card", "props": { "title": "Abstract", "description": "Card with abstract image", "imageUrl": "https://picsum.photos/seed/card3/400/250", "shadowSize": "medium", "accentColor": "#ef4444" }, "style": {}, "children": [] }
           ]
-        },
-        { "id": "comp-cards-text-h", "type": "Heading", "props": { "level": 4, "text": "Text Only" }, "style": {}, "children": [] },
-        {
-          "id": "comp-cards-text-grid",
-          "type": "Grid",
-          "props": { "columns": 2, "gap": "md" },
-          "style": {},
-          "children": [
-            { "id": "comp-card-text-1", "type": "Card", "props": { "title": "Feature Card", "description": "This card has no image. It displays title and description text only with a colored accent border.", "accentColor": "#8b5cf6", "shadowSize": "large" }, "style": {}, "children": [] },
-            { "id": "comp-card-text-2", "type": "Card", "props": { "title": "Info Card", "description": "Another text-only card demonstrating different accent colors and shadow configurations.", "accentColor": "#f59e0b", "shadowSize": "small" }, "style": {}, "children": [] }
-          ]
         }
       ]
     },
@@ -267,7 +244,7 @@
       "style": {},
       "children": [
         { "id": "comp-lists-title", "type": "Heading", "props": { "level": 2, "text": "Lists" }, "style": {}, "children": [] },
-        { "id": "comp-lists-divider", "type": "Divider", "props": { "variant": "solid", "color": "dark", "thickness": "normal" }, "style": {}, "children": [] },
+        { "id": "comp-lists-divider", "type": "Divider", "props": { "variant": "solid", "color": "dark" }, "style": {}, "children": [] },
         { "id": "comp-lists-bullet-h", "type": "Heading", "props": { "level": 4, "text": "Bullet Styles" }, "style": {}, "children": [] },
         {
           "id": "comp-lists-bullet-grid",
@@ -275,66 +252,30 @@
           "props": { "columns": 3, "gap": "lg" },
           "style": {},
           "children": [
-            {
-              "id": "comp-list-disc-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-disc-h", "type": "Heading", "props": { "level": 5, "text": "Disc" }, "style": {}, "children": [] },
-                { "id": "comp-list-disc", "type": "List", "props": { "type": "ul", "bulletStyle": "disc", "items": ["First item", "Second item", "Third item"], "color": "default", "spacing": "md" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-circle-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-circle-h", "type": "Heading", "props": { "level": 5, "text": "Circle" }, "style": {}, "children": [] },
-                { "id": "comp-list-circle", "type": "List", "props": { "type": "ul", "bulletStyle": "circle", "items": ["First item", "Second item", "Third item"], "color": "primary", "spacing": "md" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-square-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-square-h", "type": "Heading", "props": { "level": 5, "text": "Square" }, "style": {}, "children": [] },
-                { "id": "comp-list-square", "type": "List", "props": { "type": "ul", "bulletStyle": "square", "items": ["First item", "Second item", "Third item"], "color": "success", "spacing": "md" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-check-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-check-h", "type": "Heading", "props": { "level": 5, "text": "Check" }, "style": {}, "children": [] },
-                { "id": "comp-list-check", "type": "List", "props": { "type": "ul", "bulletStyle": "check", "items": ["Completed task", "Another task", "Final task"], "color": "success", "spacing": "sm" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-arrow-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-arrow-h", "type": "Heading", "props": { "level": 5, "text": "Arrow" }, "style": {}, "children": [] },
-                { "id": "comp-list-arrow", "type": "List", "props": { "type": "ul", "bulletStyle": "arrow", "items": ["Navigate here", "Go there", "End up here"], "color": "primary", "spacing": "sm" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-dot-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-dot-h", "type": "Heading", "props": { "level": 5, "text": "Dot" }, "style": {}, "children": [] },
-                { "id": "comp-list-dot", "type": "List", "props": { "type": "ul", "bulletStyle": "dot", "items": ["Point one", "Point two", "Point three"], "color": "muted", "spacing": "lg" }, "style": {}, "children": [] }
-              ]
-            }
+            { "id": "comp-ldisc-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-ldisc-h", "type": "Heading", "props": { "level": 5, "text": "Disc" }, "style": {}, "children": [] },
+              { "id": "comp-ldisc", "type": "List", "props": { "type": "ul", "bulletStyle": "disc", "items": ["First item", "Second item", "Third item"], "color": "default", "spacing": "md" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-lcircle-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-lcircle-h", "type": "Heading", "props": { "level": 5, "text": "Circle" }, "style": {}, "children": [] },
+              { "id": "comp-lcircle", "type": "List", "props": { "type": "ul", "bulletStyle": "circle", "items": ["First item", "Second item", "Third item"], "color": "primary", "spacing": "md" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-lsquare-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-lsquare-h", "type": "Heading", "props": { "level": 5, "text": "Square" }, "style": {}, "children": [] },
+              { "id": "comp-lsquare", "type": "List", "props": { "type": "ul", "bulletStyle": "square", "items": ["First item", "Second item", "Third item"], "color": "success", "spacing": "md" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-lcheck-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-lcheck-h", "type": "Heading", "props": { "level": 5, "text": "Check" }, "style": {}, "children": [] },
+              { "id": "comp-lcheck", "type": "List", "props": { "type": "ul", "bulletStyle": "check", "items": ["Completed task", "Another task", "Final task"], "color": "success", "spacing": "sm" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-larrow-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-larrow-h", "type": "Heading", "props": { "level": 5, "text": "Arrow" }, "style": {}, "children": [] },
+              { "id": "comp-larrow", "type": "List", "props": { "type": "ul", "bulletStyle": "arrow", "items": ["Navigate here", "Go there", "End up here"], "color": "primary", "spacing": "sm" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-ldot-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-ldot-h", "type": "Heading", "props": { "level": 5, "text": "Dot" }, "style": {}, "children": [] },
+              { "id": "comp-ldot", "type": "List", "props": { "type": "ul", "bulletStyle": "dot", "items": ["Point one", "Point two", "Point three"], "color": "muted", "spacing": "lg" }, "style": {}, "children": [] }
+            ]}
           ]
         },
         { "id": "comp-lists-number-h", "type": "Heading", "props": { "level": 4, "text": "Number Styles" }, "style": {}, "children": [] },
@@ -344,36 +285,18 @@
           "props": { "columns": 3, "gap": "lg" },
           "style": {},
           "children": [
-            {
-              "id": "comp-list-decimal-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-decimal-h", "type": "Heading", "props": { "level": 5, "text": "Decimal" }, "style": {}, "children": [] },
-                { "id": "comp-list-decimal", "type": "List", "props": { "type": "ol", "numberStyle": "decimal", "items": ["Step one", "Step two", "Step three"], "color": "default", "spacing": "md" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-roman-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-roman-h", "type": "Heading", "props": { "level": 5, "text": "Roman" }, "style": {}, "children": [] },
-                { "id": "comp-list-roman", "type": "List", "props": { "type": "ol", "numberStyle": "roman", "items": ["First", "Second", "Third"], "color": "primary", "spacing": "md" }, "style": {}, "children": [] }
-              ]
-            },
-            {
-              "id": "comp-list-alpha-wrap",
-              "type": "Container",
-              "props": {},
-              "style": {},
-              "children": [
-                { "id": "comp-list-alpha-h", "type": "Heading", "props": { "level": 5, "text": "Alpha" }, "style": {}, "children": [] },
-                { "id": "comp-list-alpha", "type": "List", "props": { "type": "ol", "numberStyle": "alpha", "items": ["Option A", "Option B", "Option C"], "color": "danger", "spacing": "md" }, "style": {}, "children": [] }
-              ]
-            }
+            { "id": "comp-ldecimal-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-ldecimal-h", "type": "Heading", "props": { "level": 5, "text": "Decimal" }, "style": {}, "children": [] },
+              { "id": "comp-ldecimal", "type": "List", "props": { "type": "ol", "numberStyle": "decimal", "items": ["Step one", "Step two", "Step three"], "color": "default", "spacing": "md" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-lroman-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-lroman-h", "type": "Heading", "props": { "level": 5, "text": "Roman" }, "style": {}, "children": [] },
+              { "id": "comp-lroman", "type": "List", "props": { "type": "ol", "numberStyle": "roman", "items": ["First", "Second", "Third"], "color": "primary", "spacing": "md" }, "style": {}, "children": [] }
+            ]},
+            { "id": "comp-lalpha-w", "type": "Container", "props": {}, "style": {}, "children": [
+              { "id": "comp-lalpha-h", "type": "Heading", "props": { "level": 5, "text": "Alpha" }, "style": {}, "children": [] },
+              { "id": "comp-lalpha", "type": "List", "props": { "type": "ol", "numberStyle": "alpha", "items": ["Option A", "Option B", "Option C"], "color": "danger", "spacing": "md" }, "style": {}, "children": [] }
+            ]}
           ]
         }
       ]
@@ -385,36 +308,32 @@
       "style": {},
       "children": [
         { "id": "comp-dividers-title", "type": "Heading", "props": { "level": 2, "text": "Dividers" }, "style": {}, "children": [] },
-        { "id": "comp-div-variants-h", "type": "Heading", "props": { "level": 4, "text": "Variants" }, "style": {}, "children": [] },
-        { "id": "comp-div-solid-label", "type": "Text", "props": { "content": "Solid:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-solid", "type": "Divider", "props": { "variant": "solid", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
-        { "id": "comp-div-dashed-label", "type": "Text", "props": { "content": "Dashed:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-dashed", "type": "Divider", "props": { "variant": "dashed", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
-        { "id": "comp-div-dotted-label", "type": "Text", "props": { "content": "Dotted:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-dotted", "type": "Divider", "props": { "variant": "dotted", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
-        { "id": "comp-div-gradient-label", "type": "Text", "props": { "content": "Gradient:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-gradient", "type": "Divider", "props": { "variant": "gradient", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
-        { "id": "comp-div-thickness-h", "type": "Heading", "props": { "level": 4, "text": "Thicknesses" }, "style": {}, "children": [] },
-        { "id": "comp-div-thin-label", "type": "Text", "props": { "content": "Thin:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-thin", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "thin" }, "style": {}, "children": [] },
-        { "id": "comp-div-normal-label", "type": "Text", "props": { "content": "Normal:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-normal", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "normal" }, "style": {}, "children": [] },
-        { "id": "comp-div-thick-label", "type": "Text", "props": { "content": "Thick:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-thick", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-xl-label", "type": "Text", "props": { "content": "XL:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
-        { "id": "comp-div-xl", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "xl" }, "style": {}, "children": [] },
-        { "id": "comp-div-colors-h", "type": "Heading", "props": { "level": 4, "text": "Colors" }, "style": {}, "children": [] },
-        { "id": "comp-div-c-default", "type": "Divider", "props": { "variant": "solid", "color": "default", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-c-dark", "type": "Divider", "props": { "variant": "solid", "color": "dark", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-c-primary", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-c-success", "type": "Divider", "props": { "variant": "solid", "color": "success", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-c-danger", "type": "Divider", "props": { "variant": "solid", "color": "danger", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-c-muted", "type": "Divider", "props": { "variant": "solid", "color": "muted", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-gradient-h", "type": "Heading", "props": { "level": 4, "text": "Gradient Colors" }, "style": {}, "children": [] },
-        { "id": "comp-div-g-blue", "type": "Divider", "props": { "variant": "solid", "color": "blue-gradient", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-g-green", "type": "Divider", "props": { "variant": "solid", "color": "green-gradient", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-g-purple", "type": "Divider", "props": { "variant": "solid", "color": "purple-gradient", "thickness": "thick" }, "style": {}, "children": [] },
-        { "id": "comp-div-g-rainbow", "type": "Divider", "props": { "variant": "solid", "color": "rainbow", "thickness": "thick" }, "style": {}, "children": [] }
+        { "id": "comp-dv-h", "type": "Heading", "props": { "level": 4, "text": "Variants" }, "style": {}, "children": [] },
+        { "id": "comp-dv-sl", "type": "Text", "props": { "content": "Solid:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
+        { "id": "comp-dv-solid", "type": "Divider", "props": { "variant": "solid", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
+        { "id": "comp-dv-dl", "type": "Text", "props": { "content": "Dashed:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
+        { "id": "comp-dv-dashed", "type": "Divider", "props": { "variant": "dashed", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
+        { "id": "comp-dv-dtl", "type": "Text", "props": { "content": "Dotted:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
+        { "id": "comp-dv-dotted", "type": "Divider", "props": { "variant": "dotted", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
+        { "id": "comp-dv-gl", "type": "Text", "props": { "content": "Gradient:", "size": "sm", "color": "#64748b" }, "style": {}, "children": [] },
+        { "id": "comp-dv-gradient-v", "type": "Divider", "props": { "variant": "gradient", "color": "default", "thickness": "normal" }, "style": {}, "children": [] },
+        { "id": "comp-dt-h", "type": "Heading", "props": { "level": 4, "text": "Thicknesses" }, "style": {}, "children": [] },
+        { "id": "comp-dt-thin", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "thin" }, "style": {}, "children": [] },
+        { "id": "comp-dt-normal", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "normal" }, "style": {}, "children": [] },
+        { "id": "comp-dt-thick", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dt-xl", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "xl" }, "style": {}, "children": [] },
+        { "id": "comp-dc-h", "type": "Heading", "props": { "level": 4, "text": "Colors" }, "style": {}, "children": [] },
+        { "id": "comp-dc-default", "type": "Divider", "props": { "variant": "solid", "color": "default", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dc-dark", "type": "Divider", "props": { "variant": "solid", "color": "dark", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dc-primary", "type": "Divider", "props": { "variant": "solid", "color": "primary", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dc-success", "type": "Divider", "props": { "variant": "solid", "color": "success", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dc-danger", "type": "Divider", "props": { "variant": "solid", "color": "danger", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dc-muted", "type": "Divider", "props": { "variant": "solid", "color": "muted", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dg-h", "type": "Heading", "props": { "level": 4, "text": "Gradient Colors" }, "style": {}, "children": [] },
+        { "id": "comp-dg-blue", "type": "Divider", "props": { "variant": "solid", "color": "blue-gradient", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dg-green", "type": "Divider", "props": { "variant": "solid", "color": "green-gradient", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dg-purple", "type": "Divider", "props": { "variant": "solid", "color": "purple-gradient", "thickness": "thick" }, "style": {}, "children": [] },
+        { "id": "comp-dg-rainbow", "type": "Divider", "props": { "variant": "solid", "color": "rainbow", "thickness": "thick" }, "style": {}, "children": [] }
       ]
     },
     {
@@ -425,135 +344,24 @@
       "children": [
         { "id": "comp-grids-title", "type": "Heading", "props": { "level": 2, "text": "Grid Layouts" }, "style": {}, "children": [] },
         { "id": "comp-grids-divider", "type": "Divider", "props": { "variant": "solid", "color": "primary" }, "style": {}, "children": [] },
-        { "id": "comp-grid-2-h", "type": "Heading", "props": { "level": 4, "text": "2 Columns" }, "style": {}, "children": [] },
-        {
-          "id": "comp-grid-2",
-          "type": "Grid",
-          "props": { "columns": 2, "gap": "md" },
-          "style": {},
-          "children": [
-            { "id": "comp-grid-2-a", "type": "Container", "props": {}, "style": { "backgroundColor": "#dbeafe", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-2-a-t", "type": "Text", "props": { "content": "Column 1" }, "style": {}, "children": [] }] },
-            { "id": "comp-grid-2-b", "type": "Container", "props": {}, "style": { "backgroundColor": "#dbeafe", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-2-b-t", "type": "Text", "props": { "content": "Column 2" }, "style": {}, "children": [] }] }
-          ]
-        },
-        { "id": "comp-grid-3-h", "type": "Heading", "props": { "level": 4, "text": "3 Columns" }, "style": {}, "children": [] },
-        {
-          "id": "comp-grid-3",
-          "type": "Grid",
-          "props": { "columns": 3, "gap": "md" },
-          "style": {},
-          "children": [
-            { "id": "comp-grid-3-a", "type": "Container", "props": {}, "style": { "backgroundColor": "#dcfce7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-3-a-t", "type": "Text", "props": { "content": "Column 1" }, "style": {}, "children": [] }] },
-            { "id": "comp-grid-3-b", "type": "Container", "props": {}, "style": { "backgroundColor": "#dcfce7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-3-b-t", "type": "Text", "props": { "content": "Column 2" }, "style": {}, "children": [] }] },
-            { "id": "comp-grid-3-c", "type": "Container", "props": {}, "style": { "backgroundColor": "#dcfce7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-3-c-t", "type": "Text", "props": { "content": "Column 3" }, "style": {}, "children": [] }] }
-          ]
-        },
-        { "id": "comp-grid-4-h", "type": "Heading", "props": { "level": 4, "text": "4 Columns" }, "style": {}, "children": [] },
-        {
-          "id": "comp-grid-4",
-          "type": "Grid",
-          "props": { "columns": 4, "gap": "md" },
-          "style": {},
-          "children": [
-            { "id": "comp-grid-4-a", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-4-a-t", "type": "Text", "props": { "content": "Col 1" }, "style": {}, "children": [] }] },
-            { "id": "comp-grid-4-b", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-4-b-t", "type": "Text", "props": { "content": "Col 2" }, "style": {}, "children": [] }] },
-            { "id": "comp-grid-4-c", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-4-c-t", "type": "Text", "props": { "content": "Col 3" }, "style": {}, "children": [] }] },
-            { "id": "comp-grid-4-d", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-grid-4-d-t", "type": "Text", "props": { "content": "Col 4" }, "style": {}, "children": [] }] }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "comp-sections-section",
-      "type": "Section",
-      "props": { "padding": "lg", "background": "white" },
-      "style": {},
-      "children": [
-        { "id": "comp-sections-title", "type": "Heading", "props": { "level": 2, "text": "Sections" }, "style": {}, "children": [] },
-        { "id": "comp-sections-divider", "type": "Divider", "props": { "variant": "dashed", "color": "primary" }, "style": {}, "children": [] },
-        {
-          "id": "comp-section-light",
-          "type": "Section",
-          "props": { "padding": "sm", "background": "light", "title": "Light Background, Small Padding" },
-          "style": {},
-          "children": [
-            { "id": "comp-section-light-text", "type": "Text", "props": { "content": "Section with light background and small padding." }, "style": {}, "children": [] }
-          ]
-        },
-        {
-          "id": "comp-section-subtle",
-          "type": "Section",
-          "props": { "padding": "md", "background": "subtle", "title": "Subtle Background, Medium Padding" },
-          "style": {},
-          "children": [
-            { "id": "comp-section-subtle-text", "type": "Text", "props": { "content": "Section with subtle background and medium padding." }, "style": {}, "children": [] }
-          ]
-        },
-        {
-          "id": "comp-section-blue",
-          "type": "Section",
-          "props": { "padding": "lg", "background": "gradient-blue", "title": "Blue Gradient, Large Padding" },
-          "style": {},
-          "children": [
-            { "id": "comp-section-blue-text", "type": "Text", "props": { "content": "Section with blue gradient background." }, "style": {}, "children": [] }
-          ]
-        },
-        {
-          "id": "comp-section-green",
-          "type": "Section",
-          "props": { "padding": "lg", "background": "gradient-green", "title": "Green Gradient, Large Padding" },
-          "style": {},
-          "children": [
-            { "id": "comp-section-green-text", "type": "Text", "props": { "content": "Section with green gradient background." }, "style": {}, "children": [] }
-          ]
-        },
-        {
-          "id": "comp-section-purple",
-          "type": "Section",
-          "props": { "padding": "xl", "background": "gradient-purple", "title": "Purple Gradient, XL Padding" },
-          "style": {},
-          "children": [
-            { "id": "comp-section-purple-text", "type": "Text", "props": { "content": "Section with purple gradient background." }, "style": {}, "children": [] }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "comp-containers-section",
-      "type": "Section",
-      "props": { "padding": "lg", "background": "subtle" },
-      "style": {},
-      "children": [
-        { "id": "comp-containers-title", "type": "Heading", "props": { "level": 2, "text": "Containers" }, "style": {}, "children": [] },
-        { "id": "comp-containers-divider", "type": "Divider", "props": { "variant": "solid", "color": "muted" }, "style": {}, "children": [] },
-        {
-          "id": "comp-container-sm",
-          "type": "Container",
-          "props": { "maxWidth": "sm", "padding": "md" },
-          "style": { "border": "1px dashed #cbd5e1" },
-          "children": [{ "id": "comp-container-sm-t", "type": "Text", "props": { "content": "maxWidth sm (640px)" }, "style": {}, "children": [] }]
-        },
-        {
-          "id": "comp-container-md",
-          "type": "Container",
-          "props": { "maxWidth": "md", "padding": "lg" },
-          "style": { "border": "1px dashed #cbd5e1" },
-          "children": [{ "id": "comp-container-md-t", "type": "Text", "props": { "content": "maxWidth md (768px)" }, "style": {}, "children": [] }]
-        },
-        {
-          "id": "comp-container-lg",
-          "type": "Container",
-          "props": { "maxWidth": "lg", "padding": "lg" },
-          "style": { "border": "1px dashed #cbd5e1" },
-          "children": [{ "id": "comp-container-lg-t", "type": "Text", "props": { "content": "maxWidth lg (1024px)" }, "style": {}, "children": [] }]
-        },
-        {
-          "id": "comp-container-xl",
-          "type": "Container",
-          "props": { "maxWidth": "xl", "padding": "xl" },
-          "style": { "border": "1px dashed #cbd5e1" },
-          "children": [{ "id": "comp-container-xl-t", "type": "Text", "props": { "content": "maxWidth xl (1200px)" }, "style": {}, "children": [] }]
-        }
+        { "id": "comp-g2-h", "type": "Heading", "props": { "level": 4, "text": "2 Columns" }, "style": {}, "children": [] },
+        { "id": "comp-g2", "type": "Grid", "props": { "columns": 2, "gap": "md" }, "style": {}, "children": [
+          { "id": "comp-g2-a", "type": "Container", "props": {}, "style": { "backgroundColor": "#dbeafe", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g2-at", "type": "Text", "props": { "content": "Column 1" }, "style": {}, "children": [] }] },
+          { "id": "comp-g2-b", "type": "Container", "props": {}, "style": { "backgroundColor": "#dbeafe", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g2-bt", "type": "Text", "props": { "content": "Column 2" }, "style": {}, "children": [] }] }
+        ]},
+        { "id": "comp-g3-h", "type": "Heading", "props": { "level": 4, "text": "3 Columns" }, "style": {}, "children": [] },
+        { "id": "comp-g3", "type": "Grid", "props": { "columns": 3, "gap": "md" }, "style": {}, "children": [
+          { "id": "comp-g3-a", "type": "Container", "props": {}, "style": { "backgroundColor": "#dcfce7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g3-at", "type": "Text", "props": { "content": "Column 1" }, "style": {}, "children": [] }] },
+          { "id": "comp-g3-b", "type": "Container", "props": {}, "style": { "backgroundColor": "#dcfce7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g3-bt", "type": "Text", "props": { "content": "Column 2" }, "style": {}, "children": [] }] },
+          { "id": "comp-g3-c", "type": "Container", "props": {}, "style": { "backgroundColor": "#dcfce7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g3-ct", "type": "Text", "props": { "content": "Column 3" }, "style": {}, "children": [] }] }
+        ]},
+        { "id": "comp-g4-h", "type": "Heading", "props": { "level": 4, "text": "4 Columns" }, "style": {}, "children": [] },
+        { "id": "comp-g4", "type": "Grid", "props": { "columns": 4, "gap": "md" }, "style": {}, "children": [
+          { "id": "comp-g4-a", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g4-at", "type": "Text", "props": { "content": "Col 1" }, "style": {}, "children": [] }] },
+          { "id": "comp-g4-b", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g4-bt", "type": "Text", "props": { "content": "Col 2" }, "style": {}, "children": [] }] },
+          { "id": "comp-g4-c", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g4-ct", "type": "Text", "props": { "content": "Col 3" }, "style": {}, "children": [] }] },
+          { "id": "comp-g4-d", "type": "Container", "props": {}, "style": { "backgroundColor": "#fef3c7", "padding": "20px", "borderRadius": "8px" }, "children": [{ "id": "comp-g4-dt", "type": "Text", "props": { "content": "Col 4" }, "style": {}, "children": [] }] }
+        ]}
       ]
     }
   ]
