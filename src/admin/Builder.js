@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import ComponentPalette from './ComponentPalette';
 import BuilderCanvas from './BuilderCanvas';
 import PropsEditor from './PropsEditor';
-import componentRegistry from '../lib/componentRegistry';
+import BuilderPropsPanel from './BuilderPropsPanel';
 import { deepClone, removeComponentById, findComponentById } from './builderHelpers';
 import { styles } from './builderStyles.js';
 
@@ -32,6 +32,8 @@ export default function Builder({ pageData, onUpdate }) {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [paletteVisible, setPaletteVisible] = useState(true);
   const [showMobilePropsPanel, setShowMobilePropsPanel] = useState(false);
+  const [recoveryInfo, setRecoveryInfo] = useState(null);
+  const autoSaveRef = useRef(null);
   const screenSize = useResponsiveBuilder();
   const isMobile = screenSize === 'mobile';
   const isTablet = screenSize === 'tablet';
@@ -43,28 +45,23 @@ export default function Builder({ pageData, onUpdate }) {
   }, [pageData]);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
-        e.preventDefault();
-        handleUndo();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z') {
-        e.preventDefault();
-        handleRedo();
-      }
-      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedComponentId) {
-        e.preventDefault();
-        handleDelete(selectedComponentId);
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key === 'd' && selectedComponentId) {
-        e.preventDefault();
-        handleDuplicate(selectedComponentId);
-      }
-      if (e.key === 'Escape') {
-        setSelectedComponentId(null);
-      }
-    };
+    if (!pageData?.name) return;
+    const mgr = new AutoSaveManager(pageData.name);
+    autoSaveRef.current = mgr;
+    const info = mgr.getRecoveryInfo();
+    if (info && !info.isEmpty) setRecoveryInfo(info);
+    mgr.start(() => pageData);
+    return () => mgr.stop();
+  }, [pageData?.name]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); handleUndo(); }
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z') { e.preventDefault(); handleRedo(); }
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedComponentId) { e.preventDefault(); handleDelete(selectedComponentId); }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'd' && selectedComponentId) { e.preventDefault(); handleDuplicate(selectedComponentId); }
+      if (e.key === 'Escape') setSelectedComponentId(null);
+    };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedComponentId, historyIndex, history]);
@@ -72,169 +69,71 @@ export default function Builder({ pageData, onUpdate }) {
   const addToHistory = (newPageData) => {
     const newHistory = history.slice(0, historyIndex + 1);
     newHistory.push(deepClone(newPageData));
-    if (newHistory.length > 50) {
-      newHistory.shift();
-    } else {
-      setHistoryIndex(historyIndex + 1);
-    }
+    if (newHistory.length > 50) { newHistory.shift(); } else { setHistoryIndex(historyIndex + 1); }
     setHistory(newHistory);
   };
 
   const handleUpdate = (updatedPageData) => {
     addToHistory(updatedPageData);
     onUpdate(updatedPageData);
+    if (autoSaveRef.current) autoSaveRef.current.save(updatedPageData);
   };
 
   const handleUndo = () => {
-    if (historyIndex > 0) {
-      const newIndex = historyIndex - 1;
-      setHistoryIndex(newIndex);
-      onUpdate(history[newIndex]);
-    }
+    if (historyIndex > 0) { const i = historyIndex - 1; setHistoryIndex(i); onUpdate(history[i]); }
   };
 
   const handleRedo = () => {
-    if (historyIndex < history.length - 1) {
-      const newIndex = historyIndex + 1;
-      setHistoryIndex(newIndex);
-      onUpdate(history[newIndex]);
-    }
-  };
-
-  const handleSelectComponent = (componentId) => {
-    setSelectedComponentId(componentId);
+    if (historyIndex < history.length - 1) { const i = historyIndex + 1; setHistoryIndex(i); onUpdate(history[i]); }
   };
 
   const handleDelete = (componentId) => {
-    const newPageData = removeComponentById(pageData, componentId);
-    handleUpdate(newPageData);
-    if (selectedComponentId === componentId) {
-      setSelectedComponentId(null);
-    }
+    handleUpdate(removeComponentById(pageData, componentId));
+    if (selectedComponentId === componentId) setSelectedComponentId(null);
   };
 
   const handleDuplicate = (componentId) => {
     const component = findComponentById(pageData, componentId);
     if (!component) return;
-
     const duplicated = deepClone(component);
     duplicated.id = `comp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
     const newPageData = deepClone(pageData);
     newPageData.components.push(duplicated);
-
     handleUpdate(newPageData);
     setSelectedComponentId(duplicated.id);
   };
 
-  const paletteShouldShow = !isMobile;
-
   return (
     <DndProvider backend={HTML5Backend}>
+      {recoveryInfo && (
+        <RecoveryDialog
+          recovery={recoveryInfo}
+          onRecover={() => { handleUpdate(recoveryInfo.pageData); setRecoveryInfo(null); autoSaveRef.current?.clear(); }}
+          onDiscard={() => { setRecoveryInfo(null); autoSaveRef.current?.clear(); }}
+        />
+      )}
       <div style={styles.builder}>
-        {paletteShouldShow && (
+        {!isMobile && (
           <div style={isTablet ? styles.leftTablet : styles.left}>
-            <ComponentPalette
-              pageData={pageData}
-              selectedId={selectedComponentId}
-              onSelect={handleSelectComponent}
-              onDelete={handleDelete}
-              onDuplicate={handleDuplicate}
-              isVisible={paletteVisible}
-              onToggleVisibility={setPaletteVisible}
-            />
+            <ComponentPalette pageData={pageData} selectedId={selectedComponentId} onSelect={setSelectedComponentId} onDelete={handleDelete} onDuplicate={handleDuplicate} isVisible={paletteVisible} onToggleVisibility={setPaletteVisible} />
           </div>
         )}
-
         {isMobile && (
-          <ComponentPalette
-            pageData={pageData}
-            selectedId={selectedComponentId}
-            onSelect={handleSelectComponent}
-            onDelete={handleDelete}
-            onDuplicate={handleDuplicate}
-            isVisible={paletteVisible}
-            onToggleVisibility={setPaletteVisible}
-          />
+          <ComponentPalette pageData={pageData} selectedId={selectedComponentId} onSelect={setSelectedComponentId} onDelete={handleDelete} onDuplicate={handleDuplicate} isVisible={paletteVisible} onToggleVisibility={setPaletteVisible} />
         )}
-
-        <div style={{...styles.center, flex: paletteShouldShow && !paletteVisible ? 0 : undefined}}>
-          <BuilderCanvas
-            pageData={pageData}
-            selectedId={selectedComponentId}
-            onUpdate={handleUpdate}
-            onSelectComponent={handleSelectComponent}
-            onDelete={handleDelete}
-            onDuplicate={handleDuplicate}
-            canUndo={historyIndex > 0}
-            canRedo={historyIndex < history.length - 1}
-            onUndo={handleUndo}
-            onRedo={handleRedo}
-            paletteVisible={paletteVisible}
-            isMobile={isMobile}
-          />
+        <div style={{...styles.center, flex: !isMobile && !paletteVisible ? 0 : undefined}}>
+          <BuilderCanvas pageData={pageData} selectedId={selectedComponentId} onUpdate={handleUpdate} onSelectComponent={setSelectedComponentId} onDelete={handleDelete} onDuplicate={handleDuplicate} canUndo={historyIndex > 0} canRedo={historyIndex < history.length - 1} onUndo={handleUndo} onRedo={handleRedo} paletteVisible={paletteVisible} isMobile={isMobile} />
         </div>
-
-        {isMobile && showMobilePropsPanel ? (
+        {isMobile && showMobilePropsPanel && (
           <PropsEditor
-            component={selectedComponentId ? findComponentById(pageData, selectedComponentId) : null}
-            schema={selectedComponentId ? componentRegistry.getComponent(findComponentById(pageData, selectedComponentId)?.type) : null}
-            onChange={(updatedProps) => {
-              const newPageData = deepClone(pageData);
-              const comp = findComponentById(newPageData, selectedComponentId);
-              if (comp) {
-                comp.props = updatedProps;
-                handleUpdate(newPageData);
-              }
-            }}
+            component={findComponentById(pageData, selectedComponentId)}
+            schema={componentRegistry.getComponent(findComponentById(pageData, selectedComponentId)?.type)}
+            onChange={(updatedProps) => { const d = deepClone(pageData); const c = findComponentById(d, selectedComponentId); if (c) { c.props = updatedProps; handleUpdate(d); } }}
             onClose={() => setShowMobilePropsPanel(false)}
             isMobile={true}
           />
-        ) : null}
-
-        <div style={isMobile ? styles.rightMobile : isTablet ? styles.rightTablet : styles.right}>
-          {selectedComponentId ? (() => {
-            const component = findComponentById(pageData, selectedComponentId);
-            const schema = component ? componentRegistry.getComponent(component.type) : null;
-            return isMobile ? (
-              <button
-                onClick={() => setShowMobilePropsPanel(true)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  backgroundColor: '#2563eb',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  minHeight: '44px',
-                }}
-              >
-                Edit Properties
-              </button>
-            ) : (
-              <PropsEditor
-                component={component}
-                schema={schema}
-                onChange={(updatedProps) => {
-                  const newPageData = deepClone(pageData);
-                  const comp = findComponentById(newPageData, selectedComponentId);
-                  if (comp) {
-                    comp.props = updatedProps;
-                    handleUpdate(newPageData);
-                  }
-                }}
-                isMobile={false}
-              />
-            );
-          })() : (
-            <div style={styles.placeholder}>
-              Select a component to edit props
-            </div>
-          )}
-        </div>
+        )}
+        <BuilderPropsPanel pageData={pageData} selectedComponentId={selectedComponentId} onUpdate={handleUpdate} isMobile={isMobile} isTablet={isTablet} onShowMobileProps={() => setShowMobilePropsPanel(true)} styles={styles} />
       </div>
     </DndProvider>
   );

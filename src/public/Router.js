@@ -134,103 +134,50 @@ const Router = ({ owner, repo, defaultPage = 'home', layout }) => {
 
   if (loading) {
     return (
-      <div className="router-loading" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        fontFamily: 'sans-serif'
-      }}>
-        <div className="spinner" style={{
-          width: '40px',
-          height: '40px',
-          border: '4px solid #f3f3f3',
-          borderTop: '4px solid #3498db',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }}></div>
-        <p>Loading page...</p>
+      <div style={pageStates.center}>
+        <div style={pageStates.spinner} />
+        <p style={{ color: '#64748b', fontFamily: 'system-ui, sans-serif' }}>Loading page...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="router-error" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        padding: '20px',
-        fontFamily: 'sans-serif',
-        textAlign: 'center'
-      }}>
-        <h1>Error</h1>
-        <p>{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-        >
-          Reload
-        </button>
+      <div style={pageStates.center}>
+        <div style={pageStates.icon}>!</div>
+        <h1 style={pageStates.heading}>Something went wrong</h1>
+        <p style={pageStates.desc}>{error}</p>
+        <button onClick={() => window.location.reload()} style={pageStates.btn}>Reload</button>
       </div>
     );
   }
 
   if (notFound) {
     return (
-      <div className="router-404" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        padding: '20px',
-        fontFamily: 'sans-serif',
-        textAlign: 'center'
-      }}>
-        <h1>404</h1>
-        <p>Page not found</p>
-        <a
-          href="#/"
-          style={{
-            marginTop: '20px',
-            padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '4px',
-            display: 'inline-block'
-          }}
-        >
-          Go to home page
-        </a>
+      <div style={pageStates.center}>
+        <div style={pageStates.icon}>?</div>
+        <h1 style={pageStates.heading}>Page not found</h1>
+        <p style={pageStates.desc}>This page does not exist or may have been moved.</p>
+        <a href="#/" style={pageStates.link}>Go to home page</a>
       </div>
     );
   }
 
   if (currentPage) {
-    return (
-      <div className="router" style={{
-        opacity: loading ? 0.5 : 1,
-        transition: 'opacity 0.3s ease'
-      }}>
-        <Renderer pageData={currentPage} mode="view" layout={layout} />
-      </div>
-    );
+    return <Renderer pageData={currentPage} mode="view" layout={layout} />;
   }
 
   return null;
+};
+
+const pageStates = {
+  center: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', padding: '40px 20px', fontFamily: 'system-ui, -apple-system, sans-serif', textAlign: 'center' },
+  spinner: { width: '36px', height: '36px', border: '3px solid #e2e8f0', borderTop: '3px solid #2563eb', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: '16px' },
+  icon: { width: '64px', height: '64px', borderRadius: '50%', backgroundColor: '#f1f5f9', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: '700', marginBottom: '16px' },
+  heading: { margin: '0 0 8px', fontSize: '1.5rem', fontWeight: '700', color: '#1e293b' },
+  desc: { margin: '0 0 24px', fontSize: '0.875rem', color: '#64748b', maxWidth: '360px', lineHeight: '1.5' },
+  btn: { padding: '12px 24px', backgroundColor: '#2563eb', color: '#ffffff', border: 'none', borderRadius: '8px', fontSize: '0.875rem', fontWeight: '600', cursor: 'pointer' },
+  link: { padding: '12px 24px', backgroundColor: '#2563eb', color: '#ffffff', borderRadius: '8px', fontSize: '0.875rem', fontWeight: '600', textDecoration: 'none' },
 };
 
 export default Router;
