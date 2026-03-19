@@ -63,36 +63,28 @@ export default function App() {
 
 function WelcomePage() {
   return (
-    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '80px 32px', textAlign: 'center' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '24px' }}>🪝</div>
-        <h1 style={{ fontSize: '3rem', fontWeight: 800, color: '#1e293b', margin: '0 0 16px', letterSpacing: '-1px' }}>
-          Hookie CMS
-        </h1>
-        <p style={{ fontSize: '1.25rem', color: '#64748b', margin: '0 0 48px', lineHeight: 1.6, maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
+    <div className="min-h-screen bg-backgroundSecondary font-sans">
+      <div className="max-w-3xl mx-auto px-8 py-20 text-center">
+        <div className="text-5xl mb-6">🪝</div>
+        <h1 className="text-5xl font-extrabold text-content1 mb-4 tracking-tight">Hookie CMS</h1>
+        <p className="text-xl text-content2 mb-12 leading-relaxed max-w-xl mx-auto">
           Build websites visually and store everything in GitHub. No servers, no databases — just your repo.
         </p>
-
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '64px' }}>
-          <a href="#/admin/settings" style={ctaBtn}>
-            Get Started →
-          </a>
-          <a href="#/admin" style={secondaryBtn}>
-            Open Admin
-          </a>
+        <div className="flex gap-4 justify-center flex-wrap mb-16">
+          <a href="#/admin/settings" className="btn btn-primary btn-lg">Get Started →</a>
+          <a href="#/admin" className="btn btn-outline btn-lg">Open Admin</a>
         </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px', textAlign: 'left' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
           {[
             { icon: '🎨', title: 'Visual Builder', desc: 'Drag and drop components to build pages without writing code.' },
             { icon: '🐙', title: 'GitHub Storage', desc: 'Pages stored as JSON in your repo. Full git history and version control.' },
             { icon: '🧩', title: '19 Components', desc: 'Hero, Card, Grid, Testimonial, PricingCard, ContactForm and more.' },
             { icon: '⚡', title: 'No Build Step', desc: 'Deploy to GitHub Pages or any static host. Zero configuration.' },
           ].map((f, i) => (
-            <div key={i} style={featureCard}>
-              <div style={{ fontSize: '1.75rem', marginBottom: '12px' }}>{f.icon}</div>
-              <h3 style={{ margin: '0 0 8px', fontSize: '1rem', fontWeight: 700, color: '#1e293b' }}>{f.title}</h3>
-              <p style={{ margin: 0, fontSize: '0.875rem', color: '#64748b', lineHeight: 1.6 }}>{f.desc}</p>
+            <div key={i} className="card card-bordered p-6">
+              <div className="text-3xl mb-3">{f.icon}</div>
+              <h3 className="font-bold text-content1 mb-2">{f.title}</h3>
+              <p className="text-sm text-content2 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -100,22 +92,3 @@ function WelcomePage() {
     </div>
   );
 }
-
-const ctaBtn = {
-  display: 'inline-flex', alignItems: 'center', padding: '16px 32px',
-  backgroundColor: '#2563eb', color: '#ffffff', borderRadius: '12px',
-  textDecoration: 'none', fontWeight: 700, fontSize: '1rem',
-  boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
-};
-
-const secondaryBtn = {
-  display: 'inline-flex', alignItems: 'center', padding: '16px 32px',
-  backgroundColor: '#ffffff', color: '#1e293b', borderRadius: '12px',
-  textDecoration: 'none', fontWeight: 600, fontSize: '1rem',
-  border: '2px solid #e2e8f0',
-};
-
-const featureCard = {
-  backgroundColor: '#ffffff', borderRadius: '12px',
-  padding: '24px', border: '1px solid #e2e8f0',
-};

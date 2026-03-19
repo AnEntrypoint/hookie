@@ -1,170 +1,106 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useMachine } from '@xstate/react';
+import { pageManagerMachine } from '../machines/pageManagerMachine';
 import contentManager from '../lib/contentManager';
 import PageCard from './PageCard';
 import CreatePageModal from './CreatePageModal';
-import { styles } from './pageManagerStyles';
 
 export default function PageManager({ owner, repo, onSelectPage }) {
-  const [pages, setPages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(null);
-  const [errorType, setErrorType] = useState(null);
+  const [state, send] = useMachine(pageManagerMachine);
+  const ctx = state.context;
 
-  useEffect(() => {
-    loadPages();
-  }, [owner, repo]);
+  useEffect(() => { loadPages(); }, [owner, repo]);
 
   const loadPages = async () => {
-    setLoading(true);
-    setError(null);
-    setErrorType(null);
-    if (!owner || !repo) {
-      setLoading(false);
-      setErrorType('no-repo');
-      return;
-    }
+    send({ type: 'RELOAD' });
+    if (!owner || !repo) { send({ type: 'NO_REPO' }); return; }
     try {
       const pageList = await contentManager.listPages(owner, repo);
-      const sortedPages = Array.isArray(pageList)
-        ? pageList.filter(p => p && p.name).sort((a, b) => a.name.localeCompare(b.name))
-        : [];
-      setPages(sortedPages);
+      const sorted = Array.isArray(pageList) ? pageList.filter(p => p && p.name).sort((a, b) => a.name.localeCompare(b.name)) : [];
+      send({ type: 'LOADED', pages: sorted });
     } catch (err) {
       const msg = err.message || '';
-      if (msg.includes('401') || msg.includes('403')) {
-        setErrorType('auth');
-        setError('Authentication failed. Check your GitHub token in Settings.');
-      } else if (msg.includes('404')) {
-        setErrorType('not-found');
-        setError('Repository or content path not found. Check your repository settings.');
-      } else if (msg.includes('Network') || msg.includes('fetch')) {
-        setErrorType('network');
-        setError('Network error. Check your internet connection.');
-      } else {
-        setErrorType('api');
-        setError(msg || 'Failed to load pages');
-      }
-    } finally {
-      setLoading(false);
+      let errorType = 'api';
+      let error = msg || 'Failed to load pages';
+      if (msg.includes('401') || msg.includes('403')) { errorType = 'auth'; error = 'Authentication failed. Check your GitHub token.'; }
+      else if (msg.includes('404')) { errorType = 'not-found'; error = 'Repository or content path not found.'; }
+      else if (msg.includes('Network') || msg.includes('fetch')) { errorType = 'network'; error = 'Network error. Check your connection.'; }
+      send({ type: 'LOAD_ERROR', error, errorType });
     }
   };
 
   const handleCreatePage = async ({ slug, title, components }) => {
-    setSubmitting(true);
-    setError(null);
+    send({ type: 'CREATE_START' });
     try {
       const pageData = { name: slug, title, components };
       await contentManager.savePage(owner, repo, slug, pageData);
       await loadPages();
-      setShowForm(false);
-      setSubmitting(false);
+      send({ type: 'CREATE_SUCCESS' });
       onSelectPage({ name: slug, data: pageData });
-    } catch (err) {
-      setError(err.message || 'Failed to create page');
-      setSubmitting(false);
-    }
+    } catch (err) { send({ type: 'CREATE_ERROR', error: err.message || 'Failed to create page' }); }
   };
 
   const handleEditPage = async (page) => {
     try {
       const pageData = await contentManager.loadPage(owner, repo, page.name);
       onSelectPage({ name: page.name, data: pageData });
-    } catch (err) {
-      setError(err.message || 'Failed to load page');
-    }
+    } catch (err) { send({ type: 'SET_ERROR', error: err.message || 'Failed to load page' }); }
   };
 
   const handleDuplicatePage = async (page, newName) => {
     try {
       const pageData = await contentManager.loadPage(owner, repo, page.name);
-      const duplicatedData = { ...pageData, name: newName, title: formatPageTitle(newName) };
-      await contentManager.savePage(owner, repo, newName, duplicatedData);
+      const dup = { ...pageData, name: newName, title: formatTitle(newName) };
+      await contentManager.savePage(owner, repo, newName, dup);
       await loadPages();
-    } catch (err) {
-      setError(err.message || 'Failed to duplicate page');
-    }
+    } catch (err) { send({ type: 'SET_ERROR', error: err.message || 'Failed to duplicate' }); }
   };
 
   const handleDeletePage = async (page) => {
-    try {
-      await contentManager.deletePage(owner, repo, page.name);
-      await loadPages();
-    } catch (err) {
-      setError(err.message || 'Failed to delete page');
-    }
+    try { await contentManager.deletePage(owner, repo, page.name); await loadPages(); }
+    catch (err) { send({ type: 'SET_ERROR', error: err.message || 'Failed to delete' }); }
   };
 
-  const formatPageTitle = (name) => name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const formatTitle = (name) => name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-  if (loading) {
+  if (state.matches('loading')) {
     return (
-      <div style={styles.loading}>
-        <div style={styles.spinner} />
+      <div className="flex flex-col items-center justify-center p-12 text-content2">
+        <div className="spinner w-8 h-8 border-4 border-primary border-t-transparent rounded-full mb-4" />
         <p>Loading pages...</p>
       </div>
     );
   }
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h2 style={styles.heading}>Pages</h2>
-        {!errorType && (
-          <button onClick={() => setShowForm(true)} style={styles.newButton}>+ New Page</button>
+    <div className="p-6">
+      <header className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-bold text-content1">Pages</h2>
+        {!state.matches('noRepo') && !state.matches('error') && (
+          <button onClick={() => send({ type: 'SHOW_FORM' })} className="btn btn-primary btn-sm">+ New Page</button>
         )}
       </header>
 
-      {showForm && (
-        <CreatePageModal
-          existingPages={pages}
-          onClose={() => setShowForm(false)}
-          onSubmit={handleCreatePage}
-          submitting={submitting}
-        />
+      {ctx.showForm && (
+        <CreatePageModal existingPages={ctx.pages} onClose={() => send({ type: 'HIDE_FORM' })} onSubmit={handleCreatePage} submitting={ctx.submitting} />
       )}
 
-      {error && (
-        <div style={styles.error}>
-          {error}
-          <button onClick={() => setError(null)} style={styles.dismissButton}>x</button>
+      {ctx.error && (
+        <div className="alert alert-error mb-4 flex justify-between items-center">
+          {ctx.error}
+          <button onClick={() => send({ type: 'CLEAR_ERROR' })} className="btn btn-ghost btn-xs">✕</button>
         </div>
       )}
 
-      {errorType === 'no-repo' ? (
-        <EmptyState
-          icon="*"
-          heading="No repository configured"
-          description="Connect a GitHub repository to start managing pages."
-          action={<a href="#/admin/settings" style={emptyActionStyle}>Go to Settings</a>}
-        />
-      ) : errorType && !pages.length ? (
-        <EmptyState
-          icon="!"
-          heading="Could not load pages"
-          description={error}
-          action={<button onClick={loadPages} style={emptyActionStyle}>Retry</button>}
-        />
-      ) : pages.length === 0 ? (
-        <EmptyState
-          icon="+"
-          heading="Create your first page"
-          description="Pages are the building blocks of your site. Each page is a collection of components arranged on a canvas."
-          suggestion={'Try creating a "home" or "about" page to get started.'}
-          action={<button onClick={() => setShowForm(true)} style={emptyActionStyle}>Create Page</button>}
-        />
+      {state.matches('noRepo') ? (
+        <EmptyState icon="*" heading="No repository configured" description="Connect a GitHub repository to start managing pages." action={<a href="#/admin/settings" className="btn btn-primary">Go to Settings</a>} />
+      ) : state.matches('error') && !ctx.pages.length ? (
+        <EmptyState icon="!" heading="Could not load pages" description={ctx.error} action={<button onClick={() => send({ type: 'RETRY' })} className="btn btn-primary">Retry</button>} />
+      ) : ctx.pages.length === 0 ? (
+        <EmptyState icon="+" heading="Create your first page" description="Pages are the building blocks of your site." suggestion={'Try creating a "home" or "about" page.'} action={<button onClick={() => send({ type: 'SHOW_FORM' })} className="btn btn-primary">Create Page</button>} />
       ) : (
-        <div style={styles.grid}>
-          {pages.map(page => (
-            <PageCard
-              key={page.name}
-              page={page}
-              onEdit={handleEditPage}
-              onDuplicate={handleDuplicatePage}
-              onDelete={handleDeletePage}
-            />
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {ctx.pages.map(page => <PageCard key={page.name} page={page} onEdit={handleEditPage} onDuplicate={handleDuplicatePage} onDelete={handleDeletePage} />)}
         </div>
       )}
     </div>
@@ -173,23 +109,12 @@ export default function PageManager({ owner, repo, onSelectPage }) {
 
 function EmptyState({ icon, heading, description, suggestion, action }) {
   return (
-    <div style={emptyStyles.container}>
-      <div style={emptyStyles.icon}>{icon}</div>
-      <h3 style={emptyStyles.heading}>{heading}</h3>
-      <p style={emptyStyles.description}>{description}</p>
-      {suggestion && <p style={emptyStyles.suggestion}>{suggestion}</p>}
-      {action && <div style={emptyStyles.action}>{action}</div>}
+    <div className="flex flex-col items-center justify-center p-20 text-center border-2 border-dashed border-border1 rounded-xl bg-backgroundSecondary min-h-[360px]">
+      <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-3xl font-bold mb-4">{icon}</div>
+      <h3 className="text-lg font-bold text-content1 mb-2">{heading}</h3>
+      <p className="text-sm text-content2 max-w-sm leading-relaxed mb-2">{description}</p>
+      {suggestion && <p className="text-xs text-content3 italic mb-5">{suggestion}</p>}
+      {action && <div className="mt-2">{action}</div>}
     </div>
   );
 }
-
-const emptyActionStyle = { display: 'inline-flex', alignItems: 'center', padding: '12px 24px', backgroundColor: '#2563eb', color: '#ffffff', border: 'none', borderRadius: '8px', fontSize: '0.875rem', fontWeight: '600', cursor: 'pointer', textDecoration: 'none', minHeight: '44px' };
-
-const emptyStyles = {
-  container: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 28px', textAlign: 'center', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#f8fafc', margin: '0 28px', minHeight: '360px' },
-  icon: { width: '64px', height: '64px', borderRadius: '50%', backgroundColor: '#dbeafe', color: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem', fontWeight: '700', marginBottom: '16px' },
-  heading: { margin: '0 0 8px', fontSize: '1.25rem', fontWeight: '700', color: '#1e293b' },
-  description: { margin: '0 0 8px', fontSize: '0.875rem', color: '#64748b', maxWidth: '400px', lineHeight: '1.5' },
-  suggestion: { margin: '0 0 20px', fontSize: '0.813rem', color: '#94a3b8', fontStyle: 'italic' },
-  action: { marginTop: '8px' },
-};
