@@ -30,6 +30,42 @@ export const styles = {
   dismissButton: { ...minTouchSize, padding: '8px 12px', backgroundColor: 'transparent', color: '#1e40af', border: 'none', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer', fontWeight: '500', transition: 'background-color 150ms', flex: 1 },
 };
 
+export const breadcrumbStyle = {
+  display: 'flex', alignItems: 'center', gap: '8px', marginLeft: '8px', color: '#64748b',
+};
+
+export const previewBtnStyle = {
+  display: 'inline-flex', alignItems: 'center', gap: '4px',
+  padding: '6px 14px', borderRadius: '8px',
+  fontSize: '0.8125rem', fontWeight: 600, color: '#475569',
+  textDecoration: 'none', border: '1px solid #e2e8f0',
+  backgroundColor: '#f8fafc', cursor: 'pointer',
+  transition: 'all 150ms', minHeight: '32px',
+};
+
+export const publishBtnStyle = {
+  display: 'inline-flex', alignItems: 'center', gap: '8px',
+  padding: '6px 16px', borderRadius: '8px',
+  fontSize: '0.8125rem', fontWeight: 700, color: '#ffffff',
+  border: 'none', cursor: 'pointer',
+  transition: 'all 150ms', minHeight: '32px', position: 'relative',
+};
+
+export const badgeStyle = {
+  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+  minWidth: '18px', height: '18px', padding: '0 4px',
+  backgroundColor: '#ffffff', color: '#2563eb',
+  borderRadius: '999px', fontSize: '0.6875rem', fontWeight: 800,
+};
+
+export const helpBtnStyle = {
+  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+  width: '32px', height: '32px', borderRadius: '50%',
+  fontSize: '0.875rem', fontWeight: 700, color: '#64748b',
+  border: '1px solid #e2e8f0', backgroundColor: '#f8fafc',
+  cursor: 'pointer', transition: 'all 150ms',
+};
+
 if (typeof document !== 'undefined') {
   const stylesStr = `
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

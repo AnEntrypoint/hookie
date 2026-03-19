@@ -6,6 +6,7 @@ import contentManager from '../lib/contentManager';
 import componentRegistry from '../lib/componentRegistry';
 import * as github from '../lib/github';
 import { styles } from './componentCreatorStyles';
+import ChildrenRulesSection from './ChildrenRulesSection';
 
 export default function ComponentCreator({ owner, repo, onComponentCreated }) {
   const [componentName, setComponentName] = useState('');
@@ -35,7 +36,7 @@ export default function ComponentCreator({ owner, repo, onComponentCreated }) {
     e.preventDefault();
     setError(null);
 
-    const existingComponents = Object.keys(componentRegistry.getAllComponents());
+    const existingComponents = componentRegistry.getAllComponents();
     const nameValidation = validateComponentName(componentName, existingComponents);
     if (!nameValidation.valid) {
       setError(nameValidation.error);
@@ -163,44 +164,7 @@ export default function ComponentCreator({ owner, repo, onComponentCreated }) {
           componentName={componentName}
         />
 
-        <section style={styles.section}>
-          <h3 style={styles.sectionHeading}>Children Rules</h3>
-          
-          <div style={styles.radioGroup}>
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                value="all"
-                checked={allowedChildren === 'all'}
-                onChange={(e) => setAllowedChildren(e.target.value)}
-                style={styles.radio}
-              />
-              Allow all child types
-            </label>
-
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                value="none"
-                checked={allowedChildren === 'none'}
-                onChange={(e) => setAllowedChildren(e.target.value)}
-                style={styles.radio}
-              />
-              No children allowed
-            </label>
-
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                value="specific"
-                checked={allowedChildren === 'specific'}
-                onChange={(e) => setAllowedChildren(e.target.value)}
-                style={styles.radio}
-              />
-              Specific children only
-            </label>
-          </div>
-        </section>
+        <ChildrenRulesSection allowedChildren={allowedChildren} onChange={setAllowedChildren} />
 
         {error && (
           <div style={styles.error}>

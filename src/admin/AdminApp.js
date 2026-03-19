@@ -7,7 +7,7 @@ import Builder from './Builder';
 import ComponentCreator from './ComponentCreator';
 import ComponentLibrary from './ComponentLibrary';
 import Settings from './Settings';
-import PublishManager from './PublishManager';
+import PublishModal from './PublishModal';
 import LayoutEditor from './LayoutEditor';
 import LayoutPreview from './LayoutPreview';
 import { loadSettingsFromStorage, migrateStorageKeys, KEYS } from './settingsStorage';
@@ -182,22 +182,13 @@ export default function AdminApp() {
       <main className="flex-1 overflow-y-auto overflow-x-hidden">{renderView()}</main>
 
       {ctx.showPublishModal && (
-        <div className="modal-overlay visible" onClick={e => e.target === e.currentTarget && send({ type: 'TOGGLE_PUBLISH_MODAL', show: false })}>
-          <div className="modal visible max-w-2xl w-full">
-            <div className="modal-header flex items-center justify-between p-5 border-b border-border1">
-              <h2 className="text-lg font-bold text-content1">Publish Changes</h2>
-              <button className="btn btn-ghost btn-sm" onClick={() => send({ type: 'TOGGLE_PUBLISH_MODAL', show: false })}>✕</button>
-            </div>
-            <div className="modal-body flex-1 overflow-y-auto p-0">
-              <PublishManager
-                changes={ctx.changes}
-                owner={ctx.repoInfo.owner}
-                repo={ctx.repoInfo.repo}
-                onRefresh={() => send({ type: 'PUBLISH_SUCCESS' })}
-              />
-            </div>
-          </div>
-        </div>
+        <PublishModal
+          changes={ctx.changes}
+          owner={ctx.repoInfo.owner}
+          repo={ctx.repoInfo.repo}
+          onClose={() => send({ type: 'TOGGLE_PUBLISH_MODAL', show: false })}
+          onPublishSuccess={() => send({ type: 'PUBLISH_SUCCESS' })}
+        />
       )}
     </div>
   );
