@@ -9,6 +9,15 @@ import {
 } from './propsEditorHelpers';
 import componentRegistry from '../lib/componentRegistry';
 import { findComponentById } from './builderHelpers';
+import {
+  getMobileWrapperStyle,
+  getMobileContainerStyle,
+  getDesktopContainerStyle,
+  getMobileHeaderStyle,
+  getCloseButtonStyle,
+  getFieldWrapperStyle,
+  getEmptyStateStyle,
+} from './propsEditorStyles';
 
 const PropsEditor = ({ component, schema, onChange, onClose, isMobile, componentId, pageData }) => {
   const [localProps, setLocalProps] = useState({});
@@ -75,11 +84,27 @@ const PropsEditor = ({ component, schema, onChange, onClose, isMobile, component
 
   const propEntries = Object.entries(activeSchema.props);
 
+  const renderPropInputs = () =>
+    propEntries.map(([propName, propSchema], index) => (
+      <div key={propName} style={getFieldWrapperStyle(index, propEntries.length)}>
+        <PropInput
+          propName={propName}
+          propSchema={propSchema}
+          value={localProps[propName]}
+          error={errors[propName]}
+          onChange={{
+            onChange: handleChange(propName, propSchema),
+            onBlur: handleJSONBlur(propName, propSchema),
+          }}
+          isFirstField={index === 0}
+          isMobile={isMobile}
+        />
+      </div>
+    ));
+
   if (isMobile) {
     const handleBackdropClick = (e) => {
-      if (e.target === e.currentTarget && onClose) {
-        onClose();
-      }
+      if (e.target === e.currentTarget && onClose) onClose();
     };
 
     return (
@@ -90,137 +115,22 @@ const PropsEditor = ({ component, schema, onChange, onClose, isMobile, component
               <h3 style={{ margin: '0 0 0 0', fontSize: '18px', fontWeight: 600, color: DEFAULT_COLORS.textDark }}>
                 Properties
               </h3>
-              <button
-                type="button"
-                onClick={onClose}
-                style={getCloseButtonStyle()}
-              >
+              <button type="button" onClick={onClose} style={getCloseButtonStyle()}>
                 ✕
               </button>
             </div>
           )}
-          {propEntries.map(([propName, propSchema], index) => (
-            <div key={propName} style={getFieldWrapperStyle(index, propEntries.length)}>
-              <PropInput
-                propName={propName}
-                propSchema={propSchema}
-                value={localProps[propName]}
-                error={errors[propName]}
-                onChange={{
-                  ...handleChange(propName, propSchema),
-                  onBlur: handleJSONBlur(propName, propSchema),
-                }}
-                isFirstField={index === 0}
-                isMobile={isMobile}
-              />
-            </div>
-          ))}
+          {renderPropInputs()}
         </form>
       </div>
     );
   }
 
-  const containerStyle = getDesktopContainerStyle();
-
   return (
-    <form style={containerStyle}>
-      {propEntries.map(([propName, propSchema], index) => (
-        <div key={propName} style={getFieldWrapperStyle(index, propEntries.length)}>
-          <PropInput
-            propName={propName}
-            propSchema={propSchema}
-            value={localProps[propName]}
-            error={errors[propName]}
-            onChange={{
-              ...handleChange(propName, propSchema),
-              onBlur: handleJSONBlur(propName, propSchema),
-            }}
-            isFirstField={index === 0}
-            isMobile={isMobile}
-          />
-        </div>
-      ))}
+    <form style={getDesktopContainerStyle()}>
+      {renderPropInputs()}
     </form>
   );
 };
-
-const getMobileWrapperStyle = () => ({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  display: 'flex',
-  flexDirection: 'column',
-  zIndex: 999,
-});
-
-const getMobileContainerStyle = () => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-  padding: '16px',
-  maxHeight: 'calc(100vh - 60px)',
-  overflowY: 'auto',
-  WebkitOverflowScrolling: 'touch',
-  marginTop: 'auto',
-  backgroundColor: '#fff',
-  borderTopLeftRadius: '16px',
-  borderTopRightRadius: '16px',
-  maxWidth: '100vw',
-});
-
-const getDesktopContainerStyle = () => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-  padding: '0',
-});
-
-const getMobileHeaderStyle = () => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  paddingBottom: '16px',
-  borderBottom: `1px solid ${DEFAULT_COLORS.border}`,
-  position: 'sticky',
-  top: 0,
-  backgroundColor: '#fff',
-  zIndex: 10,
-  marginLeft: '-16px',
-  marginRight: '-16px',
-  paddingLeft: '16px',
-  paddingRight: '16px',
-  marginBottom: '8px',
-});
-
-const getCloseButtonStyle = () => ({
-  background: 'none',
-  border: 'none',
-  fontSize: '24px',
-  color: DEFAULT_COLORS.textMuted,
-  cursor: 'pointer',
-  padding: '4px 8px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minWidth: '44px',
-  minHeight: '44px',
-  borderRadius: '4px',
-  transition: 'background-color 0.2s ease',
-});
-
-const getFieldWrapperStyle = (index, total) => ({
-  paddingBottom: '24px',
-  borderBottom: index < total - 1 ? `1px solid ${DEFAULT_COLORS.border}` : 'none',
-});
-
-const getEmptyStateStyle = (isMobile) => ({
-  padding: isMobile ? '24px 16px' : '24px',
-  textAlign: 'center',
-  color: DEFAULT_COLORS.textMuted,
-  fontSize: isMobile ? '16px' : '14px',
-});
 
 export default PropsEditor;
