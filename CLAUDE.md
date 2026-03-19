@@ -3,28 +3,67 @@
 ## Project Overview
 Hookie is a GitHub-backed CMS: pages are stored as JSON in a GitHub repo, edited visually in-browser, and published via the GitHub Contents API.
 
+## Tech Stack
+- **React 18** — Admin UI (Builder, Settings, PageManager, etc.)
+- **XState v5** — State machines for all complex stateful components
+- **WebJSX** — Public-facing page rendering via Web Components
+- **Ripple UI** — CSS component framework (Tailwind-based) for admin styling
+- **Tailwind CSS v4** — Utility-first CSS for admin layout
+- **Vite** — Build tool with React plugin and Tailwind CSS plugin
+
 ## File Layout
 ```
 src/
   admin/         Admin UI components (Builder, PageManager, Settings, etc.)
   components/    19 built-in page components (Hero, Card, Grid, etc.)
   lib/           Shared logic (github.js, contentManager.js, componentRegistry.js)
-  public/        Public-facing app (App.js, Renderer.js, Router.js)
-  main.jsx       Entry point - renders App.js
+  machines/      XState state machines (adminMachine, builderMachine, etc.)
+  public/        Public-facing app (App.js, Router.js, WebJSXRenderer.js)
+    webjsx-components/  Web Component definitions for public rendering
+  styles/        Tailwind CSS entry point with Ripple UI import
+  index.jsx      Entry point - renders App.js
 ```
 
 ## Key Architecture Decisions
+
+### State Management (XState)
+- **adminMachine** (`src/machines/adminMachine.js`): States: initializing → welcome | ready. Context holds repoInfo, currentPage, changes[], layoutData, syncStatus, notifications. Ready state has substates: pageManager, pageEditor, componentCreator, library, settings, layout.
+- **builderMachine** (`src/machines/builderMachine.js`): States: idle → editing. Context holds pageData, selectedComponentId, history[], historyIndex, paletteVisible. Handles UNDO/REDO with guards.
+- **settingsMachine** (`src/machines/settingsMachine.js`): States: checking → tokenStep → repoStep → verifyStep → verifying → connected. Replaces numeric step counter with explicit states.
+- **publishMachine** (`src/machines/publishMachine.js`): States: idle → confirming → publishing → success | error. Guard validates commit message length.
+- **pageManagerMachine** (`src/machines/pageManagerMachine.js`): States: loading → ready | noRepo | error. Context holds pages[], showForm, submitting.
+- **routerMachine** (inline in `src/public/Router.js`): States: loading → ready | notFound | error. Manages page cache and navigation.
+
+All machines use `useMachine()` hook from `@xstate/react` in their respective components.
+
+### Styling (Ripple UI + Tailwind)
+- Admin UI uses Ripple UI component classes (btn, alert, card, modal, input, etc.)
+- Layout uses Tailwind utility classes (flex, grid, p-*, text-*, etc.)
+- Ripple UI imported as pre-built CSS (not as Tailwind plugin — v1 incompatible with Tailwind v4 plugin API)
+- CSS entry: `src/styles/tailwind.css` imports Tailwind and Ripple UI CSS
+- Tailwind v4 plugin configured in `vite.config.js` via `@tailwindcss/vite`
+
+### Public Rendering (WebJSX)
+- Public pages render via WebJSX Web Components instead of React
+- Each of 19 component types has a corresponding `<hookie-*>` custom element
+- Web Components use Shadow DOM for style isolation
+- `src/public/webjsx-components/registry.js` defines all component renderers and styles
+- `src/public/WebJSXRenderer.js` builds vnode tree from JSON page data and calls `webjsx.applyDiff()`
+- Falls back to React Renderer if WebJSX rendering fails
+- Admin Builder still uses React Renderer for edit mode (DnD, selection, etc.)
 
 ### Routing
 - All routing is hash-based (`#/admin`, `#/pages/home`)
 - `src/public/App.js` detects admin routes and renders `AdminApp`, otherwise renders the public site
 - `src/admin/Router.js` handles admin route parsing; `src/public/AppRoutes.js` handles public routes
+- Public Router uses XState machine for page loading state
 
 ### Component System
 - **Registry** (`src/lib/componentRegistry.js`): 19 built-in schemas with props, defaults, category, icon
-- **Renderer** (`src/public/Renderer.js`): maps type strings to React components via `COMPONENT_MAP`
+- **React Renderer** (`src/public/Renderer.js`): maps type strings to React components (used in admin edit mode)
+- **WebJSX Renderer** (`src/public/WebJSXRenderer.js`): renders page data as Web Components (used in public view)
 - **ComponentLoader** (`src/lib/componentLoader.js`): dynamically loaded custom components from GitHub
-- To add a new component: add schema to `componentRegistry.js`, add file to `src/components/`, add to `COMPONENT_MAP` in `Renderer.js`
+- To add a new component: add schema to `componentRegistry.js`, add file to `src/components/`, add to `COMPONENT_MAP` in `Renderer.js`, add renderer in `webjsx-components/registry.js`
 
 ### Content Storage
 - Pages: `content/pages/{slug}.json` — `{ name, title, components[] }`
@@ -43,23 +82,28 @@ src/
 - Token validated against `GET /repos/{owner}/{repo}` before saving
 
 ### Builder State
-- `AdminApp.js` owns page data and changes list
-- `Builder.js` owns selection state and undo/redo history
+- `Builder.js` uses `builderMachine` for selection, history, and palette state
+- `AdminApp.js` uses `adminMachine` for page data, changes list, and routing
 - `BuilderCanvas.js` passes `onDelete`/`onDuplicate` down to `Renderer.js`
 - `Renderer.js` in edit mode shows floating toolbar (type label, Copy, Delete) above selected component
-- PropsEditor lives in Builder right panel, receives selected component from Builder state
 
 ### PublishManager
-- Triggered as a modal from AdminHeader Publish button
-- Changes accumulate in AdminApp state as `{ path, content, status }` objects
-- On publish success: `changes` array cleared, modal closed
+- Uses `publishMachine` with explicit states: idle → confirming → publishing → success | error
+- Changes accumulate in adminMachine context as `{ path, content, status }` objects
+- On publish success: adminMachine receives PUBLISH_SUCCESS, changes cleared
 
 ### Settings / Setup
-- 3-step wizard: Token → Repository → Verify
+- Uses `settingsMachine` with explicit wizard states: tokenStep → repoStep → verifyStep → connected
 - `initRepo()` creates `content/layout.json` and `content/pages/home.json` if missing
 - Stored in localStorage; also reads `VITE_GITHUB_OWNER` / `VITE_GITHUB_REPO` env vars
 
 ## Constraints and Gotchas
+
+### Ripple UI + Tailwind v4
+Ripple UI v1 is not compatible with Tailwind v4's plugin API. Ripple UI CSS is imported directly as a pre-built stylesheet rather than as a Tailwind plugin. This means no tree-shaking of unused Ripple UI styles.
+
+### WebJSX + React Coexistence
+WebJSX and React use different JSX runtimes. WebJSX components use `webjsx.createElement()` directly (not JSX syntax) to avoid conflicts with React's JSX transform. The Vite config uses `@vitejs/plugin-react` for React JSX only.
 
 ### No Build Step Requirement
 The project is served directly via Vite dev server or as a built static site. JSX is compiled by Vite, but there is no separate build pipeline for the content.
@@ -68,7 +112,7 @@ The project is served directly via Vite dev server or as a built static site. JS
 `ComponentLibraryDetail.js` renders live previews via `componentLoader.getComponentImplementation()`. Built-in components must be registered via the loader in `AdminApp.loadCustomComponents()` for preview to work.
 
 ### File Size Policy
-All source files must stay under 200 lines. `ComponentLibrary.js` was refactored (was 798 lines) into `ComponentLibrary.js` + `ComponentLibraryList.js` + `ComponentLibraryDetail.js` + `componentLibraryStyles.js`.
+All source files must stay under 200 lines.
 
 ### No Test Files
 No `.test.js` or `.spec.js` files. Validation done via actual execution against real services.

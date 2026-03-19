@@ -1,15 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   base: '/hookie/',
-  plugins: [react({
-    jsxRuntime: 'automatic',
-    babel: {
-      babelrc: false,
-      configFile: false
-    }
-  })],
+  plugins: [
+    tailwindcss(),
+    react({
+      jsxRuntime: 'automatic',
+      babel: {
+        babelrc: false,
+        configFile: false
+      }
+    }),
+  ],
   esbuild: {
     loader: 'jsx',
     include: /src\/.*\.jsx?$/,
