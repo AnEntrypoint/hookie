@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useMachine } from '@xstate/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -10,17 +10,36 @@ import BuilderPropsPanel from './BuilderPropsPanel';
 import componentRegistry from '../lib/componentRegistry';
 import { deepClone, removeComponentById, findComponentById } from './builderHelpers';
 import { styles } from './builderStyles.js';
+import { AutoSaveManager } from './autoSaveManager';
+import RecoveryDialog from './RecoveryDialog';
 
 export default function Builder({ pageData, onUpdate }) {
   const [state, send] = useMachine(builderMachine);
+  const [recovery, setRecovery] = useState(null);
+  const autoSaveRef = useRef(null);
   const ctx = state.context;
   const isMobile = ctx.screenSize === 'mobile';
   const isTablet = ctx.screenSize === 'tablet';
 
   useEffect(() => {
-    if (state.matches('idle') && pageData) send({ type: 'INIT', pageData });
-    else if (state.matches('editing')) send({ type: 'EXTERNAL_UPDATE', pageData });
+    if (state.matches('idle') && pageData) {
+      const mgr = new AutoSaveManager(pageData.name);
+      autoSaveRef.current = mgr;
+      const saved = mgr.getRecoveryInfo();
+      if (saved && JSON.stringify(saved.pageData) !== JSON.stringify(pageData)) {
+        setRecovery(saved);
+      } else {
+        mgr.clear();
+        send({ type: 'INIT', pageData });
+      }
+    } else if (state.matches('editing')) {
+      send({ type: 'EXTERNAL_UPDATE', pageData });
+    }
   }, [pageData]);
+
+  useEffect(() => {
+    return () => { autoSaveRef.current?.stop(); };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,6 +65,7 @@ export default function Builder({ pageData, onUpdate }) {
 
   const handleUpdate = (updatedPageData) => {
     send({ type: 'UPDATE_PAGE', pageData: updatedPageData });
+    autoSaveRef.current?.save(updatedPageData);
     onUpdate(updatedPageData);
   };
 
@@ -75,6 +95,22 @@ export default function Builder({ pageData, onUpdate }) {
     handleUpdate(newPageData);
     send({ type: 'SELECT', id: duplicated.id });
   };
+
+  const handleRecover = () => {
+    const data = recovery.pageData;
+    setRecovery(null);
+    send({ type: 'INIT', pageData: data });
+  };
+
+  const handleDiscardRecovery = () => {
+    autoSaveRef.current?.clear();
+    setRecovery(null);
+    send({ type: 'INIT', pageData });
+  };
+
+  if (recovery) {
+    return <RecoveryDialog recovery={recovery} onRecover={handleRecover} onDiscard={handleDiscardRecovery} />;
+  }
 
   if (!ctx.pageData) return null;
 

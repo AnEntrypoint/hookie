@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as github from '../lib/github';
 import { HeaderTab, FooterTab, ColorsTab, TypographyTab } from './LayoutEditorTabs';
 
-export default function LayoutEditor({ owner, repo }) {
+export default function LayoutEditor({ owner, repo, onSave }) {
   const [layout, setLayout] = useState(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -30,13 +30,11 @@ export default function LayoutEditor({ owner, repo }) {
     setSaving(true);
     try {
       const content = JSON.stringify(layout, null, 2);
-      await github.writeFile(
-        owner, repo, 'content/layout.json',
-        content, commitMessage.trim()
-      );
+      await github.writeFile(owner, repo, 'content/layout.json', content, commitMessage.trim());
       setSuccess('Layout saved successfully!');
       setError(null);
       setTimeout(() => setSuccess(null), 3000);
+      if (onSave) onSave(layout);
     } catch (err) {
       setError('Failed to save layout: ' + err.message);
     } finally {
@@ -80,10 +78,7 @@ export default function LayoutEditor({ owner, repo }) {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            style={{
-              ...styles.tab,
-              ...(activeTab === tab.id ? styles.tabActive : {})
-            }}
+            style={{ ...styles.tab, ...(activeTab === tab.id ? styles.tabActive : {}) }}
           >
             {tab.label}
           </button>
@@ -92,11 +87,7 @@ export default function LayoutEditor({ owner, repo }) {
 
       <div style={styles.content}>
         {tabs.find(t => t.id === activeTab)?.Component &&
-          React.createElement(tabs.find(t => t.id === activeTab).Component, {
-            layout,
-            updateField,
-            styles,
-          })}
+          React.createElement(tabs.find(t => t.id === activeTab).Component, { layout, updateField, styles })}
       </div>
 
       {error && <div style={styles.error}>{error}</div>}
@@ -110,20 +101,10 @@ export default function LayoutEditor({ owner, repo }) {
           placeholder="Commit message..."
           style={{ flex: 1, padding: '8px 12px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '0.875rem' }}
         />
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          style={styles.saveButton}
-        >
+        <button onClick={handleSave} disabled={saving} style={styles.saveButton}>
           {saving ? 'Saving...' : 'Save to GitHub'}
         </button>
-        <button
-          onClick={loadLayout}
-          disabled={saving}
-          style={styles.resetButton}
-        >
-          Reload
-        </button>
+        <button onClick={loadLayout} disabled={saving} style={styles.resetButton}>Reload</button>
       </div>
     </div>
   );

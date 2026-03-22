@@ -25,3 +25,5 @@ tsconfig*.json
 .glootie-stop-verified
 pages-dist/
 .gm-stop-verified
+
+.code-search/
