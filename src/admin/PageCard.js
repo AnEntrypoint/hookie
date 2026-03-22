@@ -1,72 +1,68 @@
 import React, { useState } from 'react';
-import { styles } from './pageCardStyles';
 
 export default function PageCard({ page, onEdit, onDuplicate, onDelete }) {
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDuplicateInput, setShowDuplicateInput] = useState(false);
-  const [duplicateName, setDuplicateName] = useState(`${page.name}-copy`);
-
+  const [duplicateName, setDuplicateName] = useState('');
   const componentCount = page.data?.components?.length ?? null;
   const previewUrl = `${window.location.origin}${window.location.pathname}#/pages/${page.name}`;
+
+  const handleDelete = () => {
+    if (window.confirm(`Delete "${page.name}"? This cannot be undone.`)) onDelete(page);
+  };
 
   const handleDuplicateConfirm = () => {
     if (duplicateName.trim()) {
       onDuplicate(page, duplicateName.trim());
       setShowDuplicateInput(false);
+      setDuplicateName('');
     }
   };
 
-  if (showDeleteConfirm) {
-    return (
-      <div style={styles.card}>
-        <div style={styles.confirmDialog}>
-          <p style={styles.confirmText}>Delete {page.name}? This cannot be undone.</p>
-          <div style={styles.confirmActions}>
-            <button onClick={() => { onDelete(page); setShowDeleteConfirm(false); }} style={styles.confirmDelete}>Delete</button>
-            <button onClick={() => setShowDeleteConfirm(false)} style={styles.cancelButton}>Cancel</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (showDuplicateInput) {
-    return (
-      <div style={styles.card}>
-        <div style={styles.confirmDialog}>
-          <label style={styles.inputLabel}>New page name (URL slug):</label>
-          <input type="text" value={duplicateName} onChange={(e) => setDuplicateName(e.target.value)} style={styles.inputField} autoFocus />
-          <div style={styles.confirmActions}>
-            <button onClick={handleDuplicateConfirm} style={styles.editButton}>Create Copy</button>
-            <button onClick={() => setShowDuplicateInput(false)} style={styles.cancelButton}>Cancel</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleDuplicateKeyDown = (e) => {
+    if (e.key === 'Enter') handleDuplicateConfirm();
+    if (e.key === 'Escape') { setShowDuplicateInput(false); setDuplicateName(''); }
+  };
 
   return (
-    <div style={styles.card}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', backgroundColor: '#f1f5f9', borderRadius: '8px', marginBottom: '12px' }}>
-        <span style={{ fontSize: '2rem' }}>📄</span>
+    <div className="card bg-backgroundSecondary border border-border1 rounded-xl p-4 flex flex-col gap-3">
+      <div className="flex items-center justify-center h-20 bg-primary/5 rounded-lg">
+        <span className="text-3xl">📄</span>
       </div>
-      <div style={styles.info}>
-        <h3 style={styles.title}>{formatPageName(page.name)}</h3>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontFamily: 'monospace' }}>/{page.name}</span>
+
+      <div className="flex flex-col gap-1">
+        <h3 className="font-bold text-content1 text-sm">{formatPageName(page.name)}</h3>
+        <div className="flex gap-2 items-center flex-wrap">
+          <span className="text-xs text-content3 font-mono">/{page.name}</span>
           {componentCount !== null && (
-            <span style={{ fontSize: '0.6875rem', fontWeight: 600, color: '#2563eb', backgroundColor: '#dbeafe', padding: '2px 8px', borderRadius: '999px' }}>
+            <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
               {componentCount} {componentCount === 1 ? 'component' : 'components'}
             </span>
           )}
         </div>
       </div>
-      <div style={styles.actions}>
-        <button onClick={() => onEdit(page)} style={styles.editButton}>Edit</button>
-        <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={{ ...styles.duplicateButton, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>View</a>
-        <button onClick={() => { setShowDuplicateInput(true); setDuplicateName(`${page.name}-copy`); }} style={styles.duplicateButton}>Copy</button>
-        <button onClick={() => setShowDeleteConfirm(true)} style={styles.deleteButton}>Delete</button>
+
+      <div className="flex gap-2 flex-wrap mt-auto">
+        <button onClick={() => onEdit(page)} className="btn btn-primary btn-xs flex-1">Edit</button>
+        <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-xs flex-1 no-underline">View</a>
+        <button onClick={() => { setShowDuplicateInput(v => !v); setDuplicateName(`${page.name}-copy`); }} className="btn btn-outline btn-xs flex-1">Copy</button>
+        <button onClick={handleDelete} className="btn btn-outline btn-xs flex-1 text-error border-error/30 hover:bg-error/10">Delete</button>
       </div>
+
+      {showDuplicateInput && (
+        <div className="flex gap-2 items-center">
+          <input
+            type="text"
+            value={duplicateName}
+            onChange={e => setDuplicateName(e.target.value)}
+            onKeyDown={handleDuplicateKeyDown}
+            placeholder="new-page-name"
+            className="input input-bordered input-sm flex-1"
+            autoFocus
+          />
+          <button onClick={handleDuplicateConfirm} className="btn btn-primary btn-sm">Create</button>
+          <button onClick={() => { setShowDuplicateInput(false); setDuplicateName(''); }} className="btn btn-ghost btn-sm">✕</button>
+        </div>
+      )}
     </div>
   );
 }

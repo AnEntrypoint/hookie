@@ -10,10 +10,9 @@ export const adminMachine = createMachine({
     layoutData: null,
     syncStatus: { lastSync: null, online: true, hasRemoteChanges: false },
     showNotification: false,
-    successMessage: null,
-    pageError: null,
     showWelcome: false,
     showPublishModal: false,
+    pageError: null,
     currentRoute: { route: '', params: {} },
   },
   on: {
@@ -22,14 +21,11 @@ export const adminMachine = createMachine({
       actions: assign({
         repoInfo: ({ event }) => event.repoInfo,
         showWelcome: false,
-        successMessage: 'GitHub connection configured. Welcome to Hookie!',
       }),
     },
     SET_LAYOUT: { actions: assign({ layoutData: ({ event }) => event.layout }) },
     SHOW_NOTIFICATION: { actions: assign({ showNotification: true }) },
     DISMISS_NOTIFICATION: { actions: assign({ showNotification: false }) },
-    DISMISS_SUCCESS: { actions: assign({ successMessage: null }) },
-    SET_SUCCESS: { actions: assign({ successMessage: ({ event }) => event.message }) },
     TOGGLE_PUBLISH_MODAL: { actions: assign({ showPublishModal: ({ event }) => event.show }) },
     SYNC_REMOTE_CHANGES: {
       actions: assign({
