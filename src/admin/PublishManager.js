@@ -15,11 +15,15 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
   }, [state.value]);
 
   const doPublish = async () => {
+    const total = changes.length;
     try {
-      for (const change of changes) {
+      for (let i = 0; i < total; i++) {
+        const change = changes[i];
+        send({ type: 'PROGRESS', current: i + 1, total });
         if (change.status === 'deleted') await github.deleteFile(owner, repo, change.path, ctx.commitMessage, change.sha);
         else await github.writeFile(owner, repo, change.path, change.content, ctx.commitMessage, change.sha);
       }
+      await github.triggerWorkflow(owner, repo, 'deploy.yml');
       const branchInfo = await github.getBranchInfo(owner, repo, 'main');
       send({ type: 'SUCCESS', commit: { sha: branchInfo.commit.sha, message: ctx.commitMessage, timestamp: new Date().toISOString(), url: branchInfo.commit.url } });
       setTimeout(() => { send({ type: 'DISMISS' }); if (onRefresh) onRefresh(); }, 2000);
@@ -43,6 +47,8 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
     );
   }
 
+  const progress = ctx.publishProgress;
+
   return (
     <div className="p-6">
       <PublishStatus
@@ -52,6 +58,13 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
         onDismiss={() => send({ type: 'DISMISS' })}
         onRetry={() => send({ type: 'RETRY' })}
       />
+
+      {state.matches('publishing') && progress && (
+        <div className="mb-4 p-3 bg-info/10 border border-info/20 rounded-lg flex items-center gap-3">
+          <div className="w-4 h-4 border-2 border-info border-t-transparent rounded-full animate-spin flex-shrink-0" />
+          <span className="text-sm text-info font-medium">Publishing {progress.current}/{progress.total} files...</span>
+        </div>
+      )}
 
       <ChangesList changes={changes} expandedDiffs={new Set(ctx.expandedDiffs)} onToggleDiff={path => send({ type: 'TOGGLE_DIFF', path })} />
 

@@ -8,6 +8,7 @@ export const publishMachine = createMachine({
     error: null,
     lastCommit: null,
     expandedDiffs: [],
+    publishProgress: null,
   },
   states: {
     idle: {
@@ -26,19 +27,22 @@ export const publishMachine = createMachine({
             guard: ({ context }) => !context.commitMessage || context.commitMessage.trim().length < 3,
             actions: assign({ error: 'Commit message must be at least 3 characters' }),
           },
-          { target: 'publishing', actions: assign({ error: null }) },
+          { target: 'publishing', actions: assign({ error: null, publishProgress: null }) },
         ],
       },
     },
     publishing: {
       on: {
+        PROGRESS: {
+          actions: assign({ publishProgress: ({ event }) => ({ current: event.current, total: event.total }) }),
+        },
         SUCCESS: {
           target: 'success',
-          actions: assign({ lastCommit: ({ event }) => event.commit, commitMessage: '', error: null }),
+          actions: assign({ lastCommit: ({ event }) => event.commit, commitMessage: '', error: null, publishProgress: null }),
         },
         ERROR: {
           target: 'error',
-          actions: assign({ error: ({ event }) => event.error }),
+          actions: assign({ error: ({ event }) => event.error, publishProgress: null }),
         },
       },
     },
@@ -50,7 +54,7 @@ export const publishMachine = createMachine({
     error: {
       on: {
         DISMISS: { target: 'idle', actions: assign({ error: null }) },
-        RETRY: 'publishing',
+        RETRY: { target: 'publishing', actions: assign({ publishProgress: null }) },
       },
     },
   },
