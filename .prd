@@ -1,0 +1,147 @@
+[
+  {
+    "id": "wire-autosave-recovery",
+    "subject": "Wire AutoSaveManager and RecoveryDialog into Builder — auto-save works and recovery prompts on reload",
+    "status": "pending",
+    "description": "autoSaveManager.js and RecoveryDialog.js exist but are never imported or used. Builder.js must start the AutoSaveManager when a page is loaded, save on every page update, and show the RecoveryDialog when unsaved local changes are detected on mount.",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "feature",
+    "acceptance": [
+      "AutoSaveManager is instantiated in Builder.js and started after INIT",
+      "autoSaveManager.save() is called in handleUpdate",
+      "On mount, if getRecoveryInfo() returns data, RecoveryDialog is shown",
+      "Choosing Recover restores the saved page data into the builder",
+      "Choosing Discard clears the saved data and uses the remote page",
+      "autoSaveManager.clear() is called on publish success (listen for PUBLISH_SUCCESS equivalent)"
+    ],
+    "edge_cases": [
+      "Recovery data older than 24h is ignored (already handled in restore())",
+      "If recovered data has zero components, still offer recovery",
+      "Switching pages must start a new AutoSaveManager keyed to the new pageName"
+    ]
+  },
+  {
+    "id": "wire-toast-container",
+    "subject": "Mount ToastContainer in AdminApp and replace inline success alert with toast notifications",
+    "status": "pending",
+    "description": "Toast.js exports ToastContainer and useToast but ToastContainer is never mounted. AdminApp renders a banner alert for successMessage from adminMachine context. Replace with ToastContainer + useToast calls in AdminApp, and remove the banner alert div and successMessage from adminMachine.",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "feature",
+    "acceptance": [
+      "ToastContainer is rendered inside AdminApp's return JSX (once, not per-view)",
+      "Success messages (component created, settings saved) appear as toasts not banner alerts",
+      "successMessage context field and DISMISS_SUCCESS/SET_SUCCESS events are removed from adminMachine",
+      "The existing inline success alert div in AdminApp is removed"
+    ],
+    "edge_cases": [
+      "ToastContainer uses window.toastManager so useToast calls work from any component",
+      "Errors still show inline where context-sensitive (e.g., page load errors stay in-view)"
+    ]
+  },
+  {
+    "id": "fix-settings-validation-feedback",
+    "subject": "Show inline validation errors in Settings when token or repo fields fail guard checks",
+    "status": "pending",
+    "description": "settingsMachine tokenStep and repoStep NEXT transitions have guards that silently fail. When token doesn't match TOKEN_RE the button appears to do nothing. Same for empty owner/repo. Add error feedback: fire SET_TOKEN_ERROR/SET_REPO_ERROR actions when guards fail, display errors inline in Settings.js.",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "bug",
+    "acceptance": [
+      "Clicking Next with an invalid token format shows 'Invalid token format. Use a ghp_ or github_pat_ token.' error inline",
+      "Clicking Next with empty owner or repo shows 'Owner and repository name are required.' error inline",
+      "Error clears when user modifies the relevant field",
+      "settingsMachine has error actions for tokenStep and repoStep NEXT guard failures"
+    ],
+    "edge_cases": [
+      "Token field is type=password so error must be visible below the input not inside it",
+      "Error must be cleared on SET_TOKEN / SET_OWNER / SET_REPO events"
+    ]
+  },
+  {
+    "id": "fix-layout-editor-sync",
+    "subject": "Sync LayoutEditor saves back to adminMachine context so LayoutPreview reflects changes immediately",
+    "status": "pending",
+    "description": "AdminApp loads layout.json into ctx.layoutData and passes it to LayoutPreview. LayoutEditor independently loads and saves the same file but never notifies adminMachine. After saving in LayoutEditor, LayoutPreview shows stale data until page refresh. LayoutEditor needs an onSave callback prop that AdminApp wires to send SET_LAYOUT.",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "bug",
+    "acceptance": [
+      "LayoutEditor accepts an onSave prop (called with updated layout object after successful GitHub write)",
+      "AdminApp passes onSave={layout => send({ type: 'SET_LAYOUT', layout })} to LayoutEditor",
+      "LayoutPreview immediately reflects changes after save without page refresh"
+    ],
+    "edge_cases": [
+      "If LayoutEditor loadLayout fails, no stale ctx.layoutData is overwritten",
+      "The onSave prop is optional (LayoutEditor still works standalone)"
+    ]
+  },
+  {
+    "id": "fix-publish-double-modal",
+    "subject": "Remove double-modal confirm dialog from PublishManager when used inside PublishModal",
+    "status": "pending",
+    "description": "PublishModal wraps PublishManager in a modal. PublishManager independently renders a full-screen modal overlay when state is 'confirming'. This creates a modal-inside-a-modal. Remove the confirming state overlay from PublishManager and skip directly to publishing on SUBMIT, since PublishModal already provides the user a clear commit/cancel context. Lower the minimum commit message length to 3 chars.",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "bug",
+    "acceptance": [
+      "publishMachine SUBMIT transitions directly to 'publishing' (no 'confirming' intermediate)",
+      "The confirming state and CONFIRM/CANCEL events are removed from publishMachine",
+      "The modal overlay div inside PublishManager for confirming state is removed",
+      "Minimum commit message length is lowered to 3 characters",
+      "The PublishModal Publish Changes header provides the user enough context to proceed"
+    ],
+    "edge_cases": [
+      "If PublishManager is used outside PublishModal in future, the direct-to-publishing flow is still correct",
+      "Error and success states still function as before"
+    ]
+  },
+  {
+    "id": "add-page-search",
+    "subject": "Add search/filter input to PageManager page grid",
+    "status": "pending",
+    "description": "PageManager renders all pages in a grid with no way to find a specific page. With 7+ pages already in the demo content, search is needed. Add a text input above the grid that filters pages by name in real time using local state (no machine changes needed).",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "feature",
+    "acceptance": [
+      "A search input appears in the PageManager header area next to the New Page button",
+      "Typing filters the page grid to show only pages whose name contains the query (case-insensitive)",
+      "When no pages match, show an inline 'No pages match your search' message",
+      "Search input is cleared when pages reload",
+      "Search only renders when pages.length > 0"
+    ],
+    "edge_cases": [
+      "Search is client-side only, no API calls",
+      "If query is empty, all pages are shown"
+    ]
+  },
+  {
+    "id": "fix-pagecard-ux",
+    "subject": "Replace PageCard flip-to-confirm UX with inline action buttons using Tailwind/Ripple classes",
+    "status": "pending",
+    "description": "PageCard uses a 'flip' pattern (transforms the whole card) for delete confirmation and duplicate name input. This is disorienting and breaks grid layout consistency. Replace with: delete uses a simple window.confirm(), duplicate opens a small input that appends below the card actions row. Also migrate PageCard from inline style objects to Tailwind/Ripple UI classes to match the rest of the admin.",
+    "blocking": [],
+    "blockedBy": [],
+    "effort": "small",
+    "category": "feature",
+    "acceptance": [
+      "PageCard uses Tailwind/Ripple classes instead of style objects from pageCardStyles",
+      "Delete button uses window.confirm() for confirmation instead of flipping the card",
+      "Duplicate shows a small inline input row below the action buttons (no card flip)",
+      "Card dimensions remain stable regardless of confirmation state",
+      "pageCardStyles.js is no longer imported"
+    ],
+    "edge_cases": [
+      "If duplicateName input is shown, pressing Enter submits, Escape cancels",
+      "window.confirm is synchronous so no async state needed for delete confirm"
+    ]
+  }
+]

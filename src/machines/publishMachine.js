@@ -23,18 +23,11 @@ export const publishMachine = createMachine({
         },
         SUBMIT: [
           {
-            guard: ({ context }) => !context.commitMessage || context.commitMessage.trim().length < 10,
-            target: 'error',
-            actions: assign({ error: 'Commit message must be at least 10 characters' }),
+            guard: ({ context }) => !context.commitMessage || context.commitMessage.trim().length < 3,
+            actions: assign({ error: 'Commit message must be at least 3 characters' }),
           },
-          { target: 'confirming' },
+          { target: 'publishing', actions: assign({ error: null }) },
         ],
-      },
-    },
-    confirming: {
-      on: {
-        CONFIRM: 'publishing',
-        CANCEL: 'idle',
       },
     },
     publishing: {
@@ -57,7 +50,7 @@ export const publishMachine = createMachine({
     error: {
       on: {
         DISMISS: { target: 'idle', actions: assign({ error: null }) },
-        RETRY: 'confirming',
+        RETRY: 'publishing',
       },
     },
   },

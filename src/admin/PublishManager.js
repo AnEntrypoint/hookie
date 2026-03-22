@@ -63,25 +63,6 @@ const PublishManager = ({ owner, repo, changes, onRefresh }) => {
         disabled={false}
         changesCount={changes.length}
       />
-
-      {state.matches('confirming') && (
-        <div className="modal-overlay visible">
-          <div className="modal visible max-w-lg w-11/12">
-            <div className="p-6">
-              <h3 className="text-lg font-semibold text-content1 mb-4">Confirm Publish</h3>
-              <p className="text-content2 mb-4">Publish these changes to GitHub?</p>
-              <ul className="list-disc pl-5 text-sm text-content2 mb-4">
-                {changes.map(c => <li key={c.path} className="mb-1">{c.status}: {c.path}</li>)}
-              </ul>
-              <p className="text-sm text-content3 italic mb-5">Commit: "{ctx.commitMessage}"</p>
-              <div className="flex gap-3">
-                <button onClick={() => send({ type: 'CONFIRM' })} className="btn btn-primary flex-1">Publish</button>
-                <button onClick={() => send({ type: 'CANCEL' })} className="btn btn-outline flex-1">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
