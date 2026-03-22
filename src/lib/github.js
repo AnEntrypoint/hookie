@@ -2,21 +2,13 @@ import { KEYS } from '../admin/settingsStorage.js';
 
 const API_BASE = 'https://api.github.com';
 
-function getToken() {
-  return localStorage.getItem(KEYS.token) || '';
-}
-
-function getHeaders() {
-  const token = getToken();
-  const headers = {
-    'Accept': 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json'
-  };
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-  return headers;
-}
+const getToken = () => localStorage.getItem(KEYS.token) || '';
+const getHeaders = () => {
+  const h = { 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
+  const t = getToken();
+  if (t) h['Authorization'] = `Bearer ${t}`;
+  return h;
+};
 
 async function apiCall(url, options = {}) {
   const token = getToken();
@@ -191,10 +183,16 @@ export async function getUser() {
   };
 }
 
-export const github = {
-  getAuthToken, logout, getRepoStructure, readFile,
-  writeFile, deleteFile, getBranchInfo, getCommitHistory,
-  compareCommits, getUser
-};
+export async function triggerWorkflow(owner, repo, workflowId, ref = 'main') {
+  const token = getToken();
+  if (!token) return;
+  try {
+    await fetch(`${API_BASE}/repos/${owner}/${repo}/actions/workflows/${workflowId}/dispatches`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ ref })
+    });
+  } catch (_) {}
+}
 
-export default github;
+export default { getAuthToken, logout, getRepoStructure, readFile, writeFile, deleteFile, getBranchInfo, getCommitHistory, compareCommits, getUser, triggerWorkflow };
