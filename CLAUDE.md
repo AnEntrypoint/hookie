@@ -30,7 +30,7 @@ src/
 - **adminMachine** (`src/machines/adminMachine.js`): States: initializing → welcome | ready. Context holds repoInfo, currentPage, changes[], layoutData, syncStatus, notifications. Ready state has substates: pageManager, pageEditor, componentCreator, library, settings, layout.
 - **builderMachine** (`src/machines/builderMachine.js`): States: idle → editing. Context holds pageData, selectedComponentId, history[], historyIndex, paletteVisible. Handles UNDO/REDO with guards.
 - **settingsMachine** (`src/machines/settingsMachine.js`): States: checking → tokenStep → repoStep → verifyStep → verifying → connected. Replaces numeric step counter with explicit states.
-- **publishMachine** (`src/machines/publishMachine.js`): States: idle → publishing → success | error. SUBMIT guard validates commit message (min 3 chars); failure stays in idle with error set. No confirming intermediate state.
+- **publishMachine** (`src/machines/publishMachine.js`): States: idle → publishing → success | error. SUBMIT guard validates commit message (min 3 chars); failure stays in idle with error set. No confirming intermediate state. Context includes `publishProgress: { current, total } | null` — set by PROGRESS events during publishing, reset to null on SUCCESS/ERROR/RETRY.
 - **pageManagerMachine** (`src/machines/pageManagerMachine.js`): States: loading → ready | noRepo | error. Context holds pages[], showForm, submitting.
 - **routerMachine** (inline in `src/public/Router.js`): States: loading → ready | notFound | error. Manages page cache and navigation.
 
@@ -75,6 +75,7 @@ All machines use `useMachine()` hook from `@xstate/react` in their respective co
 - Writes use GitHub Contents API (`PUT /repos/{owner}/{repo}/contents/{path}`)
 - UTF-8 encoding: `btoa(unescape(encodeURIComponent(content)))` — handles emoji and non-ASCII
 - SHA required for updates: fetched via API before write
+- `triggerWorkflow(owner, repo, workflowId, ref)` fires `workflow_dispatch` to rebuild GitHub Pages after publish. Returns 204 No Content (not JSON) — do NOT use `apiCall()` for this; uses raw `fetch()`. Errors are swallowed silently (non-fatal).
 
 ### Authentication
 - Token stored in localStorage under `hookie_token` key (see `settingsStorage.js` for all key names)
@@ -93,6 +94,8 @@ All machines use `useMachine()` hook from `@xstate/react` in their respective co
 - Changes accumulate in adminMachine context as `{ path, content, status }` objects
 - On publish success: adminMachine receives PUBLISH_SUCCESS, changes cleared
 - `PublishModal` wraps `PublishManager` — no nested confirm modal; SUBMIT goes directly to publishing
+- During publishing: sends PROGRESS event per file (`{ type: 'PROGRESS', current, total }`); UI shows "Publishing N/M files..." spinner
+- After all writes succeed: calls `triggerWorkflow(owner, repo, 'deploy.yml')` before sending SUCCESS
 
 ### Notifications (Toast)
 - `ToastContainer` from `src/admin/Toast.js` is mounted inside `AdminApp` and sets `window.toastManager`
@@ -127,3 +130,13 @@ No `.test.js` or `.spec.js` files. Validation done via actual execution against 
 
 ### liveReload
 `src/lib/liveReload.js` polls GitHub for changes and fires a callback when remote changes are detected. Polling is started in `AdminApp.js` when repo is configured.
+
+### Static Page Generation (`bun run generate-pages`)
+Three files under `.github/scripts/`:
+- `page-renderer.js` — `renderComponent()`, `renderPage()`, `escapeHtml()`, `styleToString()` exported as ES module
+- `generate-landing.js` — exports `generateLanding({ baseUrl, pageList, pageCount, demoExists })` returning full landing page HTML
+- `generate-static-pages.js` — orchestrator: reads `content/pages/*.json`, calls renderer per page, calls landing generator, writes `pages-dist/`
+`BASE_URL` env var controls all absolute URLs (fallback: `https://anentrypoint.github.io/hookie`). CI copies `pages-dist/` into `dist/pages/` so static pages live at `/pages/<slug>.html` alongside the Vite app.
+
+### gm-cc Lang Plugin (`lang/jsx.js`)
+CommonJS plugin for gm-cc that provides JSX/JS syntax checking via `exec:jsx`. The project uses `"type": "module"` in package.json, but lang plugins **must be CommonJS** (`module.exports = {}`). Requires acorn and acorn-jsx at runtime via `require(path.join(cwd, 'node_modules', 'acorn'))` — cwd is the project root passed by the gm-cc hook runner.
