@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMachine } from '@xstate/react';
 import { pageManagerMachine } from '../machines/pageManagerMachine';
 import contentManager from '../lib/contentManager';
@@ -7,12 +7,14 @@ import CreatePageModal from './CreatePageModal';
 
 export default function PageManager({ owner, repo, onSelectPage }) {
   const [state, send] = useMachine(pageManagerMachine);
+  const [searchQuery, setSearchQuery] = useState('');
   const ctx = state.context;
 
   useEffect(() => { loadPages(); }, [owner, repo]);
 
   const loadPages = async () => {
     send({ type: 'RELOAD' });
+    setSearchQuery('');
     if (!owner || !repo) { send({ type: 'NO_REPO' }); return; }
     try {
       const pageList = await contentManager.listPages(owner, repo);
@@ -63,6 +65,10 @@ export default function PageManager({ owner, repo, onSelectPage }) {
 
   const formatTitle = (name) => name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
+  const filteredPages = ctx.pages.filter(p =>
+    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (state.matches('loading')) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-content2">
@@ -74,10 +80,19 @@ export default function PageManager({ owner, repo, onSelectPage }) {
 
   return (
     <div className="p-6">
-      <header className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-content1">Pages</h2>
+      <header className="flex items-center justify-between mb-6 gap-4">
+        <h2 className="text-xl font-bold text-content1 shrink-0">Pages</h2>
+        {ctx.pages.length > 0 && (
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Search pages..."
+            className="input input-bordered input-sm flex-1 max-w-xs"
+          />
+        )}
         {!state.matches('noRepo') && !state.matches('error') && (
-          <button onClick={() => send({ type: 'SHOW_FORM' })} className="btn btn-primary btn-sm">+ New Page</button>
+          <button onClick={() => send({ type: 'SHOW_FORM' })} className="btn btn-primary btn-sm shrink-0">+ New Page</button>
         )}
       </header>
 
@@ -98,9 +113,11 @@ export default function PageManager({ owner, repo, onSelectPage }) {
         <EmptyState icon="!" heading="Could not load pages" description={ctx.error} action={<button onClick={() => send({ type: 'RETRY' })} className="btn btn-primary">Retry</button>} />
       ) : ctx.pages.length === 0 ? (
         <EmptyState icon="+" heading="Create your first page" description="Pages are the building blocks of your site." suggestion={'Try creating a "home" or "about" page.'} action={<button onClick={() => send({ type: 'SHOW_FORM' })} className="btn btn-primary">Create Page</button>} />
+      ) : filteredPages.length === 0 ? (
+        <p className="text-sm text-content3 text-center py-8">No pages match "{searchQuery}"</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {ctx.pages.map(page => <PageCard key={page.name} page={page} onEdit={handleEditPage} onDuplicate={handleDuplicatePage} onDelete={handleDeletePage} />)}
+          {filteredPages.map(page => <PageCard key={page.name} page={page} onEdit={handleEditPage} onDuplicate={handleDuplicatePage} onDelete={handleDeletePage} />)}
         </div>
       )}
     </div>

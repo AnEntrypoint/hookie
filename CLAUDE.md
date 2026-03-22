@@ -30,7 +30,7 @@ src/
 - **adminMachine** (`src/machines/adminMachine.js`): States: initializing → welcome | ready. Context holds repoInfo, currentPage, changes[], layoutData, syncStatus, notifications. Ready state has substates: pageManager, pageEditor, componentCreator, library, settings, layout.
 - **builderMachine** (`src/machines/builderMachine.js`): States: idle → editing. Context holds pageData, selectedComponentId, history[], historyIndex, paletteVisible. Handles UNDO/REDO with guards.
 - **settingsMachine** (`src/machines/settingsMachine.js`): States: checking → tokenStep → repoStep → verifyStep → verifying → connected. Replaces numeric step counter with explicit states.
-- **publishMachine** (`src/machines/publishMachine.js`): States: idle → confirming → publishing → success | error. Guard validates commit message length.
+- **publishMachine** (`src/machines/publishMachine.js`): States: idle → publishing → success | error. SUBMIT guard validates commit message (min 3 chars); failure stays in idle with error set. No confirming intermediate state.
 - **pageManagerMachine** (`src/machines/pageManagerMachine.js`): States: loading → ready | noRepo | error. Context holds pages[], showForm, submitting.
 - **routerMachine** (inline in `src/public/Router.js`): States: loading → ready | notFound | error. Manages page cache and navigation.
 
@@ -86,16 +86,24 @@ All machines use `useMachine()` hook from `@xstate/react` in their respective co
 - `AdminApp.js` uses `adminMachine` for page data, changes list, and routing
 - `BuilderCanvas.js` passes `onDelete`/`onDuplicate` down to `Renderer.js`
 - `Renderer.js` in edit mode shows floating toolbar (type label, Copy, Delete) above selected component
+- `AutoSaveManager` (`src/admin/autoSaveManager.js`) saves to localStorage on every edit, keyed by `autosave_${pageData.name}`. On Builder mount, if saved data exists and differs from the loaded page data (by JSON.stringify), `RecoveryDialog` is shown. Recovery is discarded on explicit dismiss or when saved data matches remote.
 
 ### PublishManager
-- Uses `publishMachine` with explicit states: idle → confirming → publishing → success | error
+- Uses `publishMachine` with explicit states: idle → publishing → success | error
 - Changes accumulate in adminMachine context as `{ path, content, status }` objects
 - On publish success: adminMachine receives PUBLISH_SUCCESS, changes cleared
+- `PublishModal` wraps `PublishManager` — no nested confirm modal; SUBMIT goes directly to publishing
+
+### Notifications (Toast)
+- `ToastContainer` from `src/admin/Toast.js` is mounted inside `AdminApp` and sets `window.toastManager`
+- All success notifications (settings saved, component created) use `useToast()` → `showToast(msg, type)`
+- `window.toastManager` is set via a `useEffect` in `ToastContainer`, so it is only available after first render; `showToast` calls before mount are silently dropped
 
 ### Settings / Setup
 - Uses `settingsMachine` with explicit wizard states: tokenStep → repoStep → verifyStep → connected
 - `initRepo()` creates `content/layout.json` and `content/pages/home.json` if missing
 - Stored in localStorage; also reads `VITE_GITHUB_OWNER` / `VITE_GITHUB_REPO` env vars
+- NEXT guard failures in tokenStep and repoStep produce inline error messages via fallthrough transition (XState v5 array-of-transitions pattern); SET_TOKEN/SET_OWNER/SET_REPO clear the error
 
 ## Constraints and Gotchas
 

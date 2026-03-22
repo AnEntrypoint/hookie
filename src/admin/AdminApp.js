@@ -10,6 +10,7 @@ import Settings from './Settings';
 import PublishModal from './PublishModal';
 import LayoutEditor from './LayoutEditor';
 import LayoutPreview from './LayoutPreview';
+import { ToastContainer, useToast } from './Toast';
 import { loadSettingsFromStorage, migrateStorageKeys, KEYS } from './settingsStorage';
 import liveReload from '../lib/liveReload';
 import contentManager from '../lib/contentManager';
@@ -21,6 +22,7 @@ import './admin.css';
 
 export default function AdminApp() {
   const [state, send] = useMachine(adminMachine);
+  const { showToast } = useToast();
   const ctx = state.context;
 
   useEffect(() => {
@@ -89,6 +91,7 @@ export default function AdminApp() {
 
   const handleSettingsUpdate = (info) => {
     send({ type: 'SET_REPO', repoInfo: info });
+    showToast('GitHub connection configured. Welcome to Hookie!', 'success');
     navigateTo('/admin');
   };
 
@@ -137,8 +140,7 @@ export default function AdminApp() {
     if (route === '/admin/components') {
       return <ComponentCreator owner={ctx.repoInfo.owner} repo={ctx.repoInfo.repo} onComponentCreated={n => {
         loadCustomComponents();
-        send({ type: 'SET_SUCCESS', message: `Component "${n}" created!` });
-        setTimeout(() => send({ type: 'DISMISS_SUCCESS' }), 3000);
+        showToast(`Component "${n}" created!`, 'success');
         navigateTo('/admin');
       }} />;
     }
@@ -147,7 +149,9 @@ export default function AdminApp() {
     if (route === '/admin/layout') {
       return (
         <div className="flex h-full">
-          <div className="flex-1 min-w-0 border-r border-border1 overflow-y-auto"><LayoutEditor owner={ctx.repoInfo.owner} repo={ctx.repoInfo.repo} /></div>
+          <div className="flex-1 min-w-0 border-r border-border1 overflow-y-auto">
+            <LayoutEditor owner={ctx.repoInfo.owner} repo={ctx.repoInfo.repo} onSave={layout => send({ type: 'SET_LAYOUT', layout })} />
+          </div>
           <div className="flex-1 min-w-0 overflow-y-auto hidden lg:block"><LayoutPreview layout={ctx.layoutData} /></div>
         </div>
       );
@@ -172,13 +176,6 @@ export default function AdminApp() {
         <div className="alert alert-info text-center">Welcome to Hookie! Connect your GitHub repository to get started.</div>
       )}
 
-      {ctx.successMessage && (
-        <div className="alert alert-success flex justify-between items-center">
-          <span>{ctx.successMessage}</span>
-          <button onClick={() => send({ type: 'DISMISS_SUCCESS' })} className="btn btn-ghost btn-xs">Dismiss</button>
-        </div>
-      )}
-
       <main className="flex-1 overflow-y-auto overflow-x-hidden">{renderView()}</main>
 
       {ctx.showPublishModal && (
@@ -190,6 +187,8 @@ export default function AdminApp() {
           onPublishSuccess={() => send({ type: 'PUBLISH_SUCCESS' })}
         />
       )}
+
+      <ToastContainer />
     </div>
   );
 }

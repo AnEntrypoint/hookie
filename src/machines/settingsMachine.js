@@ -23,23 +23,33 @@ export const settingsMachine = createMachine({
     tokenStep: {
       on: {
         SET_TOKEN: { actions: assign({ token: ({ event }) => event.token, error: null }) },
-        NEXT: {
-          guard: ({ context }) => TOKEN_RE.test(context.token.trim()),
-          target: 'repoStep',
-          actions: assign({ error: null }),
-        },
+        NEXT: [
+          {
+            guard: ({ context }) => TOKEN_RE.test(context.token.trim()),
+            target: 'repoStep',
+            actions: assign({ error: null }),
+          },
+          {
+            actions: assign({ error: 'Invalid token format. Tokens start with ghp_ or github_pat_.' }),
+          },
+        ],
       },
     },
     repoStep: {
       on: {
-        SET_OWNER: { actions: assign({ owner: ({ event }) => event.owner }) },
-        SET_REPO: { actions: assign({ repo: ({ event }) => event.repo }) },
+        SET_OWNER: { actions: assign({ owner: ({ event }) => event.owner, error: null }) },
+        SET_REPO: { actions: assign({ repo: ({ event }) => event.repo, error: null }) },
         BACK: 'tokenStep',
-        NEXT: {
-          guard: ({ context }) => context.owner.trim() && context.repo.trim(),
-          target: 'verifyStep',
-          actions: assign({ error: null }),
-        },
+        NEXT: [
+          {
+            guard: ({ context }) => !!context.owner.trim() && !!context.repo.trim(),
+            target: 'verifyStep',
+            actions: assign({ error: null }),
+          },
+          {
+            actions: assign({ error: 'Owner and repository name are required.' }),
+          },
+        ],
       },
     },
     verifyStep: {
