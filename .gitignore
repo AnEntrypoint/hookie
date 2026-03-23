@@ -27,3 +27,5 @@ pages-dist/
 .gm-stop-verified
 
 .claude/settings.local.json
+
+.code-search/
