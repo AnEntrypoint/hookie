@@ -9,7 +9,6 @@ import PropsEditor from './PropsEditor';
 import BuilderPropsPanel from './BuilderPropsPanel';
 import componentRegistry from '../lib/componentRegistry';
 import { deepClone, removeComponentById, findComponentById } from './builderHelpers';
-import { styles } from './builderStyles.js';
 import { AutoSaveManager } from './autoSaveManager';
 import RecoveryDialog from './RecoveryDialog';
 import { useToast } from './Toast';
@@ -120,18 +119,25 @@ export default function Builder({ pageData, onUpdate, onAutosave, layout }) {
 
   if (!ctx.pageData) return null;
 
+  const leftCls = isTablet
+    ? 'w-[200px] p-3 border-r border-slate-200 bg-white overflow-y-auto'
+    : 'w-1/5 min-w-[250px] border-r border-slate-200 p-4 bg-white overflow-y-auto transition-[width] duration-300';
+
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={styles.builder}>
+      <div className="flex h-screen bg-slate-50">
         {!isMobile && (
-          <div style={isTablet ? styles.leftTablet : styles.left}>
+          <div className={leftCls}>
             <ComponentPalette pageData={ctx.pageData} selectedId={ctx.selectedComponentId} onSelect={id => send({ type: 'SELECT', id })} onDelete={handleDelete} onDuplicate={handleDuplicate} isVisible={ctx.paletteVisible} onToggleVisibility={v => send({ type: 'SET_PALETTE', visible: v })} />
           </div>
         )}
         {isMobile && (
           <ComponentPalette pageData={ctx.pageData} selectedId={ctx.selectedComponentId} onSelect={id => send({ type: 'SELECT', id })} onDelete={handleDelete} onDuplicate={handleDuplicate} isVisible={ctx.paletteVisible} onToggleVisibility={v => send({ type: 'SET_PALETTE', visible: v })} />
         )}
-        <div style={{...styles.center, flex: !isMobile && !ctx.paletteVisible ? 0 : undefined}}>
+        <div
+          className="flex-1 flex flex-col transition-[flex] duration-300"
+          style={{ flex: !isMobile && !ctx.paletteVisible ? 0 : undefined }}
+        >
           <BuilderCanvas pageData={ctx.pageData} selectedId={ctx.selectedComponentId} onUpdate={handleUpdate} onSelectComponent={id => send({ type: 'SELECT', id })} onDelete={handleDelete} onDuplicate={handleDuplicate} canUndo={ctx.historyIndex > 0} canRedo={ctx.historyIndex < ctx.history.length - 1} onUndo={handleUndo} onRedo={handleRedo} paletteVisible={ctx.paletteVisible} isMobile={isMobile} layout={layout} />
         </div>
         {isMobile && ctx.showMobilePropsPanel && (
@@ -143,7 +149,7 @@ export default function Builder({ pageData, onUpdate, onAutosave, layout }) {
             isMobile={true}
           />
         )}
-        <BuilderPropsPanel pageData={ctx.pageData} selectedComponentId={ctx.selectedComponentId} onUpdate={handleUpdate} isMobile={isMobile} isTablet={isTablet} onShowMobileProps={() => send({ type: 'SHOW_MOBILE_PROPS' })} styles={styles} />
+        <BuilderPropsPanel pageData={ctx.pageData} selectedComponentId={ctx.selectedComponentId} onUpdate={handleUpdate} isMobile={isMobile} isTablet={isTablet} onShowMobileProps={() => send({ type: 'SHOW_MOBILE_PROPS' })} />
       </div>
     </DndProvider>
   );

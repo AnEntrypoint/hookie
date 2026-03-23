@@ -3,7 +3,7 @@ import PropsEditor from './PropsEditor.js';
 import componentRegistry from '../lib/componentRegistry.js';
 import { deepClone, findComponentById } from './builderHelpers.js';
 
-export default function BuilderPropsPanel({ pageData, selectedComponentId, onUpdate, isMobile, isTablet, onShowMobileProps, styles }) {
+export default function BuilderPropsPanel({ pageData, selectedComponentId, onUpdate, isMobile, isTablet, onShowMobileProps }) {
   const component = selectedComponentId ? findComponentById(pageData, selectedComponentId) : null;
   const schema = component ? componentRegistry.getComponent(component.type) : null;
 
@@ -13,15 +13,19 @@ export default function BuilderPropsPanel({ pageData, selectedComponentId, onUpd
     if (comp) { comp.props = updatedProps; onUpdate(newPageData); }
   };
 
-  const panelStyle = isMobile ? styles.rightMobile : isTablet ? styles.rightTablet : styles.right;
+  const panelCls = isMobile
+    ? 'hidden'
+    : isTablet
+    ? 'w-full border-t border-slate-200 max-h-[200px] p-3 bg-white overflow-y-auto'
+    : 'w-1/4 min-w-[300px] border-l border-slate-200 p-4 bg-white overflow-y-auto';
 
   if (!selectedComponentId) {
     return (
-      <div style={panelStyle}>
-        <div style={{ padding: '24px 16px', textAlign: 'center', color: '#94a3b8' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>←</div>
-          <div style={{ fontSize: '0.8125rem', fontWeight: '600', color: '#64748b', marginBottom: '6px' }}>No component selected</div>
-          <div style={{ fontSize: '0.75rem', lineHeight: '1.5' }}>Click a component on the canvas to edit its properties here</div>
+      <div className={panelCls}>
+        <div className="p-6 text-center text-slate-400">
+          <div className="text-2xl mb-3">←</div>
+          <div className="text-sm font-semibold text-slate-500 mb-1">No component selected</div>
+          <div className="text-xs leading-relaxed">Click a component on the canvas to edit its properties here</div>
         </div>
       </div>
     );
@@ -29,16 +33,14 @@ export default function BuilderPropsPanel({ pageData, selectedComponentId, onUpd
 
   if (isMobile) {
     return (
-      <div style={panelStyle}>
-        <button onClick={onShowMobileProps} style={{ width: '100%', padding: '12px 16px', fontSize: '16px', fontWeight: '600', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', minHeight: '44px' }}>
-          Edit Properties
-        </button>
+      <div className={panelCls}>
+        <button onClick={onShowMobileProps} className="btn btn-primary w-full">Edit Properties</button>
       </div>
     );
   }
 
   return (
-    <div style={panelStyle}>
+    <div className={panelCls}>
       <PropsEditor component={component} schema={schema} onChange={handleChange} isMobile={false} />
     </div>
   );
