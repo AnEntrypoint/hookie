@@ -31,12 +31,11 @@ const componentStyles = {
   section: `
     :host { display: block; }
     .section { padding: var(--padding, 48px 24px); }
-    .section.bg-white { background: #ffffff; }
-    .section.bg-light { background: #f8fafc; }
-    .section.bg-subtle { background: #f1f5f9; }
+    .section.bg-white { background: #ffffff; color: #1e293b; }
+    .section.bg-light { background: #f8fafc; color: #1e293b; }
+    .section.bg-subtle { background: #f1f5f9; color: #1e293b; }
     h2 { margin: 0 0 8px; font-size: 1.75rem; font-weight: 700; }
     .subtitle { margin: 0 0 24px; font-size: 1rem; }
-    .content { max-width: 1200px; margin: 0 auto; }
     slot { display: block; }
   `,
   text: `:host { display: block; } p { margin: 0; line-height: 1.7; }`,
@@ -68,12 +67,11 @@ function createBaseClass(type) {
     get props() { return this._props; }
     render() {
       const css = componentStyles[type] || ':host { display: block; }';
-      const vdom = renderers[type]?.(this._props) || webjsx.createElement('div', null, `Unknown: ${type}`);
-      const slotEl = SLOT_TYPES.has(type) ? webjsx.createElement('slot', null) : null;
+      const hostStyle = this.getAttribute('style') || '';
+      const vdom = renderers[type]?.(this._props, SLOT_TYPES.has(type), hostStyle) || webjsx.createElement('div', null, `Unknown: ${type}`);
       webjsx.applyDiff(this.shadowRoot, webjsx.createElement('div', null,
         webjsx.createElement('style', null, css),
-        vdom,
-        slotEl
+        vdom
       ));
     }
   };
@@ -98,21 +96,27 @@ const renderers = {
     webjsx.createElement('h3', { style: `color: ${p.accentColor || '#2563eb'}` }, p.title || ''),
     webjsx.createElement('p', { style: `color: ${p.backgroundColor === '#111111' ? '#888888' : '#64748b'}` }, p.description || '')
   ),
-  section: (p) => {
+  section: (p, withSlot, hostStyle) => {
     const bg = p.background || 'transparent';
-    return webjsx.createElement('div', { class: `section ${bg !== 'transparent' ? 'bg-' + bg : ''}`, style: `padding: ${padMap[p.padding] || padMap.md}` },
+    const padStyle = `padding: ${padMap[p.padding] || padMap.md};`;
+    return webjsx.createElement('div', { class: `section ${bg !== 'transparent' ? 'bg-' + bg : ''}`, style: `${hostStyle ? hostStyle + ';' : ''}${padStyle}` },
       p.title ? webjsx.createElement('h2', null, p.title) : null,
-      p.subtitle ? webjsx.createElement('p', { class: 'subtitle' }, p.subtitle) : null
+      p.subtitle ? webjsx.createElement('p', { class: 'subtitle' }, p.subtitle) : null,
+      withSlot ? webjsx.createElement('slot', null) : null
     );
   },
-  text: (p) => webjsx.createElement('p', { style: `font-size: ${sizeMap[p.size] || sizeMap.base}; color: ${p.color || '#1e293b'}; font-weight: ${p.weight || 'normal'}; text-align: ${p.align || 'left'}` }, p.content || ''),
-  heading: (p) => webjsx.createElement(`h${p.level || 2}`, { style: `color: ${p.color || '#1e293b'}; text-align: ${p.align || 'left'}; font-weight: ${p.weight || 'bold'}` }, p.text || ''),
+  text: (p, _slot, hostStyle) => webjsx.createElement('p', { style: `${hostStyle ? hostStyle + ';' : ''}font-size: ${sizeMap[p.size] || sizeMap.base}; color: ${p.color || '#1e293b'}; font-weight: ${p.weight || 'normal'}; text-align: ${p.align || 'left'}` }, p.content || ''),
+  heading: (p, _slot, hostStyle) => webjsx.createElement(`h${p.level || 2}`, { style: `${hostStyle ? hostStyle + ';' : ''}color: ${p.color || '#1e293b'}; text-align: ${p.align || 'left'}; font-weight: ${p.weight || 'bold'}` }, p.text || ''),
   button: (p) => webjsx.createElement('button', { class: p.variant || 'primary', disabled: p.disabled, style: p.fullWidth ? 'width:100%' : '' }, p.label || 'Click me'),
   image: (p) => webjsx.createElement('img', { src: p.src || '', alt: p.alt || '', style: `width: ${p.width || '100%'}; height: ${p.height || 'auto'}; object-fit: ${p.objectFit || 'cover'}; border-radius: 8px;`, loading: p.lazy !== false ? 'lazy' : 'eager' }),
-  grid: (p) => webjsx.createElement('div', { class: 'grid', style: `grid-template-columns: repeat(${p.autoFit ? `auto-fit, minmax(${p.minItemWidth || '280px'}, 1fr)` : `${p.columns || 3}, 1fr`}); gap: ${gapMap[p.gap] || gapMap.md}` }),
-  container: (p) => webjsx.createElement('div', { class: 'container', style: `max-width: ${maxWidthMap[p.maxWidth] || maxWidthMap.xl}; padding: ${padMap[p.padding] || '0 24px'}; display: flex; flex-wrap: wrap; gap: 1rem;` }),
-  divider: (p) => webjsx.createElement('hr', { style: `border-top: ${p.thickness === 'thin' ? '1px' : p.thickness === 'thick' ? '3px' : p.thickness === 'xl' ? '5px' : '2px'} ${p.variant || 'solid'} ${p.color === 'primary' ? '#2563eb' : p.color === 'dark' ? '#1e293b' : '#e2e8f0'}; margin: ${padMap[p.margin] || '24px 0'}` }),
-  link: (p) => webjsx.createElement('a', { href: p.href || '#', target: p.newTab ? '_blank' : '_self', class: p.variant || '' }, p.text || ''),
+  grid: (p, withSlot, hostStyle) => webjsx.createElement('div', { class: 'grid', style: `${hostStyle ? hostStyle + ';' : ''}grid-template-columns: repeat(${p.autoFit ? `auto-fit, minmax(${p.minItemWidth || '280px'}, 1fr)` : `${p.columns || 3}, 1fr`}); gap: ${gapMap[p.gap] || gapMap.md}` },
+    withSlot ? webjsx.createElement('slot', null) : null
+  ),
+  container: (p, withSlot, hostStyle) => webjsx.createElement('div', { class: 'container', style: `${hostStyle ? hostStyle + ';' : ''}max-width: ${maxWidthMap[p.maxWidth] || maxWidthMap.xl}; padding: ${padMap[p.padding] || '0 24px'}; display: flex; flex-wrap: wrap; gap: 1rem;` },
+    withSlot ? webjsx.createElement('slot', null) : null
+  ),
+  divider: (p) => webjsx.createElement('hr', { style: `border-top: ${p.thickness === 'thin' ? '1px' : p.thickness === 'thick' ? '3px' : p.thickness === 'xl' ? '5px' : '2px'} ${p.variant || 'solid'} ${p.color && p.color !== 'primary' && p.color !== 'dark' ? p.color : p.color === 'dark' ? '#1e293b' : '#333333'}; margin: ${padMap[p.margin] || '24px 0'}` }),
+  link: (p, _slot, hostStyle) => webjsx.createElement('a', { href: p.href || '#', target: p.newTab ? '_blank' : '_self', class: p.variant || '', style: `${hostStyle ? hostStyle + ';' : ''}display: inline-block; padding: 0.6em 1.4em;` }, p.text || ''),
   list: (p) => {
     const items = (p.items || []).map(item => webjsx.createElement('li', null, typeof item === 'string' ? item : item.toString()));
     return p.type === 'ol' ? webjsx.createElement('ol', null, ...items) : webjsx.createElement('ul', null, ...items);
