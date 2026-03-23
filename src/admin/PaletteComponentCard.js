@@ -15,12 +15,12 @@ function ComponentPreview({ type }) {
     Text: <p style={{ margin: 0, fontSize: '0.75rem', color: '#1e293b' }}>Sample text</p>,
     Heading: <h3 style={{ margin: 0, fontSize: '0.9rem', color: '#1e293b', fontWeight: '600' }}>Heading</h3>,
     Link: <a style={{ fontSize: '0.75rem', color: '#2563eb', textDecoration: 'none' }} href="#">Link</a>,
-    Image: <div style={styles.previewPlaceholder}><span style={styles.previewIcon}>IMG</span></div>,
-    Container: <div style={styles.previewBox} />,
-    Section: <div style={styles.previewBox} />,
-    Grid: <div style={styles.previewBox} />,
+    Image: <div style={{ width: '48px', height: '36px', background: 'linear-gradient(135deg, #bfdbfe, #c7d2fe)', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>🖼</div>,
+    Container: <div style={{ width: '48px', height: '36px', border: '2px dashed #94a3b8', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: '28px', height: '16px', backgroundColor: '#e2e8f0', borderRadius: '2px' }} /></div>,
+    Section: <div style={{ width: '52px', height: '12px', backgroundColor: '#e2e8f0', borderRadius: '2px', boxShadow: '0 4px 0 #cbd5e1, 0 8px 0 #e2e8f0' }} />,
+    Grid: <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px', width: '40px' }}>{[0,1,2,3].map(i => <div key={i} style={{ height: '16px', backgroundColor: '#bfdbfe', borderRadius: '2px' }} />)}</div>,
     Divider: <div style={styles.previewDivider} />,
-    List: <ul style={styles.previewList}><li style={styles.previewListItem} /><li style={styles.previewListItem} /></ul>,
+    List: <ul style={styles.previewList}><li style={styles.previewListItem} /><li style={styles.previewListItem} /><li style={{ ...styles.previewListItem, width: '36px' }} /></ul>,
   };
 
   return (
