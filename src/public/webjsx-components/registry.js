@@ -24,6 +24,8 @@ const componentStyles = {
   card: `
     :host { display: block; }
     .card { border-radius: var(--radius, 0px); padding: var(--padding, 24px); overflow: hidden; }
+    a.card { display: block; text-decoration: none; transition: opacity 0.15s; }
+    a.card:hover { opacity: 0.75; cursor: pointer; }
     .card img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 16px; }
     h3 { margin: 0 0 8px; font-size: 1rem; font-weight: 700; font-family: monospace; text-transform: lowercase; }
     p { margin: 0; line-height: 1.6; font-size: 0.875rem; }
@@ -91,11 +93,17 @@ const renderers = {
       p.secondaryCtaText ? webjsx.createElement('a', { href: p.secondaryCtaHref || '#', class: 'cta cta-secondary' }, p.secondaryCtaText) : null
     )
   ),
-  card: (p) => webjsx.createElement('div', { class: 'card', style: `background: ${p.backgroundColor || '#fff'}; color: ${p.accentColor || '#2563eb'};` },
-    p.imageUrl ? webjsx.createElement('img', { src: p.imageUrl, alt: p.imageAlt || '' }) : null,
-    webjsx.createElement('h3', { style: `color: ${p.accentColor || '#2563eb'}` }, p.title || ''),
-    webjsx.createElement('p', { style: `color: ${p.backgroundColor === '#111111' ? '#888888' : '#64748b'}` }, p.description || '')
-  ),
+  card: (p) => {
+    const inner = [
+      p.imageUrl ? webjsx.createElement('img', { src: p.imageUrl, alt: p.imageAlt || '' }) : null,
+      webjsx.createElement('h3', { style: `color: ${p.accentColor || '#2563eb'}` }, p.title || ''),
+      webjsx.createElement('p', { style: `color: ${p.backgroundColor === '#111111' ? '#888888' : '#64748b'}` }, p.description || ''),
+    ];
+    const cardStyle = `background: ${p.backgroundColor || '#fff'}; color: ${p.accentColor || '#2563eb'};`;
+    return p.href
+      ? webjsx.createElement('a', { class: 'card', href: p.href, target: '_blank', rel: 'noopener noreferrer', style: cardStyle }, ...inner)
+      : webjsx.createElement('div', { class: 'card', style: cardStyle }, ...inner);
+  },
   section: (p, withSlot, hostStyle) => {
     const bg = p.background || 'transparent';
     const padStyle = `padding: ${padMap[p.padding] || padMap.md};`;
@@ -134,12 +142,12 @@ const renderers = {
   navbar: (p) => webjsx.createElement('nav', { style: `background: ${p.backgroundColor || '#fff'}; color: ${p.textColor || '#1e293b'}; ${p.sticky ? 'position: sticky; top: 0; z-index: 100;' : ''}` },
     webjsx.createElement('div', { class: 'logo' }, p.logoText || ''),
     webjsx.createElement('div', { class: 'links' },
-      ...(p.links || []).map(l => webjsx.createElement('a', { href: l.href || l.path, style: `color: ${p.textColor || '#1e293b'}` }, l.label))
+      ...(p.links || []).map(l => { const href = l.href || l.path || '#'; const ext = href.startsWith('http'); return webjsx.createElement('a', { href, target: ext ? '_blank' : '_self', rel: ext ? 'noopener noreferrer' : undefined, style: `color: ${p.textColor || '#1e293b'}` }, l.label); })
     )
   ),
   footerblock: (p) => webjsx.createElement('footer', { style: `background: ${p.backgroundColor || '#1e293b'}; color: ${p.textColor || '#94a3b8'}` },
     webjsx.createElement('div', { class: 'links' },
-      ...(p.links || []).map(l => webjsx.createElement('a', { href: l.href || l.path, style: `color: ${p.textColor || '#94a3b8'}` }, l.label))
+      ...(p.links || []).map(l => { const href = l.href || l.path || '#'; const ext = href.startsWith('http'); return webjsx.createElement('a', { href, target: ext ? '_blank' : '_self', rel: ext ? 'noopener noreferrer' : undefined, style: `color: ${p.textColor || '#94a3b8'}` }, l.label); })
     ),
     webjsx.createElement('div', { class: 'copyright' }, `${p.showYear !== false ? '© ' + new Date().getFullYear() + ' ' : ''}${p.copyrightText || ''}`)
   ),

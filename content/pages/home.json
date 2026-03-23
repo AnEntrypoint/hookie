@@ -169,7 +169,8 @@
                 "backgroundColor": "#111111",
                 "padding": "24px",
                 "borderRadius": "0px",
-                "shadowSize": "small"
+                "shadowSize": "small",
+                "href": "https://github.com/AnEntrypoint/agentgui"
               },
               "style": {
                 "fontFamily": "monospace"
@@ -186,7 +187,8 @@
                 "backgroundColor": "#111111",
                 "padding": "24px",
                 "borderRadius": "0px",
-                "shadowSize": "small"
+                "shadowSize": "small",
+                "href": "https://github.com/AnEntrypoint/zellous"
               },
               "style": {
                 "fontFamily": "monospace"
@@ -203,7 +205,8 @@
                 "backgroundColor": "#111111",
                 "padding": "24px",
                 "borderRadius": "0px",
-                "shadowSize": "small"
+                "shadowSize": "small",
+                "href": "https://github.com/AnEntrypoint/busybase"
               },
               "style": {
                 "fontFamily": "monospace"
@@ -220,7 +223,8 @@
                 "backgroundColor": "#111111",
                 "padding": "24px",
                 "borderRadius": "0px",
-                "shadowSize": "small"
+                "shadowSize": "small",
+                "href": "https://github.com/AnEntrypoint/milkvid"
               },
               "style": {
                 "fontFamily": "monospace"
@@ -237,7 +241,8 @@
                 "backgroundColor": "#111111",
                 "padding": "24px",
                 "borderRadius": "0px",
-                "shadowSize": "small"
+                "shadowSize": "small",
+                "href": "https://github.com/AnEntrypoint/diagen"
               },
               "style": {
                 "fontFamily": "monospace"
@@ -254,7 +259,8 @@
                 "backgroundColor": "#111111",
                 "padding": "24px",
                 "borderRadius": "0px",
-                "shadowSize": "small"
+                "shadowSize": "small",
+                "href": "https://github.com/AnEntrypoint/godot-kit"
               },
               "style": {
                 "fontFamily": "monospace"
