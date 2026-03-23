@@ -10,8 +10,10 @@ export default function BuilderCanvas({
   pageData, selectedId, onUpdate, onSelectComponent,
   onDelete, onDuplicate,
   canUndo, canRedo, onUndo, onRedo,
-  paletteVisible = true, isMobile = false
+  paletteVisible = true, isMobile = false, layout
 }) {
+  const pageBg = layout?.colors?.background || '#ffffff';
+  const pageText = layout?.colors?.text || '#1e293b';
   const [previewMode, setPreviewMode] = useState('desktop');
 
   const [{ isOver }, drop] = useDrop(() => ({
@@ -61,8 +63,8 @@ export default function BuilderCanvas({
         </select>
       </div>
 
-      <div ref={drop} style={{ ...styles.canvas, backgroundColor: isOver ? '#f0f9ff' : '#ffffff' }} className="builder-canvas">
-        <div style={{ ...styles.canvasInner, width: getCanvasWidth() }} className="builder-canvas-inner">
+      <div ref={drop} style={{ ...styles.canvas, backgroundColor: isOver ? '#f0f9ff' : pageBg }} className="builder-canvas">
+        <div style={{ ...styles.canvasInner, width: getCanvasWidth(), backgroundColor: pageBg, color: pageText }} className="builder-canvas-inner">
           {pageData && pageData.components && pageData.components.length > 0 ? (
             <Renderer pageData={pageData} mode="edit" selectedId={selectedId} onSelectComponent={onSelectComponent} onDelete={onDelete} onDuplicate={onDuplicate} />
           ) : (

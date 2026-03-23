@@ -14,7 +14,7 @@ import { AutoSaveManager } from './autoSaveManager';
 import RecoveryDialog from './RecoveryDialog';
 import { useToast } from './Toast';
 
-export default function Builder({ pageData, onUpdate, onAutosave }) {
+export default function Builder({ pageData, onUpdate, onAutosave, layout }) {
   const [state, send] = useMachine(builderMachine);
   const { showToast } = useToast();
   const [recovery, setRecovery] = useState(null);
@@ -132,7 +132,7 @@ export default function Builder({ pageData, onUpdate, onAutosave }) {
           <ComponentPalette pageData={ctx.pageData} selectedId={ctx.selectedComponentId} onSelect={id => send({ type: 'SELECT', id })} onDelete={handleDelete} onDuplicate={handleDuplicate} isVisible={ctx.paletteVisible} onToggleVisibility={v => send({ type: 'SET_PALETTE', visible: v })} />
         )}
         <div style={{...styles.center, flex: !isMobile && !ctx.paletteVisible ? 0 : undefined}}>
-          <BuilderCanvas pageData={ctx.pageData} selectedId={ctx.selectedComponentId} onUpdate={handleUpdate} onSelectComponent={id => send({ type: 'SELECT', id })} onDelete={handleDelete} onDuplicate={handleDuplicate} canUndo={ctx.historyIndex > 0} canRedo={ctx.historyIndex < ctx.history.length - 1} onUndo={handleUndo} onRedo={handleRedo} paletteVisible={ctx.paletteVisible} isMobile={isMobile} />
+          <BuilderCanvas pageData={ctx.pageData} selectedId={ctx.selectedComponentId} onUpdate={handleUpdate} onSelectComponent={id => send({ type: 'SELECT', id })} onDelete={handleDelete} onDuplicate={handleDuplicate} canUndo={ctx.historyIndex > 0} canRedo={ctx.historyIndex < ctx.history.length - 1} onUndo={handleUndo} onRedo={handleRedo} paletteVisible={ctx.paletteVisible} isMobile={isMobile} layout={layout} />
         </div>
         {isMobile && ctx.showMobilePropsPanel && (
           <PropsEditor
