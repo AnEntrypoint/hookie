@@ -154,7 +154,7 @@ const styles = {
     width: '100%',
     maxWidth: '100%',
     margin: '0 auto',
-    padding: '1rem',
+    padding: '0',
     boxSizing: 'border-box',
     overflowX: 'hidden'
   },
