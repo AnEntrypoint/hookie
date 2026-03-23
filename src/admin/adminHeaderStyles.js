@@ -5,7 +5,7 @@ export const styles = {
   headerLeft: { display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: 0, overflow: 'hidden' },
   logo: { margin: 0, fontSize: '1rem', fontWeight: '700', color: '#1e293b', whiteSpace: 'nowrap', flexShrink: 0 },
   nav: { display: 'none', gap: '4px', flexShrink: 0 },
-  navLink: { padding: '6px 8px', textDecoration: 'none', color: '#64748b', fontWeight: '500', fontSize: '0.7rem', borderRadius: '6px', transition: 'all 150ms', whiteSpace: 'nowrap', minHeight: '44px', display: 'flex', alignItems: 'center' },
+  navLink: { padding: '6px 10px', textDecoration: 'none', color: '#64748b', fontWeight: '500', fontSize: '0.875rem', borderRadius: '6px', transition: 'all 150ms', whiteSpace: 'nowrap', minHeight: '32px', display: 'flex', alignItems: 'center' },
   navLinkActive: { backgroundColor: '#dbeafe', color: '#2563eb' },
   headerRight: { display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 },
   syncStatus: { fontSize: '0.65rem', fontWeight: '500', minHeight: '44px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' },

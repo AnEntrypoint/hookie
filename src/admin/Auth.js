@@ -51,16 +51,15 @@ const Auth = () => {
           style={{
             textDecoration: 'none',
             color: '#ffffff',
-            minWidth: '44px',
-            minHeight: '44px',
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '8px 16px',
+            padding: '6px 14px',
+            minHeight: '32px',
             backgroundColor: '#2563eb',
             borderRadius: '6px',
             fontWeight: '500',
-            fontSize: '0.875rem',
+            fontSize: '0.8125rem',
             transition: 'background-color 150ms'
           }}
           onMouseEnter={(e) => e.target.style.backgroundColor = '#1e40af'}
@@ -84,17 +83,16 @@ const Auth = () => {
       <button
         onClick={handleLogout}
         style={{
-          minWidth: '44px',
-          minHeight: '44px',
-          padding: '8px 12px',
-          backgroundColor: '#ef4444',
-          color: '#ffffff',
-          border: 'none',
+          padding: '6px 12px',
+          minHeight: '32px',
+          backgroundColor: 'transparent',
+          color: '#ef4444',
+          border: '1px solid #fca5a5',
           borderRadius: '6px',
           fontWeight: '500',
-          fontSize: '0.875rem',
+          fontSize: '0.8125rem',
           cursor: 'pointer',
-          transition: 'background-color 150ms'
+          transition: 'all 150ms'
         }}
         onMouseEnter={(e) => e.target.style.backgroundColor = '#dc2626'}
         onMouseLeave={(e) => e.target.style.backgroundColor = '#ef4444'}

@@ -25,8 +25,11 @@ export default function PageCard({ page, onEdit, onDuplicate, onDelete }) {
 
   return (
     <div className="card bg-backgroundSecondary border border-border1 rounded-xl p-4 flex flex-col gap-3">
-      <div className="flex items-center justify-center h-20 bg-primary/5 rounded-lg">
-        <span className="text-3xl">📄</span>
+      <div className="flex items-center justify-center h-20 rounded-lg overflow-hidden" style={{ background: 'linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%)' }}>
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-2xl font-black text-primary/60 tracking-tight">{formatPageName(page.name).slice(0, 2).toUpperCase()}</span>
+          <span className="text-xs font-mono text-primary/40">/{page.name}</span>
+        </div>
       </div>
 
       <div className="flex flex-col gap-1">

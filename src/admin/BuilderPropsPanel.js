@@ -18,7 +18,11 @@ export default function BuilderPropsPanel({ pageData, selectedComponentId, onUpd
   if (!selectedComponentId) {
     return (
       <div style={panelStyle}>
-        <div style={styles.placeholder}>Select a component to edit props</div>
+        <div style={{ padding: '24px 16px', textAlign: 'center', color: '#94a3b8' }}>
+          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>←</div>
+          <div style={{ fontSize: '0.8125rem', fontWeight: '600', color: '#64748b', marginBottom: '6px' }}>No component selected</div>
+          <div style={{ fontSize: '0.75rem', lineHeight: '1.5' }}>Click a component on the canvas to edit its properties here</div>
+        </div>
       </div>
     );
   }
