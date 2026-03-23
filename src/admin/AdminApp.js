@@ -149,7 +149,7 @@ export default function AdminApp() {
         );
       }
       if (!ctx.currentPage) return <div className="p-12 text-center text-content2">Loading page...</div>;
-      return <Builder pageData={ctx.currentPage.data} onUpdate={handlePageUpdate} onAutosave={() => setLastAutosaved(Date.now())} />;
+      return <Builder pageData={ctx.currentPage.data} onUpdate={handlePageUpdate} onAutosave={() => setLastAutosaved(Date.now())} layout={ctx.layoutData} />;
     }
     if (route === '/admin/components') {
       return <ComponentCreator owner={ctx.repoInfo.owner} repo={ctx.repoInfo.repo} onComponentCreated={n => {
