@@ -71,12 +71,6 @@ export default function BuilderCanvas({
         </div>
       </div>
 
-      {selectedId && (
-        <div style={styles.selectionInfo} className="builder-selection-info">
-          <span style={styles.selectionText} className="builder-selection-text">Selected: {selectedId}</span>
-          <button onClick={() => onSelectComponent(null)} style={styles.clearButton} className="builder-clear-button">Clear Selection x</button>
-        </div>
-      )}
     </div>
   );
 }
@@ -91,7 +85,7 @@ function EmptyCanvas({ onAddComponent, isMobileView }) {
 
   return (
     <div style={styles.emptyState} className="builder-empty-state">
-      <div style={styles.emptyArrow}>{isMobileView ? '' : '<--'}</div>
+      <div style={styles.emptyArrow}>{isMobileView ? '↓ Tap below to add components' : '← Drag from left panel'}</div>
       <div style={styles.emptyIcon}>+</div>
       <h3 style={styles.emptyHeading}>Start building your page</h3>
       <p style={styles.emptyText}>
