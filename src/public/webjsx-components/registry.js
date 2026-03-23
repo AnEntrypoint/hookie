@@ -134,12 +134,12 @@ const renderers = {
   navbar: (p) => webjsx.createElement('nav', { style: `background: ${p.backgroundColor || '#fff'}; color: ${p.textColor || '#1e293b'}; ${p.sticky ? 'position: sticky; top: 0; z-index: 100;' : ''}` },
     webjsx.createElement('div', { class: 'logo' }, p.logoText || ''),
     webjsx.createElement('div', { class: 'links' },
-      ...(p.links || []).map(l => webjsx.createElement('a', { href: l.href, style: `color: ${p.textColor || '#1e293b'}` }, l.label))
+      ...(p.links || []).map(l => webjsx.createElement('a', { href: l.href || l.path, style: `color: ${p.textColor || '#1e293b'}` }, l.label))
     )
   ),
   footerblock: (p) => webjsx.createElement('footer', { style: `background: ${p.backgroundColor || '#1e293b'}; color: ${p.textColor || '#94a3b8'}` },
     webjsx.createElement('div', { class: 'links' },
-      ...(p.links || []).map(l => webjsx.createElement('a', { href: l.href, style: `color: ${p.textColor || '#94a3b8'}` }, l.label))
+      ...(p.links || []).map(l => webjsx.createElement('a', { href: l.href || l.path, style: `color: ${p.textColor || '#94a3b8'}` }, l.label))
     ),
     webjsx.createElement('div', { class: 'copyright' }, `${p.showYear !== false ? '© ' + new Date().getFullYear() + ' ' : ''}${p.copyrightText || ''}`)
   ),
