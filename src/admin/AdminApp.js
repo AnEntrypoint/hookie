@@ -42,6 +42,8 @@ export default function AdminApp() {
     const settings = loadSettingsFromStorage();
     const owner = settings.owner || import.meta.env.VITE_GITHUB_OWNER || '';
     const repo = settings.repo || import.meta.env.VITE_GITHUB_REPO || '';
+    if (owner && !settings.owner) localStorage.setItem('github_owner', owner);
+    if (repo && !settings.repo) localStorage.setItem('github_repo', repo);
     send({ type: 'INITIALIZED', repoInfo: { owner, repo } });
   }, []);
 
