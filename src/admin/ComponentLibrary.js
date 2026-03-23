@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import componentRegistry from '../lib/componentRegistry.js';
 import * as github from '../lib/github.js';
 import { listComponentSchemas, deleteComponentSchema } from '../lib/componentManager.js';
-import { styles } from './componentLibraryStyles.js';
 import ComponentLibraryList from './ComponentLibraryList.js';
 import ComponentLibraryDetail from './ComponentLibraryDetail.js';
-import './componentLibraryStyles.css';
 
 export default function ComponentLibrary({ owner, repo }) {
   const [components, setComponents] = useState([]);
@@ -95,13 +93,13 @@ export default function ComponentLibrary({ owner, repo }) {
     return matchSearch && matchFilter;
   });
 
-  if (loading) return <div style={styles.loading}>Loading components...</div>;
+  if (loading) return <div className="p-12 text-center text-slate-500">Loading components...</div>;
 
   return (
-    <div style={styles.container}>
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', flexDirection: isMobile ? 'column' : 'row' }}>
+    <div className="flex flex-col h-full overflow-hidden bg-white">
+      <div className={`flex flex-1 overflow-hidden ${isMobile ? 'flex-col' : 'flex-row'}`}>
         {(!isMobile || !showDetail) && (
-          <div style={{ width: isMobile ? '100%' : '300px', borderRight: isMobile ? 'none' : '1px solid #e2e8f0', flexShrink: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div className={isMobile ? 'w-full flex flex-col overflow-y-auto' : 'w-[300px] border-r border-slate-200 shrink-0 overflow-y-auto flex flex-col'}>
             <ComponentLibraryList
               components={filteredComponents}
               selectedComponent={selectedComponent}
@@ -115,7 +113,7 @@ export default function ComponentLibrary({ owner, repo }) {
           </div>
         )}
         {(!isMobile || showDetail) && (
-          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-1 overflow-y-auto flex flex-col">
             <ComponentLibraryDetail
               component={selectedComponent}
               pageUsage={pageUsage}
