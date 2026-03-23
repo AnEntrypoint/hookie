@@ -12,9 +12,11 @@ import { deepClone, removeComponentById, findComponentById } from './builderHelp
 import { styles } from './builderStyles.js';
 import { AutoSaveManager } from './autoSaveManager';
 import RecoveryDialog from './RecoveryDialog';
+import { useToast } from './Toast';
 
-export default function Builder({ pageData, onUpdate }) {
+export default function Builder({ pageData, onUpdate, onAutosave }) {
   const [state, send] = useMachine(builderMachine);
+  const { showToast } = useToast();
   const [recovery, setRecovery] = useState(null);
   const autoSaveRef = useRef(null);
   const ctx = state.context;
@@ -67,6 +69,7 @@ export default function Builder({ pageData, onUpdate }) {
     send({ type: 'UPDATE_PAGE', pageData: updatedPageData });
     autoSaveRef.current?.save(updatedPageData);
     onUpdate(updatedPageData);
+    onAutosave?.();
   };
 
   const handleUndo = () => {
@@ -80,9 +83,11 @@ export default function Builder({ pageData, onUpdate }) {
   };
 
   const handleDelete = (componentId) => {
+    const comp = findComponentById(ctx.pageData, componentId);
     const updated = removeComponentById(ctx.pageData, componentId);
     send({ type: 'DELETE_COMPONENT', id: componentId });
     handleUpdate(updated);
+    showToast(`Deleted ${comp?.type || 'component'}`, 'info');
   };
 
   const handleDuplicate = (componentId) => {
@@ -94,6 +99,7 @@ export default function Builder({ pageData, onUpdate }) {
     newPageData.components.push(duplicated);
     handleUpdate(newPageData);
     send({ type: 'SELECT', id: duplicated.id });
+    showToast(`Duplicated ${component.type}`, 'success');
   };
 
   const handleRecover = () => {

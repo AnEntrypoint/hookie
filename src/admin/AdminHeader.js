@@ -11,6 +11,7 @@ export default function AdminHeader({
   onRefresh,
   onDismissNotification,
   changesCount = 0,
+  lastAutosaved,
   onPublish
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -96,6 +97,12 @@ export default function AdminHeader({
           >
             Preview
           </a>
+
+          {lastAutosaved && (
+            <span style={{ fontSize: '0.75rem', color: '#64748b', whiteSpace: 'nowrap' }} title={`Last autosaved: ${new Date(lastAutosaved).toLocaleTimeString()}`}>
+              ● Saved
+            </span>
+          )}
 
           <button
             onClick={onPublish}

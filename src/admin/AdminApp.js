@@ -23,7 +23,19 @@ import './admin.css';
 export default function AdminApp() {
   const [state, send] = useMachine(adminMachine);
   const { showToast } = useToast();
+  const [lastAutosaved, setLastAutosaved] = React.useState(null);
   const ctx = state.context;
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        if (state.context.changes.length > 0) send({ type: 'TOGGLE_PUBLISH_MODAL', show: true });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [state.context.changes]);
 
   useEffect(() => {
     migrateStorageKeys();
@@ -135,7 +147,7 @@ export default function AdminApp() {
         );
       }
       if (!ctx.currentPage) return <div className="p-12 text-center text-content2">Loading page...</div>;
-      return <Builder pageData={ctx.currentPage.data} onUpdate={handlePageUpdate} />;
+      return <Builder pageData={ctx.currentPage.data} onUpdate={handlePageUpdate} onAutosave={() => setLastAutosaved(Date.now())} />;
     }
     if (route === '/admin/components') {
       return <ComponentCreator owner={ctx.repoInfo.owner} repo={ctx.repoInfo.repo} onComponentCreated={n => {
@@ -169,6 +181,7 @@ export default function AdminApp() {
         onRefresh={handleRefresh}
         onDismissNotification={() => send({ type: 'DISMISS_NOTIFICATION' })}
         changesCount={ctx.changes.length}
+        lastAutosaved={lastAutosaved}
         onPublish={() => send({ type: 'TOGGLE_PUBLISH_MODAL', show: true })}
       />
 
