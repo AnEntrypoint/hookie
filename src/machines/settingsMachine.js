@@ -17,6 +17,7 @@ export const settingsMachine = createMachine({
     checking: {
       on: {
         HAS_CONFIG: { target: 'connected', actions: assign(({ event }) => ({ token: event.token, owner: event.owner, repo: event.repo })) },
+        HAS_REPO: { target: 'tokenStep', actions: assign(({ event }) => ({ owner: event.owner, repo: event.repo })) },
         NO_CONFIG: 'tokenStep',
       },
     },
@@ -24,6 +25,11 @@ export const settingsMachine = createMachine({
       on: {
         SET_TOKEN: { actions: assign({ token: ({ event }) => event.token, error: null }) },
         NEXT: [
+          {
+            guard: ({ context }) => TOKEN_RE.test(context.token.trim()) && !!context.owner.trim() && !!context.repo.trim(),
+            target: 'verifyStep',
+            actions: assign({ error: null }),
+          },
           {
             guard: ({ context }) => TOKEN_RE.test(context.token.trim()),
             target: 'repoStep',

@@ -45,7 +45,10 @@ const Settings = ({ onUpdate, repoInfo }) => {
 
   useEffect(() => {
     const s = loadSettingsFromStorage();
-    if (s.token && s.owner && s.repo) send({ type: 'HAS_CONFIG', token: s.token, owner: s.owner, repo: s.repo });
+    const owner = s.owner || import.meta.env.VITE_GITHUB_OWNER || '';
+    const repo = s.repo || import.meta.env.VITE_GITHUB_REPO || '';
+    if (s.token && owner && repo) send({ type: 'HAS_CONFIG', token: s.token, owner, repo });
+    else if (owner && repo) send({ type: 'HAS_REPO', owner, repo });
     else send({ type: 'NO_CONFIG' });
   }, []);
 
@@ -112,15 +115,21 @@ const Settings = ({ onUpdate, repoInfo }) => {
 
   return (
     <div className="max-w-xl mx-auto p-4">
-      <div className="mb-6"><h1 className="text-2xl font-extrabold text-content1 tracking-tight">Setup</h1><p className="text-sm text-content2">Connect Hookie to your GitHub repository in 3 steps</p></div>
-      <Steps n={stepIndex} />
+      <div className="mb-6"><h1 className="text-2xl font-extrabold text-content1 tracking-tight">Setup</h1><p className="text-sm text-content2">{ctx.owner && ctx.repo ? `Adding token for ${ctx.owner}/${ctx.repo}` : 'Connect Hookie to your GitHub repository'}</p></div>
+      {!(ctx.owner && ctx.repo) && <Steps n={stepIndex} />}
       {ctx.error && <div className="alert alert-error mb-4">{ctx.error}</div>}
 
       {state.matches('tokenStep') && (
         <div className="flex flex-col gap-4">
           <h2 className="text-lg font-bold text-content1">Connect your GitHub account</h2>
-          <p className="text-sm text-content2 leading-relaxed">Hookie stores your content as JSON files in a GitHub repository. You need a Personal Access Token (PAT) so Hookie can read and write those files.</p>
-          <div className="flex gap-3 flex-wrap"><a href={NEW_REPO_URL} target="_blank" rel="noopener noreferrer" className="link link-primary text-sm font-semibold">Create a new repo</a><span className="text-content3">·</span><a href={TOKEN_URL} target="_blank" rel="noopener noreferrer" className="link link-primary text-sm font-semibold">Create a PAT</a></div>
+          {ctx.owner && ctx.repo ? (
+            <div className="alert alert-success text-sm">
+              <div>Editing <strong>{ctx.owner}/{ctx.repo}</strong> — just add your token to enable writes.</div>
+            </div>
+          ) : (
+            <p className="text-sm text-content2 leading-relaxed">Hookie stores your content as JSON files in a GitHub repository. You need a Personal Access Token (PAT) so Hookie can read and write those files.</p>
+          )}
+          <div className="flex gap-3 flex-wrap"><a href={TOKEN_URL} target="_blank" rel="noopener noreferrer" className="link link-primary text-sm font-semibold">Create a PAT on GitHub →</a></div>
           <div className="alert alert-info text-sm"><div><strong>Classic token:</strong> needs <code>repo</code> scope<br/><strong>Fine-grained:</strong> needs <code>Contents: Read and write</code></div></div>
           <div className="form-group">
             <label className="form-label">Personal Access Token</label>
