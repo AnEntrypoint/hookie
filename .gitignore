@@ -26,4 +26,4 @@ tsconfig*.json
 pages-dist/
 .gm-stop-verified
 
-.code-search/
+.code-search/.claude/settings.local.json
