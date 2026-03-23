@@ -11,26 +11,25 @@ const getDefaultProps = (schema) => {
   return defaults;
 };
 
+const styleObjToStr = (s) => s ? Object.entries(s).map(([k,v]) => `${k.replace(/([A-Z])/g,'-$1').toLowerCase()}:${v}`).join(';') : '';
+
 function buildVNode(component) {
   if (!component) return null;
   const { type, props, style, children } = component;
   const schema = componentRegistry.getComponent(type);
-  if (!schema) return webjsx.createElement('div', { style: 'padding:12px;background:#fee2e2;border:1px solid #fecaca;border-radius:4px;color:#991b1b;font-size:14px' }, `Unknown: ${type}`);
+  if (!schema) return webjsx.createElement('div', { style: 'padding:12px;background:#fee2e2;color:#991b1b;font-size:14px' }, `Unknown: ${type}`);
 
   const mergedProps = { ...getDefaultProps(schema), ...(props || {}) };
   const tagName = getTagName(type);
-  const el = webjsx.createElement(tagName, { props: JSON.stringify(mergedProps) });
+  const attrs = { props: JSON.stringify(mergedProps) };
+  if (style && Object.keys(style).length) attrs.style = styleObjToStr(style);
 
   if (children?.length > 0) {
     const childVNodes = children.map(buildVNode).filter(Boolean);
-    const renderer = renderers[type.toLowerCase()];
-    if (renderer) {
-      const containerEl = webjsx.createElement(tagName, { props: JSON.stringify(mergedProps) }, ...childVNodes);
-      return containerEl;
-    }
+    return webjsx.createElement(tagName, attrs, ...childVNodes);
   }
 
-  return el;
+  return webjsx.createElement(tagName, attrs);
 }
 
 export function renderPage(container, pageData) {

@@ -138,7 +138,9 @@ const Router = ({ owner, repo, defaultPage = 'home', layout }) => {
 
   if (state.matches('ready') && state.context.currentPage) {
     if (useWebJSX) {
-      return <div ref={webjsxContainerRef} className="webjsx-root w-full" />;
+      const bgColor = layout?.colors?.background || '#ffffff';
+      const textColor = layout?.colors?.text || '#1e293b';
+      return <div ref={webjsxContainerRef} className="webjsx-root w-full" style={{backgroundColor: bgColor, color: textColor, minHeight: '100vh'}} />;
     }
     return <Renderer pageData={state.context.currentPage} mode="view" layout={layout} />;
   }
