@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { styles as baseStyles } from './pageManagerStyles';
 
 function uid() { return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`; }
 
@@ -104,12 +103,12 @@ export default function CreatePageModal({ existingPages, onClose, onSubmit, subm
   };
 
   return (
-    <div style={baseStyles.modalBackdrop} onClick={onClose}>
-      <div style={modalStyles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3 style={baseStyles.modalTitle}>Create New Page</h3>
-        <form onSubmit={handleSubmit} style={baseStyles.form}>
-          <div style={modalStyles.field}>
-            <label style={modalStyles.label}>Page Title</label>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-white p-8 rounded-xl max-w-[560px] w-[90%] shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <h3 className="text-2xl font-bold text-slate-800 m-0 mb-6">Create New Page</h3>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[0.813rem] font-semibold text-slate-700">Page Title</label>
             <input
               type="text"
               value={pageTitle}
@@ -117,73 +116,42 @@ export default function CreatePageModal({ existingPages, onClose, onSubmit, subm
               placeholder="My New Page"
               autoFocus
               maxLength={MAX_NAME_LENGTH}
-              style={baseStyles.input}
+              className="input input-bordered w-full"
             />
           </div>
           {slug && (
-            <div style={modalStyles.slugPreview}>
+            <div className="text-xs text-slate-500 font-mono px-3 py-2 bg-slate-100 rounded-md">
               URL: /{slug}
-              {isDuplicate && <span style={modalStyles.errorInline}> - already exists</span>}
-              {isReserved && <span style={modalStyles.errorInline}> - reserved name</span>}
+              {isDuplicate && <span className="text-red-500 font-semibold"> - already exists</span>}
+              {isReserved && <span className="text-red-500 font-semibold"> - reserved name</span>}
             </div>
           )}
-          <div style={modalStyles.field}>
-            <label style={modalStyles.label}>Template</label>
-            <div style={modalStyles.templateGrid}>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[0.813rem] font-semibold text-slate-700">Template</label>
+            <div className="grid grid-cols-3 gap-2">
               {TEMPLATES.map(t => (
                 <button
                   key={t.id}
                   type="button"
                   onClick={() => setSelectedTemplate(t.id)}
-                  style={{
-                    ...modalStyles.templateCard,
-                    ...(selectedTemplate === t.id ? modalStyles.templateCardSelected : {}),
-                  }}
+                  className={`flex flex-col items-center gap-1 py-4 px-2 border-2 rounded-lg bg-white cursor-pointer text-center transition-all ${selectedTemplate === t.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}
                 >
-                  <span style={modalStyles.templateIcon}>{t.icon}</span>
-                  <span style={modalStyles.templateLabel}>{t.label}</span>
-                  <span style={modalStyles.templateDesc}>{t.description}</span>
+                  <span className="text-xl font-bold text-blue-600 font-mono">{t.icon}</span>
+                  <span className="text-[0.813rem] font-semibold text-slate-800">{t.label}</span>
+                  <span className="text-[0.688rem] text-slate-500 leading-tight">{t.description}</span>
                 </button>
               ))}
             </div>
           </div>
-          {validationError && <div style={modalStyles.error}>{validationError}</div>}
-          <div style={baseStyles.modalActions}>
-            <button type="submit" disabled={submitting || !slug || isDuplicate || isReserved} style={baseStyles.createButton}>
+          {validationError && <div className="text-[0.813rem] text-red-500 px-3 py-2 bg-red-50 rounded-md">{validationError}</div>}
+          <div className="flex gap-3 justify-end">
+            <button type="submit" disabled={submitting || !slug || isDuplicate || isReserved} className="btn btn-primary">
               {submitting ? 'Creating...' : 'Create Page'}
             </button>
-            <button type="button" onClick={onClose} style={baseStyles.cancelButton}>Cancel</button>
+            <button type="button" onClick={onClose} className="btn btn-ghost">Cancel</button>
           </div>
         </form>
       </div>
     </div>
   );
 }
-
-const modalStyles = {
-  modal: {
-    backgroundColor: '#ffffff',
-    padding: '32px',
-    borderRadius: '12px',
-    maxWidth: '560px',
-    width: '90%',
-    boxShadow: '0 25px 50px rgba(0,0,0,0.15)',
-    maxHeight: '90vh',
-    overflowY: 'auto',
-  },
-  field: { display: 'flex', flexDirection: 'column', gap: '6px' },
-  label: { fontSize: '0.813rem', fontWeight: '600', color: '#374151' },
-  slugPreview: { fontSize: '0.75rem', color: '#64748b', fontFamily: 'monospace', padding: '8px 12px', backgroundColor: '#f1f5f9', borderRadius: '6px' },
-  errorInline: { color: '#ef4444', fontWeight: '600' },
-  error: { fontSize: '0.813rem', color: '#ef4444', padding: '8px 12px', backgroundColor: '#fef2f2', borderRadius: '6px' },
-  templateGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' },
-  templateCard: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
-    padding: '16px 8px', border: '2px solid #e5e7eb', borderRadius: '8px',
-    backgroundColor: '#ffffff', cursor: 'pointer', textAlign: 'center', transition: 'all 150ms',
-  },
-  templateCardSelected: { borderColor: '#2563eb', backgroundColor: '#eff6ff' },
-  templateIcon: { fontSize: '1.25rem', fontWeight: '700', color: '#2563eb', fontFamily: 'monospace' },
-  templateLabel: { fontSize: '0.813rem', fontWeight: '600', color: '#1e293b' },
-  templateDesc: { fontSize: '0.688rem', color: '#64748b', lineHeight: '1.3' },
-};

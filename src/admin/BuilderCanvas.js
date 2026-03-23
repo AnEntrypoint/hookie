@@ -3,7 +3,6 @@ import { useDrop } from 'react-dnd';
 import Renderer from '../public/Renderer';
 import componentRegistry from '../lib/componentRegistry';
 import { generateUniqueId } from './builderHelpers';
-import { styles } from './builderCanvasStyles';
 import './admin.css';
 
 export default function BuilderCanvas({
@@ -47,24 +46,31 @@ export default function BuilderCanvas({
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.toolbar} className="builder-toolbar">
-        <button onClick={onUndo} disabled={!canUndo} style={styles.toolbarButton} className="builder-toolbar-button" title="Undo (Ctrl+Z)">
+    <div className="flex flex-col h-full bg-slate-50">
+      <div className="flex items-center gap-2 px-4 py-3 bg-white border-b border-slate-200 flex-wrap builder-toolbar">
+        <button onClick={onUndo} disabled={!canUndo} className="px-3 py-2 bg-slate-100 border border-slate-200 rounded-md cursor-pointer text-base text-slate-800 min-h-[44px] min-w-[44px] disabled:opacity-40 disabled:cursor-not-allowed builder-toolbar-button" title="Undo (Ctrl+Z)">
           &#8630;
         </button>
-        <button onClick={onRedo} disabled={!canRedo} style={styles.toolbarButton} className="builder-toolbar-button" title="Redo (Ctrl+Shift+Z)">
+        <button onClick={onRedo} disabled={!canRedo} className="px-3 py-2 bg-slate-100 border border-slate-200 rounded-md cursor-pointer text-base text-slate-800 min-h-[44px] min-w-[44px] disabled:opacity-40 disabled:cursor-not-allowed builder-toolbar-button" title="Redo (Ctrl+Shift+Z)">
           &#8631;
         </button>
-        <div style={styles.separator} className="builder-separator" />
-        <select value={previewMode} onChange={(e) => setPreviewMode(e.target.value)} style={styles.select} className="builder-select">
+        <div className="w-px h-6 bg-slate-200 mx-2 builder-separator" />
+        <select value={previewMode} onChange={(e) => setPreviewMode(e.target.value)} className="px-3 py-2 border border-slate-200 rounded-md text-sm bg-white cursor-pointer min-h-[44px] builder-select">
           <option value="desktop">Desktop</option>
           <option value="tablet">Tablet (768px)</option>
           <option value="mobile">Mobile (375px)</option>
         </select>
       </div>
 
-      <div ref={drop} style={{ ...styles.canvas, backgroundColor: isOver ? '#f0f9ff' : pageBg }} className="builder-canvas">
-        <div style={{ ...styles.canvasInner, width: getCanvasWidth(), backgroundColor: pageBg, color: pageText }} className="builder-canvas-inner">
+      <div
+        ref={drop}
+        className="flex-1 overflow-y-auto p-5 flex justify-center transition-colors duration-150 builder-canvas"
+        style={{ backgroundColor: isOver ? '#f0f9ff' : pageBg }}
+      >
+        <div
+          className="transition-[width] duration-300 min-h-[400px] builder-canvas-inner"
+          style={{ width: getCanvasWidth(), backgroundColor: pageBg, color: pageText }}
+        >
           {pageData && pageData.components && pageData.components.length > 0 ? (
             <Renderer pageData={pageData} mode="edit" selectedId={selectedId} onSelectComponent={onSelectComponent} onDelete={onDelete} onDuplicate={onDuplicate} />
           ) : (
@@ -86,18 +92,18 @@ function EmptyCanvas({ onAddComponent, isMobileView }) {
   ];
 
   return (
-    <div style={styles.emptyState} className="builder-empty-state">
-      <div style={styles.emptyArrow}>{isMobileView ? '↓ Tap below to add components' : '← Drag from left panel'}</div>
-      <div style={styles.emptyIcon}>+</div>
-      <h3 style={styles.emptyHeading}>Start building your page</h3>
-      <p style={styles.emptyText}>
+    <div className="p-12 text-center text-slate-400 text-base border-2 border-dashed border-slate-300 rounded-lg bg-slate-50 flex flex-col items-center gap-3 min-h-[400px] justify-center builder-empty-state">
+      <div className="text-3xl text-slate-300 font-mono tracking-widest self-start ml-6">{isMobileView ? '\u2193 Tap below to add components' : '\u2190 Drag from left panel'}</div>
+      <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold">+</div>
+      <h3 className="m-0 text-lg font-semibold text-slate-800">Start building your page</h3>
+      <p className="m-0 text-sm text-slate-500 max-w-xs leading-relaxed">
         {isMobileView ? 'Tap the component button to browse components' : 'Drag components from the left panel onto this canvas'}
       </p>
-      <div style={styles.quickAddRow}>
+      <div className="flex gap-2 flex-wrap justify-center mt-2">
         {quickPatterns.map(p => (
-          <button key={p.type} style={styles.quickAddButton} onClick={() => onAddComponent({ componentType: p.type })}>
-            <span style={styles.quickAddIcon}>{p.icon}</span>
-            <span style={styles.quickAddLabel}>{p.label}</span>
+          <button key={p.type} className="flex flex-col items-center gap-1 px-4 py-3 bg-white border border-slate-200 rounded-lg cursor-pointer min-w-[80px] hover:border-blue-300" onClick={() => onAddComponent({ componentType: p.type })}>
+            <span className="text-sm font-bold text-blue-600 font-mono">{p.icon}</span>
+            <span className="text-xs text-slate-500 font-medium">{p.label}</span>
           </button>
         ))}
       </div>

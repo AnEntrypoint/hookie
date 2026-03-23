@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { getComponentTitle } from './builderHelpers';
-import { styles } from './componentPaletteStyles';
 import componentRegistry from '../lib/componentRegistry';
 
 const CATEGORY_COLORS = {
@@ -41,8 +40,8 @@ export default function PaletteTreeNode({ component, selectedId, onSelect, onDel
   return (
     <div>
       <div
+        className="flex items-center gap-2 px-3 py-2 cursor-pointer relative"
         style={{
-          ...styles.treeNode,
           paddingLeft: `${8 + level * 30}px`,
           backgroundColor: isSelected ? '#dbeafe' : 'transparent',
           borderLeft: isSelected ? '3px solid #2563eb' : '3px solid transparent',
@@ -50,22 +49,22 @@ export default function PaletteTreeNode({ component, selectedId, onSelect, onDel
         }}
         onClick={() => onSelect(component.id)}
       >
-        <div style={styles.treeNodeContent}>
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           {hasChildren ? (
-            <button onClick={handleToggleExpanded} style={styles.expandButton} title={expanded ? 'Collapse' : 'Expand'}>
+            <button onClick={handleToggleExpanded} className="bg-none border-none cursor-pointer text-xs p-0.5 text-slate-500 w-5 h-5 flex items-center justify-center shrink-0" title={expanded ? 'Collapse' : 'Expand'}>
               {expanded ? 'v' : '>'}
             </button>
           ) : (
-            <span style={styles.expandPlaceholder}>.</span>
+            <span className="w-5 h-5 flex items-center justify-center text-slate-300 shrink-0">.</span>
           )}
-          <span style={styles.componentIcon}>{typeInfo.icon}</span>
-          <span style={styles.nodeTitle}>{getComponentTitle(component)}</span>
-          <div style={styles.typeBadge(typeInfo.color)}>{component.type}</div>
+          <span className="text-base shrink-0">{typeInfo.icon}</span>
+          <span className="flex-1 text-[0.813rem] text-slate-800 font-mono overflow-hidden text-ellipsis whitespace-nowrap">{getComponentTitle(component)}</span>
+          <div style={{ padding: '2px 6px', backgroundColor: typeInfo.color + '18', color: typeInfo.color, fontSize: '0.65rem', fontWeight: '600', borderRadius: '3px', fontFamily: "'Monaco', 'Courier New', monospace", flexShrink: 0, whiteSpace: 'nowrap' }}>{component.type}</div>
         </div>
-        <div style={styles.nodeActions}>
+        <div className="flex gap-1 opacity-70 shrink-0">
           <button
             onClick={(e) => { e.stopPropagation(); onDuplicate(component.id); }}
-            style={styles.actionButton}
+            className="bg-none border-none cursor-pointer text-base text-blue-600 px-1 py-0.5"
             title="Duplicate"
           >
             ++
@@ -75,7 +74,7 @@ export default function PaletteTreeNode({ component, selectedId, onSelect, onDel
               e.stopPropagation();
               setDeleteConfirm({ componentId: component.id, componentName: getComponentTitle(component) });
             }}
-            style={styles.deleteButton}
+            className="bg-none border-none cursor-pointer text-lg text-red-500 px-1 py-0.5"
             title="Delete"
           >
             x
