@@ -1,78 +1,118 @@
 {
   "name": "home",
-  "title": "Home",
+  "title": "AnEntrypoint",
   "components": [
     {
-      "id": "home-hero-section",
+      "id": "hero-section",
       "type": "Section",
       "props": {
-        "background": "gradient-blue",
+        "background": "transparent",
         "padding": "2xl",
         "fullWidth": true
       },
-      "style": { "textAlign": "center" },
+      "style": {
+        "backgroundColor": "#0d0d0d",
+        "minHeight": "90vh",
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center"
+      },
       "children": [
         {
-          "id": "home-hero-heading",
-          "type": "Heading",
-          "props": {
-            "level": 1,
-            "text": "Build Anything with Hookie",
-            "color": "#0c4a6e",
-            "weight": "bold",
-            "align": "center"
-          },
-          "style": {},
-          "children": []
-        },
-        {
-          "id": "home-hero-text",
+          "id": "hero-label",
           "type": "Text",
           "props": {
-            "content": "The modern CMS that puts you in control. Visual editing, GitHub-powered, component-based.",
-            "size": "xl",
-            "color": "#0c4a6e",
-            "weight": "normal",
-            "align": "center"
+            "content": "// AnEntrypoint",
+            "size": "sm",
+            "color": "#00ff88",
+            "weight": "bold",
+            "align": "left"
           },
-          "style": {},
+          "style": {
+            "fontFamily": "monospace",
+            "letterSpacing": "0.1em",
+            "marginBottom": "1rem"
+          },
           "children": []
         },
         {
-          "id": "home-hero-buttons",
+          "id": "hero-h1",
+          "type": "Heading",
+          "props": {
+            "text": "We build things that shouldn't exist yet.",
+            "level": 1,
+            "color": "#f0f0f0",
+            "align": "left",
+            "weight": "bold"
+          },
+          "style": {
+            "fontSize": "clamp(2.5rem, 6vw, 5rem)",
+            "lineHeight": "1.05",
+            "maxWidth": "14ch",
+            "marginBottom": "2rem"
+          },
+          "children": []
+        },
+        {
+          "id": "hero-sub",
+          "type": "Text",
+          "props": {
+            "content": "Open source experiments in AI, audio, games, and infrastructure. 274 repos. Still going.",
+            "size": "lg",
+            "color": "#888888",
+            "weight": "normal",
+            "align": "left"
+          },
+          "style": {
+            "maxWidth": "48ch",
+            "marginBottom": "3rem"
+          },
+          "children": []
+        },
+        {
+          "id": "hero-ctas",
           "type": "Container",
-          "props": {},
+          "props": {
+            "padding": "none"
+          },
           "style": {
             "display": "flex",
-            "gap": "16px",
-            "justifyContent": "center",
+            "gap": "1rem",
             "flexWrap": "wrap"
           },
           "children": [
             {
-              "id": "home-hero-get-started",
+              "id": "hero-github",
               "type": "Link",
               "props": {
+                "text": "github.com/AnEntrypoint →",
+                "href": "https://github.com/AnEntrypoint",
                 "variant": "button",
-                "text": "Get Started",
-                "href": "#/admin",
                 "size": "lg",
                 "color": "primary"
               },
-              "style": {},
+              "style": {
+                "fontFamily": "monospace",
+                "backgroundColor": "#00ff88",
+                "color": "#0d0d0d"
+              },
               "children": []
             },
             {
-              "id": "home-hero-view-components",
+              "id": "hero-discord",
               "type": "Link",
               "props": {
+                "text": "join the community",
+                "href": "http://dsc.gg/entrypoint",
                 "variant": "pill",
-                "text": "View Components",
-                "href": "#/pages/components",
                 "size": "lg",
                 "color": "success"
               },
-              "style": {},
+              "style": {
+                "fontFamily": "monospace",
+                "backgroundColor": "transparent",
+                "color": "#00ff88"
+              },
               "children": []
             }
           ]
@@ -80,150 +120,145 @@
       ]
     },
     {
-      "id": "home-features-section",
+      "id": "projects-section",
       "type": "Section",
       "props": {
-        "padding": "xl",
-        "background": "white"
-      },
-      "style": {},
-      "children": [
-        {
-          "id": "home-features-heading",
-          "type": "Heading",
-          "props": {
-            "level": 2,
-            "text": "Features",
-            "align": "center"
-          },
-          "style": {},
-          "children": []
-        },
-        {
-          "id": "home-features-subtitle",
-          "type": "Text",
-          "props": {
-            "content": "Everything you need to build modern websites",
-            "align": "center",
-            "color": "#64748b",
-            "size": "lg"
-          },
-          "style": {},
-          "children": []
-        },
-        {
-          "id": "home-features-grid",
-          "type": "Grid",
-          "props": {
-            "columns": 3,
-            "gap": "lg"
-          },
-          "style": {},
-          "children": [
-            {
-              "id": "home-feature-card-1",
-              "type": "Card",
-              "props": {
-                "title": "Visual Editor",
-                "description": "Drag and drop interface for building pages. See changes in real-time.",
-                "shadowSize": "medium",
-                "accentColor": "#2563eb"
-              },
-              "style": {},
-              "children": []
-            },
-            {
-              "id": "home-feature-card-2",
-              "type": "Card",
-              "props": {
-                "title": "GitHub Powered",
-                "description": "Content stored as JSON in your repo. Full version control and collaboration.",
-                "shadowSize": "medium",
-                "accentColor": "#10b981"
-              },
-              "style": {},
-              "children": []
-            },
-            {
-              "id": "home-feature-card-3",
-              "type": "Card",
-              "props": {
-                "title": "Component Based",
-                "description": "Build with reusable components. Extend the library with custom components.",
-                "shadowSize": "medium",
-                "accentColor": "#f59e0b"
-              },
-              "style": {},
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "home-testimonials-section",
-      "type": "Section",
-      "props": {
-        "padding": "xl",
-        "background": "subtle",
+        "background": "transparent",
+        "padding": "2xl",
         "fullWidth": true
       },
-      "style": {},
+      "style": {
+        "backgroundColor": "#0d0d0d"
+      },
       "children": [
         {
-          "id": "home-testimonials-heading",
-          "type": "Heading",
+          "id": "projects-label",
+          "type": "Text",
           "props": {
-            "level": 2,
-            "text": "What People Say",
-            "align": "center"
+            "content": "// selected work",
+            "size": "sm",
+            "color": "#00ff88",
+            "weight": "bold",
+            "align": "left"
           },
-          "style": {},
+          "style": {
+            "fontFamily": "monospace",
+            "letterSpacing": "0.1em",
+            "marginBottom": "2rem"
+          },
           "children": []
         },
         {
-          "id": "home-testimonials-grid",
+          "id": "projects-grid",
           "type": "Grid",
           "props": {
-            "columns": 3,
-            "gap": "lg"
+            "columns": 2,
+            "gap": "lg",
+            "minItemWidth": "320px",
+            "autoFit": true
           },
           "style": {},
           "children": [
             {
-              "id": "home-testimonial-card-1",
+              "id": "card-agentgui",
               "type": "Card",
               "props": {
-                "title": "Jane Smith",
-                "description": "Hookie CMS transformed how we build websites. The visual editor is incredible.",
-                "shadowSize": "small",
-                "accentColor": "#8b5cf6"
+                "title": "agentgui",
+                "description": "Multi-agent GUI for AI coding assistants — Claude Code, Gemini CLI, OpenCode & more. npx agentgui",
+                "accentColor": "#00ff88",
+                "backgroundColor": "#111111",
+                "padding": "24px",
+                "borderRadius": "0px",
+                "shadowSize": "small"
               },
-              "style": {},
+              "style": {
+                "fontFamily": "monospace"
+              },
               "children": []
             },
             {
-              "id": "home-testimonial-card-2",
+              "id": "card-zellous",
               "type": "Card",
               "props": {
-                "title": "Alex Johnson",
-                "description": "GitHub integration means our content is always versioned and backed up.",
-                "shadowSize": "small",
-                "accentColor": "#8b5cf6"
+                "title": "zellous",
+                "description": "Production-ready Push-to-Talk with Opus codec, dynamic rooms, and audio replay.",
+                "accentColor": "#00ff88",
+                "backgroundColor": "#111111",
+                "padding": "24px",
+                "borderRadius": "0px",
+                "shadowSize": "small"
               },
-              "style": {},
+              "style": {
+                "fontFamily": "monospace"
+              },
               "children": []
             },
             {
-              "id": "home-testimonial-card-3",
+              "id": "card-busybase",
               "type": "Card",
               "props": {
-                "title": "Maria Garcia",
-                "description": "The component system makes it easy to maintain consistency across pages.",
-                "shadowSize": "small",
-                "accentColor": "#8b5cf6"
+                "title": "busybase",
+                "description": "Supabase-like HTTP SQLite database. Zero-hop embedded columnar store. npm i busybase",
+                "accentColor": "#00ff88",
+                "backgroundColor": "#111111",
+                "padding": "24px",
+                "borderRadius": "0px",
+                "shadowSize": "small"
               },
-              "style": {},
+              "style": {
+                "fontFamily": "monospace"
+              },
+              "children": []
+            },
+            {
+              "id": "card-milkvid",
+              "type": "Card",
+              "props": {
+                "title": "milkvid",
+                "description": "Milkdrop preset video renderer — butterchurn + WebCodecs + ffmpeg. Visual audio in the browser.",
+                "accentColor": "#00ff88",
+                "backgroundColor": "#111111",
+                "padding": "24px",
+                "borderRadius": "0px",
+                "shadowSize": "small"
+              },
+              "style": {
+                "fontFamily": "monospace"
+              },
+              "children": []
+            },
+            {
+              "id": "card-diagen",
+              "type": "Card",
+              "props": {
+                "title": "diagen",
+                "description": "Text-to-Speech + Facial Animation Server for VRM avatars. Talk to your model.",
+                "accentColor": "#00ff88",
+                "backgroundColor": "#111111",
+                "padding": "24px",
+                "borderRadius": "0px",
+                "shadowSize": "small"
+              },
+              "style": {
+                "fontFamily": "monospace"
+              },
+              "children": []
+            },
+            {
+              "id": "card-godotkit",
+              "type": "Card",
+              "props": {
+                "title": "godot-kit",
+                "description": "Agentic Godot 4.x dev boilerplate — REPL/CLI debugging, gdtoolkit, DAP, scene inspector.",
+                "accentColor": "#00ff88",
+                "backgroundColor": "#111111",
+                "padding": "24px",
+                "borderRadius": "0px",
+                "shadowSize": "small"
+              },
+              "style": {
+                "fontFamily": "monospace"
+              },
               "children": []
             }
           ]
@@ -231,213 +266,106 @@
       ]
     },
     {
-      "id": "home-stats-section",
-      "type": "Section",
-      "props": {
-        "padding": "lg",
-        "background": "white"
-      },
-      "style": {},
-      "children": [
-        {
-          "id": "home-stats-grid",
-          "type": "Grid",
-          "props": {
-            "columns": 4,
-            "gap": "md"
-          },
-          "style": {},
-          "children": [
-            {
-              "id": "home-stat-1",
-              "type": "Container",
-              "props": {},
-              "style": { "textAlign": "center" },
-              "children": [
-                {
-                  "id": "home-stat-1-heading",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "12+",
-                    "color": "#2563eb",
-                    "align": "center"
-                  },
-                  "style": { "fontSize": "2.5rem" },
-                  "children": []
-                },
-                {
-                  "id": "home-stat-1-text",
-                  "type": "Text",
-                  "props": {
-                    "content": "Components",
-                    "color": "#64748b",
-                    "align": "center"
-                  },
-                  "style": {},
-                  "children": []
-                }
-              ]
-            },
-            {
-              "id": "home-stat-2",
-              "type": "Container",
-              "props": {},
-              "style": { "textAlign": "center" },
-              "children": [
-                {
-                  "id": "home-stat-2-heading",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "100%",
-                    "color": "#2563eb",
-                    "align": "center"
-                  },
-                  "style": { "fontSize": "2.5rem" },
-                  "children": []
-                },
-                {
-                  "id": "home-stat-2-text",
-                  "type": "Text",
-                  "props": {
-                    "content": "Customizable",
-                    "color": "#64748b",
-                    "align": "center"
-                  },
-                  "style": {},
-                  "children": []
-                }
-              ]
-            },
-            {
-              "id": "home-stat-3",
-              "type": "Container",
-              "props": {},
-              "style": { "textAlign": "center" },
-              "children": [
-                {
-                  "id": "home-stat-3-heading",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "0",
-                    "color": "#2563eb",
-                    "align": "center"
-                  },
-                  "style": { "fontSize": "2.5rem" },
-                  "children": []
-                },
-                {
-                  "id": "home-stat-3-text",
-                  "type": "Text",
-                  "props": {
-                    "content": "Build Steps",
-                    "color": "#64748b",
-                    "align": "center"
-                  },
-                  "style": {},
-                  "children": []
-                }
-              ]
-            },
-            {
-              "id": "home-stat-4",
-              "type": "Container",
-              "props": {},
-              "style": { "textAlign": "center" },
-              "children": [
-                {
-                  "id": "home-stat-4-heading",
-                  "type": "Heading",
-                  "props": {
-                    "level": 3,
-                    "text": "Git",
-                    "color": "#2563eb",
-                    "align": "center"
-                  },
-                  "style": { "fontSize": "2.5rem" },
-                  "children": []
-                },
-                {
-                  "id": "home-stat-4-text",
-                  "type": "Text",
-                  "props": {
-                    "content": "Version Control",
-                    "color": "#64748b",
-                    "align": "center"
-                  },
-                  "style": {},
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "home-cta-divider",
+      "id": "divider-1",
       "type": "Divider",
       "props": {
-        "variant": "gradient",
-        "color": "blue-gradient",
-        "thickness": "thick",
-        "margin": "lg"
+        "color": "primary",
+        "variant": "solid",
+        "thickness": "thin",
+        "margin": "sm"
       },
       "style": {},
       "children": []
     },
     {
-      "id": "home-cta-section",
+      "id": "cta-section",
       "type": "Section",
       "props": {
-        "padding": "xl",
-        "background": "gradient-blue",
+        "background": "transparent",
+        "padding": "2xl",
         "fullWidth": true
       },
-      "style": { "textAlign": "center" },
+      "style": {
+        "backgroundColor": "#0d0d0d"
+      },
       "children": [
         {
-          "id": "home-cta-heading",
+          "id": "cta-heading",
           "type": "Heading",
           "props": {
+            "text": "Love 🧀 and 📐s?",
             "level": 2,
-            "text": "Ready to Get Started?",
-            "color": "#0c4a6e",
-            "align": "center"
+            "color": "#f0f0f0",
+            "align": "center",
+            "weight": "bold"
           },
-          "style": {},
+          "style": {
+            "fontSize": "clamp(1.8rem, 4vw, 3rem)",
+            "marginBottom": "1rem"
+          },
           "children": []
         },
         {
-          "id": "home-cta-text",
+          "id": "cta-sub",
           "type": "Text",
           "props": {
-            "content": "Start building your site today with Hookie CMS.",
+            "content": "We're a community that ships. Join the Discord, lurk the repos, or just steal the code.",
             "size": "lg",
-            "color": "#0c4a6e",
+            "color": "#888888",
+            "weight": "normal",
             "align": "center"
           },
-          "style": {},
+          "style": {
+            "maxWidth": "50ch",
+            "margin": "0 auto 2.5rem"
+          },
           "children": []
         },
         {
-          "id": "home-cta-button-container",
+          "id": "cta-buttons",
           "type": "Container",
-          "props": {},
-          "style": { "display": "flex", "justifyContent": "center" },
+          "props": {
+            "padding": "none"
+          },
+          "style": {
+            "display": "flex",
+            "gap": "1rem",
+            "justifyContent": "center",
+            "flexWrap": "wrap"
+          },
           "children": [
             {
-              "id": "home-cta-button",
+              "id": "cta-discord-btn",
               "type": "Link",
               "props": {
+                "text": "discord.gg/entrypoint",
+                "href": "http://dsc.gg/entrypoint",
                 "variant": "button",
-                "text": "Open Admin Panel",
-                "href": "#/admin",
-                "size": "lg"
+                "size": "lg",
+                "color": "primary"
               },
-              "style": {},
+              "style": {
+                "fontFamily": "monospace",
+                "backgroundColor": "#00ff88",
+                "color": "#0d0d0d"
+              },
+              "children": []
+            },
+            {
+              "id": "cta-github-btn",
+              "type": "Link",
+              "props": {
+                "text": "browse all repos",
+                "href": "https://github.com/AnEntrypoint",
+                "variant": "pill",
+                "size": "lg",
+                "color": "success"
+              },
+              "style": {
+                "fontFamily": "monospace",
+                "color": "#00ff88",
+                "backgroundColor": "transparent"
+              },
               "children": []
             }
           ]

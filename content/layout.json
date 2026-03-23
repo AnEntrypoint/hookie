@@ -1,67 +1,79 @@
 {
   "version": "1.0.0",
   "site": {
-    "title": "Hookie - Visual Page Builder CMS",
-    "description": "Build beautiful websites with a drag-and-drop page builder powered by GitHub",
-    "theme": "light"
+    "title": "AnEntrypoint",
+    "description": "Open source experiments in AI, audio, games, and infrastructure.",
+    "theme": "dark"
   },
   "header": {
     "enabled": true,
     "height": 64,
-    "backgroundColor": "#ffffff",
-    "borderBottom": "1px solid #e2e8f0",
+    "backgroundColor": "#0d0d0d",
     "position": "sticky",
     "padding": "0.75rem 2rem",
     "items": [
       {
         "type": "logo",
-        "text": "Hookie CMS"
+        "text": "AnEntrypoint"
       },
       {
         "type": "nav",
         "links": [
-          { "label": "Home", "path": "#/" },
-          { "label": "Components", "path": "#/pages/components" },
-          { "label": "About", "path": "#/pages/about" },
-          { "label": "Pricing", "path": "#/pages/pricing" },
-          { "label": "Blog", "path": "#/pages/blog" }
+          {
+            "label": "work",
+            "path": "#/"
+          },
+          {
+            "label": "github",
+            "path": "https://github.com/AnEntrypoint"
+          },
+          {
+            "label": "discord",
+            "path": "http://dsc.gg/entrypoint"
+          }
         ]
       }
     ]
   },
   "footer": {
     "enabled": true,
-    "backgroundColor": "#1e293b",
-    "color": "#94a3b8",
+    "backgroundColor": "#0d0d0d",
+    "color": "#555555",
     "padding": "3rem 2rem",
-    "borderTop": "none",
     "sections": [
       {
-        "title": "Product",
+        "title": "AnEntrypoint",
         "links": [
-          { "label": "Features", "path": "#/" },
-          { "label": "Pricing", "path": "#/pages/pricing" },
-          { "label": "Components", "path": "#/pages/components" },
-          { "label": "Blog", "path": "#/pages/blog" }
+          {
+            "label": "GitHub",
+            "path": "https://github.com/AnEntrypoint"
+          },
+          {
+            "label": "Discord",
+            "path": "http://dsc.gg/entrypoint"
+          }
         ]
       },
       {
-        "title": "Company",
+        "title": "projects",
         "links": [
-          { "label": "About", "path": "#/pages/about" },
-          { "label": "Contact", "path": "mailto:hello@hookie.dev" }
+          {
+            "label": "agentgui",
+            "path": "https://github.com/AnEntrypoint/agentgui"
+          },
+          {
+            "label": "busybase",
+            "path": "https://github.com/AnEntrypoint/busybase"
+          },
+          {
+            "label": "zellous",
+            "path": "https://github.com/AnEntrypoint/zellous"
+          }
         ]
       },
       {
-        "title": "Resources",
-        "links": [
-          { "label": "Documentation", "path": "#/docs" },
-          { "label": "GitHub", "path": "https://github.com" }
-        ]
-      },
-      {
-        "title": "Legal",
-        "text": "2026 Hookie. All rights reserved."
+        "title": "",
+        "text": "2026 AnEntrypoint. Build freely."
       }
     ]
   },
@@ -85,16 +97,16 @@
     "xl": 32
   },
   "colors": {
-    "primary": "#2563eb",
-    "secondary": "#7c3aed",
+    "primary": "#00ff88",
+    "secondary": "#00ff88",
     "success": "#10b981",
     "warning": "#f59e0b",
     "error": "#ef4444",
-    "background": "#ffffff",
-    "surface": "#f8fafc",
-    "text": "#1e293b",
-    "textSecondary": "#64748b",
-    "border": "#e2e8f0"
+    "background": "#0d0d0d",
+    "surface": "#111111",
+    "text": "#f0f0f0",
+    "textSecondary": "#888888",
+    "border": "#222222"
   },
   "typography": {
     "fontFamily": "system-ui, -apple-system, sans-serif",
