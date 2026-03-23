@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { github } from '../lib/github.js';
+import github from '../lib/github.js';
 
 const Auth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

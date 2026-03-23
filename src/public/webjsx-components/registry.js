@@ -23,10 +23,10 @@ const componentStyles = {
   `,
   card: `
     :host { display: block; }
-    .card { border-radius: var(--radius, 12px); padding: var(--padding, 24px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden; }
-    .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; }
-    h3 { margin: 0 0 8px; font-size: 1.25rem; font-weight: 700; }
-    p { margin: 0; color: #64748b; line-height: 1.6; }
+    .card { border-radius: var(--radius, 0px); padding: var(--padding, 24px); overflow: hidden; }
+    .card img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 16px; }
+    h3 { margin: 0 0 8px; font-size: 1rem; font-weight: 700; font-family: monospace; text-transform: lowercase; }
+    p { margin: 0; line-height: 1.6; font-size: 0.875rem; }
   `,
   section: `
     :host { display: block; }
@@ -34,16 +34,17 @@ const componentStyles = {
     .section.bg-white { background: #ffffff; }
     .section.bg-light { background: #f8fafc; }
     .section.bg-subtle { background: #f1f5f9; }
-    h2 { margin: 0 0 8px; font-size: 1.75rem; font-weight: 700; color: #1e293b; }
-    .subtitle { margin: 0 0 24px; color: #64748b; font-size: 1rem; }
+    h2 { margin: 0 0 8px; font-size: 1.75rem; font-weight: 700; }
+    .subtitle { margin: 0 0 24px; font-size: 1rem; }
     .content { max-width: 1200px; margin: 0 auto; }
+    slot { display: block; }
   `,
   text: `:host { display: block; } p { margin: 0; line-height: 1.7; }`,
   heading: `:host { display: block; } h1,h2,h3,h4,h5,h6 { margin: 0; }`,
   button: `:host { display: inline-block; } button { padding: 10px 20px; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; font-size: 0.9375rem; } .primary { background: #2563eb; color: #fff; } .secondary { background: #f1f5f9; color: #1e293b; } .outline { background: transparent; border: 2px solid #2563eb; color: #2563eb; } .ghost { background: transparent; color: #2563eb; } .danger { background: #ef4444; color: #fff; }`,
   image: `:host { display: block; } img { max-width: 100%; height: auto; display: block; }`,
-  grid: `:host { display: block; } .grid { display: grid; gap: var(--gap, 24px); }`,
-  container: `:host { display: block; } .container { max-width: var(--max-width, 1200px); margin: 0 auto; padding: var(--padding, 0 24px); }`,
+  grid: `:host { display: block; } .grid { display: grid; gap: var(--gap, 24px); } slot { display: contents; }`,
+  container: `:host { display: block; } .container { max-width: var(--max-width, 1200px); margin: 0 auto; } slot { display: contents; }`,
   divider: `:host { display: block; } hr { border: none; margin: var(--margin, 24px 0); }`,
   link: `:host { display: inline; } a { text-decoration: none; font-weight: 500; } a.underline { text-decoration: underline; }`,
   list: `:host { display: block; } ul, ol { margin: 0; padding-left: 24px; } li { margin-bottom: 8px; line-height: 1.6; }`,
@@ -55,6 +56,8 @@ const componentStyles = {
   contactform: `:host { display: block; } form { display: flex; flex-direction: column; gap: 16px; max-width: 500px; } label { font-weight: 600; font-size: 0.875rem; display: flex; flex-direction: column; gap: 6px; } input, textarea { padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 1rem; font-family: inherit; } textarea { min-height: 120px; resize: vertical; } button { padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; }`,
 };
 
+const SLOT_TYPES = new Set(['section','container','grid']);
+
 function createBaseClass(type) {
   return class extends HTMLElement {
     static get observedAttributes() { return ['props']; }
@@ -64,11 +67,13 @@ function createBaseClass(type) {
     set props(val) { this._props = typeof val === 'string' ? JSON.parse(val) : val; this.render(); }
     get props() { return this._props; }
     render() {
-      const style = componentStyles[type] || ':host { display: block; }';
+      const css = componentStyles[type] || ':host { display: block; }';
       const vdom = renderers[type]?.(this._props) || webjsx.createElement('div', null, `Unknown: ${type}`);
+      const slotEl = SLOT_TYPES.has(type) ? webjsx.createElement('slot', null) : null;
       webjsx.applyDiff(this.shadowRoot, webjsx.createElement('div', null,
-        webjsx.createElement('style', null, style),
-        vdom
+        webjsx.createElement('style', null, css),
+        vdom,
+        slotEl
       ));
     }
   };
@@ -88,18 +93,16 @@ const renderers = {
       p.secondaryCtaText ? webjsx.createElement('a', { href: p.secondaryCtaHref || '#', class: 'cta cta-secondary' }, p.secondaryCtaText) : null
     )
   ),
-  card: (p) => webjsx.createElement('div', { class: 'card', style: `background: ${p.backgroundColor || '#fff'}; border-left: 4px solid ${p.accentColor || '#2563eb'};` },
+  card: (p) => webjsx.createElement('div', { class: 'card', style: `background: ${p.backgroundColor || '#fff'}; color: ${p.accentColor || '#2563eb'};` },
     p.imageUrl ? webjsx.createElement('img', { src: p.imageUrl, alt: p.imageAlt || '' }) : null,
     webjsx.createElement('h3', { style: `color: ${p.accentColor || '#2563eb'}` }, p.title || ''),
-    webjsx.createElement('p', null, p.description || '')
+    webjsx.createElement('p', { style: `color: ${p.backgroundColor === '#111111' ? '#888888' : '#64748b'}` }, p.description || '')
   ),
   section: (p) => {
     const bg = p.background || 'transparent';
     return webjsx.createElement('div', { class: `section ${bg !== 'transparent' ? 'bg-' + bg : ''}`, style: `padding: ${padMap[p.padding] || padMap.md}` },
-      webjsx.createElement('div', { class: 'content' },
-        p.title ? webjsx.createElement('h2', null, p.title) : null,
-        p.subtitle ? webjsx.createElement('p', { class: 'subtitle' }, p.subtitle) : null
-      )
+      p.title ? webjsx.createElement('h2', null, p.title) : null,
+      p.subtitle ? webjsx.createElement('p', { class: 'subtitle' }, p.subtitle) : null
     );
   },
   text: (p) => webjsx.createElement('p', { style: `font-size: ${sizeMap[p.size] || sizeMap.base}; color: ${p.color || '#1e293b'}; font-weight: ${p.weight || 'normal'}; text-align: ${p.align || 'left'}` }, p.content || ''),
@@ -107,7 +110,7 @@ const renderers = {
   button: (p) => webjsx.createElement('button', { class: p.variant || 'primary', disabled: p.disabled, style: p.fullWidth ? 'width:100%' : '' }, p.label || 'Click me'),
   image: (p) => webjsx.createElement('img', { src: p.src || '', alt: p.alt || '', style: `width: ${p.width || '100%'}; height: ${p.height || 'auto'}; object-fit: ${p.objectFit || 'cover'}; border-radius: 8px;`, loading: p.lazy !== false ? 'lazy' : 'eager' }),
   grid: (p) => webjsx.createElement('div', { class: 'grid', style: `grid-template-columns: repeat(${p.autoFit ? `auto-fit, minmax(${p.minItemWidth || '280px'}, 1fr)` : `${p.columns || 3}, 1fr`}); gap: ${gapMap[p.gap] || gapMap.md}` }),
-  container: (p) => webjsx.createElement('div', { class: 'container', style: `max-width: ${maxWidthMap[p.maxWidth] || maxWidthMap.xl}; padding: ${padMap[p.padding] || '0 24px'}` }),
+  container: (p) => webjsx.createElement('div', { class: 'container', style: `max-width: ${maxWidthMap[p.maxWidth] || maxWidthMap.xl}; padding: ${padMap[p.padding] || '0 24px'}; display: flex; flex-wrap: wrap; gap: 1rem;` }),
   divider: (p) => webjsx.createElement('hr', { style: `border-top: ${p.thickness === 'thin' ? '1px' : p.thickness === 'thick' ? '3px' : p.thickness === 'xl' ? '5px' : '2px'} ${p.variant || 'solid'} ${p.color === 'primary' ? '#2563eb' : p.color === 'dark' ? '#1e293b' : '#e2e8f0'}; margin: ${padMap[p.margin] || '24px 0'}` }),
   link: (p) => webjsx.createElement('a', { href: p.href || '#', target: p.newTab ? '_blank' : '_self', class: p.variant || '' }, p.text || ''),
   list: (p) => {
