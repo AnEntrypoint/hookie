@@ -1,6 +1,6 @@
 import { createMachine, assign } from 'xstate';
 
-const TOKEN_RE = /^(ghp_[a-zA-Z0-9]{36,}|github_pat_[a-zA-Z0-9_]{22,})$/;
+const TOKEN_RE = /^(ghp_[a-zA-Z0-9]{36,}|gho_[a-zA-Z0-9]{36,}|github_pat_[a-zA-Z0-9_]{22,})$/;
 
 export const settingsMachine = createMachine({
   id: 'settings',
