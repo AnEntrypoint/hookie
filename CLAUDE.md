@@ -15,7 +15,7 @@ Hookie is a GitHub-backed CMS: pages are stored as JSON in a GitHub repo, edited
 ```
 src/
   admin/         Admin UI components (Builder, PageManager, Settings, etc.)
-  components/    19 built-in page components (Hero, Card, Grid, etc.)
+  components/    18 built-in page components (Hero, Card, Grid, etc.)
   lib/           Shared logic (github.js, contentManager.js, componentRegistry.js)
   machines/      XState state machines (adminMachine, builderMachine, etc.)
   public/        Public-facing app (App.js, Router.js, WebJSXRenderer.js)
@@ -132,11 +132,12 @@ No `.test.js` or `.spec.js` files. Validation done via actual execution against 
 `src/lib/liveReload.js` polls GitHub for changes and fires a callback when remote changes are detected. Polling is started in `AdminApp.js` when repo is configured.
 
 ### Static Page Generation (`bun run generate-pages`)
-Three files under `.github/scripts/`:
+Four files under `.github/scripts/`:
 - `page-renderer.js` — `renderComponent()`, `renderPage()`, `escapeHtml()`, `styleToString()` exported as ES module
-- `generate-landing.js` — exports `generateLanding({ baseUrl, pageList, pageCount, demoExists })` returning full landing page HTML
+- `generate-sections.js` — exports individual HTML section generators: `genStyles`, `genNav`, `genHero`, `genHowItWorks`, `genComponents`, `genTechStack`, `genGetStarted`, `genFooter`
+- `generate-landing.js` — exports `generateLanding({ baseUrl, pageList, pageCount, demoExists })` assembling the product marketing website from section generators
 - `generate-static-pages.js` — orchestrator: reads `content/pages/*.json`, calls renderer per page, calls landing generator, writes `pages-dist/`
-`BASE_URL` env var controls all absolute URLs (fallback: `https://anentrypoint.github.io/hookie`). CI copies `pages-dist/` into `dist/pages/` so static pages live at `/pages/<slug>.html` alongside the Vite app.
+`BASE_URL` env var controls all absolute URLs (fallback: `https://anentrypoint.github.io/hookie`). CI pipeline: (1) copies `screenshot.png` to `public/` before build, (2) after Vite build renames `dist/index.html` → `dist/app.html` so the admin SPA is at `/hookie/app.html`, (3) copies `pages-dist/index.html` → `dist/index.html` so the product website is at the root. Admin URL on deployed site: `BASE_URL/app.html#/admin`.
 
 ### gm-cc Lang Plugin (`lang/jsx.js`)
 CommonJS plugin for gm-cc that provides JSX/JS syntax checking via `exec:jsx`. The project uses `"type": "module"` in package.json, but lang plugins **must be CommonJS** (`module.exports = {}`). Requires acorn and acorn-jsx at runtime via `require(path.join(cwd, 'node_modules', 'acorn'))` — cwd is the project root passed by the gm-cc hook runner.
