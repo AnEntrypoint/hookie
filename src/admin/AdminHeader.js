@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Auth from './Auth';
 import KeyboardShortcutsModal from './KeyboardShortcutsModal';
-import { styles, breadcrumbStyle, previewBtnStyle, publishBtnStyle, badgeStyle, helpBtnStyle } from './adminHeaderStyles';
+import { styles, breadcrumbStyle, previewBtnStyle, publishBtnStyle, badgeStyle, helpBtnStyle, themeBtnStyle } from './adminHeaderStyles';
+
+function getPreviewUrl(currentPageName, origin, pathname) {
+  if (!currentPageName) return origin + pathname + '#/';
+  const isLocal = origin.includes('localhost') || origin.includes('127.0.0.1');
+  if (isLocal) return origin + pathname + '#/pages/' + currentPageName;
+  return (origin + pathname).replace(/app\.html$/, '') + 'pages/' + currentPageName + '.html';
+}
+
+function getSiteUrl(origin, pathname) {
+  const isLocal = origin.includes('localhost') || origin.includes('127.0.0.1');
+  if (isLocal) return origin + '/';
+  return (origin + pathname).replace(/app\.html$/, '');
+}
 
 export default function AdminHeader({
-  currentRoute,
-  currentPageName,
-  syncStatus,
-  showNotification,
-  onRefresh,
-  onDismissNotification,
-  changesCount = 0,
-  lastAutosaved,
-  onPublish
+  currentRoute, currentPageName, syncStatus, showNotification,
+  onRefresh, onDismissNotification, changesCount = 0, lastAutosaved, onPublish
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' && window.innerWidth > 768);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.getAttribute('data-theme') === 'dark');
 
   useEffect(() => {
     const onResize = () => {
@@ -40,12 +47,19 @@ export default function AdminHeader({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
+  const toggleTheme = () => {
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('hookie_theme', next);
+    setIsDark(!isDark);
+  };
+
   const navItems = [
-    { href: '#/admin', label: 'Pages', icon: 'P' },
-    { href: '#/admin/components', label: 'Components', icon: 'C' },
-    { href: '#/admin/library', label: 'Library', icon: 'L' },
-    { href: '#/admin/layout', label: 'Layout', icon: 'Y' },
-    { href: '#/admin/settings', label: 'Settings', icon: 'S' },
+    { href: '#/admin', label: 'Pages', icon: '📄' },
+    { href: '#/admin/components', label: 'Components', icon: '🧩' },
+    { href: '#/admin/library', label: 'Library', icon: '📚' },
+    { href: '#/admin/layout', label: 'Layout', icon: '🎨' },
+    { href: '#/admin/settings', label: 'Settings', icon: '⚙️' },
   ];
 
   const isActive = (item) => {
@@ -59,9 +73,8 @@ export default function AdminHeader({
 
   const handleNavClick = (href) => { window.location.hash = href; setMobileMenuOpen(false); };
 
-  const previewUrl = currentPageName
-    ? `${window.location.origin}${window.location.pathname}#/pages/${currentPageName}`
-    : `${window.location.origin}${window.location.pathname}#/`;
+  const previewUrl = getPreviewUrl(currentPageName, window.location.origin, window.location.pathname);
+  const siteUrl = getSiteUrl(window.location.origin, window.location.pathname);
 
   return (
     <>
@@ -69,11 +82,11 @@ export default function AdminHeader({
 
       <header style={styles.header}>
         <div style={styles.headerLeft}>
-          <h1 style={styles.logo}>Hookie</h1>
+          <h1 style={styles.logo}>⚓ Hookie</h1>
           {currentPageName && isDesktop && (
             <span style={breadcrumbStyle}>
               <span style={{ opacity: 0.4 }}>/</span>
-              <span style={{ marginLeft: '8px', fontWeight: 500, fontSize: '0.875rem', color: '#64748b', maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span style={{ marginLeft: '8px', fontWeight: 500, fontSize: '0.875rem', color: 'var(--admin-text2)', maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {currentPageName}
               </span>
             </span>
@@ -88,60 +101,33 @@ export default function AdminHeader({
         </div>
 
         <div style={styles.headerRight}>
-          <a
-            href={previewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={previewBtnStyle}
-            title="Preview site"
-          >
+          <a href={siteUrl} target="_blank" rel="noopener noreferrer" style={previewBtnStyle} title="View published site">
+            Site ↗
+          </a>
+          <a href={previewUrl} target="_blank" rel="noopener noreferrer" style={previewBtnStyle} title="Preview this page">
             Preview
           </a>
-
           {lastAutosaved && (
-            <span style={{ fontSize: '0.75rem', color: '#64748b', whiteSpace: 'nowrap' }} title={`Last autosaved: ${new Date(lastAutosaved).toLocaleTimeString()}`}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--admin-text2)', whiteSpace: 'nowrap' }} title={`Last autosaved: ${new Date(lastAutosaved).toLocaleTimeString()}`}>
               ● Saved
             </span>
           )}
-
-          <button
-            onClick={onPublish}
-            style={{
-              ...publishBtnStyle,
-              backgroundColor: changesCount > 0 ? '#2563eb' : '#94a3b8',
-            }}
-            title={changesCount > 0 ? `Publish ${changesCount} change${changesCount !== 1 ? 's' : ''}` : 'No pending changes'}
-          >
+          <button onClick={onPublish}
+            style={{ ...publishBtnStyle, backgroundColor: changesCount > 0 ? 'var(--admin-accent)' : 'var(--admin-text3)' }}
+            title={changesCount > 0 ? `Publish ${changesCount} change${changesCount !== 1 ? 's' : ''}` : 'No pending changes'}>
             Publish
-            {changesCount > 0 && (
-              <span style={badgeStyle}>{changesCount}</span>
-            )}
+            {changesCount > 0 && <span style={badgeStyle}>{changesCount}</span>}
           </button>
-
-          <button
-            onClick={() => setShowShortcuts(true)}
-            style={helpBtnStyle}
-            title="Keyboard shortcuts (?)"
-          >
-            ?
+          <button onClick={toggleTheme} style={themeBtnStyle} title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}>
+            {isDark ? '☀️' : '🌙'}
           </button>
-
+          <button onClick={() => setShowShortcuts(true)} style={helpBtnStyle} title="Keyboard shortcuts (?)">?</button>
           <Auth />
-
-          <button
-            style={{ ...styles.mobileMenuButton, display: isDesktop ? 'none' : 'flex' }}
+          <button style={{ ...styles.mobileMenuButton, display: isDesktop ? 'none' : 'flex' }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileMenuOpen}
-          >
-            {mobileMenuOpen ? (
-              <span style={styles.hamburgerX}>✕</span>
-            ) : (
-              <>
-                <span style={styles.hamburgerLine} />
-                <span style={styles.hamburgerLine} />
-                <span style={styles.hamburgerLine} />
-              </>
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileMenuOpen}>
+            {mobileMenuOpen ? <span style={styles.hamburgerX}>✕</span> : (
+              <><span style={styles.hamburgerLine} /><span style={styles.hamburgerLine} /><span style={styles.hamburgerLine} /></>
             )}
           </button>
         </div>
@@ -155,7 +141,8 @@ export default function AdminHeader({
           </div>
           <div style={styles.menuContent}>
             {navItems.map(item => (
-              <a key={item.href} href={item.href} onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }} style={{ ...styles.menuItem, ...(isActive(item) ? styles.menuItemActive : {}) }}>
+              <a key={item.href} href={item.href} onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
+                style={{ ...styles.menuItem, ...(isActive(item) ? styles.menuItemActive : {}) }}>
                 <span style={styles.menuItemIcon}>{item.icon}</span>
                 <span style={styles.menuItemLabel}>{item.label}</span>
               </a>
@@ -174,9 +161,7 @@ export default function AdminHeader({
         </div>
       )}
 
-      {showShortcuts && (
-        <KeyboardShortcutsModal onClose={() => setShowShortcuts(false)} />
-      )}
+      {showShortcuts && <KeyboardShortcutsModal onClose={() => setShowShortcuts(false)} />}
     </>
   );
 }
