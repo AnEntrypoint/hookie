@@ -1,214 +1,74 @@
-/* Admin Styles - Responsive */
-
-/* BuilderCanvas Responsive Styles */
-@media (max-width: 768px) {
-  .builder-toolbar {
-    padding: 8px 12px;
-    gap: 6px;
-  }
-
-  .builder-toolbar-button {
-    padding: 6px 10px;
-    font-size: 0.875rem;
-  }
-
-  .builder-canvas {
-    padding: 12px;
-  }
-
-  .builder-canvas-inner {
-    min-height: 300px;
-  }
-
-  .builder-empty-state {
-    padding: 32px 16px;
-    font-size: 0.875rem;
-  }
-
-  .builder-separator {
-    display: none;
-  }
-
-  .builder-select {
-    padding: 6px 10px;
-    font-size: 0.8125rem;
-  }
-
-  .builder-selection-info {
-    padding: 10px 12px;
-    gap: 8px;
-  }
-
-  .builder-selection-text {
-    font-size: 0.75rem;
-  }
-
-  .builder-clear-button {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-  }
+:root {
+  --admin-bg: #ffffff;
+  --admin-bg2: #f8fafc;
+  --admin-bg3: #f1f5f9;
+  --admin-border: #e2e8f0;
+  --admin-text: #1e293b;
+  --admin-text2: #64748b;
+  --admin-text3: #94a3b8;
+  --admin-accent: #2563eb;
+  --admin-accent2: #475569;
+  --admin-accent-light: #dbeafe;
+  --admin-accent-dark: #1e40af;
+  --admin-accent-border: #93c5fd;
+  --admin-success: #10b981;
 }
 
-@media (max-width: 375px) {
-  .builder-toolbar {
-    padding: 6px 8px;
-    gap: 4px;
-  }
-
-  .builder-toolbar-button {
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-
-  .builder-canvas {
-    padding: 8px;
-  }
-
-  .builder-canvas-inner {
-    min-height: 250px;
-  }
-
-  .builder-empty-state {
-    padding: 24px 12px;
-    font-size: 0.75rem;
-  }
-
-  .builder-select {
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-
-  .builder-selection-info {
-    padding: 8px 8px;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+html[data-theme="dark"] {
+  --admin-bg: #0f172a;
+  --admin-bg2: #1e293b;
+  --admin-bg3: #334155;
+  --admin-border: #334155;
+  --admin-text: #f1f5f9;
+  --admin-text2: #94a3b8;
+  --admin-text3: #64748b;
+  --admin-accent: #60a5fa;
+  --admin-accent2: #94a3b8;
+  --admin-accent-light: #1e3a8a;
+  --admin-accent-dark: #93c5fd;
+  --admin-accent-border: #1d4ed8;
+  --admin-success: #34d399;
 }
 
-/* AdminApp Responsive Styles */
 @media (max-width: 768px) {
-  .admin-builder-layout {
-    flex-direction: column;
-  }
+  .builder-toolbar { padding: 8px 12px; gap: 6px; }
+  .builder-toolbar-button { padding: 6px 10px; font-size: 0.875rem; }
+  .builder-canvas { padding: 12px; }
+  .builder-canvas-inner { min-height: 300px; }
+  .builder-empty-state { padding: 32px 16px; font-size: 0.875rem; }
+  .builder-separator { display: none; }
+  .builder-select { padding: 6px 10px; font-size: 0.8125rem; }
+  .builder-selection-info { padding: 10px 12px; gap: 8px; }
+  .builder-selection-text { font-size: 0.75rem; }
+  .builder-clear-button { font-size: 0.75rem; padding: 4px 8px; }
+}
 
-  .admin-builder-main {
-    order: 1;
-    min-height: 400px;
-  }
-
+@media (max-width: 768px) {
+  .admin-builder-layout { flex-direction: column; }
+  .admin-builder-main { order: 1; min-height: 400px; }
   .admin-builder-sidebar {
-    width: 100%;
-    order: 2;
-    border-left: none;
-    border-top: 1px solid #e2e8f0;
-    max-height: 300px;
-    padding: 16px;
+    width: 100%; order: 2; border-left: none;
+    border-top: 1px solid var(--admin-border);
+    max-height: 300px; padding: 16px;
   }
-
-  .admin-loading {
-    padding: 32px 16px;
-  }
-
-  .admin-not-found {
-    padding: 32px 16px;
-  }
-
-  .admin-success-banner {
-    padding: 10px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  .admin-loading { padding: 32px 16px; }
+  .admin-not-found { padding: 32px 16px; }
+  .admin-success-banner { padding: 10px 16px; flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 1024px) {
-  .admin-builder-sidebar {
-    width: 280px;
-    padding: 16px;
-  }
+  .admin-builder-sidebar { width: 280px; padding: 16px; }
 }
 
-@media (max-width: 375px) {
-  .admin-builder-sidebar {
-    max-height: 250px;
-    padding: 8px;
-  }
-
-  .admin-loading {
-    padding: 24px 12px;
-  }
-
-  .admin-not-found {
-    padding: 24px 12px;
-  }
-
-  .admin-success-banner {
-    padding: 8px 12px;
-    font-size: 0.875rem;
-  }
-
-  .admin-dismiss-button {
-    font-size: 0.875rem;
-    padding: 6px 12px;
-  }
-}
-
-/* Settings Form Responsive */
 @media (min-width: 769px) {
-  .settings-container {
-    padding: 24px;
-  }
-
-  .settings-header {
-    margin-bottom: 40px;
-  }
-
-  .settings-title {
-    font-size: 2rem;
-  }
-
-  .settings-description {
-    font-size: 0.95rem;
-  }
-
-  .settings-label-helper {
-    font-size: 0.8125rem;
-  }
-
-  .settings-button-group {
-    flex-direction: row;
-    margin-top: 20px;
-  }
+  .settings-container { padding: 24px; }
+  .settings-header { margin-bottom: 40px; }
+  .settings-title { font-size: 2rem; }
+  .settings-button-group { flex-direction: row; margin-top: 20px; }
 }
 
-@media (min-width: 1025px) {
-  .settings-container {
-    padding: 40px 28px;
-  }
-}
-
-/* Component Creator Form Responsive */
 @media (min-width: 769px) {
-  .creator-container {
-    padding: 24px;
-  }
-
-  .creator-heading {
-    font-size: 2rem;
-    margin-bottom: 24px;
-  }
-
-  .creator-section-heading {
-    font-size: 1.25rem;
-  }
-
-  .creator-actions {
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-}
-
-@media (min-width: 1025px) {
-  .creator-container {
-    padding: 32px;
-  }
+  .creator-container { padding: 24px; }
+  .creator-heading { font-size: 2rem; margin-bottom: 24px; }
+  .creator-actions { flex-direction: row; justify-content: flex-end; }
 }
