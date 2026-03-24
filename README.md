@@ -6,7 +6,7 @@ A visual page builder that stores content in your GitHub repository. No servers,
 
 Hookie lets you build websites visually and save everything as JSON files in a GitHub repository. You get:
 
-- **Visual drag-and-drop builder** with 19 built-in components
+- **Visual drag-and-drop builder** with 18 built-in components
 - **GitHub as your CMS** — full version history, no lock-in
 - **Zero configuration** — deploy to GitHub Pages or any static host
 - **No build step** — open `index.html` and go
@@ -28,7 +28,7 @@ Go to [GitHub Settings → Tokens](https://github.com/settings/tokens/new?scopes
 
 Deploy `index.html` and the `src/` directory to any static host (GitHub Pages, Netlify, Vercel, etc.), or open locally.
 
-Navigate to `#/admin/settings` and complete the 3-step setup:
+Navigate to `app.html#/admin/settings` and complete the 3-step setup:
 1. Enter your GitHub token
 2. Enter your repo owner and name
 3. Verify and save — then click **Initialize Repo** to create starter content
