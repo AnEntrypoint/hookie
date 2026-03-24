@@ -66,11 +66,20 @@ a{text-decoration:none;color:inherit}
 .foot a{color:var(--acc)}.foot a:hover{text-decoration:underline}
 @keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero>*{animation:fu .7s ease both}.hero h1{animation-delay:.05s}.hero p{animation-delay:.15s}.cta-row{animation-delay:.25s}.browser{animation-delay:.35s}
-</style>`;
+html.light{--bg:#ffffff;--bg2:#f8fafc;--bg3:#f1f5f9;--bd:#e2e8f0;--acc:#2563eb;--acc2:#7c3aed;--txt:#1e293b;--txt2:#64748b;--grn:#059669}
+html.light .nav{background:rgba(255,255,255,.9)}
+html.light .browser{box-shadow:0 8px 32px rgba(0,0,0,.12)}
+@media(prefers-color-scheme:light){:root{--bg:#ffffff;--bg2:#f8fafc;--bg3:#f1f5f9;--bd:#e2e8f0;--acc:#2563eb;--acc2:#7c3aed;--txt:#1e293b;--txt2:#64748b;--grn:#059669}}
+#tm{position:relative;z-index:1;padding:7px 14px;border-radius:8px;font-size:14px;font-weight:500;color:var(--txt2);background:transparent;border:none;cursor:pointer}
+#tm:hover{color:var(--txt)}
+</style>
+<script>
+(function(){var t=localStorage.getItem('hookie_site_theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='light'||(!t&&!d))document.documentElement.classList.add('light');})();
+</script>`;
 }
 
 export function genNav(adminUrl, githubUrl) {
-  return `<nav class="nav"><div class="nav-inner"><div class="logo">⚓ <em>Hookie</em> <span style="color:var(--txt2);font-weight:400;font-size:14px">CMS</span></div><div style="display:flex;gap:4px;align-items:center"><a href="${githubUrl}" target="_blank" rel="noopener">GitHub ↗</a><a href="${adminUrl}" class="cta">Open Admin →</a></div></div></nav>`;
+  return `<nav class="nav"><div class="nav-inner"><div class="logo">⚓ <em>Hookie</em> <span style="color:var(--txt2);font-weight:400;font-size:14px">CMS</span></div><div style="display:flex;gap:4px;align-items:center"><a href="${githubUrl}" target="_blank" rel="noopener">GitHub ↗</a><button id="tm" onclick="var l=document.documentElement.classList.toggle('light');localStorage.setItem('hookie_site_theme',l?'light':'dark')" title="Toggle light/dark">◑</button><a href="${adminUrl}" class="cta">Open Admin →</a></div></div></nav>`;
 }
 
 export function genHero(adminUrl, githubUrl, screenshotUrl) {

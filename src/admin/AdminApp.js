@@ -38,6 +38,9 @@ export default function AdminApp() {
   }, [state.context.changes]);
 
   useEffect(() => {
+    const stored = localStorage.getItem('hookie_theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
     migrateStorageKeys();
     const settings = loadSettingsFromStorage();
     const owner = settings.owner || import.meta.env.VITE_GITHUB_OWNER || '';
