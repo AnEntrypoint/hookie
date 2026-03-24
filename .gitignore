@@ -29,3 +29,4 @@ pages-dist/
 .claude/settings.local.json
 
 .code-search/
+public/screenshot.png
